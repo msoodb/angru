@@ -7,7 +7,7 @@
 
 int main(int argc, char const *argv[])
 {
-	std::cout<<"Insomnai version .013. Check Logfile."<<std::endl;
+	std::cout<<"Angru version .013. Check Logfile."<<std::endl;
 
 	try
 	{
