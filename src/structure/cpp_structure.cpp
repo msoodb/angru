@@ -71,6 +71,18 @@ int main_cpp(int argc, char const *argv[])
 
 	char cha = 't';
 	cout <<int(cha)<<endl;
+
+	int ax;
+  long int bx;
+  char cx;
+  float fx;
+  double dx;
+  std::cin>>ax>>bx>>cx>>fx>>dx;
+  std::cout<<ax<<"\n";
+  std::cout<<bx<<"\n";
+  std::cout<<cx<<"\n";
+  std::cout<<std::fixed<<std::setprecision(3)<<fx<<"\n";
+  std::cout<<std::fixed<<std::setprecision(9)<<dx;
 	//-----------------------------------------------------------------------//
 
 	//-----------------------------  cin, cout ------------------------------//

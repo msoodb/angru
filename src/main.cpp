@@ -9,7 +9,12 @@ int main(int argc, char const *argv[])
 {
 	std::cout<<"Angru version .010. Check Logfile."<<std::endl;
 
-	try
+	int n[10000001];
+	/*for (size_t i = 0; i < 10000001; i++) {
+		std::cout << i<< " : hello" << '\n';
+	}*/
+	return 0;
+	/*try
 	{
     int count = 10;
     int r;
@@ -57,5 +62,5 @@ int main(int argc, char const *argv[])
     LOG_ERROR << "Error: unknown exception";
 		return 2;
 	}
-	return 0;
+	return 0;*/
 }
