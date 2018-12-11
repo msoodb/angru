@@ -9,7 +9,7 @@
 
 void _datetime::init()
 {
-  // current date/time based on current system zone
+  // current date/time based on current system
   time_t now = time(0);
 
   // convert now to string form
@@ -48,7 +48,7 @@ void _datetime::sample()
 void _datetime::sampleII()
 {
   /* is an absolute time, represented as the integer number of seconds
-  since the UNIX epoch (midnight GMT, 1 January 1970)*/
+  since the UNIX epoch (midnight GMT, 1 January 1970) */
   time_t now = time(0);
   std::cout<<"now : "<<now<<std::endl;
 
