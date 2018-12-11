@@ -9,7 +9,7 @@
 
 void _datetime::init()
 {
-  // current date/time based on current system
+  // current date/time based on current system zone
   time_t now = time(0);
 
   // convert now to string form
