@@ -16,7 +16,9 @@ int main(int argc, char const *argv[])
 	std::cout << "--------------------------------------" << '\n';
 	try
 	{
-		
+		pqxx::result R = Product::getProducts("id <= 8 AND price < 120");
+		CSVWriter writer("products8.csv");
+		writer.addData(R);
 	}
 	catch(const _error& e)
 	{

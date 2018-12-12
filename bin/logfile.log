@@ -1,8 +1,4 @@
-0000001 | 2018-12-13, 02:51:52.334704 [info] - Opened database successfully: angrudb
-0000002 | 2018-12-13, 02:51:52.334853 [info] - Connected to database: angrudb
-0000003 | 2018-12-13, 02:51:52.343392 [info] - start writing data in csv: products12.csv
-0000004 | 2018-12-13, 02:51:52.343756 [info] - end writing data in csv: products12.csv
-0000005 | 2018-12-13, 02:51:52.349656 [info] - Opened database successfully: angrudb
-0000006 | 2018-12-13, 02:51:52.349767 [info] - Connected to database: angrudb
-0000007 | 2018-12-13, 02:51:52.418358 [info] - Opened database successfully: angrudb
-0000008 | 2018-12-13, 02:51:52.418545 [info] - Connected to database: angrudb
+0000001 | 2018-12-13, 03:06:35.989753 [info] - Opened database successfully: angrudb
+0000002 | 2018-12-13, 03:06:35.989950 [info] - Connected to database: angrudb
+0000003 | 2018-12-13, 03:06:35.997892 [info] - start writing data in csv: products8.csv
+0000004 | 2018-12-13, 03:06:35.998489 [info] - end writing data in csv: products8.csv

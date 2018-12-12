@@ -1,20 +1,17 @@
 #include <iostream>
-#include <ctime>
 #include <string>
-#include <vector>
 #include <pqxx/pqxx>
-#include "product.h"
+
 #include "_error.h"
 #include "_log.h"
 #include "_PostgreSQL.h"
 
+#include "product.h"
+
+
 Product::Product(){
 }
 Product::~Product(){
-}
-void Product::setData(){
-}
-void Product::print(){
 }
 pqxx::result Product::getProducts(){
 	pqxx::connection C(_PostgreSQL::connection_string());

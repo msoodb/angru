@@ -15,8 +15,6 @@ class Product
 public:
 	Product();
 	~Product();
-	void setData();
-	void print();
 	static pqxx::result getProducts();
 	static pqxx::result getProducts(std::string);
   static pqxx::row getProduct(int);
