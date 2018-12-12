@@ -14,7 +14,12 @@ int main(int argc, char const *argv[])
 		std::cout << i<< " : hello" << '\n';
 	}*/
 	//return 0;
-	try
+	std::cout << argc << '\n';
+	int count = argv.size();
+	for (size_t i = 0; i < count; i++) {
+		std::cout << argv[i] << '\n';
+	}
+	/*try
 	{
     int count = 10;
     int r;
@@ -61,6 +66,6 @@ int main(int argc, char const *argv[])
 	{
     LOG_ERROR << "Error: unknown exception";
 		return 2;
-	}
+	}*/
 	return 0;
 }
