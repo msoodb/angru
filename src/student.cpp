@@ -3,77 +3,48 @@
 #include <vector>
 #include "student.h"
 
-Student::Student()
-{
-	studentId = 0;
-	entryYear = 2000;
-	firstName = "";
-	middleName = "";
-	lastName = "";
-	GPA = 0.0; //Grade Point Average
-	gender = 'M';
+Student::Student(int student_id_,	int entry_year_, std::string first_name_,
+	std::string middle_name_, std::string last_name_, double GPA_, char gender_) :
+	student_id(student_id_), entry_year(entry_year_), first_name(first_name_),
+			middle_name(middle_name_),	last_name (last_name_), GPA (GPA_), gender (gender_){
 }
-Student::~Student()
-{
-
+Student::Student() : Student(0,2000,"","","",15.0,'M'){
 }
-Student::Student(
-		int new_studentId,
-		int new_entryYear,
-		std::string new_firstName,
-		std::string new_middleName,
-		std::string new_lastName,
-		double new_GPA, //Grade Point Average
-		char new_gender)
-{
-	studentId = new_studentId;
-	entryYear = new_entryYear;
-	firstName = new_firstName;
-	middleName = new_middleName;
-	lastName = new_lastName;
-	GPA = new_GPA; //Grade Point Average
-	gender = new_gender;
+Student::Student(const Student &obj) : Student(obj.student_id, obj.entry_year,
+	obj.first_name, obj.middle_name, obj.last_name, obj.GPA, obj.gender){
 }
-Student::Student(const Student &obj)
-{
-	studentId = obj.studentId;
-	entryYear = obj.entryYear;
-	firstName = obj.firstName;
-	middleName = obj.middleName;
-	lastName = obj.lastName;
-	GPA = obj.GPA; //Grade Point Average
-	gender = obj.gender;
+Student::~Student(){
 }
 void Student::setData(
-		int new_studentId,
-		int new_entryYear,
-		std::string new_firstName,
-		std::string new_middleName,
-		std::string new_lastName,
-		double new_GPA, //Grade Point Average
-		char new_gender)
+		int student_id_,
+		int entry_year_,
+		std::string first_name_,
+		std::string middle_name_,
+		std::string last_name_,
+		double GPA_,
+		char gender_)
 {
-	studentId = new_studentId;
-	entryYear = new_entryYear;
-	firstName = new_firstName;
-	middleName = new_middleName;
-	lastName = new_lastName;
-	GPA = new_GPA; //Grade Point Average
-	gender = new_gender;
+	student_id = student_id_;
+	entry_year = entry_year_;
+	first_name = first_name_;
+	middle_name = middle_name_;
+	last_name = last_name_;
+	GPA = GPA_;
+	gender = gender_;
 }
 void Student::print()
 {
-	std::cout<<" "<<studentId<<" "<<entryYear<<" "
-		<<firstName<<" "<<middleName<<" "<<lastName<<" "<<gender<<" "<<GPA<<"\n"; //Grade Point Average
+	std::cout<<" "<<student_id<<" "<<entry_year<<" "
+		<<first_name<<" "<<middle_name<<" "<<last_name<<" "<<gender<<" "<<GPA<<"\n";
 }
 std::vector<std::string> Student::getStudent()
 {
 	std::vector<std::string> v;
-	v.push_back(std::to_string(this->studentId));
-	v.push_back(std::to_string(this->entryYear));
-	v.push_back(this->firstName);
-	v.push_back(this->middleName);
-	v.push_back(this->lastName);
+	v.push_back(std::to_string(this->student_id));
+	v.push_back(std::to_string(this->entry_year));
+	v.push_back(this->first_name);
+	v.push_back(this->middle_name);
+	v.push_back(this->last_name);
 	v.push_back(std::to_string(this->GPA));
 	v.push_back(std::string(1, this->gender));
 	return v;
@@ -81,27 +52,27 @@ std::vector<std::string> Student::getStudent()
 
 int Student::getId()
 {
-	return studentId;
+	return student_id;
 }
 int Student::getEntryYer()
 {
-	return entryYear;
+	return entry_year;
 }
-std::string Student::getFirstName()
+std::string Student::getfirst_name()
 {
-	return firstName;
+	return first_name;
 }
-std::string Student::getMiddleName()
+std::string Student::getmiddle_name()
 {
-	return middleName;
+	return middle_name;
 }
-std::string Student::getLastName()
+std::string Student::getlast_name()
 {
-	return lastName;
+	return last_name;
 }
 std::string Student::getFullName()
 {
-	return firstName + " " + middleName + " " + lastName;
+	return first_name + " " + middle_name + " " + last_name;
 }
 double Student::getGPA()
 {
@@ -118,6 +89,6 @@ int Student::add(int a, int b)
 //      Operator
 Student& Student::operator ++()
 {
-	this->entryYear++;
+	this->entry_year++;
 	return *this;
 }

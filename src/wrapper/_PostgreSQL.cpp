@@ -27,8 +27,8 @@ std::string _PostgreSQL::connection_string()
   std::string _hostaddr;
   std::string _port;
 
-	_dbname = "pgguide";
-	_user = "pgguide";
+	_dbname = "angrudb";
+	_user = "angru";
   _password = "1235";
   _hostaddr = "127.0.0.1";
   _port = "5432";

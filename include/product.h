@@ -18,8 +18,11 @@ public:
 	void setData();
 	void print();
 	static pqxx::result getProducts();
-  static pqxx::result getProduct(int id);
+	static pqxx::result getProducts(std::string);
+  static pqxx::row getProduct(int);
 	static void addProduct(int, std::string, float, std::string, std::string, std::string);
+	static void updateProduct(int, std::string, float, std::string, std::string, std::string);
+	static void deleteProduct(int);
 };
 
 // This is the end of the header guard
