@@ -1,4 +1,16 @@
-0000001 | 2018-12-13, 03:06:35.989753 [info] - Opened database successfully: angrudb
-0000002 | 2018-12-13, 03:06:35.989950 [info] - Connected to database: angrudb
-0000003 | 2018-12-13, 03:06:35.997892 [info] - start writing data in csv: products8.csv
-0000004 | 2018-12-13, 03:06:35.998489 [info] - end writing data in csv: products8.csv
+0000001 | 2018-12-14, 01:33:17.535408 [info] - start reading data from json: config.json
+0000002 | 2018-12-14, 01:33:17.535957 [info] - end reading data from json: config.json
+0000003 | 2018-12-14, 01:33:17.546682 [info] - Opened database successfully: angrudb
+0000004 | 2018-12-14, 01:33:17.546829 [info] - Connected to database: angrudb
+0000005 | 2018-12-14, 01:33:17.562835 [info] - Opened database successfully: angrudb
+0000006 | 2018-12-14, 01:33:17.562972 [info] - Connected to database: angrudb
+0000007 | 2018-12-14, 01:33:17.570838 [info] - start writing data in csv: products8.csv
+0000008 | 2018-12-14, 01:33:17.571206 [info] - end writing data in csv: products8.csv
+0000009 | 2018-12-14, 01:33:17.576673 [info] - Opened database successfully: angrudb
+0000010 | 2018-12-14, 01:33:17.576795 [info] - Connected to database: angrudb
+0000011 | 2018-12-14, 01:33:17.590041 [info] - start writing data in json: products.json
+0000012 | 2018-12-14, 01:33:17.591374 [info] - end writing data in json: products.json
+0000013 | 2018-12-14, 01:33:17.597006 [info] - Opened database successfully: angrudb
+0000014 | 2018-12-14, 01:33:17.597133 [info] - Connected to database: angrudb
+0000015 | 2018-12-14, 01:33:17.604665 [info] - start writing data in json: products1230.json
+0000016 | 2018-12-14, 01:33:17.604807 [info] - end writing data in json: products1230.json

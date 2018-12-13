@@ -2,6 +2,9 @@
 #include <string>
 #include <pqxx/pqxx>
 
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+
 #include "_error.h"
 #include "_log.h"
 #include "_PostgreSQL.h"
@@ -9,29 +12,9 @@
 #include "product.h"
 
 
-Product::Product(){
-}
-Product::~Product(){
-}
-pqxx::result Product::getProducts(){
-	pqxx::connection C(_PostgreSQL::connection_string());
-	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
-			 LOG_ERROR << "Can't open database: " << C.dbname();
-		}
-		C.disconnect ();
-	} catch (const _error &e) {
-			LOG_ERROR << e.what();
-	}
-	LOG_INFO << "Connected to database: " << C.dbname();
-	pqxx::work W(C);
-	pqxx::result R =
-		W.exec("SELECT id, title, price, created_at, deleted_at, tags FROM products");
-		return R;
-}
-pqxx::result Product::getProducts(std::string query){
+Product::Product(){}
+Product::~Product(){}
+pqxx::result Product::getProducts(std::string query=""){
 	pqxx::connection C(_PostgreSQL::connection_string());
 	try {
 		if (C.is_open()) {
@@ -46,11 +29,32 @@ pqxx::result Product::getProducts(std::string query){
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	std::string complete_query = "SELECT id, title, price, created_at, \
-																deleted_at, tags FROM products where " + query;
+																deleted_at, tags FROM products ";
+	if(!query.empty())
+	{
+		complete_query += " where ";
+		complete_query +=  query;
+	}
   C.prepare("find", complete_query);
   pqxx::result R = W.prepared("find").exec();
   W.commit();
 	return R;
+}
+boost::property_tree::ptree Product::getProducts_json(std::string query=""){
+	pqxx::result R = getProducts(query);
+	boost::property_tree::ptree products_node;
+	boost::property_tree::ptree product_node;
+	for(pqxx::row r : R)
+	{
+		product_node.put("id", r[0]);
+		product_node.put("title", r[1]);
+		product_node.put("price", r[2]);
+		product_node.put("created_at", r[3]);
+		product_node.put("deleted_at", r[4]);
+		product_node.put("tags", r[5]);
+		products_node.push_back(std::make_pair(r[0].c_str(), product_node));
+	}
+	return products_node;
 }
 pqxx::row Product::getProduct(int id){
 	pqxx::connection C(_PostgreSQL::connection_string());
@@ -74,6 +78,19 @@ pqxx::row Product::getProduct(int id){
 	}
   W.commit();
 	return r;
+}
+boost::property_tree::ptree Product::getProduct_json(int id){
+	pqxx::row r = getProduct(id);
+	boost::property_tree::ptree products_node;
+	boost::property_tree::ptree product_node;
+	product_node.put("id", r[0]);
+	product_node.put("title", r[1]);
+	product_node.put("price", r[2]);
+	product_node.put("created_at", r[3]);
+	product_node.put("deleted_at", r[4]);
+	product_node.put("tags", r[5]);
+	products_node.push_back(std::make_pair(r[0].c_str(), product_node));
+	return products_node;
 }
 void Product::addProduct( int id,
 													std::string title,
@@ -163,6 +180,27 @@ for (size_t i = 0; i < count; i++) {
 						"2016-06-22 19:10:25-07", "2016-06-22 19:10:25-07", "{gun, handgun, pistol}");
 						std::cout << "record : "<< i << '\n';
 }*/
+
+/*
+try
+{
+	std::cout<<"setup database connection_string..."<<std::endl;
+	_PostgreSQL::setup();
+
+	Product::deleteProduct(30);
+	pqxx::result R = Product::getProducts("id<15");
+	CSVWriter writer("products8.csv");
+	writer.addData(R);
+
+	boost::property_tree::ptree product_root = Product::getProducts_json("id>15 AND id<100");
+	JSONWriter product_json_writer("products.json");
+	product_json_writer.addData(product_root);
+
+	boost::property_tree::ptree product_root_1230 = Product::getProduct_json(1230);
+	JSONWriter product_json_writer2("products1230.json");
+	product_json_writer2.addData(product_root_1230);
+}
+*/
 
 /*pqxx::result R = Product::getProducts(" id <= 12 ");
 CSVWriter writer("products12.csv");

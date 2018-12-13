@@ -5,7 +5,9 @@
 #include <iostream>
 #include <vector>
 #include <pqxx/pqxx>
-//#include <boost/date_time/gregorian/gregorian.hpp>
+
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
 
 
 
@@ -15,9 +17,10 @@ class Product
 public:
 	Product();
 	~Product();
-	static pqxx::result getProducts();
 	static pqxx::result getProducts(std::string);
+	static boost::property_tree::ptree getProducts_json(std::string);
   static pqxx::row getProduct(int);
+	static boost::property_tree::ptree getProduct_json(int);
 	static void addProduct(int, std::string, float, std::string, std::string, std::string);
 	static void updateProduct(int, std::string, float, std::string, std::string, std::string);
 	static void deleteProduct(int);

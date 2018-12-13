@@ -25,7 +25,7 @@ void * _thread::CalcFib(void *threadid)
 
 void _thread::useThread2()
 {
-  pthread_t threads[NUM_THREADS];
+  /*pthread_t threads[NUM_THREADS];
   int rc;
   int i;
 
@@ -39,11 +39,11 @@ void _thread::useThread2()
       exit(-1);
     }
   }
-  pthread_exit(NULL);
+  pthread_exit(NULL);*/
 }
 void _thread::useThread()
 {
-  pthread_t threads[NUM_THREADS];
+  /*pthread_t threads[NUM_THREADS];
   int rc;
   int i;
 
@@ -57,7 +57,7 @@ void _thread::useThread()
       exit(-1);
     }
   }
-  pthread_exit(NULL);
+  pthread_exit(NULL);*/
 }
 
 /*pthread_t threads[NUM_THREADS];

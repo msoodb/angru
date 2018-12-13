@@ -1,6 +1,7 @@
 // This is start of the header guard.  CSVREADER_H can be any unique name.  By convention, we use the name of the header file.
 #ifndef _PostgreSQL_H
 #define _PostgreSQL_H
+
 #include <pqxx/pqxx>
 
 
@@ -14,14 +15,17 @@
 
 class _PostgreSQL
 {
-
+private:
+	static std::string _dbname;
+	static std::string _user;
+  static std::string _password;
+  static std::string _hostaddr;
+  static std::string _port;
+	static std::string _connection_string;
 public:
 	_PostgreSQL();
-
-	// Function to fetch data from a CSV File
 	static void setup();
 	static std::string connection_string();
 };
-
 // This is the end of the header guard
 #endif

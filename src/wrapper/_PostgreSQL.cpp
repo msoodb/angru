@@ -1,43 +1,37 @@
 #include <iostream>
 #include <string>
 #include <pqxx/pqxx>
+#include <boost/property_tree/ptree.hpp>
 
 #include "_PostgreSQL.h"
-
+#include "_JSONReader.h"
+#include "_error.h"
 /*
  * This Function accepts a range and appends all the elements in the range
  * to the last row, seperated by delimeter (Default is comma)
  */
-_PostgreSQL::_PostgreSQL()
-{
+ std::string _PostgreSQL::_dbname="";
+ std::string _PostgreSQL::_user="";
+ std::string _PostgreSQL::_password="";
+ std::string _PostgreSQL::_hostaddr="";
+ std::string _PostgreSQL::_port="";
+ std::string _PostgreSQL::_connection_string="";
+
+_PostgreSQL::_PostgreSQL(){
 }
 
 void _PostgreSQL::setup()
 {
-	//std::cout << _connectionstring<<std::endl;
-	//return new pqxx::basic_connection<connect_direct>(C);
-	//pqxx::connection C(_connectionstring);
-	//return C;
+	JSONReader config_reader("config.json");
+	boost::property_tree::ptree config = config_reader.getData();
+	_dbname = config.get<std::string>("connection_string._dbname");
+	_user = config.get<std::string>("connection_string._user");
+	_password = config.get<std::string>("connection_string._password");
+	_hostaddr = config.get<std::string>("connection_string._hostaddr");
+	_port = config.get<std::string>("connection_string._port");
+	_connection_string = "dbname = "+_dbname+" user = "+_user
+			+" password = "+_password+" hostaddr = "+_hostaddr+" port = "+_port;
 }
-std::string _PostgreSQL::connection_string()
-{
-	std::string _dbname;
-	std::string _user;
-  std::string _password;
-  std::string _hostaddr;
-  std::string _port;
-
-	_dbname = "angrudb";
-	_user = "angru";
-  _password = "1235";
-  _hostaddr = "127.0.0.1";
-  _port = "5432";
-
-	std::string _connectionstring =
-		"dbname = " + _dbname
-		+ " user = " + _user
-		+ " password = " + _password
-		+ " hostaddr = " + _hostaddr
-		+ " port = " + _port;
-		return _connectionstring;
+std::string _PostgreSQL::connection_string(){
+		return _connection_string;
 }
