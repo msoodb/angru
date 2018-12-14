@@ -17,8 +17,8 @@ class Product
 public:
 	Product();
 	~Product();
-	static pqxx::result getProducts(std::string);
-	static boost::property_tree::ptree getProducts_json(std::string);
+	static pqxx::result getProducts(std::string query="");
+	static boost::property_tree::ptree getProducts_json(std::string query="");
   static pqxx::row getProduct(int);
 	static boost::property_tree::ptree getProduct_json(int);
 	static void addProduct(int, std::string, float, std::string, std::string, std::string);

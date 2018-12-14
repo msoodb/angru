@@ -14,7 +14,7 @@
 
 Product::Product(){}
 Product::~Product(){}
-pqxx::result Product::getProducts(std::string query=""){
+pqxx::result Product::getProducts(std::string query){
 	pqxx::connection C(_PostgreSQL::connection_string());
 	try {
 		if (C.is_open()) {
@@ -40,7 +40,7 @@ pqxx::result Product::getProducts(std::string query=""){
   W.commit();
 	return R;
 }
-boost::property_tree::ptree Product::getProducts_json(std::string query=""){
+boost::property_tree::ptree Product::getProducts_json(std::string query){
 	pqxx::result R = getProducts(query);
 	boost::property_tree::ptree products_node;
 	boost::property_tree::ptree product_node;
