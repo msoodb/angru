@@ -45,11 +45,13 @@ pqxx::result ProductModel::getProducts(int page, std::string query){
 }
 boost::property_tree::ptree ProductModel::getProducts_json(int page, std::string query){
 	pqxx::result R = getProducts(page, query);
+	int count = R.size();
+	int pageCount = count / OFFSET_COUNT;
 	boost::property_tree::ptree products_node;
 	boost::property_tree::ptree product_node;
 	for(pqxx::row r : R)
 	{
-		product_node.put("id", r[0]);
+		product_node.put<int>("id", r[0].as<int>());
 		product_node.put("title", r[1]);
 		product_node.put("price", r[2]);
 		product_node.put("created_at", r[3]);
