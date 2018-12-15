@@ -9,7 +9,7 @@
 #include "_log.h"
 #include "_PostgreSQL.h"
 
-#include "product.h"
+#include "productModel.h"
 #include "productView.h"
 
 

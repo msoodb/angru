@@ -23,8 +23,6 @@
 #include "_error.h"
 #include "_log.h"
 
-#include "student.h"
-#include "product.h"
 
 int main(int argc, char const *argv[])
 {

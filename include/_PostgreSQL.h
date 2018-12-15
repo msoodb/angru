@@ -12,6 +12,8 @@
 #define PASSWORD std::string
 #define HOSTADDR std::string
 #define PORT std::string
+#define OFFSET_COUNT 20
+
 
 class _PostgreSQL
 {
