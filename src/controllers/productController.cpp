@@ -64,3 +64,39 @@ void ProductController::doDeleteProduct(const Pistache::Rest::Request& request,
     ProductModel::deleteProduct(id);
     response.send(Pistache::Http::Code::Ok, "Product delet.");
 }
+void ProductController::doAddProduct(const Pistache::Rest::Request& request,
+  Pistache::Http::ResponseWriter response) {
+    auto query = request.query();
+    int id;
+    std::string title;
+    float price;
+    std::string created_at;
+    std::string deleted_at;
+    std::string tags = "{gun, handgun, pistol}";
+    if(query.has("id")) {
+      auto value = query.get("id").get();
+      id = std::stoi(value);
+    }
+    if(query.has("title")) {
+      auto value = query.get("title").get();
+      title = value;
+    }
+    if(query.has("price")) {
+      auto value = query.get("price").get();
+      price = std::stof(value);
+    }
+    if(query.has("created_at")) {
+      auto value = query.get("created_at").get();
+      created_at = value;
+    }
+    if(query.has("deleted_at")) {
+      auto value = query.get("deleted_at").get();
+      deleted_at = value;
+    }
+    if(query.has("tags")) {
+      auto value = query.get("tags").get();
+      tags = value;
+    }
+    ProductModel::addProduct(id,title,price,created_at,deleted_at,tags);
+    response.send(Pistache::Http::Code::Ok, "Product added.");
+}

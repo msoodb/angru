@@ -5,6 +5,8 @@
 #include "_error.h"
 
 #include "productController.h"
+#include "userController.h"
+
 
 
 REST_Server::REST_Server(Pistache::Address addr) : httpEndpoint(std::make_shared<Pistache::Http::Endpoint>(addr))
@@ -15,6 +17,10 @@ void REST_Server::setupRoutes() {
     Pistache::Rest::Routes::Get(router, "/products", Pistache::Rest::Routes::bind(&ProductController::doGetProducts));
     Pistache::Rest::Routes::Get(router, "/products/:id", Pistache::Rest::Routes::bind(&ProductController::doGetProduct));
     Pistache::Rest::Routes::Delete(router, "/products/:id", Pistache::Rest::Routes::bind(&ProductController::doDeleteProduct));
+    Pistache::Rest::Routes::Post(router, "/products", Pistache::Rest::Routes::bind(&ProductController::doAddProduct));
+    Pistache::Rest::Routes::Get(router, "/users", Pistache::Rest::Routes::bind(&UserController::doGetUsers));
+    Pistache::Rest::Routes::Get(router, "/users/:id", Pistache::Rest::Routes::bind(&UserController::doGetUser));
+    Pistache::Rest::Routes::Delete(router, "/users/:id", Pistache::Rest::Routes::bind(&UserController::doDeleteUser));
 }
 
 void REST_Server::printCookies(const Pistache::Http::Request& req) {
