@@ -22,7 +22,7 @@ _PostgreSQL::_PostgreSQL(){
 
 void _PostgreSQL::setup()
 {
-	JSONReader config_reader("config.json");
+	JSONReader config_reader("../config/config.json");
 	boost::property_tree::ptree config = config_reader.getData();
 	_dbname = config.get<std::string>("connection_string._dbname");
 	_user = config.get<std::string>("connection_string._user");

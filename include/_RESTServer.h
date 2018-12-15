@@ -55,7 +55,6 @@ public:
   void setupRoutes();
   void doRecordMetric(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
   void doGetMetric(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
-  void doGetProduct(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
   void doAuth(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 };
 // This is the end of the header guard
