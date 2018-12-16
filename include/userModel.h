@@ -21,8 +21,8 @@ public:
 	static boost::property_tree::ptree getUsers_json(int page=1, std::string query="");
   static pqxx::row getUser(int);
 	static boost::property_tree::ptree getUser_json(int);
-	static void addUser(int, std::string, float, std::string, std::string, std::string);
-	static void updateUser(int, std::string, float, std::string, std::string, std::string);
+	static void addUser(int, std::string, std::string, std::string, std::string, std::string);
+	static void updateUser(int, std::string, std::string, std::string, std::string, std::string);
 	static void deleteUser(int);
 };
 

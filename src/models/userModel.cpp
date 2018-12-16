@@ -28,6 +28,7 @@ pqxx::result UserModel::getUsers(int page, std::string query){
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
+	//std::string complete_query = "SELECT id, email, password, details, created_at,
 	std::string complete_query = "SELECT id, email, password, details, created_at, \
 																deleted_at FROM users ";
 	if(!query.empty())
@@ -99,11 +100,11 @@ boost::property_tree::ptree UserModel::getUser_json(int id){
 	return users_node;
 }
 void UserModel::addUser( int id,
-													std::string title,
-													float price,
+													std::string  email,
+													std::string  password,
+													std::string  details,
 													std::string  created_at,
-													std::string  deleted_at,
-													std::string  tags){
+													std::string  deleted_at){
 	pqxx::connection C(_PostgreSQL::connection_string());
 	try {
 		if (C.is_open()) {
@@ -118,17 +119,17 @@ void UserModel::addUser( int id,
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	C.prepare("insert", "INSERT INTO users \
-												(id, email, password, details, created_at, deleted_at) VALUES \
-												($1, $2, $3, $4, $5, $6)");
-  pqxx::result R = W.prepared("insert")(id)(title)(price)(created_at)(deleted_at)(tags).exec();
+												(id, email, password) VALUES \
+												($1, $2, $3)");
+  pqxx::result R = W.prepared("insert")(id)(email)(password).exec();
   W.commit();
 }
-void UserModel::updateUser( int id,
-													std::string title,
-													float price,
+void UserModel::updateUser(int id,
+													std::string  email,
+													std::string  password,
+													std::string  details,
 													std::string  created_at,
-													std::string  deleted_at,
-													std::string  tags){
+													std::string  deleted_at){
 	pqxx::connection C(_PostgreSQL::connection_string());
 	try {
 		if (C.is_open()) {
@@ -143,9 +144,8 @@ void UserModel::updateUser( int id,
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	C.prepare("update", "UPDATE users SET \
-												email = $2, password = $3, details = $4, created_at = $5, \
-												deleted_at = $6 WHERE id = $1");
-  W.prepared("update")(id)(title)(price)(created_at)(deleted_at)(tags).exec();
+												email = $2, password = $3 WHERE id = $1");
+  W.prepared("update")(id)(email)(password).exec();
   W.commit();
 }
 void UserModel::deleteUser(int id){

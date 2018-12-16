@@ -72,7 +72,7 @@ void ProductController::doAddProduct(const Pistache::Rest::Request& request,
     float price;
     std::string created_at;
     std::string deleted_at;
-    std::string tags = "{gun, handgun, pistol}";
+    std::string tags = "{gun}";
     if(query.has("id")) {
       auto value = query.get("id").get();
       id = std::stoi(value);
