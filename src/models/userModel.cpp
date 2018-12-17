@@ -36,7 +36,7 @@ pqxx::result UserModel::getUsers(int page, std::string query){
 		complete_query += " where ";
 		complete_query +=  query;
 	}
-	complete_query += "limit 20 offset ";
+	complete_query += " limit 20 offset ";
 	int offset = (page-1)* OFFSET_COUNT ;
 	complete_query += std::to_string(offset);
   C.prepare("find", complete_query);

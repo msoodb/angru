@@ -18,6 +18,7 @@ class UserController
 public:
 	UserController();
 	~UserController();
+	static void doLogin(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 	static void doGetUsers(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 	static void doGetUser(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 	static void doDeleteUser(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);

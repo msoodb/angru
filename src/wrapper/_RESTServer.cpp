@@ -12,6 +12,8 @@ REST_Server::REST_Server(Pistache::Address addr) : httpEndpoint(std::make_shared
 }
 
 void REST_Server::setupRoutes() {
+    Pistache::Rest::Routes::Post(router, "/login", Pistache::Rest::Routes::bind(&UserController::doLogin));
+    //-----------------------------------------------------------------------------------------------------------
     Pistache::Rest::Routes::Get(router, "/products", Pistache::Rest::Routes::bind(&ProductController::doGetProducts));
     Pistache::Rest::Routes::Get(router, "/products/:id", Pistache::Rest::Routes::bind(&ProductController::doGetProduct));
     Pistache::Rest::Routes::Delete(router, "/products/:id", Pistache::Rest::Routes::bind(&ProductController::doDeleteProduct));

@@ -12,12 +12,14 @@
 
 #include "productController.h"
 #include "productModel.h"
+#include "_authorization.h"
 
 
 ProductController::ProductController(){}
 ProductController::~ProductController(){}
 void ProductController::doGetProducts(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
+    _Authorization::AuthorizationCheck(request,response);
     int page = 1;
     auto query = request.query();
     if(query.has("page")) {
@@ -37,6 +39,7 @@ void ProductController::doGetProducts(const Pistache::Rest::Request& request,
 }
 void ProductController::doGetProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
+    _Authorization::AuthorizationCheck(request,response);
     int id = -1;
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
@@ -56,6 +59,7 @@ void ProductController::doGetProduct(const Pistache::Rest::Request& request,
 }
 void ProductController::doDeleteProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
+    _Authorization::AuthorizationCheck(request,response);
     int id = -1;
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
@@ -66,6 +70,7 @@ void ProductController::doDeleteProduct(const Pistache::Rest::Request& request,
 }
 void ProductController::doAddProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
+    _Authorization::AuthorizationCheck(request,response);
     auto query = request.query();
     int id;
     std::string title;

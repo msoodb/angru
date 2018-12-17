@@ -19,6 +19,7 @@
 #include "_JSONWriter.h"
 #include "_JSONReader.h"
 #include "_RESTServer.h"
+#include "_cryptography.h"
 
 #include "_error.h"
 #include "_log.h"
@@ -31,18 +32,6 @@ int main(int argc, char const *argv[])
 	{
 		std::cout<<"setup database connection_string..."<<std::endl;
 		_PostgreSQL::setup();
-
-		/*pqxx::result R = Product::getProducts("id<55");
-		CSVWriter writer("products.csv");
-		writer.addData(R);
-
-		boost::property_tree::ptree product_root = Product::getProducts_json();
-		JSONWriter product_json_writer("products.json");
-		product_json_writer.addData(product_root);
-
-		boost::property_tree::ptree product_root_1230 = Product::getProduct_json(1230);
-		JSONWriter product_json_writer2("products1230.json");
-		product_json_writer2.addData(product_root_1230);*/
 
 		Pistache::Port port(9080);
 

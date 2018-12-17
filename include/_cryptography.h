@@ -6,9 +6,11 @@
 class _cryptography
 {
 public:
-	static std::string get_md5(const std::string& p_arg);
-	static std::string get_sha1(const std::string& p_arg);
-	static std::string get_sha256(const std::string& p_arg);
+	static std::string get_base64(const std::string&);
+	static std::string get_md5(const std::string&);
+	static std::string get_sha1(const std::string&);
+	static std::string get_sha256(const std::string&);
+	static std::string get_jwt(const std::string&, const std::string&);
 };
 // This is the end of the header guard
 #endif
