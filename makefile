@@ -11,7 +11,8 @@ TARGET := bin/angru
 SRCEXT := cpp
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
-CFLAGS := -g -Wall
+#OBJECTS := $(BUILDDIR)
+CFLAGS := -g #-Wall
 LIBPQ := -lpqxx -lpq
 LIB := -pthread -lboost_log -lboost_log_setup -lboost_regex
 LIB += -lboost_thread -lboost_filesystem -lboost_system -lboost_date_time -lboost_locale
