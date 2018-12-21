@@ -71,37 +71,28 @@ void ProductController::doDeleteProduct(const Pistache::Rest::Request& request,
 void ProductController::doAddProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     _Authorization::AuthorizationCheck(request,response);
-    auto query = request.query();
-    int id;
+    _Authorization::ContentTypeJSONCheck(request,response);
+    auto body = request.body();
     std::string title;
     float price;
     std::string created_at;
     std::string deleted_at;
     std::string tags = "{gun}";
-    if(query.has("id")) {
-      auto value = query.get("id").get();
-      id = std::stoi(value);
+    try
+    {
+      std::stringstream ss;
+      ss << body;
+      boost::property_tree::ptree pt;
+      boost::property_tree::read_json(ss, pt);      
+      title = pt.get<std::string>("title");
+      price = pt.get<float>("price");
+      created_at = pt.get<std::string>("created_at");
+      deleted_at = pt.get<std::string>("deleted_at");
+      tags = pt.get<std::string>("tags");
     }
-    if(query.has("title")) {
-      auto value = query.get("title").get();
-      title = value;
+    catch (std::exception const& e){
+      response.send(Pistache::Http::Code::Not_Found, "Product not found");
     }
-    if(query.has("price")) {
-      auto value = query.get("price").get();
-      price = std::stof(value);
-    }
-    if(query.has("created_at")) {
-      auto value = query.get("created_at").get();
-      created_at = value;
-    }
-    if(query.has("deleted_at")) {
-      auto value = query.get("deleted_at").get();
-      deleted_at = value;
-    }
-    if(query.has("tags")) {
-      auto value = query.get("tags").get();
-      tags = value;
-    }
-    ProductModel::addProduct(id,title,price,created_at,deleted_at,tags);
+    ProductModel::addProduct(title,price,created_at,deleted_at,tags);
     response.send(Pistache::Http::Code::Ok, "Product added.");
 }

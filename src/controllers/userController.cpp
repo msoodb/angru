@@ -22,6 +22,7 @@ UserController::~UserController(){}
 
 void UserController::doLogin(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
+    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
     auto headers = request.headers();
     auto content_type = headers.tryGet<Pistache::Http::Header::ContentType>();
     if (content_type != nullptr){
@@ -116,10 +117,9 @@ void UserController::doDeleteUser(const Pistache::Rest::Request& request,
 }
 void UserController::doAddUser(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    _Authorization::AuthorizationCheck(request,response);
+    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
     _Authorization::ContentTypeJSONCheck(request,response);
     auto body = request.body();
-    int id;
     std::string email;
     std::string password;
     std::string password_sha1;
@@ -132,7 +132,6 @@ void UserController::doAddUser(const Pistache::Rest::Request& request,
       ss << body;
       boost::property_tree::ptree pt;
       boost::property_tree::read_json(ss, pt);
-      id = pt.get<int>("id");
       email = pt.get<std::string>("email");
       password = pt.get<std::string>("password");
       password_sha1 = _cryptography::get_sha1(password);
@@ -140,7 +139,7 @@ void UserController::doAddUser(const Pistache::Rest::Request& request,
     catch (std::exception const& e){
         std::cerr << e.what() << std::endl;
     }
-    UserModel::addUser(id,email,password_sha1,details,created_at,deleted_at);
+    UserModel::addUser(email,password_sha1,details,created_at,deleted_at);
     response.send(Pistache::Http::Code::Ok, "User added.");
 }
 void UserController::doUpdateUser(const Pistache::Rest::Request& request,

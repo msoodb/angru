@@ -97,8 +97,7 @@ boost::property_tree::ptree ProductModel::getProduct_json(int id){
 	products_node.push_back(std::make_pair(r[0].c_str(), product_node));
 	return products_node;
 }
-void ProductModel::addProduct( int id,
-													std::string title,
+void ProductModel::addProduct( std::string title,
 													float price,
 													std::string  created_at,
 													std::string  deleted_at,
@@ -118,8 +117,8 @@ void ProductModel::addProduct( int id,
 	pqxx::work W(C);
 	C.prepare("insert", "INSERT INTO products \
 												(id, title, price, created_at, deleted_at, tags) VALUES \
-												($1, $2, $3, $4, $5, $6)");
-  pqxx::result R = W.prepared("insert")(id)(title)(price)(created_at)(deleted_at)(tags).exec();
+												(DEFAULT, $1, $2, $3, $4, $5)");
+  pqxx::result R = W.prepared("insert")(title)(price)(created_at)(deleted_at)(tags).exec();
   W.commit();
 }
 void ProductModel::updateProduct( int id,

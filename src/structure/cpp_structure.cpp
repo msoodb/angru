@@ -2,6 +2,8 @@
 #include <iostream>      //cin, cout
 #include <string>			//string class
 #include <iomanip>		 //format float number fixed, setw, setprecision, serfill
+#include <future>
+#include <chrono>
 
 using namespace std;
 
@@ -18,6 +20,25 @@ const string YEAR[YEAR_MONTHS_COUNT] = {
 	"October", "November", "December"
 };
 int n_variable = 12; //global n
+
+std::string fetchDataFromCSV(std::string recvdData)
+{
+	std::this_thread::sleep_for(std::chrono::seconds(7));
+	return "CSV_" + recvdData;
+}
+
+std::string fetchDataFromDB(std::string recvdData)
+{
+	std::this_thread::sleep_for(std::chrono::seconds(5));
+	return "DB_" + recvdData;
+}
+
+std::string fetchDataFromFile(std::string recvdData)
+{
+	std::this_thread::sleep_for(std::chrono::seconds(5));
+	return "File_" + recvdData;
+}
+
 int main_cpp(int argc, char const *argv[])
 {
 
@@ -176,7 +197,22 @@ int main_cpp(int argc, char const *argv[])
 		j = rand();
 		std::cout <<" Random Number : " << j << std::endl;
 	}
-	//-----------------------------------------------------------------------//
+	//-------------------------------------------------------------------------//
+
+	//-------------------------   Async Programming   --------------------------//
+	std::chrono::system_clock::time_point start = std::chrono::system_clock::now();
+	std::future<std::string> resultFromCSV = std::async(std::launch::async, fetchDataFromCSV, "Data");
+	std::future<std::string> resultFromDB = std::async(std::launch::async, fetchDataFromDB, "Data");
+	std::string fileData = fetchDataFromFile("Data");
+	std::string dbData = resultFromDB.get();
+	std::string csvData = resultFromCSV.get();
+	auto end = std::chrono::system_clock::now();
+	auto diff = std::chrono::duration_cast < std::chrono::seconds > (end - start).count();
+	std::cout << "Total Time Taken = " << diff << " Seconds" << std::endl;
+	std::string data = dbData + " :: " + fileData + " :: " + csvData;
+	std::cout << "Data = " << data << std::endl;
+	//-------------------------------------------------------------------------//
+
 
 	return 0;
 }

@@ -12,8 +12,6 @@ std::string _cryptography::get_md5(const std::string& p_arg){
 
 }
 std::string _cryptography::get_sha1(const std::string& p_arg){
-  std::cout << "--------------------------------------" << '\n';
-  std::cout << p_arg << '\n';
   boost::uuids::detail::sha1 sha1;
       sha1.process_bytes(p_arg.data(), p_arg.size());
       unsigned hash[5] = {0};
@@ -26,7 +24,6 @@ std::string _cryptography::get_sha1(const std::string& p_arg){
       {
           std::sprintf(buf + (i << 3), "%08x", hash[i]);
       }
-      std::cout << std::string(buf) << '\n';
       return std::string(buf);
 }
 std::string _cryptography::get_sha256(const std::string& p_arg){
@@ -48,7 +45,7 @@ std::string _cryptography::get_jwt(const std::string& id, const std::string&emai
        .add_claim("sub", "test")
        .add_claim("id", id)
        .add_claim("iat", 1513862371)
-       .add_claim("exp", std::chrono::system_clock::now() + std::chrono::seconds{60});
+       .add_claim("exp", std::chrono::system_clock::now() + std::chrono::seconds{259200});
   //Get the encoded string/assertion
   auto enc_str = obj.signature();
   //std::cout << enc_str << std::endl;

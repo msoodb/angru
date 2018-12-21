@@ -18,13 +18,14 @@ private:
   Pistache::Rest::Router router;
   Pistache::Rest::Description desc;
 public:
+  static void setup(int port_number, int thread_count);
   REST_Server(Pistache::Address);
   void printCookies(const Pistache::Http::Request&);
   void handleReady(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
   void init(size_t thr = 2);
   void start();
   void shutdown();
-  void setupRoutes();  
+  void setupRoutes();
 };
 // This is the end of the header guard
 #endif

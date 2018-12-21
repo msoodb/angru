@@ -99,8 +99,7 @@ boost::property_tree::ptree UserModel::getUser_json(int id){
 	users_node.push_back(std::make_pair(r[0].c_str(), user_node));
 	return users_node;
 }
-void UserModel::addUser( int id,
-													std::string  email,
+void UserModel::addUser( 	std::string  email,
 													std::string  password,
 													std::string  details,
 													std::string  created_at,
@@ -120,8 +119,8 @@ void UserModel::addUser( int id,
 	pqxx::work W(C);
 	C.prepare("insert", "INSERT INTO users \
 												(id, email, password) VALUES \
-												($1, $2, $3)");
-  pqxx::result R = W.prepared("insert")(id)(email)(password).exec();
+												(DEFAULT, $1, $2)");
+  pqxx::result R = W.prepared("insert")(email)(password).exec();
   W.commit();
 }
 void UserModel::updateUser(int id,
