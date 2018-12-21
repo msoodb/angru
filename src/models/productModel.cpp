@@ -100,7 +100,6 @@ boost::property_tree::ptree ProductModel::getProduct_json(int id){
 void ProductModel::addProduct( std::string title,
 													float price,
 													std::string  created_at,
-													std::string  deleted_at,
 													std::string  tags){
 	pqxx::connection C(_PostgreSQL::connection_string());
 	try {
@@ -116,9 +115,9 @@ void ProductModel::addProduct( std::string title,
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	C.prepare("insert", "INSERT INTO products \
-												(id, title, price, created_at, deleted_at, tags) VALUES \
-												(DEFAULT, $1, $2, $3, $4, $5)");
-  pqxx::result R = W.prepared("insert")(title)(price)(created_at)(deleted_at)(tags).exec();
+												(id, title, price, created_at, tags) VALUES \
+												(DEFAULT, $1, $2, $3, $4)");
+  pqxx::result R = W.prepared("insert")(title)(price)(created_at)(tags).exec();
   W.commit();
 }
 void ProductModel::updateProduct( int id,

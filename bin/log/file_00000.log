@@ -1,0 +1,487 @@
+0000001 | 2018-12-21, 15:25:36.696952 [info] - setup logfile using boost...
+0000002 | 2018-12-21, 15:25:36.728679 [info] - setup database connection_string using pqxx...
+0000003 | 2018-12-21, 15:25:36.728826 [info] - start reading data from json: ../config/config.json
+0000004 | 2018-12-21, 15:25:36.738566 [info] - end reading data from json: ../config/config.json
+0000005 | 2018-12-21, 15:25:36.738797 [info] - setup datetime and calendar using boost...
+0000006 | 2018-12-21, 15:25:36.738858 [info] - set boost::locale::time_zone::global("GMT+4:30")
+0000007 | 2018-12-21, 15:25:36.738962 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000008 | 2018-12-21, 15:25:36.946422 [info] - setup HTTP_Client using pistache...
+0000009 | 2018-12-21, 15:25:36.946542 [info] - setup REST_Server using pistache...
+0000010 | 2018-12-21, 15:25:37.004614 [info] - setup REST_Server using pistache...0
+0000011 | 2018-12-21, 15:25:37.004814 [info] - setup REST_Server using pistache...1
+0000012 | 2018-12-21, 15:25:37.004867 [info] - setup REST_Server using pistache...2
+0000013 | 2018-12-21, 15:25:37.004908 [info] - setup REST_Server using pistache...3
+0000014 | 2018-12-21, 15:25:37.004947 [info] - setup REST_Server using pistache...4
+0000015 | 2018-12-21, 15:25:37.004985 [info] - setup REST_Server using pistache...5
+0000016 | 2018-12-21, 15:25:37.005023 [info] - setup REST_Server using pistache...6
+0000017 | 2018-12-21, 15:25:37.005060 [info] - setup REST_Server using pistache...7
+0000018 | 2018-12-21, 15:25:37.005098 [info] - setup REST_Server using pistache...8
+0000019 | 2018-12-21, 15:25:37.005135 [info] - setup REST_Server using pistache...9
+0000020 | 2018-12-21, 15:25:37.005173 [info] - setup REST_Server using pistache...10
+0000021 | 2018-12-21, 15:25:37.005211 [info] - setup REST_Server using pistache...11
+0000022 | 2018-12-21, 15:25:37.005249 [info] - setup REST_Server using pistache...12
+0000023 | 2018-12-21, 15:25:37.005286 [info] - setup REST_Server using pistache...13
+0000024 | 2018-12-21, 15:25:37.005336 [info] - setup REST_Server using pistache...14
+0000025 | 2018-12-21, 15:25:37.005375 [info] - setup REST_Server using pistache...15
+0000026 | 2018-12-21, 15:25:37.005413 [info] - setup REST_Server using pistache...16
+0000027 | 2018-12-21, 15:25:37.005451 [info] - setup REST_Server using pistache...17
+0000028 | 2018-12-21, 15:25:37.005488 [info] - setup REST_Server using pistache...18
+0000029 | 2018-12-21, 15:25:37.005525 [info] - setup REST_Server using pistache...19
+0000030 | 2018-12-21, 15:25:37.005563 [info] - setup REST_Server using pistache...20
+0000031 | 2018-12-21, 15:25:37.005600 [info] - setup REST_Server using pistache...21
+0000032 | 2018-12-21, 15:25:37.005637 [info] - setup REST_Server using pistache...22
+0000033 | 2018-12-21, 15:25:37.005674 [info] - setup REST_Server using pistache...23
+0000034 | 2018-12-21, 15:25:37.005712 [info] - setup REST_Server using pistache...24
+0000035 | 2018-12-21, 15:25:37.005749 [info] - setup REST_Server using pistache...25
+0000036 | 2018-12-21, 15:25:37.005786 [info] - setup REST_Server using pistache...26
+0000037 | 2018-12-21, 15:25:37.005824 [info] - setup REST_Server using pistache...27
+0000038 | 2018-12-21, 15:25:37.005862 [info] - setup REST_Server using pistache...28
+0000039 | 2018-12-21, 15:25:37.005900 [info] - setup REST_Server using pistache...29
+0000040 | 2018-12-21, 15:25:37.005937 [info] - setup REST_Server using pistache...30
+0000041 | 2018-12-21, 15:25:37.006000 [info] - setup REST_Server using pistache...31
+0000042 | 2018-12-21, 15:25:37.006060 [info] - setup REST_Server using pistache...32
+0000043 | 2018-12-21, 15:25:37.006125 [info] - setup REST_Server using pistache...33
+0000044 | 2018-12-21, 15:25:37.006190 [info] - setup REST_Server using pistache...34
+0000045 | 2018-12-21, 15:25:37.006257 [info] - setup REST_Server using pistache...35
+0000046 | 2018-12-21, 15:25:37.006300 [info] - setup REST_Server using pistache...36
+0000047 | 2018-12-21, 15:25:37.006339 [info] - setup REST_Server using pistache...37
+0000048 | 2018-12-21, 15:25:37.006377 [info] - setup REST_Server using pistache...38
+0000049 | 2018-12-21, 15:25:37.006414 [info] - setup REST_Server using pistache...39
+0000050 | 2018-12-21, 15:25:37.006451 [info] - setup REST_Server using pistache...40
+0000051 | 2018-12-21, 15:25:37.006488 [info] - setup REST_Server using pistache...41
+0000052 | 2018-12-21, 15:25:37.006526 [info] - setup REST_Server using pistache...42
+0000053 | 2018-12-21, 15:25:37.006564 [info] - setup REST_Server using pistache...43
+0000054 | 2018-12-21, 15:25:37.006602 [info] - setup REST_Server using pistache...44
+0000055 | 2018-12-21, 15:25:37.006640 [info] - setup REST_Server using pistache...45
+0000056 | 2018-12-21, 15:25:37.006678 [info] - setup REST_Server using pistache...46
+0000057 | 2018-12-21, 15:25:37.006716 [info] - setup REST_Server using pistache...47
+0000058 | 2018-12-21, 15:25:37.006754 [info] - setup REST_Server using pistache...48
+0000059 | 2018-12-21, 15:25:37.006792 [info] - setup REST_Server using pistache...49
+0000060 | 2018-12-21, 15:25:37.006830 [info] - setup REST_Server using pistache...50
+0000061 | 2018-12-21, 15:25:37.006868 [info] - setup REST_Server using pistache...51
+0000062 | 2018-12-21, 15:25:37.006907 [info] - setup REST_Server using pistache...52
+0000063 | 2018-12-21, 15:25:37.006964 [info] - setup REST_Server using pistache...53
+0000064 | 2018-12-21, 15:25:37.007025 [info] - setup REST_Server using pistache...54
+0000065 | 2018-12-21, 15:25:37.007088 [info] - setup REST_Server using pistache...55
+0000066 | 2018-12-21, 15:25:37.007151 [info] - setup REST_Server using pistache...56
+0000067 | 2018-12-21, 15:25:37.007216 [info] - setup REST_Server using pistache...57
+0000068 | 2018-12-21, 15:25:37.007283 [info] - setup REST_Server using pistache...58
+0000069 | 2018-12-21, 15:25:37.007348 [info] - setup REST_Server using pistache...59
+0000070 | 2018-12-21, 15:25:37.007398 [info] - setup REST_Server using pistache...60
+0000071 | 2018-12-21, 15:25:37.007436 [info] - setup REST_Server using pistache...61
+0000072 | 2018-12-21, 15:25:37.007493 [info] - setup REST_Server using pistache...62
+0000073 | 2018-12-21, 15:25:37.007533 [info] - setup REST_Server using pistache...63
+0000074 | 2018-12-21, 15:25:37.007579 [info] - setup REST_Server using pistache...64
+0000075 | 2018-12-21, 15:25:37.007636 [info] - setup REST_Server using pistache...65
+0000076 | 2018-12-21, 15:25:37.007696 [info] - setup REST_Server using pistache...66
+0000077 | 2018-12-21, 15:25:37.007756 [info] - setup REST_Server using pistache...67
+0000078 | 2018-12-21, 15:25:37.007821 [info] - setup REST_Server using pistache...68
+0000079 | 2018-12-21, 15:25:37.007884 [info] - setup REST_Server using pistache...69
+0000080 | 2018-12-21, 15:25:37.007948 [info] - setup REST_Server using pistache...70
+0000081 | 2018-12-21, 15:25:37.007990 [info] - setup REST_Server using pistache...71
+0000082 | 2018-12-21, 15:25:37.008027 [info] - setup REST_Server using pistache...72
+0000083 | 2018-12-21, 15:25:37.008064 [info] - setup REST_Server using pistache...73
+0000084 | 2018-12-21, 15:25:37.008100 [info] - setup REST_Server using pistache...74
+0000085 | 2018-12-21, 15:25:37.008137 [info] - setup REST_Server using pistache...75
+0000086 | 2018-12-21, 15:25:37.008174 [info] - setup REST_Server using pistache...76
+0000087 | 2018-12-21, 15:25:37.008210 [info] - setup REST_Server using pistache...77
+0000088 | 2018-12-21, 15:25:37.008247 [info] - setup REST_Server using pistache...78
+0000089 | 2018-12-21, 15:25:37.008344 [info] - setup REST_Server using pistache...79
+0000090 | 2018-12-21, 15:25:37.008409 [info] - setup REST_Server using pistache...80
+0000091 | 2018-12-21, 15:25:37.008475 [info] - setup REST_Server using pistache...81
+0000092 | 2018-12-21, 15:25:37.008542 [info] - setup REST_Server using pistache...82
+0000093 | 2018-12-21, 15:25:37.008599 [info] - setup REST_Server using pistache...83
+0000094 | 2018-12-21, 15:25:37.008639 [info] - setup REST_Server using pistache...84
+0000095 | 2018-12-21, 15:25:37.008676 [info] - setup REST_Server using pistache...85
+0000096 | 2018-12-21, 15:25:37.008714 [info] - setup REST_Server using pistache...86
+0000097 | 2018-12-21, 15:25:37.008899 [info] - setup REST_Server using pistache...87
+0000098 | 2018-12-21, 15:25:37.008957 [info] - setup REST_Server using pistache...88
+0000099 | 2018-12-21, 15:25:37.008996 [info] - setup REST_Server using pistache...89
+0000100 | 2018-12-21, 15:25:37.009033 [info] - setup REST_Server using pistache...90
+0000101 | 2018-12-21, 15:25:37.009071 [info] - setup REST_Server using pistache...91
+0000102 | 2018-12-21, 15:25:37.009109 [info] - setup REST_Server using pistache...92
+0000103 | 2018-12-21, 15:25:37.009147 [info] - setup REST_Server using pistache...93
+0000104 | 2018-12-21, 15:25:37.009184 [info] - setup REST_Server using pistache...94
+0000105 | 2018-12-21, 15:25:37.009222 [info] - setup REST_Server using pistache...95
+0000106 | 2018-12-21, 15:25:37.009259 [info] - setup REST_Server using pistache...96
+0000107 | 2018-12-21, 15:25:37.009297 [info] - setup REST_Server using pistache...97
+0000108 | 2018-12-21, 15:25:37.009334 [info] - setup REST_Server using pistache...98
+0000109 | 2018-12-21, 15:25:37.009372 [info] - setup REST_Server using pistache...99
+0000001 | 2018-12-21, 15:25:53.135716 [info] - setup logfile using boost...
+0000002 | 2018-12-21, 15:25:53.135830 [info] - setup database connection_string using pqxx...
+0000003 | 2018-12-21, 15:25:53.135855 [info] - start reading data from json: ../config/config.json
+0000004 | 2018-12-21, 15:25:53.136105 [info] - end reading data from json: ../config/config.json
+0000005 | 2018-12-21, 15:25:53.136154 [info] - setup datetime and calendar using boost...
+0000006 | 2018-12-21, 15:25:53.136167 [info] - set boost::locale::time_zone::global("GMT+4:30")
+0000007 | 2018-12-21, 15:25:53.136186 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000008 | 2018-12-21, 15:25:53.137610 [info] - setup HTTP_Client using pistache...
+0000009 | 2018-12-21, 15:25:53.137652 [info] - setup REST_Server using pistache...
+0000010 | 2018-12-21, 15:25:53.138624 [info] - setup REST_Server using pistache...0
+0000011 | 2018-12-21, 15:25:53.138695 [info] - setup REST_Server using pistache...1
+0000012 | 2018-12-21, 15:25:53.138715 [info] - setup REST_Server using pistache...2
+0000013 | 2018-12-21, 15:25:53.138732 [info] - setup REST_Server using pistache...3
+0000014 | 2018-12-21, 15:25:53.138743 [info] - setup REST_Server using pistache...4
+0000015 | 2018-12-21, 15:25:53.138751 [info] - setup REST_Server using pistache...5
+0000016 | 2018-12-21, 15:25:53.138760 [info] - setup REST_Server using pistache...6
+0000017 | 2018-12-21, 15:25:53.138769 [info] - setup REST_Server using pistache...7
+0000018 | 2018-12-21, 15:25:53.138777 [info] - setup REST_Server using pistache...8
+0000019 | 2018-12-21, 15:25:53.138786 [info] - setup REST_Server using pistache...9
+0000020 | 2018-12-21, 15:25:53.138795 [info] - setup REST_Server using pistache...10
+0000021 | 2018-12-21, 15:25:53.138804 [info] - setup REST_Server using pistache...11
+0000022 | 2018-12-21, 15:25:53.138812 [info] - setup REST_Server using pistache...12
+0000023 | 2018-12-21, 15:25:53.138821 [info] - setup REST_Server using pistache...13
+0000024 | 2018-12-21, 15:25:53.138833 [info] - setup REST_Server using pistache...14
+0000025 | 2018-12-21, 15:25:53.138842 [info] - setup REST_Server using pistache...15
+0000026 | 2018-12-21, 15:25:53.138850 [info] - setup REST_Server using pistache...16
+0000027 | 2018-12-21, 15:25:53.138859 [info] - setup REST_Server using pistache...17
+0000028 | 2018-12-21, 15:25:53.138868 [info] - setup REST_Server using pistache...18
+0000029 | 2018-12-21, 15:25:53.138876 [info] - setup REST_Server using pistache...19
+0000030 | 2018-12-21, 15:25:53.138885 [info] - setup REST_Server using pistache...20
+0000031 | 2018-12-21, 15:25:53.138894 [info] - setup REST_Server using pistache...21
+0000032 | 2018-12-21, 15:25:53.138902 [info] - setup REST_Server using pistache...22
+0000033 | 2018-12-21, 15:25:53.138911 [info] - setup REST_Server using pistache...23
+0000034 | 2018-12-21, 15:25:53.138920 [info] - setup REST_Server using pistache...24
+0000035 | 2018-12-21, 15:25:53.138929 [info] - setup REST_Server using pistache...25
+0000036 | 2018-12-21, 15:25:53.138937 [info] - setup REST_Server using pistache...26
+0000037 | 2018-12-21, 15:25:53.138946 [info] - setup REST_Server using pistache...27
+0000038 | 2018-12-21, 15:25:53.138955 [info] - setup REST_Server using pistache...28
+0000039 | 2018-12-21, 15:25:53.138963 [info] - setup REST_Server using pistache...29
+0000040 | 2018-12-21, 15:25:53.138972 [info] - setup REST_Server using pistache...30
+0000041 | 2018-12-21, 15:25:53.138982 [info] - setup REST_Server using pistache...31
+0000042 | 2018-12-21, 15:25:53.138992 [info] - setup REST_Server using pistache...32
+0000043 | 2018-12-21, 15:25:53.139001 [info] - setup REST_Server using pistache...33
+0000044 | 2018-12-21, 15:25:53.139012 [info] - setup REST_Server using pistache...34
+0000045 | 2018-12-21, 15:25:53.139021 [info] - setup REST_Server using pistache...35
+0000046 | 2018-12-21, 15:25:53.139032 [info] - setup REST_Server using pistache...36
+0000047 | 2018-12-21, 15:25:53.139044 [info] - setup REST_Server using pistache...37
+0000048 | 2018-12-21, 15:25:53.139056 [info] - setup REST_Server using pistache...38
+0000049 | 2018-12-21, 15:25:53.139067 [info] - setup REST_Server using pistache...39
+0000050 | 2018-12-21, 15:25:53.139080 [info] - setup REST_Server using pistache...40
+0000051 | 2018-12-21, 15:25:53.139092 [info] - setup REST_Server using pistache...41
+0000052 | 2018-12-21, 15:25:53.139103 [info] - setup REST_Server using pistache...42
+0000053 | 2018-12-21, 15:25:53.139119 [info] - setup REST_Server using pistache...43
+0000054 | 2018-12-21, 15:25:53.139139 [info] - setup REST_Server using pistache...44
+0000055 | 2018-12-21, 15:25:53.139154 [info] - setup REST_Server using pistache...45
+0000056 | 2018-12-21, 15:25:53.139169 [info] - setup REST_Server using pistache...46
+0000057 | 2018-12-21, 15:25:53.139184 [info] - setup REST_Server using pistache...47
+0000058 | 2018-12-21, 15:25:53.139216 [info] - setup REST_Server using pistache...48
+0000059 | 2018-12-21, 15:25:53.139241 [info] - setup REST_Server using pistache...49
+0000060 | 2018-12-21, 15:25:53.139259 [info] - setup REST_Server using pistache...50
+0000061 | 2018-12-21, 15:25:53.139281 [info] - setup REST_Server using pistache...51
+0000062 | 2018-12-21, 15:25:53.139300 [info] - setup REST_Server using pistache...52
+0000063 | 2018-12-21, 15:25:53.139321 [info] - setup REST_Server using pistache...53
+0000064 | 2018-12-21, 15:25:53.139348 [info] - setup REST_Server using pistache...54
+0000065 | 2018-12-21, 15:25:53.139371 [info] - setup REST_Server using pistache...55
+0000066 | 2018-12-21, 15:25:53.139396 [info] - setup REST_Server using pistache...56
+0000067 | 2018-12-21, 15:25:53.139422 [info] - setup REST_Server using pistache...57
+0000068 | 2018-12-21, 15:25:53.139444 [info] - setup REST_Server using pistache...58
+0000069 | 2018-12-21, 15:25:53.139469 [info] - setup REST_Server using pistache...59
+0000070 | 2018-12-21, 15:25:53.139491 [info] - setup REST_Server using pistache...60
+0000071 | 2018-12-21, 15:25:53.139513 [info] - setup REST_Server using pistache...61
+0000072 | 2018-12-21, 15:25:53.139534 [info] - setup REST_Server using pistache...62
+0000073 | 2018-12-21, 15:25:53.139556 [info] - setup REST_Server using pistache...63
+0000074 | 2018-12-21, 15:25:53.139578 [info] - setup REST_Server using pistache...64
+0000075 | 2018-12-21, 15:25:53.139599 [info] - setup REST_Server using pistache...65
+0000076 | 2018-12-21, 15:25:53.139619 [info] - setup REST_Server using pistache...66
+0000077 | 2018-12-21, 15:25:53.139638 [info] - setup REST_Server using pistache...67
+0000078 | 2018-12-21, 15:25:53.139660 [info] - setup REST_Server using pistache...68
+0000079 | 2018-12-21, 15:25:53.139676 [info] - setup REST_Server using pistache...69
+0000080 | 2018-12-21, 15:25:53.139699 [info] - setup REST_Server using pistache...70
+0000081 | 2018-12-21, 15:25:53.139723 [info] - setup REST_Server using pistache...71
+0000082 | 2018-12-21, 15:25:53.139743 [info] - setup REST_Server using pistache...72
+0000083 | 2018-12-21, 15:25:53.139759 [info] - setup REST_Server using pistache...73
+0000084 | 2018-12-21, 15:25:53.139777 [info] - setup REST_Server using pistache...74
+0000085 | 2018-12-21, 15:25:53.139793 [info] - setup REST_Server using pistache...75
+0000086 | 2018-12-21, 15:25:53.139810 [info] - setup REST_Server using pistache...76
+0000087 | 2018-12-21, 15:25:53.139826 [info] - setup REST_Server using pistache...77
+0000088 | 2018-12-21, 15:25:53.139845 [info] - setup REST_Server using pistache...78
+0000089 | 2018-12-21, 15:25:53.139862 [info] - setup REST_Server using pistache...79
+0000090 | 2018-12-21, 15:25:53.139879 [info] - setup REST_Server using pistache...80
+0000091 | 2018-12-21, 15:25:53.139897 [info] - setup REST_Server using pistache...81
+0000092 | 2018-12-21, 15:25:53.139911 [info] - setup REST_Server using pistache...82
+0000093 | 2018-12-21, 15:25:53.139929 [info] - setup REST_Server using pistache...83
+0000094 | 2018-12-21, 15:25:53.139943 [info] - setup REST_Server using pistache...84
+0000095 | 2018-12-21, 15:25:53.139960 [info] - setup REST_Server using pistache...85
+0000096 | 2018-12-21, 15:25:53.139978 [info] - setup REST_Server using pistache...86
+0000097 | 2018-12-21, 15:25:53.140188 [info] - setup REST_Server using pistache...87
+0000098 | 2018-12-21, 15:25:53.140308 [info] - setup REST_Server using pistache...88
+0000099 | 2018-12-21, 15:25:53.140344 [info] - setup REST_Server using pistache...89
+0000100 | 2018-12-21, 15:25:53.140366 [info] - setup REST_Server using pistache...90
+0000101 | 2018-12-21, 15:25:53.140388 [info] - setup REST_Server using pistache...91
+0000102 | 2018-12-21, 15:25:53.140409 [info] - setup REST_Server using pistache...92
+0000103 | 2018-12-21, 15:25:53.140424 [info] - setup REST_Server using pistache...93
+0000104 | 2018-12-21, 15:25:53.140442 [info] - setup REST_Server using pistache...94
+0000105 | 2018-12-21, 15:25:53.140464 [info] - setup REST_Server using pistache...95
+0000106 | 2018-12-21, 15:25:53.140490 [info] - setup REST_Server using pistache...96
+0000107 | 2018-12-21, 15:25:53.140511 [info] - setup REST_Server using pistache...97
+0000108 | 2018-12-21, 15:25:53.140535 [info] - setup REST_Server using pistache...98
+0000109 | 2018-12-21, 15:25:53.140550 [info] - setup REST_Server using pistache...99
+0000001 | 2018-12-21, 15:26:25.137094 [info] - setup logfile using boost...
+0000002 | 2018-12-21, 15:26:25.137262 [info] - setup database connection_string using pqxx...
+0000003 | 2018-12-21, 15:26:25.137303 [info] - start reading data from json: ../config/config.json
+0000004 | 2018-12-21, 15:26:25.137660 [info] - end reading data from json: ../config/config.json
+0000005 | 2018-12-21, 15:26:25.137733 [info] - setup datetime and calendar using boost...
+0000006 | 2018-12-21, 15:26:25.137761 [info] - set boost::locale::time_zone::global("GMT+4:30")
+0000007 | 2018-12-21, 15:26:25.137796 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000008 | 2018-12-21, 15:26:25.139687 [info] - setup HTTP_Client using pistache...
+0000009 | 2018-12-21, 15:26:25.139734 [info] - setup REST_Server using pistache...
+0000010 | 2018-12-21, 15:26:25.140905 [info] - setup REST_Server using pistache...0
+0000011 | 2018-12-21, 15:26:25.140980 [info] - setup REST_Server using pistache...1
+0000012 | 2018-12-21, 15:26:25.141005 [info] - setup REST_Server using pistache...2
+0000013 | 2018-12-21, 15:26:25.141025 [info] - setup REST_Server using pistache...3
+0000014 | 2018-12-21, 15:26:25.141044 [info] - setup REST_Server using pistache...4
+0000015 | 2018-12-21, 15:26:25.141063 [info] - setup REST_Server using pistache...5
+0000016 | 2018-12-21, 15:26:25.141082 [info] - setup REST_Server using pistache...6
+0000017 | 2018-12-21, 15:26:25.141101 [info] - setup REST_Server using pistache...7
+0000018 | 2018-12-21, 15:26:25.141119 [info] - setup REST_Server using pistache...8
+0000019 | 2018-12-21, 15:26:25.141137 [info] - setup REST_Server using pistache...9
+0000020 | 2018-12-21, 15:26:25.141156 [info] - setup REST_Server using pistache...10
+0000021 | 2018-12-21, 15:26:25.141173 [info] - setup REST_Server using pistache...11
+0000022 | 2018-12-21, 15:26:25.141193 [info] - setup REST_Server using pistache...12
+0000023 | 2018-12-21, 15:26:25.141212 [info] - setup REST_Server using pistache...13
+0000024 | 2018-12-21, 15:26:25.141234 [info] - setup REST_Server using pistache...14
+0000025 | 2018-12-21, 15:26:25.141254 [info] - setup REST_Server using pistache...15
+0000026 | 2018-12-21, 15:26:25.141273 [info] - setup REST_Server using pistache...16
+0000027 | 2018-12-21, 15:26:25.141291 [info] - setup REST_Server using pistache...17
+0000028 | 2018-12-21, 15:26:25.141309 [info] - setup REST_Server using pistache...18
+0000029 | 2018-12-21, 15:26:25.141327 [info] - setup REST_Server using pistache...19
+0000030 | 2018-12-21, 15:26:25.141346 [info] - setup REST_Server using pistache...20
+0000031 | 2018-12-21, 15:26:25.141377 [info] - setup REST_Server using pistache...21
+0000032 | 2018-12-21, 15:26:25.141398 [info] - setup REST_Server using pistache...22
+0000033 | 2018-12-21, 15:26:25.141417 [info] - setup REST_Server using pistache...23
+0000034 | 2018-12-21, 15:26:25.141435 [info] - setup REST_Server using pistache...24
+0000035 | 2018-12-21, 15:26:25.141457 [info] - setup REST_Server using pistache...25
+0000036 | 2018-12-21, 15:26:25.141482 [info] - setup REST_Server using pistache...26
+0000037 | 2018-12-21, 15:26:25.141504 [info] - setup REST_Server using pistache...27
+0000038 | 2018-12-21, 15:26:25.141530 [info] - setup REST_Server using pistache...28
+0000039 | 2018-12-21, 15:26:25.141557 [info] - setup REST_Server using pistache...29
+0000040 | 2018-12-21, 15:26:25.141638 [info] - setup REST_Server using pistache...30
+0000041 | 2018-12-21, 15:26:25.141663 [info] - setup REST_Server using pistache...31
+0000042 | 2018-12-21, 15:26:25.141689 [info] - setup REST_Server using pistache...32
+0000043 | 2018-12-21, 15:26:25.141719 [info] - setup REST_Server using pistache...33
+0000044 | 2018-12-21, 15:26:25.141746 [info] - setup REST_Server using pistache...34
+0000045 | 2018-12-21, 15:26:25.141774 [info] - setup REST_Server using pistache...35
+0000046 | 2018-12-21, 15:26:25.141804 [info] - setup REST_Server using pistache...36
+0000047 | 2018-12-21, 15:26:25.141834 [info] - setup REST_Server using pistache...37
+0000048 | 2018-12-21, 15:26:25.141864 [info] - setup REST_Server using pistache...38
+0000049 | 2018-12-21, 15:26:25.141892 [info] - setup REST_Server using pistache...39
+0000050 | 2018-12-21, 15:26:25.141927 [info] - setup REST_Server using pistache...40
+0000051 | 2018-12-21, 15:26:25.141965 [info] - setup REST_Server using pistache...41
+0000052 | 2018-12-21, 15:26:25.141994 [info] - setup REST_Server using pistache...42
+0000053 | 2018-12-21, 15:26:25.142026 [info] - setup REST_Server using pistache...43
+0000054 | 2018-12-21, 15:26:25.142054 [info] - setup REST_Server using pistache...44
+0000055 | 2018-12-21, 15:26:25.142081 [info] - setup REST_Server using pistache...45
+0000056 | 2018-12-21, 15:26:25.142113 [info] - setup REST_Server using pistache...46
+0000057 | 2018-12-21, 15:26:25.142148 [info] - setup REST_Server using pistache...47
+0000058 | 2018-12-21, 15:26:25.142179 [info] - setup REST_Server using pistache...48
+0000059 | 2018-12-21, 15:26:25.142209 [info] - setup REST_Server using pistache...49
+0000060 | 2018-12-21, 15:26:25.142236 [info] - setup REST_Server using pistache...50
+0000061 | 2018-12-21, 15:26:25.142269 [info] - setup REST_Server using pistache...51
+0000062 | 2018-12-21, 15:26:25.142302 [info] - setup REST_Server using pistache...52
+0000063 | 2018-12-21, 15:26:25.142330 [info] - setup REST_Server using pistache...53
+0000064 | 2018-12-21, 15:26:25.142358 [info] - setup REST_Server using pistache...54
+0000065 | 2018-12-21, 15:26:25.142387 [info] - setup REST_Server using pistache...55
+0000066 | 2018-12-21, 15:26:25.142427 [info] - setup REST_Server using pistache...56
+0000067 | 2018-12-21, 15:26:25.142461 [info] - setup REST_Server using pistache...57
+0000068 | 2018-12-21, 15:26:25.142488 [info] - setup REST_Server using pistache...58
+0000069 | 2018-12-21, 15:26:25.142513 [info] - setup REST_Server using pistache...59
+0000070 | 2018-12-21, 15:26:25.142540 [info] - setup REST_Server using pistache...60
+0000071 | 2018-12-21, 15:26:25.142571 [info] - setup REST_Server using pistache...61
+0000072 | 2018-12-21, 15:26:25.142601 [info] - setup REST_Server using pistache...62
+0000073 | 2018-12-21, 15:26:25.142629 [info] - setup REST_Server using pistache...63
+0000074 | 2018-12-21, 15:26:25.142651 [info] - setup REST_Server using pistache...64
+0000075 | 2018-12-21, 15:26:25.142684 [info] - setup REST_Server using pistache...65
+0000076 | 2018-12-21, 15:26:25.142699 [info] - setup REST_Server using pistache...66
+0000077 | 2018-12-21, 15:26:25.142714 [info] - setup REST_Server using pistache...67
+0000078 | 2018-12-21, 15:26:25.142729 [info] - setup REST_Server using pistache...68
+0000079 | 2018-12-21, 15:26:25.142743 [info] - setup REST_Server using pistache...69
+0000080 | 2018-12-21, 15:26:25.142758 [info] - setup REST_Server using pistache...70
+0000081 | 2018-12-21, 15:26:25.142772 [info] - setup REST_Server using pistache...71
+0000082 | 2018-12-21, 15:26:25.142786 [info] - setup REST_Server using pistache...72
+0000083 | 2018-12-21, 15:26:25.142799 [info] - setup REST_Server using pistache...73
+0000084 | 2018-12-21, 15:26:25.142813 [info] - setup REST_Server using pistache...74
+0000085 | 2018-12-21, 15:26:25.142827 [info] - setup REST_Server using pistache...75
+0000086 | 2018-12-21, 15:26:25.142841 [info] - setup REST_Server using pistache...76
+0000087 | 2018-12-21, 15:26:25.142855 [info] - setup REST_Server using pistache...77
+0000088 | 2018-12-21, 15:26:25.142869 [info] - setup REST_Server using pistache...78
+0000089 | 2018-12-21, 15:26:25.142884 [info] - setup REST_Server using pistache...79
+0000090 | 2018-12-21, 15:26:25.142899 [info] - setup REST_Server using pistache...80
+0000091 | 2018-12-21, 15:26:25.142912 [info] - setup REST_Server using pistache...81
+0000092 | 2018-12-21, 15:26:25.142926 [info] - setup REST_Server using pistache...82
+0000093 | 2018-12-21, 15:26:25.142940 [info] - setup REST_Server using pistache...83
+0000094 | 2018-12-21, 15:26:25.142953 [info] - setup REST_Server using pistache...84
+0000095 | 2018-12-21, 15:26:25.142967 [info] - setup REST_Server using pistache...85
+0000096 | 2018-12-21, 15:26:25.142980 [info] - setup REST_Server using pistache...86
+0000097 | 2018-12-21, 15:26:25.143114 [info] - setup REST_Server using pistache...87
+0000098 | 2018-12-21, 15:26:25.143138 [info] - setup REST_Server using pistache...88
+0000099 | 2018-12-21, 15:26:25.143155 [info] - setup REST_Server using pistache...89
+0000100 | 2018-12-21, 15:26:25.143168 [info] - setup REST_Server using pistache...90
+0000101 | 2018-12-21, 15:26:25.143182 [info] - setup REST_Server using pistache...91
+0000102 | 2018-12-21, 15:26:25.143196 [info] - setup REST_Server using pistache...92
+0000103 | 2018-12-21, 15:26:25.143210 [info] - setup REST_Server using pistache...93
+0000104 | 2018-12-21, 15:26:25.143224 [info] - setup REST_Server using pistache...94
+0000105 | 2018-12-21, 15:26:25.143238 [info] - setup REST_Server using pistache...95
+0000106 | 2018-12-21, 15:26:25.143252 [info] - setup REST_Server using pistache...96
+0000107 | 2018-12-21, 15:26:25.143265 [info] - setup REST_Server using pistache...97
+0000108 | 2018-12-21, 15:26:25.143279 [info] - setup REST_Server using pistache...98
+0000109 | 2018-12-21, 15:26:25.143293 [info] - setup REST_Server using pistache...99
+0000001 | 2018-12-21, 15:52:15.158242 [info] - setup logfile using boost...
+0000002 | 2018-12-21, 15:52:15.158810 [info] - setup database connection_string using pqxx...
+0000003 | 2018-12-21, 15:52:15.158860 [info] - start reading data from json: ../config/config.json
+0000004 | 2018-12-21, 15:52:15.178246 [info] - end reading data from json: ../config/config.json
+0000005 | 2018-12-21, 15:52:15.178321 [info] - setup datetime and calendar using boost...
+0000006 | 2018-12-21, 15:52:15.178334 [info] - set boost::locale::time_zone::global("GMT+4:30")
+0000007 | 2018-12-21, 15:52:15.178356 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000008 | 2018-12-21, 15:52:15.419262 [info] - setup HTTP_Client using pistache...
+0000009 | 2018-12-21, 15:52:15.419377 [info] - setup REST_Server using pistache...
+0000001 | 2018-12-21, 16:42:41.294601 [info] - setup logfile using boost...
+0000002 | 2018-12-21, 16:42:41.326030 [info] - setup database connection_string using pqxx...
+0000003 | 2018-12-21, 16:42:41.326174 [info] - start reading data from json: ../config/config.json
+0000004 | 2018-12-21, 16:42:41.336336 [info] - end reading data from json: ../config/config.json
+0000005 | 2018-12-21, 16:42:41.336547 [info] - setup datetime and calendar using boost...
+0000006 | 2018-12-21, 16:42:41.336602 [info] - set boost::locale::time_zone::global("GMT+4:30")
+0000007 | 2018-12-21, 16:42:41.336680 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000008 | 2018-12-21, 16:42:41.576770 [info] - setup HTTP_Client using pistache...
+0000009 | 2018-12-21, 16:42:41.576893 [info] - setup REST_Server using pistache...
+0000001 | 2018-12-21, 16:51:00.750111 [info] - setup logfile using boost...
+0000002 | 2018-12-21, 16:51:00.781549 [info] - setup database connection_string using pqxx...
+0000003 | 2018-12-21, 16:51:00.781684 [info] - start reading data from json: ../config/config.json
+0000004 | 2018-12-21, 16:51:00.791950 [info] - end reading data from json: ../config/config.json
+0000005 | 2018-12-21, 16:51:00.792188 [info] - setup datetime and calendar using boost...
+0000006 | 2018-12-21, 16:51:00.792245 [info] - set boost::locale::time_zone::global("GMT+4:30")
+0000007 | 2018-12-21, 16:51:00.792374 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000008 | 2018-12-21, 16:51:01.104896 [info] - setup HTTP_Client using pistache...
+0000009 | 2018-12-21, 16:51:01.105042 [info] - setup REST_Server using pistache...
+0000001 | 2018-12-21, 17:11:42.360488 [info] - setup logfile using boost...
+0000002 | 2018-12-21, 17:11:42.361599 [info] - setup database connection_string using pqxx...
+0000003 | 2018-12-21, 17:11:42.361753 [info] - start reading data from json: ../config/config.json
+0000004 | 2018-12-21, 17:11:42.362750 [info] - end reading data from json: ../config/config.json
+0000005 | 2018-12-21, 17:11:42.362941 [info] - setup datetime and calendar using boost...
+0000006 | 2018-12-21, 17:11:42.362994 [info] - set boost::locale::time_zone::global("GMT+4:30")
+0000007 | 2018-12-21, 17:11:42.363069 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000008 | 2018-12-21, 17:11:42.604241 [info] - setup HTTP_Client using pistache...
+0000009 | 2018-12-21, 17:11:42.604411 [info] - setup REST_Server using pistache...
+0000001 | 2018-12-21, 17:12:39.688383 [info] - setup logfile using boost...
+0000002 | 2018-12-21, 17:12:39.688766 [info] - setup database connection_string using pqxx...
+0000003 | 2018-12-21, 17:12:39.688857 [info] - start reading data from json: ../config/config.json
+0000004 | 2018-12-21, 17:12:39.689725 [info] - end reading data from json: ../config/config.json
+0000005 | 2018-12-21, 17:12:39.689920 [info] - setup datetime and calendar using boost...
+0000006 | 2018-12-21, 17:12:39.689970 [info] - set boost::locale::time_zone::global("GMT+4:30")
+0000007 | 2018-12-21, 17:12:39.690039 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000008 | 2018-12-21, 17:12:39.695344 [info] - setup HTTP_Client using pistache...
+0000009 | 2018-12-21, 17:12:39.695450 [info] - setup REST_Server using pistache...
+0000001 | 2018-12-21, 17:15:35.581173 [info] - setup logfile using boost...
+0000002 | 2018-12-21, 17:15:35.581481 [info] - setup database connection_string using pqxx...
+0000003 | 2018-12-21, 17:15:35.581555 [info] - start reading data from json: ../config/config.json
+0000004 | 2018-12-21, 17:15:35.582278 [info] - end reading data from json: ../config/config.json
+0000005 | 2018-12-21, 17:15:35.582443 [info] - setup datetime and calendar using boost...
+0000006 | 2018-12-21, 17:15:35.582487 [info] - set boost::locale::time_zone::global("GMT+4:30")
+0000007 | 2018-12-21, 17:15:35.582541 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000008 | 2018-12-21, 17:15:35.585983 [info] - setup HTTP_Client using pistache...
+0000009 | 2018-12-21, 17:15:35.586063 [info] - setup REST_Server using pistache...
+0000001 | 2018-12-21, 17:25:00.448565 [info] - setup logfile using boost...
+0000002 | 2018-12-21, 17:25:00.449606 [info] - setup database connection_string using pqxx...
+0000003 | 2018-12-21, 17:25:00.449747 [info] - start reading data from json: ../config/config.json
+0000004 | 2018-12-21, 17:25:00.450964 [info] - end reading data from json: ../config/config.json
+0000005 | 2018-12-21, 17:25:00.451221 [info] - setup datetime and calendar using boost...
+0000006 | 2018-12-21, 17:25:00.451319 [info] - set boost::locale::time_zone::global("GMT+4:30")
+0000007 | 2018-12-21, 17:25:00.451431 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000008 | 2018-12-21, 17:25:00.696458 [info] - setup HTTP_Client using pistache...
+0000009 | 2018-12-21, 17:25:00.696575 [info] - setup REST_Server using pistache...
+0000001 | 2018-12-21, 17:48:34.036692 [info] - setup logfile using boost...
+0000002 | 2018-12-21, 17:48:34.038566 [info] - setup database connection_string using pqxx...
+0000003 | 2018-12-21, 17:48:34.038795 [info] - start reading data from json: ../config/config.json
+0000004 | 2018-12-21, 17:48:34.040117 [info] - end reading data from json: ../config/config.json
+0000005 | 2018-12-21, 17:48:34.040384 [info] - setup datetime and calendar using boost...
+0000006 | 2018-12-21, 17:48:34.040446 [info] - set boost::locale::time_zone::global("GMT+4:30")
+0000007 | 2018-12-21, 17:48:34.040520 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000008 | 2018-12-21, 17:48:34.619048 [info] - setup HTTP_Client using pistache...
+0000009 | 2018-12-21, 17:48:34.619167 [info] - setup REST_Server using pistache...
+0000010 | 2018-12-21, 17:48:35.822484 [info] - Opened database successfully: angrudb
+0000011 | 2018-12-21, 17:48:35.822988 [info] - Connected to database: angrudb
+0000001 | 2018-12-21, 18:05:33.457199 [info] - setup logfile using boost...
+0000002 | 2018-12-21, 18:05:33.498004 [info] - setup database connection_string using pqxx...
+0000003 | 2018-12-21, 18:05:33.498149 [info] - start reading data from json: ../config/config.json
+0000004 | 2018-12-21, 18:05:33.510720 [info] - end reading data from json: ../config/config.json
+0000005 | 2018-12-21, 18:05:33.510955 [info] - setup datetime and calendar using boost...
+0000006 | 2018-12-21, 18:05:33.511010 [info] - set boost::locale::time_zone::global("GMT+5:30")
+0000007 | 2018-12-21, 18:05:33.511086 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000008 | 2018-12-21, 18:05:33.740778 [info] - setup HTTP_Client using pistache...
+0000009 | 2018-12-21, 18:05:33.740898 [info] - setup REST_Server using pistache...
+0000010 | 2018-12-21, 18:05:34.062261 [info] - Opened database successfully: angrudb
+0000011 | 2018-12-21, 18:05:34.062812 [info] - Connected to database: angrudb
+0000001 | 2018-12-21, 18:09:35.329905 [info] - setup logfile using boost...
+0000002 | 2018-12-21, 18:09:35.330094 [info] - setup database connection_string using pqxx...
+0000003 | 2018-12-21, 18:09:35.330132 [info] - start reading data from json: ../config/config.json
+0000004 | 2018-12-21, 18:09:35.330503 [info] - end reading data from json: ../config/config.json
+0000005 | 2018-12-21, 18:09:35.330578 [info] - setup datetime and calendar using boost...
+0000006 | 2018-12-21, 18:09:35.330606 [info] - set boost::locale::time_zone::global("GMT+5:30")
+0000007 | 2018-12-21, 18:09:35.330636 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000008 | 2018-12-21, 18:09:35.334086 [info] - setup HTTP_Client using pistache...
+0000009 | 2018-12-21, 18:09:35.334242 [info] - setup REST_Server using pistache...
+0000010 | 2018-12-21, 18:09:35.343498 [info] - Opened database successfully: angrudb
+0000011 | 2018-12-21, 18:09:35.343669 [info] - Connected to database: angrudb
+0000001 | 2018-12-21, 18:11:16.804855 [info] - setup logfile using boost...
+0000002 | 2018-12-21, 18:11:16.825420 [info] - setup database connection_string using pqxx...
+0000003 | 2018-12-21, 18:11:16.825564 [info] - start reading data from json: ../config/config.json
+0000004 | 2018-12-21, 18:11:16.835806 [info] - end reading data from json: ../config/config.json
+0000005 | 2018-12-21, 18:11:16.836047 [info] - setup datetime and calendar using boost...
+0000006 | 2018-12-21, 18:11:16.836099 [info] - set boost::locale::time_zone::global("GMT+5:30")
+0000007 | 2018-12-21, 18:11:16.836173 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000008 | 2018-12-21, 18:11:17.114313 [info] - setup HTTP_Client using pistache...
+0000009 | 2018-12-21, 18:11:17.114431 [info] - setup REST_Server using pistache...
+0000010 | 2018-12-21, 18:11:17.391293 [info] - Opened database successfully: angrudb
+0000011 | 2018-12-21, 18:11:17.391706 [info] - Connected to database: angrudb
+0000001 | 2018-12-21, 18:14:55.881765 [info] - setup logfile using boost...
+0000002 | 2018-12-21, 18:14:55.913480 [info] - setup database connection_string using pqxx...
+0000003 | 2018-12-21, 18:14:55.913668 [info] - start reading data from json: ../config/config.json
+0000004 | 2018-12-21, 18:14:55.923557 [info] - end reading data from json: ../config/config.json
+0000005 | 2018-12-21, 18:14:55.923794 [info] - setup datetime and calendar using boost...
+0000006 | 2018-12-21, 18:14:55.923847 [info] - set boost::locale::time_zone::global("GMT+5:30")
+0000007 | 2018-12-21, 18:14:55.923922 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000008 | 2018-12-21, 18:14:56.164524 [info] - setup HTTP_Client using pistache...
+0000009 | 2018-12-21, 18:14:56.164644 [info] - setup REST_Server using pistache...
+0000010 | 2018-12-21, 18:14:56.663818 [info] - Opened database successfully: angrudb
+0000011 | 2018-12-21, 18:14:56.664324 [info] - Connected to database: angrudb
+0000001 | 2018-12-21, 19:13:22.861427 [info] - setup logfile using boost...
+0000002 | 2018-12-21, 19:13:22.862707 [info] - setup database connection_string using pqxx...
+0000003 | 2018-12-21, 19:13:22.862831 [info] - start reading data from json: ../config/config.json
+0000004 | 2018-12-21, 19:13:22.863714 [info] - end reading data from json: ../config/config.json
+0000005 | 2018-12-21, 19:13:22.863883 [info] - setup datetime and calendar using boost...
+0000006 | 2018-12-21, 19:13:22.863928 [info] - set boost::locale::time_zone::global("GMT+5:30")
+0000007 | 2018-12-21, 19:13:22.863999 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000008 | 2018-12-21, 19:13:23.109685 [info] - setup HTTP_Client using pistache...
+0000009 | 2018-12-21, 19:13:23.109841 [info] - setup REST_Server using pistache...
+0000010 | 2018-12-21, 19:13:23.441826 [info] - Opened database successfully: angrudb
+0000011 | 2018-12-21, 19:13:23.442519 [info] - Connected to database: angrudb
+0000001 | 2018-12-21, 19:14:53.428549 [info] - setup logfile using boost...
+0000002 | 2018-12-21, 19:14:53.472813 [info] - setup database connection_string using pqxx...
+0000003 | 2018-12-21, 19:14:53.472962 [info] - start reading data from json: ../config/config.json
+0000004 | 2018-12-21, 19:14:53.483328 [info] - end reading data from json: ../config/config.json
+0000005 | 2018-12-21, 19:14:53.483569 [info] - setup datetime and calendar using boost...
+0000006 | 2018-12-21, 19:14:53.483646 [info] - set boost::locale::time_zone::global("GMT+5:30")
+0000007 | 2018-12-21, 19:14:53.483726 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000008 | 2018-12-21, 19:14:53.731586 [info] - setup HTTP_Client using pistache...
+0000009 | 2018-12-21, 19:14:53.731620 [info] - setup REST_Server using pistache...
+0000010 | 2018-12-21, 19:14:54.278152 [info] - Opened database successfully: angrudb
+0000011 | 2018-12-21, 19:14:54.278607 [info] - Connected to database: angrudb
+0000001 | 2018-12-21, 19:16:15.866244 [info] - setup logfile using boost...
+0000002 | 2018-12-21, 19:16:15.908975 [info] - setup database connection_string using pqxx...
+0000003 | 2018-12-21, 19:16:15.909087 [info] - start reading data from json: ../config/config.json
+0000004 | 2018-12-21, 19:16:15.918382 [info] - end reading data from json: ../config/config.json
+0000005 | 2018-12-21, 19:16:15.918445 [info] - setup datetime and calendar using boost...
+0000006 | 2018-12-21, 19:16:15.918461 [info] - set boost::locale::time_zone::global("GMT+5:30")
+0000007 | 2018-12-21, 19:16:15.918486 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000008 | 2018-12-21, 19:16:16.247881 [info] - setup HTTP_Client using pistache...
+0000009 | 2018-12-21, 19:16:16.248001 [info] - setup REST_Server using pistache...
+0000010 | 2018-12-21, 19:16:16.666330 [info] - Opened database successfully: angrudb
+0000011 | 2018-12-21, 19:16:16.666458 [info] - Connected to database: angrudb
+0000001 | 2018-12-21, 20:17:28.561496 [info] - setup logfile using boost...
+0000002 | 2018-12-21, 20:17:28.602257 [info] - setup database connection_string using pqxx...
+0000003 | 2018-12-21, 20:17:28.602402 [info] - start reading data from json: ../config/config.json
+0000004 | 2018-12-21, 20:17:28.615053 [info] - end reading data from json: ../config/config.json
+0000005 | 2018-12-21, 20:17:28.615290 [info] - setup datetime and calendar using boost...
+0000006 | 2018-12-21, 20:17:28.615347 [info] - set boost::locale::time_zone::global("GMT+5:30")
+0000007 | 2018-12-21, 20:17:28.615426 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000008 | 2018-12-21, 20:17:28.886624 [info] - setup HTTP_Client using pistache...
+0000009 | 2018-12-21, 20:17:28.886788 [info] - setup REST_Server using pistache...

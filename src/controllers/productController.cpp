@@ -76,23 +76,21 @@ void ProductController::doAddProduct(const Pistache::Rest::Request& request,
     std::string title;
     float price;
     std::string created_at;
-    std::string deleted_at;
     std::string tags = "{gun}";
     try
     {
       std::stringstream ss;
       ss << body;
       boost::property_tree::ptree pt;
-      boost::property_tree::read_json(ss, pt);      
+      boost::property_tree::read_json(ss, pt);
       title = pt.get<std::string>("title");
       price = pt.get<float>("price");
       created_at = pt.get<std::string>("created_at");
-      deleted_at = pt.get<std::string>("deleted_at");
       tags = pt.get<std::string>("tags");
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Product not found");
     }
-    ProductModel::addProduct(title,price,created_at,deleted_at,tags);
+    ProductModel::addProduct(title,price,created_at,tags);
     response.send(Pistache::Http::Code::Ok, "Product added.");
 }
