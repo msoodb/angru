@@ -26,10 +26,13 @@ void HTTP_Client::get(std::string const page, std::string& body, Pistache::Http:
     std::atomic<size_t> failedRequests(0);
 
     //auto start = std::chrono::system_clock::now();
+    std::cout << page << '\n';
     auto resp = client.get(page).send();
+    std::cout << "1" << '\n';
       resp.then([&](Http::Response response) {
           code = response.code();
-          body = response.body();
+          if(code == Pistache::Http::Code::Ok)
+            body = response.body();
       }, Async::IgnoreException);
       responses.push_back(std::move(resp));
 
@@ -100,3 +103,12 @@ return 1;*/
               << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms" << std::endl;
   client.shutdown();
 }*/
+
+/*
+//std::string page = "http://api.timezonedb.com/v2.1/get-time-zone?key=97IQ2W4BJCT5&format=json&by=zone&zone=America/Chicago";
+std::string page = "https://www.mp3juices.cc/";
+std::string body;
+Pistache::Http::Code code;
+HTTP_Client::get(page, body, code);
+std::cout << code << '\n';
+*/

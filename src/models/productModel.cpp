@@ -29,10 +29,10 @@ pqxx::result ProductModel::getProducts(int page, std::string query){
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	std::string complete_query = "SELECT id, title, price, created_at, \
-																deleted_at, tags FROM products ";
+																tags FROM products where deleted_at is NULL ";
 	if(!query.empty())
 	{
-		complete_query += " where ";
+		complete_query += " AND ";
 		complete_query +=  query;
 	}
 	complete_query += " limit 20 offset ";
@@ -55,8 +55,7 @@ boost::property_tree::ptree ProductModel::getProducts_json(int page, std::string
 		product_node.put("title", r[1]);
 		product_node.put("price", r[2]);
 		product_node.put("created_at", r[3]);
-		product_node.put("deleted_at", r[4]);
-		product_node.put("tags", r[5]);
+		product_node.put("tags", r[4]);
 		products_node.push_back(std::make_pair(r[0].c_str(), product_node));
 	}
 	return products_node;
@@ -75,7 +74,8 @@ pqxx::row ProductModel::getProduct(int id){
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-  C.prepare("find", "SELECT id, title, price, created_at, deleted_at, tags FROM products where id = $1");
+  C.prepare("find", "SELECT id, title, price, created_at, \
+								tags FROM products where id = $1 and deleted_at is NULL ");
   pqxx::result R = W.prepared("find")(id).exec();
 	pqxx::row r;
 	if (R.size() == 1){
@@ -92,14 +92,12 @@ boost::property_tree::ptree ProductModel::getProduct_json(int id){
 	product_node.put("title", r[1]);
 	product_node.put("price", r[2]);
 	product_node.put("created_at", r[3]);
-	product_node.put("deleted_at", r[4]);
-	product_node.put("tags", r[5]);
+	product_node.put("tags", r[4]);
 	products_node.push_back(std::make_pair(r[0].c_str(), product_node));
 	return products_node;
 }
 void ProductModel::addProduct( std::string title,
 													float price,
-													std::string  created_at,
 													std::string  tags){
 	pqxx::connection C(_PostgreSQL::connection_string());
 	try {
@@ -115,16 +113,14 @@ void ProductModel::addProduct( std::string title,
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	C.prepare("insert", "INSERT INTO products \
-												(id, title, price, created_at, tags) VALUES \
-												(DEFAULT, $1, $2, $3, $4)");
-  pqxx::result R = W.prepared("insert")(title)(price)(created_at)(tags).exec();
+												(id, title, price, created_at, deleted_at, tags) VALUES \
+												(DEFAULT, $1, $2, now(), NULL, $4)");
+  pqxx::result R = W.prepared("insert")(title)(price)(tags).exec();
   W.commit();
 }
 void ProductModel::updateProduct( int id,
 													std::string title,
 													float price,
-													std::string  created_at,
-													std::string  deleted_at,
 													std::string  tags){
 	pqxx::connection C(_PostgreSQL::connection_string());
 	try {
@@ -140,9 +136,9 @@ void ProductModel::updateProduct( int id,
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	C.prepare("update", "UPDATE products SET \
-												title = $2, price = $3, created_at = $4, deleted_at = $5, tags = $6 \
+												title = $2, price = $3, tags = $5 \
 												WHERE id = $1");
-  W.prepared("update")(id)(title)(price)(created_at)(deleted_at)(tags).exec();
+  W.prepared("update")(id)(title)(price)(tags).exec();
   W.commit();
 }
 void ProductModel::deleteProduct(int id){
@@ -159,8 +155,10 @@ void ProductModel::deleteProduct(int id){
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-  C.prepare("delete", "DELETE FROM products where id = $1");
-  W.prepared("delete")(id).exec();
+	C.prepare("update", "UPDATE products SET \
+												deleted_at = now()  \
+												WHERE id = $1");
+  W.prepared("update")(id).exec();
   W.commit();
 }
 

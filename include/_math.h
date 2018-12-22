@@ -6,7 +6,9 @@
 class _math
 {
 public:
-	static int add(int, int); // function prototype for add.h -- don't forget the semicolon!
+	static int add1(int, int); // function prototype for add.h -- don't forget the semicolon!
+	static int add2(int, int); // function prototype for add.h -- don't forget the semicolon!
+	static int add3(int, int); // function prototype for add.h -- don't forget the semicolon!
 	static bool checkPrimeNumber(int);
 	static void goldbachConjecture(int);
 	static int sumN(int);

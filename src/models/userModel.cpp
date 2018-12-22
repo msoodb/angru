@@ -28,9 +28,8 @@ pqxx::result UserModel::getUsers(int page, std::string query){
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	//std::string complete_query = "SELECT id, email, password, details, created_at,
-	std::string complete_query = "SELECT id, email, password, details, created_at, \
-																deleted_at FROM users ";
+	std::string complete_query = "SELECT id, email, password, details, created_at \
+																FROM users deleted_at is NULL ";
 	if(!query.empty())
 	{
 		complete_query += " where ";
@@ -57,7 +56,6 @@ boost::property_tree::ptree UserModel::getUsers_json(int page, std::string query
 		user_node.put("password", r[2]);
 		user_node.put("details", r[3]);
 		user_node.put("created_at", r[4]);
-		user_node.put("deleted_at", r[5]);
 		users_node.push_back(std::make_pair(r[0].c_str(), user_node));
 	}
 	return users_node;
@@ -76,8 +74,8 @@ pqxx::row UserModel::getUser(int id){
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-  C.prepare("find", "SELECT id, email, password, details, created_at, \
-																deleted_at FROM users where id = $1");
+  C.prepare("find", "SELECT id, email, details, created_at \
+																FROM users where id = $1 and deleted_at is NULL ");
   pqxx::result R = W.prepared("find")(id).exec();
 	pqxx::row r;
 	if (R.size() == 1){
@@ -92,18 +90,14 @@ boost::property_tree::ptree UserModel::getUser_json(int id){
 	boost::property_tree::ptree user_node;
 	user_node.put("id", r[0]);
 	user_node.put("email", r[1]);
-	user_node.put("password", r[2]);
-	user_node.put("details", r[3]);
-	user_node.put("created_at", r[4]);
-	user_node.put("deleted_at", r[5]);
+	user_node.put("details", r[2]);
+	user_node.put("created_at", r[3]);
 	users_node.push_back(std::make_pair(r[0].c_str(), user_node));
 	return users_node;
 }
 void UserModel::addUser( 	std::string  email,
 													std::string  password,
-													std::string  details,
-													std::string  created_at,
-													std::string  deleted_at){
+													std::string  details){
 	pqxx::connection C(_PostgreSQL::connection_string());
 	try {
 		if (C.is_open()) {
@@ -118,17 +112,15 @@ void UserModel::addUser( 	std::string  email,
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	C.prepare("insert", "INSERT INTO users \
-												(id, email, password) VALUES \
-												(DEFAULT, $1, $2)");
-  pqxx::result R = W.prepared("insert")(email)(password).exec();
+												(id, email, password, details, created_at, deleted_at) VALUES \
+												(DEFAULT, $1, $2, $3, now(), NULL)");
+  pqxx::result R = W.prepared("insert")(email)(password)(details).exec();
   W.commit();
 }
 void UserModel::updateUser(int id,
 													std::string  email,
 													std::string  password,
-													std::string  details,
-													std::string  created_at,
-													std::string  deleted_at){
+													std::string  details){
 	pqxx::connection C(_PostgreSQL::connection_string());
 	try {
 		if (C.is_open()) {
@@ -143,7 +135,7 @@ void UserModel::updateUser(int id,
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	C.prepare("update", "UPDATE users SET \
-												email = $2, password = $3 WHERE id = $1");
+												email = $2, password = $3, details = $4 WHERE id = $1");
   W.prepared("update")(id)(email)(password).exec();
   W.commit();
 }
@@ -161,7 +153,8 @@ void UserModel::deleteUser(int id){
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-  C.prepare("delete", "DELETE FROM users where id = $1");
-  W.prepared("delete")(id).exec();
+	C.prepare("update", "UPDATE users SET deleted_at = now() \
+													WHERE id = $1");
+	W.prepared("update")(id).exec();
   W.commit();
 }

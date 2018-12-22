@@ -22,6 +22,7 @@ public:
 	static void doGetProduct(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 	static void doDeleteProduct(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 	static void doAddProduct(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+	static void doUpdateProduct(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 };
 
 // This is the end of the header guard

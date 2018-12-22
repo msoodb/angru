@@ -1,19 +1,48 @@
 #include <iostream>
+#include <chrono>
 #include <cmath>
+#include <future>
 #include "_math.h"
 
-int _math::add(int x, int y)
+int _math::add1(int x, int y)
 {
-    return x + y;
+  int count = 12;
+  for (size_t i = 0; i < count; i++) {
+    //std::cout << "add1...";
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    //std::cout << '\n';
+  }
+  //std::cout << '\n';
+  return x + y;
+}
+int _math::add2(int x, int y)
+{
+  int count = 7;
+  for (size_t i = 0; i < count; i++) {
+    //std::cout << "add2...";
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    //std::cout << '\n';
+  }
+  //std::cout << '\n';
+  return x + y;
+}
+int _math::add3(int x, int y)
+{
+  int count = 5;
+  for (size_t i = 0; i < count; i++) {
+    //std::cout << "add3...";
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    //std::cout << '\n';
+  }
+  //std::cout << '\n';
+  return x + y;
 }
 
 bool _math::checkPrimeNumber(int n)
 {
 	bool flag = true;
-	for (int i = 2; i <= n/2; ++i)
-	{
-		if(n%i == 0)
-		{
+	for (int i = 2; i <= n/2; ++i){
+		if(n%i == 0){
 			flag = false;
 			break;
 		}
@@ -31,8 +60,7 @@ void _math::goldbachConjecture(int n)
 }
 int _math::sumN(int n)  //Recursion
 {
-	if (n==0)
-	{
+	if (n==0)	{
 		return 0;
 	}
 	return n+sumN(n-1);

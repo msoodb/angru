@@ -32,6 +32,8 @@
 #include "_localize.h"
 #include "_error.h"
 #include "_log.h"
+#include "_math.h"
+
 
 #include "productModel.h"
 
@@ -58,12 +60,8 @@ int main(int argc, char const *argv[])
 		LOG_INFO << "setup HTTP_Client using pistache...";
 		//HTTP_Client::setup();
 		LOG_INFO << "setup REST_Server using pistache...";
-		REST_Server::setup(port, thr);
+		//REST_Server::setup(port, thr);
 		//------------------------------------------------------------------
-
-		_localize::output();
-		boost::locale::date_time now;
-	  std::cout << "Now is "<< now << std::endl;
 	}
 	catch(const _error& e)
 	{

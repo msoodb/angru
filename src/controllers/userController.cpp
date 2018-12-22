@@ -22,6 +22,7 @@ UserController::~UserController(){}
 
 void UserController::doLogin(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
+    _Authorization::ContentTypeJSONCheck(request,response);
     response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
     auto headers = request.headers();
     auto content_type = headers.tryGet<Pistache::Http::Header::ContentType>();
@@ -44,7 +45,7 @@ void UserController::doLogin(const Pistache::Rest::Request& request,
         password_sha1 = _cryptography::get_sha1(password);
     }
     catch (std::exception const& e){
-        std::cerr << e.what() << std::endl;
+      response.send(Pistache::Http::Code::Not_Found, "Invalid Username or Password.");
     }
     std::string query = " email = '" + email + "' and password = '" + password_sha1 + "'";
     pqxx::result R = UserModel::getUsers(1, query);
@@ -76,7 +77,7 @@ void UserController::doGetUsers(const Pistache::Rest::Request& request,
 
     std::string inifile_text = oss.str();
     if (inifile_text.empty()) {
-        response.send(Pistache::Http::Code::Not_Found, "Users does not exist");
+        response.send(Pistache::Http::Code::Not_Found, "Users not found.");
     }
     else {
       response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
@@ -98,7 +99,7 @@ void UserController::doGetUser(const Pistache::Rest::Request& request,
     std::string inifile_text = oss.str();
 
     if (inifile_text.empty()) {
-        response.send(Pistache::Http::Code::Not_Found, "User does not exist");
+        response.send(Pistache::Http::Code::Not_Found, "Users not found.");
     } else {
         response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
         response.send(Pistache::Http::Code::Ok, inifile_text);
@@ -124,8 +125,6 @@ void UserController::doAddUser(const Pistache::Rest::Request& request,
     std::string password;
     std::string password_sha1;
     std::string details;
-    std::string created_at;
-    std::string deleted_at;
     try
     {
       std::stringstream ss;
@@ -135,11 +134,12 @@ void UserController::doAddUser(const Pistache::Rest::Request& request,
       email = pt.get<std::string>("email");
       password = pt.get<std::string>("password");
       password_sha1 = _cryptography::get_sha1(password);
+      details = pt.get<std::string>("details");
     }
     catch (std::exception const& e){
-        std::cerr << e.what() << std::endl;
+      response.send(Pistache::Http::Code::Not_Found, "Users not found.");
     }
-    UserModel::addUser(email,password_sha1,details,created_at,deleted_at);
+    UserModel::addUser(email,password_sha1,details);
     response.send(Pistache::Http::Code::Ok, "User added.");
 }
 void UserController::doUpdateUser(const Pistache::Rest::Request& request,
@@ -152,15 +152,13 @@ void UserController::doUpdateUser(const Pistache::Rest::Request& request,
         id = value.as<int>();
     }
     if(id==-1){
-        response.send(Pistache::Http::Code::Not_Found, "User not found.");
+        response.send(Pistache::Http::Code::Not_Found, "Users not found.");
     }
     auto body = request.body();
     std::string email;
     std::string password;
     std::string password_sha1;
     std::string details;
-    std::string created_at;
-    std::string deleted_at;
     try
     {
         std::stringstream ss;
@@ -171,10 +169,11 @@ void UserController::doUpdateUser(const Pistache::Rest::Request& request,
         email = pt.get<std::string>("email");
         password = pt.get<std::string>("password");
         password_sha1 = _cryptography::get_sha1(password);
+        details = pt.get<std::string>("details");
     }
     catch (std::exception const& e){
-        std::cerr << e.what() << std::endl;
+      response.send(Pistache::Http::Code::Not_Found, "Users not found.");
     }
-    UserModel::updateUser(id,email,password_sha1,details,created_at,deleted_at);
+    UserModel::updateUser(id,email,password_sha1,details);
     response.send(Pistache::Http::Code::Ok, "User updated.");
 }

@@ -32,7 +32,7 @@ void ProductController::doGetProducts(const Pistache::Rest::Request& request,
 
     std::string inifile_text = oss.str();
     if (inifile_text.empty()) {
-        response.send(Pistache::Http::Code::Not_Found, "Products does not exist");
+        response.send(Pistache::Http::Code::Not_Found, "Products not found.");
     } else {
         response.send(Pistache::Http::Code::Ok, inifile_text);
     }
@@ -52,7 +52,7 @@ void ProductController::doGetProduct(const Pistache::Rest::Request& request,
     std::string inifile_text = oss.str();
 
     if (inifile_text.empty()) {
-        response.send(Pistache::Http::Code::Not_Found, "Product does not exist");
+        response.send(Pistache::Http::Code::Not_Found, "Products not found.");
     } else {
         response.send(Pistache::Http::Code::Ok, inifile_text);
     }
@@ -75,8 +75,7 @@ void ProductController::doAddProduct(const Pistache::Rest::Request& request,
     auto body = request.body();
     std::string title;
     float price;
-    std::string created_at;
-    std::string tags = "{gun}";
+    std::string tags;
     try
     {
       std::stringstream ss;
@@ -85,12 +84,43 @@ void ProductController::doAddProduct(const Pistache::Rest::Request& request,
       boost::property_tree::read_json(ss, pt);
       title = pt.get<std::string>("title");
       price = pt.get<float>("price");
-      created_at = pt.get<std::string>("created_at");
       tags = pt.get<std::string>("tags");
     }
     catch (std::exception const& e){
-      response.send(Pistache::Http::Code::Not_Found, "Product not found");
+      response.send(Pistache::Http::Code::Not_Found, "Products not found.");
     }
-    ProductModel::addProduct(title,price,created_at,tags);
+    ProductModel::addProduct(title,price,tags);
     response.send(Pistache::Http::Code::Ok, "Product added.");
+}
+void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
+  Pistache::Http::ResponseWriter response) {
+    _Authorization::AuthorizationCheck(request,response);
+    _Authorization::ContentTypeJSONCheck(request,response);
+    int id = -1;
+    if (request.hasParam(":id")) {
+        auto value = request.param(":id");
+        id = value.as<int>();
+    }
+    if(id==-1){
+        response.send(Pistache::Http::Code::Not_Found, "Products not found.");
+    }
+    auto body = request.body();
+    std::string title;
+    float price;
+    std::string tags;
+    try
+    {
+      std::stringstream ss;
+      ss << body;
+      boost::property_tree::ptree pt;
+      boost::property_tree::read_json(ss, pt);
+      title = pt.get<std::string>("title");
+      price = pt.get<float>("price");
+      tags = pt.get<std::string>("tags");
+    }
+    catch (std::exception const& e){
+      response.send(Pistache::Http::Code::Not_Found, "Products not found.");
+    }
+    ProductModel::updateProduct(id,title,price,tags);
+    response.send(Pistache::Http::Code::Ok, "Products updated.");
 }
