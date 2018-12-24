@@ -71,7 +71,7 @@ int main(int argc, char const *argv[])
 		std::thread t(hello);
 		std::cout << "before join" << '\n';
 		t.join();
-		std::cout << "after join" << '\n';
+		std::cout << "after join thread" << '\n';
 	}
 	catch(const _error& e)
 	{
