@@ -1,8 +1,6 @@
-// This is start of the header guard.  INC_MATH_H can be any unique name.  By convention, we use the name of the header file.
-#ifndef INC_MATH_H
-#define INC_MATH_H
+#ifndef ANGRU_MATH_H_
+#define ANGRU_MATH_H_
 
-// This is the content of the .h file, which is where the declarations go
 class _math
 {
 public:
@@ -18,5 +16,4 @@ public:
 	template<typename T>
 	T minimum (T a, T b);
 };
-// This is the end of the header guard
 #endif

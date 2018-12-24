@@ -1,7 +1,5 @@
-#ifndef INC_BOOSTJSON_H
-#define INC_BOOSTJSON_H
-
-
+#ifndef ANGRU_BOOSTJSON_H_
+#define ANGRU_BOOSTJSON_H_
 
 class _boostjson
 {

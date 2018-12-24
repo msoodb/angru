@@ -1,6 +1,5 @@
-// This is start of the header guard. PRODUCT_CONTROLLER_H can be any unique name.  By convention, we use the name of the header file.
-#ifndef PRODUCT_CONTROLLER_H
-#define PRODUCT_CONTROLLER_H
+#ifndef ANGRU_PRODUCT_CONTROLLER_H_
+#define ANGRU_PRODUCT_CONTROLLER_H_
 
 #include <iostream>
 #include <vector>
@@ -12,7 +11,6 @@
 #include <pistache/router.h>
 #include <pistache/serializer/rapidjson.h>
 
-// This is the content of the .h file, which is where the declarations go
 class ProductController
 {
 public:
@@ -25,5 +23,4 @@ public:
 	static void doUpdateProduct(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 };
 
-// This is the end of the header guard
 #endif

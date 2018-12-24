@@ -1,6 +1,5 @@
-// This is start of the header guard. BOOSTSTRUCTURE_H can be any unique name.  By convention, we use the name of the header file.
-#ifndef BOOSTSTRUCTURE_H
-#define BOOSTSTRUCTURE_H
+#ifndef ANGRU_BOOST_STRUCTURE_H_
+#define ANGRU_BOOST_STRUCTURE_H_
 
 class Boost_Structure
 {
@@ -18,7 +17,7 @@ public:
 	static void testRawPointer();
 	static void testSharedPointer();
 	//----------------------------------
-	
+
 
 	//---------------------------------- Distribution Functions
 	static void distributionFunc1();

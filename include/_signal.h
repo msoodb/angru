@@ -1,5 +1,5 @@
-#ifndef INC_SIGNAL_H
-#define INC_SIGNAL_H
+#ifndef ANGRU_SIGNAL_H_
+#define ANGRU_SIGNAL_H_
 
 #include <iostream>
 #include <csignal>

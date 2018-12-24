@@ -1,5 +1,5 @@
-#ifndef INC_LOG_H
-#define INC_LOG_H
+#ifndef ANGRU_LOG_H_
+#define ANGRU_LOG_H_
 
 #include <boost/log/trivial.hpp>
 #include <boost/log/sources/global_logger_storage.hpp>

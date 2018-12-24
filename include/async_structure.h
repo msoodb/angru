@@ -1,6 +1,5 @@
-// This is start of the header guard. ASYNC_STRUCTURE_H can be any unique name.  By convention, we use the name of the header file.
-#ifndef ASYNC_STRUCTURE_H
-#define ASYNC_STRUCTURE_H
+#ifndef ANGRU_ASYNC_STRUCTURE_H_
+#define ANGRU_ASYNC_STRUCTURE_H_
 
 class Async_Structure
 {

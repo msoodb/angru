@@ -1,6 +1,5 @@
-// This is start of the header guard. PRODUCT_MODEL_H can be any unique name.  By convention, we use the name of the header file.
-#ifndef PRODUCT_MODEL_H
-#define PRODUCT_MODEL_H
+#ifndef ANGRU_PRODUCT_MODEL_H_
+#define ANGRU_PRODUCT_MODEL_H_
 
 #include <iostream>
 #include <vector>
@@ -9,9 +8,6 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 
-
-
-// This is the content of the .h file, which is where the declarations go
 class ProductModel
 {
 public:
@@ -26,6 +22,4 @@ public:
 	static void deleteProduct(int);
 	static void createReport();
 };
-
-// This is the end of the header guard
 #endif

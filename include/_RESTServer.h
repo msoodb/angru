@@ -1,15 +1,11 @@
-// This is start of the header guard. _RESTSERVER_H can be any unique name.  By convention, we use the name of the header file.
-#ifndef _RESTSERVER_H
-#define _RESTSERVER_H
+#ifndef ANGRU_RESTSERVER_H_
+#define ANGRU_RESTSERVER_H_
 
 #include <pistache/http.h>
 #include <pistache/endpoint.h>
 #include <pistache/description.h>
 #include <pistache/router.h>
 #include <pistache/serializer/rapidjson.h>
-
-//#define POSTGRES_CONN pqxx::connection
-// This is the content of the .h file, which is where the declarations go
 
 class REST_Server
 {
@@ -27,5 +23,4 @@ public:
   void shutdown();
   void setupRoutes();
 };
-// This is the end of the header guard
 #endif

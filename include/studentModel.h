@@ -1,10 +1,9 @@
+#ifndef ANGRU_STUDENT_MODEL_H_
+#define ANGRU_STUDENT_MODEL_H_
+
 #include <iostream>
 #include <vector>
-// This is start of the header guard. STUDENT_MODEL_H can be any unique name.  By convention, we use the name of the header file.
-#ifndef STUDENT_MODEL_H
-#define STUDENT_MODEL_H
 
-// This is the content of the .h file, which is where the declarations go
 class StudentModel
 {
 	int student_id;
@@ -50,5 +49,4 @@ public:
 	StudentModel& operator ++();
 };
 
-// This is the end of the header guard
 #endif

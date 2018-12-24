@@ -1,5 +1,5 @@
-#ifndef INC_THREAD_H
-#define INC_THREAD_H
+#ifndef ANGRU_THREAD_H_
+#define ANGRU_THREAD_H_
 
 #include <iostream>
 #include <pthread.h>

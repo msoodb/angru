@@ -1,5 +1,5 @@
-#ifndef INC_RAPIDJSON_H
-#define INC_RAPIDJSON_H
+#ifndef ANGRU_RAPIDJSON_H_
+#define ANGRU_RAPIDJSON_H_
 
 #include <iostream>
 

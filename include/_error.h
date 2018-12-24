@@ -1,5 +1,5 @@
-#ifndef INC_ERROR_H
-#define INC_ERROR_H
+#ifndef ANGRU_ERROR_H_
+#define ANGRU_ERROR_H_
 
 #include <stdexcept>
 #include <string>
