@@ -14,4 +14,5 @@ public:
   static void useThread();
   static void useThread2();
 };
-#endif
+
+#endif // ANGRU_THREAD_H_

@@ -10,4 +10,5 @@ class _error : public std::runtime_error {
          : std::runtime_error( emsg ) {
       }
 };
-#endif
+
+#endif // ANGRU_ERROR_H_

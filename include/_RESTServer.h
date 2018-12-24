@@ -23,4 +23,5 @@ public:
   void shutdown();
   void setupRoutes();
 };
-#endif
+
+#endif // ANGRU_RESTSERVER_H_

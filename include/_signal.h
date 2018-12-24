@@ -9,4 +9,5 @@ class _signal
    public:
     static void signalHandler( int );
 };
-#endif
+
+#endif // ANGRU_SIGNAL_H_

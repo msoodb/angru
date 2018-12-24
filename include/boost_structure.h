@@ -53,4 +53,5 @@ public:
 	//----------------------------------
 
 };
-#endif
+
+#endif // ANGRU_BOOST_STRUCTURE_H_

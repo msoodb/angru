@@ -13,4 +13,4 @@ public:
 	static void AuthorizationCheck(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter&);
 	static void ContentTypeJSONCheck(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter&);
 };
-#endif
+#endif // ANGRU_AUTHORIZATION_H_

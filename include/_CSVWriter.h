@@ -18,4 +18,4 @@ public:
 	void addData(T data);
 };
 
-#endif
+#endif // ANGRU_CSVWRITER_H_

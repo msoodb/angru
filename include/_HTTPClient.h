@@ -16,4 +16,5 @@ public:
   static int sampledo(int argc, char const *argv[]);
   static void get(std::string const page, std::string& body, Pistache::Http::Code &code);
 };
-#endif
+
+#endif // ANGRU_HTTPCLIENT_H_

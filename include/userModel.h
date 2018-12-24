@@ -23,4 +23,4 @@ public:
 	static void deleteUser(int);
 };
 
-#endif
+#endif // ANGRU_USER_MODEL_H_

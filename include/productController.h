@@ -23,4 +23,4 @@ public:
 	static void doUpdateProduct(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 };
 
-#endif
+#endif // ANGRU_PRODUCT_CONTROLLER_H_

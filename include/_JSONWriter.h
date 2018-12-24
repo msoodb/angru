@@ -17,4 +17,4 @@ public:
 	void addData(boost::property_tree::ptree);
 };
 
-#endif
+#endif // ANGRU_JSONWRITER_H_

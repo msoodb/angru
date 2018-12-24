@@ -14,4 +14,4 @@ public:
 	std::vector<std::vector<std::string> > getData();
 };
 
-#endif
+#endif // ANGRU_CSVREADER_H_

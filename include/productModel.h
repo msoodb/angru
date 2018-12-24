@@ -22,4 +22,5 @@ public:
 	static void deleteProduct(int);
 	static void createReport();
 };
-#endif
+
+#endif // ANGRU_PRODUCT_MODEL_H_

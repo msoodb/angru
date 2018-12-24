@@ -3,4 +3,5 @@
 
 int vectorSample(); // function prototype for add.h -- don't forget the semicolon!
 int dequeSample(); // function prototype for add.h -- don't forget the semicolon!
-#endif
+
+#endif // ANGRU_STLSTRUCTURE_H_

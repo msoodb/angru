@@ -24,4 +24,5 @@ public:
 	static void setup();
 	static std::string connection_string();
 };
-#endif
+
+#endif // ANGRU_POSTGRESQL_H_

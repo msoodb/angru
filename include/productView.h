@@ -12,4 +12,4 @@ public:
 	~ProductView();
 };
 
-#endif
+#endif // ANGRU_PRODUCT_VIEW_H_

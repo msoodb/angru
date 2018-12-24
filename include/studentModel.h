@@ -49,4 +49,4 @@ public:
 	StudentModel& operator ++();
 };
 
-#endif
+#endif // ANGRU_STUDENT_MODEL_H_

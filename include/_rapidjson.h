@@ -9,4 +9,5 @@ public:
 	_rapidjson();
 	static void rapidtest();
 };
-#endif
+
+#endif // ANGRU_RAPIDJSON_H_

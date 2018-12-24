@@ -10,4 +10,5 @@ public:
 	static std::string get_sha256(const std::string&);
 	static std::string get_jwt(const std::string&, const std::string&);
 };
-#endif
+
+#endif // ANGRU_CRYPTOGRAPHY_H_

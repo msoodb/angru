@@ -7,4 +7,5 @@ public:
 	_boostjson();
 	static void boostjsontest();
 };
-#endif
+
+#endif // ANGRU_BOOSTJSON_H_

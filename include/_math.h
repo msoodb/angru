@@ -16,4 +16,5 @@ public:
 	template<typename T>
 	T minimum (T a, T b);
 };
-#endif
+
+#endif // ANGRU_MATH_H_

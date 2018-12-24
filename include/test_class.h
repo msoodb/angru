@@ -18,4 +18,5 @@ public:
 	double getValue() const {return myValue_;}
 
 };
-#endif
+
+#endif // ANGRU_TEST_CLASS_H_

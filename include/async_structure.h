@@ -10,4 +10,5 @@ public:
 	static int add3(int x, int y);
 	static void test_async();
 };
-#endif
+
+#endif // ANGRU_ASYNC_STRUCTURE_H_

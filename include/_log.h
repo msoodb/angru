@@ -24,4 +24,4 @@ BOOST_LOG_GLOBAL_LOGGER(logger, boost::log::sources::severity_logger_mt<boost::l
 #define LOG_ERROR   LOG(error)
 #define LOG_FATAL   LOG(fatal)
 
-#endif
+#endif // ANGRU_LOG_H_

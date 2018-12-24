@@ -14,4 +14,4 @@ public:
 	boost::property_tree::ptree getData();
 };
 
-#endif
+#endif // ANGRU_JSONREADER_H_

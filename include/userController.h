@@ -30,5 +30,4 @@ public:
 	static void	doUpdateUser(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 };
 
-// This is the end of the header guard
-#endif
+#endif // ANGRU_USER_CONTROLLER_H_
