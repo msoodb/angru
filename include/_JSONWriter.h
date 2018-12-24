@@ -1,6 +1,9 @@
 #ifndef ANGRU_JSONWRITER_H_
 #define ANGRU_JSONWRITER_H_
 
+#include <iostream>
+#include <boost/property_tree/ptree.hpp>
+
 class JSONWriter
 {
 	std::string fileName;

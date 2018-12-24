@@ -1,15 +1,13 @@
+#include "_PostgreSQL.h"
+
 #include <iostream>
 #include <string>
+
 #include <pqxx/pqxx>
 #include <boost/property_tree/ptree.hpp>
-
-#include "_PostgreSQL.h"
 #include "_JSONReader.h"
 #include "_error.h"
-/*
- * This Function accepts a range and appends all the elements in the range
- * to the last row, seperated by delimeter (Default is comma)
- */
+
  std::string _PostgreSQL::_dbname="";
  std::string _PostgreSQL::_user="";
  std::string _PostgreSQL::_password="";

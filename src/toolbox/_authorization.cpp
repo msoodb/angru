@@ -1,9 +1,11 @@
+#include "_authorization.h"
+
 #include <iostream>
 #include <string>
 #include <chrono>
+
 #include <boost/uuid/sha1.hpp>
 #include <jwt/jwt.hpp>
-#include "_authorization.h"
 
 void _Authorization::AuthorizationCheck(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter& response){

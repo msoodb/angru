@@ -1,16 +1,16 @@
+#include "_JSONWriter.h"
+
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <iterator>
 #include <string>
 #include <algorithm>
+
 #include <boost/algorithm/string.hpp>
 #include <pqxx/pqxx>
-
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-
-#include "_JSONWriter.h"
 #include "_error.h"
 #include "_log.h"
 /*

@@ -1,13 +1,12 @@
+#include "_RESTServer.h"
+
 #include <iostream>
 #include <string>
 
 #include <pistache/http.h>
 #include <pistache/router.h>
 #include <pistache/endpoint.h>
-
-#include "_RESTServer.h"
 #include "_error.h"
-
 #include "productController.h"
 #include "userController.h"
 

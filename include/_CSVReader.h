@@ -1,6 +1,9 @@
 #ifndef ANGRU_CSVREADER_H_
 #define ANGRU_CSVREADER_H_
 
+#include <iostream>
+#include <vector>
+
 class CSVReader
 {
 	std::string fileName;

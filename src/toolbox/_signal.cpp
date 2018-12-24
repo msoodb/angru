@@ -1,5 +1,6 @@
-#include <iostream>
 #include <_signal.h>
+
+#include <iostream>
 
 void _signal::signalHandler( int signum )
 {

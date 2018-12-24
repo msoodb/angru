@@ -1,3 +1,5 @@
+#include "_CSVReader.h"
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -5,11 +7,8 @@
 #include <string>
 #include <algorithm>
 
-
 #include <boost/algorithm/string.hpp>
 #include <boost/current_function.hpp>
-
-#include "_CSVReader.h"
 #include "_error.h"
 
 

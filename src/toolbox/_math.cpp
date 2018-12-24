@@ -1,8 +1,9 @@
+#include "_math.h"
+
 #include <iostream>
 #include <chrono>
 #include <cmath>
 #include <future>
-#include "_math.h"
 
 int _math::add1(int x, int y)
 {

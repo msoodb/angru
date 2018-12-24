@@ -1,10 +1,10 @@
+#include "_JSONReader.h"
+
 #include <iostream>
 #include <string>
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-
-#include "_JSONReader.h"
 #include "_error.h"
 #include "_log.h"
 

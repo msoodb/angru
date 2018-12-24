@@ -1,7 +1,8 @@
+#include "_HTTPClient.h"
+
 #include <iostream>
 #include <string>
 
-#include "_HTTPClient.h"
 #include "_error.h"
 
 using namespace Pistache;

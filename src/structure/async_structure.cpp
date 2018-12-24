@@ -1,12 +1,12 @@
+#include "async_structure.h"
+
 #include <iostream>
+#include <pthread.h>
+#include <thread>
+#include <chrono>
+#include <future>
 #include <vector>
 #include <algorithm>
-#include <pthread.h>
-#include <future>
-#include <chrono>
-#include <thread>
-
-#include "async_structure.h"
 
 int Async_Structure::add1(int x, int y){
   int count = 12;

@@ -1,18 +1,17 @@
+#include "productController.h"
+
 #include <iostream>
 #include <string>
-#include <pqxx/pqxx>
 
+#include <pqxx/pqxx>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ini_parser.hpp>
-
 #include "_error.h"
 #include "_log.h"
 #include "_PostgreSQL.h"
-
-#include "productController.h"
-#include "productModel.h"
 #include "_authorization.h"
+#include "productModel.h"
 
 
 ProductController::ProductController(){}

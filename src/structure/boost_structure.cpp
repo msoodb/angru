@@ -1,5 +1,6 @@
-#include <iostream>	
+#include "boost_structure.h"
 
+#include <iostream>
 #include <vector>
 
 #include <boost/current_function.hpp>
@@ -10,11 +11,7 @@
 #include <boost/math/distributions.hpp>
 #include <boost/random.hpp>
 #include <boost/function.hpp>
-
-#include "boost_structure.h"	
 #include "test_class.h"
-
-
 
 //---------------------------------------------------------------------------------------------//
 Boost_Structure::Boost_Structure()
@@ -71,7 +68,7 @@ void Boost_Structure::distributionFunc1()
 }
 void Boost_Structure::distributionFunc2()
 {
-	
+
 }
 //---------------------------------------------------------------------------------------------//
 void Boost_Structure::randomFunc1()
@@ -80,33 +77,15 @@ void Boost_Structure::randomFunc1()
 }
 void Boost_Structure::randomFunc2()
 {
-	
+
 }
 void Boost_Structure::randomFunc3()
 {
-	
+
 }
 void Boost_Structure::randomFunc4()
 {
-	
+
 }
 
 //---------------------------------------------------------------------------------------------//
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,17 +1,16 @@
+#include "STL_structure.h"
+
 #include <iostream>
 #include <string>
 #include <vector>
 #include <deque>
 #include <algorithm>
 
-#include "STL_structure.h"
-
-
 int vectorSample()
 {
 	std::cout<<"STLstructure vectorSample method"<<std::endl;
 	std::vector <int> vec;
-	int i=0;	
+	int i=0;
 	std::cout<<"vec size is: "<<vec.size()<<std::endl;
 	for (i = 0; i < 5; ++i)
 	{
@@ -85,18 +84,3 @@ int dequeSample()
 	std::cout<<std::endl;
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

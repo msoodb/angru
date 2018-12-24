@@ -1,7 +1,6 @@
-
-#include <iostream>      //cin, cout
-#include <string>			//string class
-#include <iomanip>		 //format float number fixed, setw, setprecision, serfill
+#include <iostream>
+#include <string>
+#include <iomanip>
 #include <future>
 #include <chrono>
 

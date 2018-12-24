@@ -1,6 +1,8 @@
 #ifndef ANGRU_CRYPTOGRAPHY_H_
 #define ANGRU_CRYPTOGRAPHY_H_
 
+#include <iostream>
+
 class _cryptography
 {
 public:

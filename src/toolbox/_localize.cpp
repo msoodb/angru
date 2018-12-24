@@ -1,12 +1,13 @@
+#include "_localize.h"
+
 #include <iostream>
 #include <string>
 #include <ctime>
 #include <chrono>
+
 #include <boost/locale.hpp>
 #include <boost/locale/date_time.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
-
-#include "_localize.h"
 #include "_math.h"
 #include "_error.h"
 #include "_log.h"

@@ -1,7 +1,8 @@
+#include <_thread.h>
+
 #include <iostream>
 #include <pthread.h>
 
-#include <_thread.h>
 #include "_math.h"
 
 

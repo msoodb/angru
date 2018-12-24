@@ -1,7 +1,8 @@
+#include "studentModel.h"
+
 #include <iostream>
 #include <string>
 #include <vector>
-#include "studentModel.h"
 
 StudentModel::StudentModel(int student_id_,	int entry_year_, std::string first_name_,
 	std::string middle_name_, std::string last_name_, double GPA_, char gender_) :

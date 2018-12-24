@@ -1,9 +1,11 @@
+#include "_cryptography.h"
+
 #include <iostream>
 #include <string>
 #include <chrono>
+
 #include <boost/uuid/sha1.hpp>
 #include <jwt/jwt.hpp>
-#include "_cryptography.h"
 
 std::string _cryptography::get_base64(const std::string& p_arg){
 

@@ -1,6 +1,8 @@
 #ifndef ANGRU_CSVWRITER_H_
 #define ANGRU_CSVWRITER_H_
 
+#include <iostream>
+
 class CSVWriter
 {
 	std::string fileName;

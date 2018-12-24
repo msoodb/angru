@@ -1,19 +1,17 @@
+#include "_CSVWriter.h"
+
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <iterator>
 #include <string>
 #include <algorithm>
+
 #include <boost/algorithm/string.hpp>
 #include <pqxx/pqxx>
-
-#include "_CSVWriter.h"
 #include "_error.h"
 #include "_log.h"
-/*
- * This Function accepts a range and appends all the elements in the range
- * to the last row, seperated by delimeter (Default is comma)
- */
+
 template<typename T>
 void CSVWriter::addDatainRow(T first, T last)
 {

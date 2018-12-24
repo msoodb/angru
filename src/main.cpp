@@ -9,17 +9,13 @@
 #include <pistache/http.h>
 #include <pistache/router.h>
 #include <pistache/endpoint.h>
-
 #include <pqxx/pqxx>
-
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ini_parser.hpp>
 #include <boost/locale.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-
-
 #include "_PostgreSQL.h"
 #include "_CSVWriter.h"
 #include "_CSVReader.h"
@@ -28,13 +24,10 @@
 #include "_RESTServer.h"
 #include "_HTTPClient.h"
 #include "_cryptography.h"
-
 #include "_localize.h"
 #include "_error.h"
 #include "_log.h"
 #include "_math.h"
-
-
 #include "productModel.h"
 #include "async_structure.h"
 
