@@ -50,10 +50,3 @@ void CSVWriter::addData(T data)
 	LOG_INFO << "end writing data in csv: "<<fileName;
 }
 template void CSVWriter::addData(pqxx::result);
-
-template <typename T>
-T CSVWriter::minimum (T a, T b)
-{
-	return a<b ? a : b;
-}
-template int CSVWriter::minimum(int,int);

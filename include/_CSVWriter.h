@@ -22,9 +22,6 @@ public:
 
   template<typename T>
 	void addData(T data);
-
-	template<typename T>
-	T minimum (T a, T b);
 };
 
 

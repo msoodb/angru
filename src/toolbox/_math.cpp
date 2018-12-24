@@ -89,3 +89,10 @@ long long  _math::factoriel(int n)
     if (n < 2) return n;
     return n * factoriel(n-1);
 }
+template <typename T>
+T _math::minimum (T a, T b)
+{
+	return a<b ? a : b;
+}
+template int _math::minimum(int,int);
+template double _math::minimum(double,double);

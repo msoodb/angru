@@ -29,10 +29,10 @@ pqxx::result UserModel::getUsers(int page, std::string query){
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	std::string complete_query = "SELECT id, email, password, details, created_at \
-																FROM users deleted_at is NULL ";
+																FROM users where deleted_at is NULL ";
 	if(!query.empty())
 	{
-		complete_query += " where ";
+		complete_query += " and ";
 		complete_query +=  query;
 	}
 	complete_query += " limit 20 offset ";

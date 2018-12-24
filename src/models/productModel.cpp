@@ -8,13 +8,14 @@
 #include "_error.h"
 #include "_log.h"
 #include "_PostgreSQL.h"
+#include "_CSVWriter.h"
 
 #include "productModel.h"
 
 
 ProductModel::ProductModel(){}
 ProductModel::~ProductModel(){}
-pqxx::result ProductModel::getProducts(int page, std::string query){
+pqxx::result ProductModel::getProducts(int page, std::string query, bool paging){
 	pqxx::connection C(_PostgreSQL::connection_string());
 	try {
 		if (C.is_open()) {
@@ -35,9 +36,11 @@ pqxx::result ProductModel::getProducts(int page, std::string query){
 		complete_query += " AND ";
 		complete_query +=  query;
 	}
-	complete_query += " limit 20 offset ";
-	int offset = (page-1)* OFFSET_COUNT ;
-	complete_query += std::to_string(offset);
+	if(!paging){
+		complete_query += " limit 20 offset ";
+		int offset = (page-1)* OFFSET_COUNT ;
+		complete_query += std::to_string(offset);
+	}
   C.prepare("find", complete_query);
   pqxx::result R = W.prepared("find").exec();
   W.commit();
@@ -161,6 +164,25 @@ void ProductModel::deleteProduct(int id){
   W.prepared("update")(id).exec();
   W.commit();
 }
+
+void ProductModel::createReport() {
+	pqxx::result R = getProducts(1, "", true);
+	CSVWriter writer("report/products.csv");
+	writer.addData(R);
+	R = getProducts(1, "", true);
+	writer.addData(R);
+}
+/*
+std::cout << "start creating report" << '\n';
+std::future<void> rep = std::async(ProductModel::createReport);
+std::cout << "end creating report" << '\n';
+int n;
+for (size_t i = 0; i < 10; i++) {
+	std::cin >> n;
+	std::cout << i+n << '\n';
+}
+rep.get();
+*/
 
 //              Retrieve data in main file
 /*

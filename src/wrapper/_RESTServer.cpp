@@ -34,6 +34,7 @@ void REST_Server::setupRoutes() {
     Pistache::Rest::Routes::Get(router, "/products/:id", Pistache::Rest::Routes::bind(&ProductController::doGetProduct));
     Pistache::Rest::Routes::Delete(router, "/products/:id", Pistache::Rest::Routes::bind(&ProductController::doDeleteProduct));
     Pistache::Rest::Routes::Post(router, "/products", Pistache::Rest::Routes::bind(&ProductController::doAddProduct));
+    Pistache::Rest::Routes::Put(router, "/products/:id", Pistache::Rest::Routes::bind(&ProductController::doUpdateProduct));
     //-----------------------------------------------------------------------------------------------------------
     Pistache::Rest::Routes::Get(router, "/users", Pistache::Rest::Routes::bind(&UserController::doGetUsers));
     Pistache::Rest::Routes::Get(router, "/users/:id", Pistache::Rest::Routes::bind(&UserController::doGetUser));

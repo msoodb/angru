@@ -36,7 +36,13 @@
 
 
 #include "productModel.h"
+#include "async_structure.h"
 
+void hello() {
+	for (size_t i = 0; i < 10; i++) {
+		std::cout << "hello world!" << '\n';
+	}
+}
 
 int main(int argc, char const *argv[])
 {
@@ -60,8 +66,12 @@ int main(int argc, char const *argv[])
 		LOG_INFO << "setup HTTP_Client using pistache...";
 		//HTTP_Client::setup();
 		LOG_INFO << "setup REST_Server using pistache...";
-		//REST_Server::setup(port, thr);
+		REST_Server::setup(port, thr);
 		//------------------------------------------------------------------
+		std::thread t(hello);
+		std::cout << "before join" << '\n';
+		t.join();
+		std::cout << "after join" << '\n';
 	}
 	catch(const _error& e)
 	{

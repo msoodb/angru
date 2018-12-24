@@ -15,6 +15,8 @@ public:
 	static int convertBinaryToDecimal(long long);
   static long fibonacci(unsigned);
 	static long long  factoriel(int);
+	template<typename T>
+	T minimum (T a, T b);
 };
 // This is the end of the header guard
 #endif
