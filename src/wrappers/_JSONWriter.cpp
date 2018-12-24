@@ -1,4 +1,4 @@
-#include "_JSONWriter.h"
+#include "wrappers/_JSONWriter.h"
 
 #include <iostream>
 #include <fstream>
@@ -11,12 +11,9 @@
 #include <pqxx/pqxx>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-#include "_error.h"
-#include "_log.h"
-/*
- * This Function accepts a range and appends all the elements in the range
- * to the last row, seperated by delimeter (Default is comma)
- */
+#include "tools/_error.h"
+#include "tools/_log.h"
+
 template<typename T>
 void JSONWriter::addDatainRow(T first, T last)
 {

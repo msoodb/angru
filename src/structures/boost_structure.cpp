@@ -1,4 +1,4 @@
-#include "boost_structure.h"
+#include "structures/boost_structure.h"
 
 #include <iostream>
 #include <vector>
@@ -11,7 +11,6 @@
 #include <boost/math/distributions.hpp>
 #include <boost/random.hpp>
 #include <boost/function.hpp>
-#include "test_class.h"
 
 //---------------------------------------------------------------------------------------------//
 Boost_Structure::Boost_Structure()
@@ -47,19 +46,19 @@ void Boost_Structure::testMacroD()
 //---------------------------------------------------------------------------------------------//
 void Boost_Structure::testRawPointer()
 {
-	A* ptr_myA = new A(1.0);
+	/*A* ptr_myA = new A(1.0);
 	throw "Error Ocurred in Class A.";
-	delete ptr_myA;   //ptr_myA wont be deleted.!!!
+	delete ptr_myA;   //ptr_myA wont be deleted.!!!*/
 }
 void Boost_Structure::testSharedPointer()
 {
 	//boost::shared_ptr<A> bptr_myA(new A(1.0));
 	//std::cout<<bptr_myA->getValue()<<std::endl;
 	//------------------------------------------------
-	A* ptr_myA = new A(2.0);
+	/*A* ptr_myA = new A(2.0);
 	boost::shared_ptr<A> bptr_myA(ptr_myA);
 	//std::cout<<bptr_myA->getValue()<<std::endl;
-	bptr_myA.reset(new A(3.0));
+	bptr_myA.reset(new A(3.0));*/
 }
 //---------------------------------------------------------------------------------------------//
 void Boost_Structure::distributionFunc1()

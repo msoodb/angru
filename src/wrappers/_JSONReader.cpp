@@ -1,18 +1,13 @@
-#include "_JSONReader.h"
+#include "wrappers/_JSONReader.h"
 
 #include <iostream>
 #include <string>
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-#include "_error.h"
-#include "_log.h"
+#include "tools/_error.h"
+#include "tools/_log.h"
 
-
-/*
-* Parses through csv file line by line and returns the data
-* in vector of vector of strings.
-*/
 boost::property_tree::ptree JSONReader::getData()
 {
   // Create a root

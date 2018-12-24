@@ -1,4 +1,4 @@
-#include "userController.h"
+#include "controllers/userController.h"
 
 #include <iostream>
 #include <string>
@@ -8,12 +8,12 @@
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ini_parser.hpp>
 #include <jwt/jwt.hpp>
-#include "_error.h"
-#include "_log.h"
-#include "_PostgreSQL.h"
-#include "_authorization.h"
-#include "_cryptography.h"
-#include "userModel.h"
+#include "tools/_error.h"
+#include "tools/_log.h"
+#include "wrappers/_PostgreSQL.h"
+#include "tools/_authorization.h"
+#include "tools/_cryptography.h"
+#include "models/userModel.h"
 
 UserController::UserController(){}
 UserController::~UserController(){}

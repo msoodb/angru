@@ -1,9 +1,9 @@
-#include "_HTTPClient.h"
+#include "wrappers/_HTTPClient.h"
 
 #include <iostream>
 #include <string>
 
-#include "_error.h"
+#include "tools/_error.h"
 
 using namespace Pistache;
 using namespace Pistache::Http;

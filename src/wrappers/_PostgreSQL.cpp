@@ -1,12 +1,12 @@
-#include "_PostgreSQL.h"
+#include "wrappers/_PostgreSQL.h"
 
 #include <iostream>
 #include <string>
 
 #include <pqxx/pqxx>
 #include <boost/property_tree/ptree.hpp>
-#include "_JSONReader.h"
-#include "_error.h"
+#include "wrappers/_JSONReader.h"
+#include "tools/_error.h"
 
  std::string _PostgreSQL::_dbname="";
  std::string _PostgreSQL::_user="";

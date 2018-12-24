@@ -1,4 +1,4 @@
-#include "_CSVReader.h"
+#include "wrappers/_CSVReader.h"
 
 #include <iostream>
 #include <fstream>
@@ -9,7 +9,7 @@
 
 #include <boost/algorithm/string.hpp>
 #include <boost/current_function.hpp>
-#include "_error.h"
+#include "tools/_error.h"
 
 
 /*

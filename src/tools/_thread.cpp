@@ -1,9 +1,9 @@
-#include <_thread.h>
+#include <tools/_thread.h>
 
 #include <iostream>
 #include <pthread.h>
 
-#include "_math.h"
+#include "tools/_math.h"
 
 
 void * _thread::PrintHello(void *threadid)

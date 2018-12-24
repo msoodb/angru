@@ -1,4 +1,4 @@
-#include "productController.h"
+#include "controllers/productController.h"
 
 #include <iostream>
 #include <string>
@@ -7,11 +7,11 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ini_parser.hpp>
-#include "_error.h"
-#include "_log.h"
-#include "_PostgreSQL.h"
-#include "_authorization.h"
-#include "productModel.h"
+#include "tools/_error.h"
+#include "tools/_log.h"
+#include "wrappers/_PostgreSQL.h"
+#include "tools/_authorization.h"
+#include "models/productModel.h"
 
 
 ProductController::ProductController(){}

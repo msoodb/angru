@@ -1,4 +1,4 @@
-#include "_RESTServer.h"
+#include "wrappers/_RESTServer.h"
 
 #include <iostream>
 #include <string>
@@ -6,9 +6,9 @@
 #include <pistache/http.h>
 #include <pistache/router.h>
 #include <pistache/endpoint.h>
-#include "_error.h"
-#include "productController.h"
-#include "userController.h"
+#include "tools/_error.h"
+#include "controllers/productController.h"
+#include "controllers/userController.h"
 
 void REST_Server::setup(int port_number, int thread_count){
   Pistache::Port port(port_number);

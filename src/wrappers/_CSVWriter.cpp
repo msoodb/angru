@@ -1,4 +1,4 @@
-#include "_CSVWriter.h"
+#include "wrappers/_CSVWriter.h"
 
 #include <iostream>
 #include <fstream>
@@ -9,8 +9,8 @@
 
 #include <boost/algorithm/string.hpp>
 #include <pqxx/pqxx>
-#include "_error.h"
-#include "_log.h"
+#include "tools/_error.h"
+#include "tools/_log.h"
 
 template<typename T>
 void CSVWriter::addDatainRow(T first, T last)

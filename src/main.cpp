@@ -16,20 +16,20 @@
 #include <boost/locale.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include "_PostgreSQL.h"
-#include "_CSVWriter.h"
-#include "_CSVReader.h"
-#include "_JSONWriter.h"
-#include "_JSONReader.h"
-#include "_RESTServer.h"
-#include "_HTTPClient.h"
-#include "_cryptography.h"
-#include "_localize.h"
-#include "_error.h"
-#include "_log.h"
-#include "_math.h"
-#include "productModel.h"
-#include "async_structure.h"
+#include "wrappers/_PostgreSQL.h"
+#include "wrappers/_CSVWriter.h"
+#include "wrappers/_CSVReader.h"
+#include "wrappers/_JSONWriter.h"
+#include "wrappers/_JSONReader.h"
+#include "wrappers/_RESTServer.h"
+#include "wrappers/_HTTPClient.h"
+#include "tools/_cryptography.h"
+#include "tools/_localize.h"
+#include "tools/_error.h"
+#include "tools/_log.h"
+#include "tools/_math.h"
+#include "models/productModel.h"
+#include "structures/async_structure.h"
 
 void hello() {
 	for (size_t i = 0; i < 10; i++) {
