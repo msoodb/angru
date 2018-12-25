@@ -11,9 +11,9 @@ using namespace Pistache::Http;
 namespace angru{
 namespace wrapper{
 
-void HttpClient::setup(){
+void HttpClient::Setup(){
 }
-void HttpClient::get(std::string const page, std::string& body, Pistache::Http::Code &code){
+void HttpClient::Get(std::string const page, std::string& body, Pistache::Http::Code &code){
 
     //page = "http://api.timezonedb.com/v2.1/get-time-zone?key=97IQ2W4BJCT5&format=json&by=zone&zone=America/Chicago";
     //page = "http://51.68.208.142/data.json";

@@ -17,10 +17,10 @@ public:
 			fileName(filename), delimeter(delm), linesCount(0)
 	{}
 	template<typename T>
-	void addDatainRow(T first, T last);
+	void AddDataRow(T first, T last);
 
   template<typename T>
-	void addData(T data);
+	void AddData(T data);
 };
 
 } // wrapper

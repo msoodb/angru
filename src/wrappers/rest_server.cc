@@ -13,16 +13,16 @@
 namespace angru{
 namespace wrapper{
 
-void RestServer::setup(int port_number, int thread_count){
+void RestServer::Setup(int port_number, int thread_count){
   Pistache::Port port(port_number);
   Pistache::Address addr(Pistache::Ipv4::any(), port);
   std::cout << "Using " <<  std::thread::hardware_concurrency() << " Cores" << std::endl;
   std::cout << "Using " << port_number << " port number" << std::endl;
   std::cout << "Using " << thread_count << " threads" << std::endl;
   RestServer rest_server(addr);
-  rest_server.init(thread_count);
-  rest_server.start();
-  rest_server.shutdown();
+  rest_server.Init(thread_count);
+  rest_server.Start();
+  rest_server.Shutdown();
 }
 
 RestServer::RestServer(Pistache::Address addr) :
@@ -30,7 +30,7 @@ RestServer::RestServer(Pistache::Address addr) :
   ,desc("angru RESTful API", "0.1"){
 }
 
-void RestServer::setupRoutes() {
+void RestServer::SetupRoutes() {
   using namespace angru::mvc::controller;
   using namespace Pistache::Rest::Routes;
 
@@ -49,7 +49,7 @@ void RestServer::setupRoutes() {
   Put(router, "/users/:id", bind(&UserController::doUpdateUser));
 }
 
-void RestServer::printCookies(const Pistache::Http::Request& req) {
+void RestServer::PrintCookies(const Pistache::Http::Request& req) {
     auto cookies = req.cookies();
     std::cout << "Cookies: [" << std::endl;
     const std::string indent(4, ' ');
@@ -59,25 +59,25 @@ void RestServer::printCookies(const Pistache::Http::Request& req) {
     std::cout << "]" << std::endl;
 }
 
-void RestServer::handleReady(const Pistache::Rest::Request&,
+void RestServer::HandleReady(const Pistache::Rest::Request&,
   Pistache::Http::ResponseWriter response) {
     response.send(Pistache::Http::Code::Ok, "1");
 }
 
-void RestServer::init(size_t thr) {
+void RestServer::Init(size_t thr) {
     auto opts = Pistache::Http::Endpoint::options()
         .threads(thr)
         .flags(Pistache::Tcp::Options::InstallSignalHandler);
     httpEndpoint->init(opts);
-    setupRoutes();
+    SetupRoutes();
 }
 
-void RestServer::start() {
+void RestServer::Start() {
     httpEndpoint->setHandler(router.handler());
     httpEndpoint->serve();
 }
 
-void RestServer::shutdown() {
+void RestServer::Shutdown() {
     httpEndpoint->shutdown();
 }
 

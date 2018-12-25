@@ -18,7 +18,7 @@ namespace angru{
 namespace wrapper{
 
 template<typename T>
-void JsonWriter::addDatainRow(T first, T last)
+void JsonWriter::AddDataRow(T first, T last)
 {
 	std::fstream file;
 	// Open the file in truncate mode if first line else in Append Mode
@@ -37,12 +37,12 @@ void JsonWriter::addDatainRow(T first, T last)
 	// Close the file
 	file.close();
 }
-template void JsonWriter::addDatainRow(std::vector<std::string>::iterator, std::vector<std::string>::iterator);
-template void JsonWriter::addDatainRow(std::deque<std::string>::iterator, std::deque<std::string>::iterator);
-template void JsonWriter::addDatainRow(std::list<std::string>::iterator, std::list<std::string>::iterator);
-template void JsonWriter::addDatainRow(pqxx::row::iterator, pqxx::row::iterator);
+template void JsonWriter::AddDataRow(std::vector<std::string>::iterator, std::vector<std::string>::iterator);
+template void JsonWriter::AddDataRow(std::deque<std::string>::iterator, std::deque<std::string>::iterator);
+template void JsonWriter::AddDataRow(std::list<std::string>::iterator, std::list<std::string>::iterator);
+template void JsonWriter::AddDataRow(pqxx::row::iterator, pqxx::row::iterator);
 
-void JsonWriter::addData(boost::property_tree::ptree oroot){
+void JsonWriter::AddData(boost::property_tree::ptree oroot){
 	LOG_INFO << "start writing data in json: "<<fileName;
   boost::property_tree::write_json(fileName, oroot);
 	LOG_INFO << "end writing data in json: "<<fileName;
@@ -52,13 +52,13 @@ void JsonWriter::addData(boost::property_tree::ptree oroot){
 } // angru
 
 /*template<typename T>
-void JSONWriter::addData(T data)
+void JSONWriter::AddData(T data)
 {
 	LOG_INFO << "start writing data in csv: "<<fileName;
 	for (auto row : data)
 	{
-		addDatainRow(row.begin(), row.end());
+		AddDataRow(row.begin(), row.end());
 	}
 	LOG_INFO << "end writing data in csv: "<<fileName;
 }
-template void JSONWriter::addData(pqxx::result);*/
+template void JSONWriter::AddData(pqxx::result);*/

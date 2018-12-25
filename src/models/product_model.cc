@@ -17,7 +17,7 @@ namespace model{
 
 ProductModel::ProductModel(){}
 ProductModel::~ProductModel(){}
-pqxx::result ProductModel::getProducts(int page, std::string query, bool paging){
+pqxx::result ProductModel::GetProducts(int page, std::string query, bool paging){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -48,8 +48,8 @@ pqxx::result ProductModel::getProducts(int page, std::string query, bool paging)
   W.commit();
 	return R;
 }
-boost::property_tree::ptree ProductModel::getProducts_json(int page, std::string query){
-	pqxx::result R = getProducts(page, query);
+boost::property_tree::ptree ProductModel::GetProductsJson(int page, std::string query){
+	pqxx::result R = GetProducts(page, query);
 	int count = R.size();
 	int pageCount = count / OFFSET_COUNT;
 	boost::property_tree::ptree products_node;
@@ -65,7 +65,7 @@ boost::property_tree::ptree ProductModel::getProducts_json(int page, std::string
 	}
 	return products_node;
 }
-pqxx::row ProductModel::getProduct(int id){
+pqxx::row ProductModel::GetProduct(int id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -89,8 +89,8 @@ pqxx::row ProductModel::getProduct(int id){
   W.commit();
 	return r;
 }
-boost::property_tree::ptree ProductModel::getProduct_json(int id){
-	pqxx::row r = getProduct(id);
+boost::property_tree::ptree ProductModel::GetProductJson(int id){
+	pqxx::row r = GetProduct(id);
 	boost::property_tree::ptree products_node;
 	boost::property_tree::ptree product_node;
 	product_node.put("id", r[0]);
@@ -101,7 +101,7 @@ boost::property_tree::ptree ProductModel::getProduct_json(int id){
 	products_node.push_back(std::make_pair(r[0].c_str(), product_node));
 	return products_node;
 }
-void ProductModel::addProduct( std::string title,
+void ProductModel::AddProduct( std::string title,
 													float price,
 													std::string  tags){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
@@ -123,7 +123,7 @@ void ProductModel::addProduct( std::string title,
   pqxx::result R = W.prepared("insert")(title)(price)(tags).exec();
   W.commit();
 }
-void ProductModel::updateProduct( int id,
+void ProductModel::UpdateProduct( int id,
 													std::string title,
 													float price,
 													std::string  tags){
@@ -146,7 +146,7 @@ void ProductModel::updateProduct( int id,
   W.prepared("update")(id)(title)(price)(tags).exec();
   W.commit();
 }
-void ProductModel::deleteProduct(int id){
+void ProductModel::DeleteProduct(int id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -167,12 +167,12 @@ void ProductModel::deleteProduct(int id){
   W.commit();
 }
 
-void ProductModel::createReport() {
-	pqxx::result R = getProducts(1, "", true);
+void ProductModel::CreateReport() {
+	pqxx::result R = GetProducts(1, "", true);
 	angru::wrapper::CsvWriter writer("report/products.csv");
-	writer.addData(R);
-	R = getProducts(1, "", true);
-	writer.addData(R);
+	writer.AddData(R);
+	R = GetProducts(1, "", true);
+	writer.AddData(R);
 }
 
 } // model
@@ -181,7 +181,7 @@ void ProductModel::createReport() {
 
 /*
 std::cout << "start creating report" << '\n';
-std::future<void> rep = std::async(ProductModel::createReport);
+std::future<void> rep = std::async(ProductModel::CreateReport);
 std::cout << "end creating report" << '\n';
 int n;
 for (size_t i = 0; i < 10; i++) {
@@ -193,20 +193,20 @@ rep.get();
 
 //              Retrieve data in main file
 /*
-pqxx::result R = Product::getProducts();
+pqxx::result R = Product::GetProducts();
 CSVWriter writer("products.csv");
-writer.addData(R);
-pqxx::result R2 = Product::getProduct(1);
-writer.addData(R2);
-//Product::addProduct(32, "m1911", 720.5, weekstart, weekstart, "{book}");
+writer.AddData(R);
+pqxx::result R2 = Product::GetProduct(1);
+writer.AddData(R2);
+//Product::AddProduct(32, "m1911", 720.5, weekstart, weekstart, "{book}");
 */
-/*Product::addProduct(30, "m1911", 720.5,
+/*Product::AddProduct(30, "m1911", 720.5,
 					"2016-06-22 19:10:25-07", "2016-06-22 19:10:25-07", "{gun, handgun, pistol}");*/
 
 /*
 int count = 100000;
 for (size_t i = 0; i < count; i++) {
-	Product::addProduct(i+30, "m1911", 17.5,
+	Product::AddProduct(i+30, "m1911", 17.5,
 						"2016-06-22 19:10:25-07", "2016-06-22 19:10:25-07", "{gun, handgun, pistol}");
 						std::cout << "record : "<< i << '\n';
 }*/
@@ -217,27 +217,27 @@ try
 	std::cout<<"setup database connection_string..."<<std::endl;
 	angru::wrapper::Postgresql::setup();
 
-	Product::deleteProduct(30);
-	pqxx::result R = Product::getProducts("id<15");
+	Product::DeleteProduct(30);
+	pqxx::result R = Product::GetProducts("id<15");
 	CSVWriter writer("products8.csv");
-	writer.addData(R);
+	writer.AddData(R);
 
-	boost::property_tree::ptree product_root = Product::getProducts_json("id>15 AND id<100");
+	boost::property_tree::ptree product_root = Product::GetProductsJson("id>15 AND id<100");
 	JSONWriter product_json_writer("products.json");
-	product_json_writer.addData(product_root);
+	product_json_writer.AddData(product_root);
 
-	boost::property_tree::ptree product_root_1230 = Product::getProduct_json(1230);
+	boost::property_tree::ptree product_root_1230 = Product::GetProductJson(1230);
 	JSONWriter product_json_writer2("products1230.json");
-	product_json_writer2.addData(product_root_1230);
+	product_json_writer2.AddData(product_root_1230);
 }
 */
 
-/*pqxx::result R = Product::getProducts(" id <= 12 ");
+/*pqxx::result R = Product::GetProducts(" id <= 12 ");
 CSVWriter writer("products12.csv");
-writer.addData(R);
+writer.AddData(R);
 
-Product::updateProduct(30, "m12", 11.5,
+Product::UpdateProduct(30, "m12", 11.5,
 					"2016-06-22 19:10:25-07", "2016-06-22 19:10:25-07", "{gun, mechinegun}");
 
-Product::deleteProduct(33);
+Product::DeleteProduct(33);
 */

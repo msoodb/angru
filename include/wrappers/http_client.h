@@ -15,9 +15,8 @@ class HttpClient
 private:
 
 public:
-  static void setup();
-  static int sampledo(int argc, char const *argv[]);
-  static void get(std::string const page, std::string& body, Pistache::Http::Code &code);
+  static void Setup();
+  static void Get(std::string const page, std::string& body, Pistache::Http::Code &code);
 };
 
 } // wrapper

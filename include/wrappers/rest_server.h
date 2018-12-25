@@ -17,14 +17,14 @@ private:
   Pistache::Rest::Router router;
   Pistache::Rest::Description desc;
 public:
-  static void setup(int port_number, int thread_count);
+  static void Setup(int port_number, int thread_count);
   RestServer(Pistache::Address);
-  void printCookies(const Pistache::Http::Request&);
-  void handleReady(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
-  void init(size_t thr = 2);
-  void start();
-  void shutdown();
-  void setupRoutes();
+  void PrintCookies(const Pistache::Http::Request&);
+  void HandleReady(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+  void Init(size_t thr = 2);
+  void Start();
+  void Shutdown();
+  void SetupRoutes();
 };
 
 } // wrapper

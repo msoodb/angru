@@ -8,11 +8,11 @@ namespace angru{
 namespace system{
 namespace localization{
 
-void setup();
-void output();
-void init();
-void sample();
-void sampleII();
+void Setup();
+void Output();
+void Init();
+void Sample();
+void SampleII();
 
 } // namespace localization
 

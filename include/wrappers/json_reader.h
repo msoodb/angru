@@ -14,7 +14,7 @@ public:
 			fileName(filename)
 	{ }
 
-	boost::property_tree::ptree getData();
+	boost::property_tree::ptree GetData();
 };
 
 } // wrapper

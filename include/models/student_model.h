@@ -10,47 +10,47 @@ namespace model{
 
 class StudentModel
 {
-	int student_id;
-	int entry_year;
-	std::string first_name;
-	std::string middle_name;
-	std::string last_name;
-	double GPA; //Grade Point Average
-	char gender;
 public:
-	static int zx;
-	StudentModel();  //Simple Constructor
+	StudentModel();
 	StudentModel(
-		int student_id_,
-		int entry_year_,
-		std::string first_name_,
-		std::string middle_name_,
-		std::string last_name_,
-		double GPA_, //Grade Point Average
-		char gender_);
-	StudentModel (const StudentModel&); //Copy Constructor
-	~StudentModel();   //Destructor
-	void setData(
-		int student_id_,
-		int entry_year_,
-		std::string first_name_,
-		std::string middle_name_,
-		std::string last_name_,
-		double GPA_, //Grade Point Average
-		char gender_);
+		int student_id,
+		int entry_year,
+		std::string first_name,
+		std::string middle_name,
+		std::string last_name,
+		double grade_point_avarage,
+		char gender);
+	StudentModel (const StudentModel&);
+	~StudentModel();
+	void SetData(
+		int student_id,
+		int entry_year,
+		std::string first_name,
+		std::string middle_name,
+		std::string last_name,
+		double grade_point_avarage,
+		char gender);
 	static int add(int, int);
-	void print();
+	void Print();
 	int getId();
 	int getEntryYer();
-	std::vector<std::string> getStudent();
+	std::vector<std::string> GetStudent();
 	std::string getfirst_name();
 	std::string getmiddle_name();
 	std::string getlast_name();
 	std::string getFullName();
 	double getGPA();
 	char getGender();
-	//   operator
 	StudentModel& operator ++();
+protected:
+private:
+	int student_id_;
+	int entry_year_;
+	std::string first_name_;
+	std::string middle_name_;
+	std::string last_name_;
+	double grade_point_avarage_;
+	char gender_;
 };
 
 } // model

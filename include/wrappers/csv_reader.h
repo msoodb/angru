@@ -17,7 +17,7 @@ public:
 			fileName(filename), delimeter(delm)
 	{ }
 
-	std::vector<std::vector<std::string> > getData();
+	std::vector<std::vector<std::string> > GetData();
 };
 
 } // wrapper

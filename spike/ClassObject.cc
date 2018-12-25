@@ -54,6 +54,6 @@ CSVWriter writer("StudentW.csv");
 for (Student s : vecStudents)
 {
   std::vector<std::string> v = s.getStudent();
-  writer.addDatainRow(v.begin(), v.end());
+  writer.AddDataRow(v.begin(), v.end());
 }
 //-----------------------------------------------------------------------//

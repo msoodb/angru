@@ -17,7 +17,7 @@ namespace angru{
 namespace system{
 namespace localization{
 
-void setup(){
+void Setup(){
   //LOG_INFO << "set boost::locale::time_zone::global(\"GMT+3:30\")";
   //boost::locale::time_zone::global("GMT+3:30");
   boost::locale::generator gen;
@@ -27,7 +27,7 @@ void setup(){
   std::cout.imbue(loc);
   //boost::locale::calendar	cal(loc,"GMT+4:30");
 }
-void output() {
+void Output() {
   //std::cout << "The language code is " << std::use_facet<boost::locale::info>(loc).language() << std::endl;
   //std::cout << "The language code is " << std::use_facet<boost::locale::info>(loc).name() << std::endl;
   //std::cout << "The language code is " << std::use_facet<boost::locale::info>(loc).country() << std::endl;
@@ -79,7 +79,7 @@ void output() {
   std::cout.imbue(std::locale{std::cout.getloc(), df});
   std::cout << d << '\n';*/
 }
-void init(){
+void Init(){
   // current date/time based on current system
   time_t now = time(0);
 
@@ -102,7 +102,7 @@ void init(){
   std::cout<< "(strdt)[std::string strUTCdt = asctime(gmtm);]: "<< strUTCdt <<"\n";
   std::cout<< "(now)[boost::gregorian::date weekstart(2002,Feb,1);]: "<< weekstart <<"\n";
 }
-void sample(){
+void Sample(){
   auto start = std::chrono::system_clock::now();
   std::cout << "f(44) = " << angru::tools::math::fibonacci(44) << '\n';
   auto end = std::chrono::system_clock::now();
@@ -113,7 +113,7 @@ void sample(){
   std::cout << "finished computation at " << std::ctime(&end_time)
             << "elapsed time: " << elapsed_seconds.count() << "s\n";
 }
-void sampleII(){
+void SampleII(){
   /* is an absolute time, represented as the integer number of seconds
   since the UNIX epoch (midnight GMT, 1 January 1970) */
   time_t now = time(0);

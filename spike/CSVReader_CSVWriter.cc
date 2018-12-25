@@ -4,7 +4,7 @@ try
   CSVReader reader("../data/Student.csv");
 
   // Get the data from CSV File
-  std::vector<std::vector<std::string> > dataList = reader.getData();
+  std::vector<std::vector<std::string> > dataList = reader.GetData();
 
   // Print the content of row by row on screen
   for(std::vector<std::string> vec : dataList)
@@ -19,7 +19,7 @@ try
   CSVWriter writer("StudentW.csv");
   for (std::vector<std::string> v : dataList)
   {
-    writer.addDatainRow(v.begin(), v.end());
+    writer.AddDataRow(v.begin(), v.end());
   }
 }
 catch(const angru::system::exception::error& e)

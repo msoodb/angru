@@ -14,7 +14,7 @@
 namespace angru{
 namespace wrapper{
 
-std::vector<std::vector<std::string> > CsvReader::getData()
+std::vector<std::vector<std::string> > CsvReader::GetData()
 {
   std::cout <<fileName<< '\n';
 	std::ifstream file(fileName);

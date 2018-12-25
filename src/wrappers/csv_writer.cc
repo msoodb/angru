@@ -16,7 +16,7 @@ namespace angru{
 namespace wrapper{
 
 template<typename T>
-void CsvWriter::addDatainRow(T first, T last)
+void CsvWriter::AddDataRow(T first, T last)
 {
 	std::fstream file;
 	// Open the file in truncate mode if first line else in Append Mode
@@ -35,22 +35,22 @@ void CsvWriter::addDatainRow(T first, T last)
 	// Close the file
 	file.close();
 }
-template void CsvWriter::addDatainRow(std::vector<std::string>::iterator, std::vector<std::string>::iterator);
-template void CsvWriter::addDatainRow(std::deque<std::string>::iterator, std::deque<std::string>::iterator);
-template void CsvWriter::addDatainRow(std::list<std::string>::iterator, std::list<std::string>::iterator);
-template void CsvWriter::addDatainRow(pqxx::row::iterator, pqxx::row::iterator);
+template void CsvWriter::AddDataRow(std::vector<std::string>::iterator, std::vector<std::string>::iterator);
+template void CsvWriter::AddDataRow(std::deque<std::string>::iterator, std::deque<std::string>::iterator);
+template void CsvWriter::AddDataRow(std::list<std::string>::iterator, std::list<std::string>::iterator);
+template void CsvWriter::AddDataRow(pqxx::row::iterator, pqxx::row::iterator);
 
 template<typename T>
-void CsvWriter::addData(T data)
+void CsvWriter::AddData(T data)
 {
 	LOG_INFO << "start writing data in csv: "<<fileName;
 	for (auto row : data)
 	{
-		addDatainRow(row.begin(), row.end());
+		AddDataRow(row.begin(), row.end());
 	}
 	LOG_INFO << "end writing data in csv: "<<fileName;
 }
-template void CsvWriter::addData(pqxx::result);
+template void CsvWriter::AddData(pqxx::result);
 
 } // wrapper
 } // angru

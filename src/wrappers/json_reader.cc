@@ -11,7 +11,7 @@
 namespace angru{
 namespace wrapper{
 
-boost::property_tree::ptree JsonReader::getData()
+boost::property_tree::ptree JsonReader::GetData()
 {
   // Create a root
   boost::property_tree::ptree iroot;

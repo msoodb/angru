@@ -18,9 +18,9 @@ public:
 			fileName(filename), delimeter(delm), linesCount(0)
 	{}
 	template<typename T>
-	void addDatainRow(T first, T last);
+	void AddDataRow(T first, T last);
 
-	void addData(boost::property_tree::ptree);
+	void AddData(boost::property_tree::ptree);
 };
 
 } // wrapper

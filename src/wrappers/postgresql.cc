@@ -23,10 +23,10 @@ std::string Postgresql::connection_str="";
 Postgresql::Postgresql(){
 }
 
-void Postgresql::setup()
+void Postgresql::Setup()
 {
 	JsonReader config_reader("../config/config.json");
-	boost::property_tree::ptree config = config_reader.getData();
+	boost::property_tree::ptree config = config_reader.GetData();
 	dbname = config.get<std::string>("connection_string.dbname");
 	user = config.get<std::string>("connection_string.user");
 	password = config.get<std::string>("connection_string.password");

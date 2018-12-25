@@ -52,13 +52,13 @@ int main(int argc, char const *argv[])
 		//------------------------------------------------------------------
 		LOG_INFO << "setup logfile using boost...";
 		LOG_INFO << "setup database connection_string using pqxx...";
-		angru::wrapper::Postgresql::setup();
+		angru::wrapper::Postgresql::Setup();
 		LOG_INFO << "setup datetime and calendar using boost...";
-		angru::system::localization::setup();
+		angru::system::localization::Setup();
 		LOG_INFO << "setup HTTP_Client using pistache...";
-		//angru::wrapper::HttpClient::setup();
+		//angru::wrapper::HttpClient::Setup();
 		LOG_INFO << "setup REST_Server using pistache...";
-		angru::wrapper::RestServer::setup(port, thr);
+		angru::wrapper::RestServer::Setup(port, thr);
 		//------------------------------------------------------------------
 		std::thread t(hello);
 		std::cout << "before join" << '\n';
