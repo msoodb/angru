@@ -13,17 +13,17 @@
 namespace angru{
 namespace wrapper{
 
-class _PostgreSQL
+class Postgresql
 {
 private:
-	static std::string _dbname;
-	static std::string _user;
-  static std::string _password;
-  static std::string _hostaddr;
-  static std::string _port;
-	static std::string _connection_string;
+	static std::string dbname;
+	static std::string user;
+  static std::string password;
+  static std::string hostaddr;
+  static std::string port;
+	static std::string connection_str;
 public:
-	_PostgreSQL();
+	Postgresql();
 	static void setup();
 	static std::string connection_string();
 };

@@ -1,4 +1,4 @@
-#include "wrappers/_RESTServer.h"
+#include "wrappers/rest_server.h"
 
 #include <iostream>
 #include <string>
@@ -6,31 +6,31 @@
 #include <pistache/http.h>
 #include <pistache/router.h>
 #include <pistache/endpoint.h>
-#include "tools/_system.h"
-#include "controllers/productController.h"
-#include "controllers/userController.h"
+#include "tools/system.h"
+#include "controllers/product_controller.h"
+#include "controllers/user_controller.h"
 
 namespace angru{
 namespace wrapper{
 
-void REST_Server::setup(int port_number, int thread_count){
+void RestServer::setup(int port_number, int thread_count){
   Pistache::Port port(port_number);
   Pistache::Address addr(Pistache::Ipv4::any(), port);
   std::cout << "Using " <<  std::thread::hardware_concurrency() << " Cores" << std::endl;
   std::cout << "Using " << port_number << " port number" << std::endl;
   std::cout << "Using " << thread_count << " threads" << std::endl;
-  REST_Server rest_server(addr);
+  RestServer rest_server(addr);
   rest_server.init(thread_count);
   rest_server.start();
   rest_server.shutdown();
 }
 
-REST_Server::REST_Server(Pistache::Address addr) :
+RestServer::RestServer(Pistache::Address addr) :
   httpEndpoint(std::make_shared<Pistache::Http::Endpoint>(addr))
   ,desc("angru RESTful API", "0.1"){
 }
 
-void REST_Server::setupRoutes() {
+void RestServer::setupRoutes() {
   using namespace angru::mvc::controller;
   using namespace Pistache::Rest::Routes;
 
@@ -49,7 +49,7 @@ void REST_Server::setupRoutes() {
   Put(router, "/users/:id", bind(&UserController::doUpdateUser));
 }
 
-void REST_Server::printCookies(const Pistache::Http::Request& req) {
+void RestServer::printCookies(const Pistache::Http::Request& req) {
     auto cookies = req.cookies();
     std::cout << "Cookies: [" << std::endl;
     const std::string indent(4, ' ');
@@ -59,12 +59,12 @@ void REST_Server::printCookies(const Pistache::Http::Request& req) {
     std::cout << "]" << std::endl;
 }
 
-void REST_Server::handleReady(const Pistache::Rest::Request&,
+void RestServer::handleReady(const Pistache::Rest::Request&,
   Pistache::Http::ResponseWriter response) {
     response.send(Pistache::Http::Code::Ok, "1");
 }
 
-void REST_Server::init(size_t thr) {
+void RestServer::init(size_t thr) {
     auto opts = Pistache::Http::Endpoint::options()
         .threads(thr)
         .flags(Pistache::Tcp::Options::InstallSignalHandler);
@@ -72,12 +72,12 @@ void REST_Server::init(size_t thr) {
     setupRoutes();
 }
 
-void REST_Server::start() {
+void RestServer::start() {
     httpEndpoint->setHandler(router.handler());
     httpEndpoint->serve();
 }
 
-void REST_Server::shutdown() {
+void RestServer::shutdown() {
     httpEndpoint->shutdown();
 }
 

@@ -1,4 +1,4 @@
-#include "models/productModel.h"
+#include "models/product_model.h"
 
 #include <iostream>
 #include <string>
@@ -6,10 +6,10 @@
 #include <pqxx/pqxx>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-#include "tools/_system.h"
-#include "tools/_log.h"
-#include "wrappers/_PostgreSQL.h"
-#include "wrappers/_CSVWriter.h"
+#include "tools/system.h"
+#include "tools/log.h"
+#include "wrappers/postgresql.h"
+#include "wrappers/csv_writer.h"
 
 namespace angru{
 namespace mvc{
@@ -18,7 +18,7 @@ namespace model{
 ProductModel::ProductModel(){}
 ProductModel::~ProductModel(){}
 pqxx::result ProductModel::getProducts(int page, std::string query, bool paging){
-	pqxx::connection C(angru::wrapper::_PostgreSQL::connection_string());
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
 			 LOG_INFO << "Opened database successfully: " << C.dbname();
@@ -66,7 +66,7 @@ boost::property_tree::ptree ProductModel::getProducts_json(int page, std::string
 	return products_node;
 }
 pqxx::row ProductModel::getProduct(int id){
-	pqxx::connection C(angru::wrapper::_PostgreSQL::connection_string());
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
 			 LOG_INFO << "Opened database successfully: " << C.dbname();
@@ -104,7 +104,7 @@ boost::property_tree::ptree ProductModel::getProduct_json(int id){
 void ProductModel::addProduct( std::string title,
 													float price,
 													std::string  tags){
-	pqxx::connection C(angru::wrapper::_PostgreSQL::connection_string());
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
 			 LOG_INFO << "Opened database successfully: " << C.dbname();
@@ -127,7 +127,7 @@ void ProductModel::updateProduct( int id,
 													std::string title,
 													float price,
 													std::string  tags){
-	pqxx::connection C(angru::wrapper::_PostgreSQL::connection_string());
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
 			 LOG_INFO << "Opened database successfully: " << C.dbname();
@@ -147,7 +147,7 @@ void ProductModel::updateProduct( int id,
   W.commit();
 }
 void ProductModel::deleteProduct(int id){
-	pqxx::connection C(angru::wrapper::_PostgreSQL::connection_string());
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
 			 LOG_INFO << "Opened database successfully: " << C.dbname();
@@ -169,7 +169,7 @@ void ProductModel::deleteProduct(int id){
 
 void ProductModel::createReport() {
 	pqxx::result R = getProducts(1, "", true);
-	angru::wrapper::CSVWriter writer("report/products.csv");
+	angru::wrapper::CsvWriter writer("report/products.csv");
 	writer.addData(R);
 	R = getProducts(1, "", true);
 	writer.addData(R);
@@ -215,7 +215,7 @@ for (size_t i = 0; i < count; i++) {
 try
 {
 	std::cout<<"setup database connection_string..."<<std::endl;
-	angru::wrapper::_PostgreSQL::setup();
+	angru::wrapper::Postgresql::setup();
 
 	Product::deleteProduct(30);
 	pqxx::result R = Product::getProducts("id<15");

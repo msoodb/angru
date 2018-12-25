@@ -1,9 +1,9 @@
-#include "wrappers/_HTTPClient.h"
+#include "wrappers/http_client.h"
 
 #include <iostream>
 #include <string>
 
-#include "tools/_system.h"
+#include "tools/system.h"
 
 using namespace Pistache;
 using namespace Pistache::Http;
@@ -11,9 +11,9 @@ using namespace Pistache::Http;
 namespace angru{
 namespace wrapper{
 
-void HTTP_Client::setup(){
+void HttpClient::setup(){
 }
-void HTTP_Client::get(std::string const page, std::string& body, Pistache::Http::Code &code){
+void HttpClient::get(std::string const page, std::string& body, Pistache::Http::Code &code){
 
     //page = "http://api.timezonedb.com/v2.1/get-time-zone?key=97IQ2W4BJCT5&format=json&by=zone&zone=America/Chicago";
     //page = "http://51.68.208.142/data.json";

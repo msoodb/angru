@@ -1,4 +1,4 @@
-#include "models/studentModel.h"
+#include "models/student_model.h"
 
 #include <iostream>
 #include <string>

@@ -1,4 +1,4 @@
-#include "views/productView.h"
+#include "views/product_view.h"
 
 #include <iostream>
 #include <string>
@@ -6,10 +6,10 @@
 #include <pqxx/pqxx>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-#include "tools/_system.h"
-#include "tools/_log.h"
-#include "wrappers/_PostgreSQL.h"
-#include "models/productModel.h"
+#include "tools/system.h"
+#include "tools/log.h"
+#include "wrappers/postgresql.h"
+#include "models/product_model.h"
 
 namespace angru{
 namespace mvc{

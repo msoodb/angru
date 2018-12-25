@@ -1,4 +1,4 @@
-#include "controllers/userController.h"
+#include "controllers/user_controller.h"
 
 #include <iostream>
 #include <string>
@@ -8,11 +8,11 @@
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ini_parser.hpp>
 #include <jwt/jwt.hpp>
-#include "tools/_system.h"
-#include "tools/_log.h"
-#include "wrappers/_PostgreSQL.h"
-#include "tools/_security.h"
-#include "models/userModel.h"
+#include "tools/system.h"
+#include "tools/log.h"
+#include "wrappers/postgresql.h"
+#include "tools/security.h"
+#include "models/user_model.h"
 
 namespace angru{
 namespace mvc{

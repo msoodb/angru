@@ -7,13 +7,13 @@
 namespace angru{
 namespace wrapper{
 
-class CSVReader
+class CsvReader
 {
 	std::string fileName;
 	std::string delimeter;
 
 public:
-	CSVReader(std::string filename, std::string delm = ",") :
+	CsvReader(std::string filename, std::string delm = ",") :
 			fileName(filename), delimeter(delm)
 	{ }
 

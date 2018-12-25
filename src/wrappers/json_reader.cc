@@ -1,17 +1,17 @@
-#include "wrappers/_JSONReader.h"
+#include "wrappers/json_reader.h"
 
 #include <iostream>
 #include <string>
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-#include "tools/_system.h"
-#include "tools/_log.h"
+#include "tools/system.h"
+#include "tools/log.h"
 
 namespace angru{
 namespace wrapper{
 
-boost::property_tree::ptree JSONReader::getData()
+boost::property_tree::ptree JsonReader::getData()
 {
   // Create a root
   boost::property_tree::ptree iroot;

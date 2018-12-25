@@ -1,4 +1,4 @@
-#include "tools/_system.h"
+#include "tools/system.h"
 
 #include <iostream>
 #include <pthread.h>
@@ -9,8 +9,8 @@
 #include <boost/locale.hpp>
 #include <boost/locale/date_time.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
-#include "tools/_math.h"
-#include "tools/_log.h"
+#include "tools/math.h"
+#include "tools/log.h"
 
 
 namespace angru{

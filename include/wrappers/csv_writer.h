@@ -1,29 +1,29 @@
-#ifndef ANGRU_JSONWRITER_H_
-#define ANGRU_JSONWRITER_H_
+#ifndef ANGRU_CSVWRITER_H_
+#define ANGRU_CSVWRITER_H_
 
 #include <iostream>
-#include <boost/property_tree/ptree.hpp>
 
 namespace angru{
 namespace wrapper{
 
-class JSONWriter
+class CsvWriter
 {
 	std::string fileName;
 	std::string delimeter;
 	int linesCount;
 
 public:
-	JSONWriter(std::string filename, std::string delm = ",") :
+	CsvWriter(std::string filename, std::string delm = ",") :
 			fileName(filename), delimeter(delm), linesCount(0)
 	{}
 	template<typename T>
 	void addDatainRow(T first, T last);
 
-	void addData(boost::property_tree::ptree);
+  template<typename T>
+	void addData(T data);
 };
 
 } // wrapper
 } // angru
 
-#endif // ANGRU_JSONWRITER_H_
+#endif // ANGRU_CSVWRITER_H_

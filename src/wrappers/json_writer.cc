@@ -1,4 +1,4 @@
-#include "wrappers/_JSONWriter.h"
+#include "wrappers/json_writer.h"
 
 #include <iostream>
 #include <fstream>
@@ -11,14 +11,14 @@
 #include <pqxx/pqxx>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-#include "tools/_system.h"
-#include "tools/_log.h"
+#include "tools/system.h"
+#include "tools/log.h"
 
 namespace angru{
 namespace wrapper{
 
 template<typename T>
-void JSONWriter::addDatainRow(T first, T last)
+void JsonWriter::addDatainRow(T first, T last)
 {
 	std::fstream file;
 	// Open the file in truncate mode if first line else in Append Mode
@@ -37,12 +37,12 @@ void JSONWriter::addDatainRow(T first, T last)
 	// Close the file
 	file.close();
 }
-template void JSONWriter::addDatainRow(std::vector<std::string>::iterator, std::vector<std::string>::iterator);
-template void JSONWriter::addDatainRow(std::deque<std::string>::iterator, std::deque<std::string>::iterator);
-template void JSONWriter::addDatainRow(std::list<std::string>::iterator, std::list<std::string>::iterator);
-template void JSONWriter::addDatainRow(pqxx::row::iterator, pqxx::row::iterator);
+template void JsonWriter::addDatainRow(std::vector<std::string>::iterator, std::vector<std::string>::iterator);
+template void JsonWriter::addDatainRow(std::deque<std::string>::iterator, std::deque<std::string>::iterator);
+template void JsonWriter::addDatainRow(std::list<std::string>::iterator, std::list<std::string>::iterator);
+template void JsonWriter::addDatainRow(pqxx::row::iterator, pqxx::row::iterator);
 
-void JSONWriter::addData(boost::property_tree::ptree oroot){
+void JsonWriter::addData(boost::property_tree::ptree oroot){
 	LOG_INFO << "start writing data in json: "<<fileName;
   boost::property_tree::write_json(fileName, oroot);
 	LOG_INFO << "end writing data in json: "<<fileName;

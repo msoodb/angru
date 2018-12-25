@@ -10,10 +10,10 @@
 #include <pqxx/pqxx>
 #include <boost/date_time/gregorian/gregorian.hpp>
 
-#include "_PostgreSQL.h"
+#include "postgresql.h"
 #include "_rapidjson.h"
 #include "_boostjson.h"
-#include "_CSVWriter.h"
+#include "csv_writer.h"
 #include "_log.h"
 #include "_math.h"
 #include "_datetime.h"

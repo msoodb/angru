@@ -1,4 +1,4 @@
-#include "wrappers/_CSVReader.h"
+#include "wrappers/csv_reader.h"
 
 #include <iostream>
 #include <fstream>
@@ -9,12 +9,12 @@
 
 #include <boost/algorithm/string.hpp>
 #include <boost/current_function.hpp>
-#include "tools/_system.h"
+#include "tools/system.h"
 
 namespace angru{
 namespace wrapper{
 
-std::vector<std::vector<std::string> > CSVReader::getData()
+std::vector<std::vector<std::string> > CsvReader::getData()
 {
   std::cout <<fileName<< '\n';
 	std::ifstream file(fileName);

@@ -1,4 +1,4 @@
-#include "tools/_log.h"
+#include "tools/log.h"
 
 #include <fstream>
 #include <ostream>

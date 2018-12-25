@@ -16,18 +16,18 @@
 #include <boost/locale.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include "wrappers/_PostgreSQL.h"
-#include "wrappers/_CSVWriter.h"
-#include "wrappers/_CSVReader.h"
-#include "wrappers/_JSONWriter.h"
-#include "wrappers/_JSONReader.h"
-#include "wrappers/_RESTServer.h"
-#include "wrappers/_HTTPClient.h"
-#include "tools/_security.h"
-#include "tools/_system.h"
-#include "tools/_log.h"
-#include "tools/_math.h"
-#include "models/productModel.h"
+#include "wrappers/postgresql.h"
+#include "wrappers/csv_writer.h"
+#include "wrappers/csv_reader.h"
+#include "wrappers/json_writer.h"
+#include "wrappers/json_reader.h"
+#include "wrappers/rest_server.h"
+#include "wrappers/http_client.h"
+#include "tools/security.h"
+#include "tools/system.h"
+#include "tools/log.h"
+#include "tools/math.h"
+#include "models/product_model.h"
 #include "structures/async_structure.h"
 
 void hello() {
@@ -52,13 +52,13 @@ int main(int argc, char const *argv[])
 		//------------------------------------------------------------------
 		LOG_INFO << "setup logfile using boost...";
 		LOG_INFO << "setup database connection_string using pqxx...";
-		angru::wrapper::_PostgreSQL::setup();
+		angru::wrapper::Postgresql::setup();
 		LOG_INFO << "setup datetime and calendar using boost...";
 		angru::system::localization::setup();
 		LOG_INFO << "setup HTTP_Client using pistache...";
-		//HTTP_Client::setup();
+		//angru::wrapper::HttpClient::setup();
 		LOG_INFO << "setup REST_Server using pistache...";
-		angru::wrapper::REST_Server::setup(port, thr);
+		angru::wrapper::RestServer::setup(port, thr);
 		//------------------------------------------------------------------
 		std::thread t(hello);
 		std::cout << "before join" << '\n';

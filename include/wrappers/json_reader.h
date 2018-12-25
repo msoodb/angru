@@ -5,12 +5,12 @@
 namespace angru{
 namespace wrapper{
 
-class JSONReader
+class JsonReader
 {
 	std::string fileName;
 
 public:
-	JSONReader(std::string filename) :
+	JsonReader(std::string filename) :
 			fileName(filename)
 	{ }
 

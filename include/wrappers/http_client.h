@@ -10,7 +10,7 @@
 namespace angru{
 namespace wrapper{
 
-class HTTP_Client
+class HttpClient
 {
 private:
 

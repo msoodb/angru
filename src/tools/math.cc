@@ -1,4 +1,4 @@
-#include "tools/_math.h"
+#include "tools/math.h"
 
 #include <iostream>
 #include <chrono>

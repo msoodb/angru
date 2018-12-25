@@ -1,10 +1,10 @@
 #ifndef ANGRU_BOOST_STRUCTURE_H_
 #define ANGRU_BOOST_STRUCTURE_H_
 
-class Boost_Structure
+class BoostStructure
 {
 public:
-	Boost_Structure();  //Simple Constructor
+	BoostStructure();  //Simple Constructor
 
 	//----------------------------------  Useful Macros
 	static void testMacroA();

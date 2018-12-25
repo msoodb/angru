@@ -10,7 +10,7 @@
 namespace angru{
 namespace wrapper{
 
-class REST_Server
+class RestServer
 {
 private:
   std::shared_ptr<Pistache::Http::Endpoint> httpEndpoint;
@@ -18,7 +18,7 @@ private:
   Pistache::Rest::Description desc;
 public:
   static void setup(int port_number, int thread_count);
-  REST_Server(Pistache::Address);
+  RestServer(Pistache::Address);
   void printCookies(const Pistache::Http::Request&);
   void handleReady(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
   void init(size_t thr = 2);

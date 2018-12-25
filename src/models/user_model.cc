@@ -1,4 +1,4 @@
-#include "models/userModel.h"
+#include "models/user_model.h"
 
 #include <iostream>
 #include <string>
@@ -6,9 +6,9 @@
 #include <pqxx/pqxx>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-#include "tools/_system.h"
-#include "tools/_log.h"
-#include "wrappers/_PostgreSQL.h"
+#include "tools/system.h"
+#include "tools/log.h"
+#include "wrappers/postgresql.h"
 
 namespace angru{
 namespace mvc{
@@ -17,7 +17,7 @@ namespace model{
 UserModel::UserModel(){}
 UserModel::~UserModel(){}
 pqxx::result UserModel::getUsers(int page, std::string query){
-	pqxx::connection C(angru::wrapper::_PostgreSQL::connection_string());
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
 			 LOG_INFO << "Opened database successfully: " << C.dbname();
@@ -63,7 +63,7 @@ boost::property_tree::ptree UserModel::getUsers_json(int page, std::string query
 	return users_node;
 }
 pqxx::row UserModel::getUser(int id){
-	pqxx::connection C(angru::wrapper::_PostgreSQL::connection_string());
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
 			 LOG_INFO << "Opened database successfully: " << C.dbname();
@@ -100,7 +100,7 @@ boost::property_tree::ptree UserModel::getUser_json(int id){
 void UserModel::addUser( 	std::string  email,
 													std::string  password,
 													std::string  details){
-	pqxx::connection C(angru::wrapper::_PostgreSQL::connection_string());
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
 			 LOG_INFO << "Opened database successfully: " << C.dbname();
@@ -123,7 +123,7 @@ void UserModel::updateUser(int id,
 													std::string  email,
 													std::string  password,
 													std::string  details){
-	pqxx::connection C(angru::wrapper::_PostgreSQL::connection_string());
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
 			 LOG_INFO << "Opened database successfully: " << C.dbname();
@@ -142,7 +142,7 @@ void UserModel::updateUser(int id,
   W.commit();
 }
 void UserModel::deleteUser(int id){
-	pqxx::connection C(angru::wrapper::_PostgreSQL::connection_string());
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
 			 LOG_INFO << "Opened database successfully: " << C.dbname();
