@@ -11,6 +11,13 @@
 #include "wrappers/_PostgreSQL.h"
 #include "models/productModel.h"
 
+namespace angru{
+namespace mvc{
+namespace view{
 
 ProductView::ProductView(){}
 ProductView::~ProductView(){}
+
+} // angru
+} // mvc
+} // view
