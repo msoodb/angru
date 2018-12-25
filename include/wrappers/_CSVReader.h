@@ -4,6 +4,9 @@
 #include <iostream>
 #include <vector>
 
+namespace angru{
+namespace wrapper{
+
 class CSVReader
 {
 	std::string fileName;
@@ -16,5 +19,8 @@ public:
 
 	std::vector<std::vector<std::string> > getData();
 };
+
+} // wrapper
+} // angru
 
 #endif // ANGRU_CSVREADER_H_

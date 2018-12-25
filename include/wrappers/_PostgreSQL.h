@@ -10,6 +10,9 @@
 #define PORT std::string
 #define OFFSET_COUNT 20
 
+namespace angru{
+namespace wrapper{
+
 class _PostgreSQL
 {
 private:
@@ -24,5 +27,8 @@ public:
 	static void setup();
 	static std::string connection_string();
 };
+
+} // wrapper
+} // angru
 
 #endif // ANGRU_POSTGRESQL_H_

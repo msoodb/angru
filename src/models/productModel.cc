@@ -11,10 +11,14 @@
 #include "wrappers/_PostgreSQL.h"
 #include "wrappers/_CSVWriter.h"
 
+namespace angru{
+namespace mvc{
+namespace model{
+
 ProductModel::ProductModel(){}
 ProductModel::~ProductModel(){}
 pqxx::result ProductModel::getProducts(int page, std::string query, bool paging){
-	pqxx::connection C(_PostgreSQL::connection_string());
+	pqxx::connection C(angru::wrapper::_PostgreSQL::connection_string());
 	try {
 		if (C.is_open()) {
 			 LOG_INFO << "Opened database successfully: " << C.dbname();
@@ -62,7 +66,7 @@ boost::property_tree::ptree ProductModel::getProducts_json(int page, std::string
 	return products_node;
 }
 pqxx::row ProductModel::getProduct(int id){
-	pqxx::connection C(_PostgreSQL::connection_string());
+	pqxx::connection C(angru::wrapper::_PostgreSQL::connection_string());
 	try {
 		if (C.is_open()) {
 			 LOG_INFO << "Opened database successfully: " << C.dbname();
@@ -100,7 +104,7 @@ boost::property_tree::ptree ProductModel::getProduct_json(int id){
 void ProductModel::addProduct( std::string title,
 													float price,
 													std::string  tags){
-	pqxx::connection C(_PostgreSQL::connection_string());
+	pqxx::connection C(angru::wrapper::_PostgreSQL::connection_string());
 	try {
 		if (C.is_open()) {
 			 LOG_INFO << "Opened database successfully: " << C.dbname();
@@ -123,7 +127,7 @@ void ProductModel::updateProduct( int id,
 													std::string title,
 													float price,
 													std::string  tags){
-	pqxx::connection C(_PostgreSQL::connection_string());
+	pqxx::connection C(angru::wrapper::_PostgreSQL::connection_string());
 	try {
 		if (C.is_open()) {
 			 LOG_INFO << "Opened database successfully: " << C.dbname();
@@ -143,7 +147,7 @@ void ProductModel::updateProduct( int id,
   W.commit();
 }
 void ProductModel::deleteProduct(int id){
-	pqxx::connection C(_PostgreSQL::connection_string());
+	pqxx::connection C(angru::wrapper::_PostgreSQL::connection_string());
 	try {
 		if (C.is_open()) {
 			 LOG_INFO << "Opened database successfully: " << C.dbname();
@@ -165,11 +169,16 @@ void ProductModel::deleteProduct(int id){
 
 void ProductModel::createReport() {
 	pqxx::result R = getProducts(1, "", true);
-	CSVWriter writer("report/products.csv");
+	angru::wrapper::CSVWriter writer("report/products.csv");
 	writer.addData(R);
 	R = getProducts(1, "", true);
 	writer.addData(R);
 }
+
+} // model
+} // mvc
+} // angru
+
 /*
 std::cout << "start creating report" << '\n';
 std::future<void> rep = std::async(ProductModel::createReport);
@@ -206,7 +215,7 @@ for (size_t i = 0; i < count; i++) {
 try
 {
 	std::cout<<"setup database connection_string..."<<std::endl;
-	_PostgreSQL::setup();
+	angru::wrapper::_PostgreSQL::setup();
 
 	Product::deleteProduct(30);
 	pqxx::result R = Product::getProducts("id<15");

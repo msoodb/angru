@@ -4,6 +4,9 @@
 #include <iostream>
 #include <boost/property_tree/ptree.hpp>
 
+namespace angru{
+namespace wrapper{
+
 class JSONWriter
 {
 	std::string fileName;
@@ -19,5 +22,8 @@ public:
 
 	void addData(boost::property_tree::ptree);
 };
+
+} // wrapper
+} // angru
 
 #endif // ANGRU_JSONWRITER_H_

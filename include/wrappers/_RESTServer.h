@@ -7,6 +7,9 @@
 #include <pistache/router.h>
 #include <pistache/serializer/rapidjson.h>
 
+namespace angru{
+namespace wrapper{
+
 class REST_Server
 {
 private:
@@ -23,5 +26,8 @@ public:
   void shutdown();
   void setupRoutes();
 };
+
+} // wrapper
+} // angru
 
 #endif // ANGRU_RESTSERVER_H_

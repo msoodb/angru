@@ -10,10 +10,14 @@
 #include "tools/_log.h"
 #include "wrappers/_PostgreSQL.h"
 
+namespace angru{
+namespace mvc{
+namespace model{
+
 UserModel::UserModel(){}
 UserModel::~UserModel(){}
 pqxx::result UserModel::getUsers(int page, std::string query){
-	pqxx::connection C(_PostgreSQL::connection_string());
+	pqxx::connection C(angru::wrapper::_PostgreSQL::connection_string());
 	try {
 		if (C.is_open()) {
 			 LOG_INFO << "Opened database successfully: " << C.dbname();
@@ -59,7 +63,7 @@ boost::property_tree::ptree UserModel::getUsers_json(int page, std::string query
 	return users_node;
 }
 pqxx::row UserModel::getUser(int id){
-	pqxx::connection C(_PostgreSQL::connection_string());
+	pqxx::connection C(angru::wrapper::_PostgreSQL::connection_string());
 	try {
 		if (C.is_open()) {
 			 LOG_INFO << "Opened database successfully: " << C.dbname();
@@ -96,7 +100,7 @@ boost::property_tree::ptree UserModel::getUser_json(int id){
 void UserModel::addUser( 	std::string  email,
 													std::string  password,
 													std::string  details){
-	pqxx::connection C(_PostgreSQL::connection_string());
+	pqxx::connection C(angru::wrapper::_PostgreSQL::connection_string());
 	try {
 		if (C.is_open()) {
 			 LOG_INFO << "Opened database successfully: " << C.dbname();
@@ -119,7 +123,7 @@ void UserModel::updateUser(int id,
 													std::string  email,
 													std::string  password,
 													std::string  details){
-	pqxx::connection C(_PostgreSQL::connection_string());
+	pqxx::connection C(angru::wrapper::_PostgreSQL::connection_string());
 	try {
 		if (C.is_open()) {
 			 LOG_INFO << "Opened database successfully: " << C.dbname();
@@ -138,7 +142,7 @@ void UserModel::updateUser(int id,
   W.commit();
 }
 void UserModel::deleteUser(int id){
-	pqxx::connection C(_PostgreSQL::connection_string());
+	pqxx::connection C(angru::wrapper::_PostgreSQL::connection_string());
 	try {
 		if (C.is_open()) {
 			 LOG_INFO << "Opened database successfully: " << C.dbname();
@@ -156,3 +160,7 @@ void UserModel::deleteUser(int id){
 	W.prepared("update")(id).exec();
   W.commit();
 }
+
+} // model
+} // mvc
+} // angru

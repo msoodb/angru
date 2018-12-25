@@ -3,6 +3,9 @@
 
 #include <iostream>
 
+namespace angru{
+namespace wrapper{
+
 class CSVWriter
 {
 	std::string fileName;
@@ -19,5 +22,8 @@ public:
   template<typename T>
 	void addData(T data);
 };
+
+} // wrapper
+} // angru
 
 #endif // ANGRU_CSVWRITER_H_

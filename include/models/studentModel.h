@@ -4,6 +4,10 @@
 #include <iostream>
 #include <vector>
 
+namespace angru{
+namespace mvc{
+namespace model{
+
 class StudentModel
 {
 	int student_id;
@@ -48,5 +52,9 @@ public:
 	//   operator
 	StudentModel& operator ++();
 };
+
+} // model
+} // mvc
+} // angru
 
 #endif // ANGRU_STUDENT_MODEL_H_

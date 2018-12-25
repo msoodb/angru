@@ -8,12 +8,17 @@
 #include "wrappers/_JSONReader.h"
 #include "tools/_system.h"
 
- std::string _PostgreSQL::_dbname="";
- std::string _PostgreSQL::_user="";
- std::string _PostgreSQL::_password="";
- std::string _PostgreSQL::_hostaddr="";
- std::string _PostgreSQL::_port="";
- std::string _PostgreSQL::_connection_string="";
+
+
+ namespace angru{
+ namespace wrapper{
+
+std::string _PostgreSQL::_dbname="";
+std::string _PostgreSQL::_user="";
+std::string _PostgreSQL::_password="";
+std::string _PostgreSQL::_hostaddr="";
+std::string _PostgreSQL::_port="";
+std::string _PostgreSQL::_connection_string="";
 
 _PostgreSQL::_PostgreSQL(){
 }
@@ -33,3 +38,6 @@ void _PostgreSQL::setup()
 std::string _PostgreSQL::connection_string(){
 		return _connection_string;
 }
+
+} // wrapper
+} // angru

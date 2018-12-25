@@ -8,6 +8,10 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 
+namespace angru{
+namespace mvc{
+namespace model{
+
 class ProductModel
 {
 public:
@@ -22,5 +26,9 @@ public:
 	static void deleteProduct(int);
 	static void createReport();
 };
+
+} // model
+} // mvc
+} // angru
 
 #endif // ANGRU_PRODUCT_MODEL_H_

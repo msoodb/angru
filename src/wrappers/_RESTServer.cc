@@ -10,6 +10,9 @@
 #include "controllers/productController.h"
 #include "controllers/userController.h"
 
+namespace angru{
+namespace wrapper{
+
 void REST_Server::setup(int port_number, int thread_count){
   Pistache::Port port(port_number);
   Pistache::Address addr(Pistache::Ipv4::any(), port);
@@ -22,24 +25,28 @@ void REST_Server::setup(int port_number, int thread_count){
   rest_server.shutdown();
 }
 
-REST_Server::REST_Server(Pistache::Address addr) : httpEndpoint(std::make_shared<Pistache::Http::Endpoint>(addr))
-  , desc("angru RESTful API", "0.1"){
+REST_Server::REST_Server(Pistache::Address addr) :
+  httpEndpoint(std::make_shared<Pistache::Http::Endpoint>(addr))
+  ,desc("angru RESTful API", "0.1"){
 }
 
 void REST_Server::setupRoutes() {
-    Pistache::Rest::Routes::Post(router, "/login", Pistache::Rest::Routes::bind(&UserController::doLogin));
-    //-----------------------------------------------------------------------------------------------------------
-    Pistache::Rest::Routes::Get(router, "/products", Pistache::Rest::Routes::bind(&ProductController::doGetProducts));
-    Pistache::Rest::Routes::Get(router, "/products/:id", Pistache::Rest::Routes::bind(&ProductController::doGetProduct));
-    Pistache::Rest::Routes::Delete(router, "/products/:id", Pistache::Rest::Routes::bind(&ProductController::doDeleteProduct));
-    Pistache::Rest::Routes::Post(router, "/products", Pistache::Rest::Routes::bind(&ProductController::doAddProduct));
-    Pistache::Rest::Routes::Put(router, "/products/:id", Pistache::Rest::Routes::bind(&ProductController::doUpdateProduct));
-    //-----------------------------------------------------------------------------------------------------------
-    Pistache::Rest::Routes::Get(router, "/users", Pistache::Rest::Routes::bind(&UserController::doGetUsers));
-    Pistache::Rest::Routes::Get(router, "/users/:id", Pistache::Rest::Routes::bind(&UserController::doGetUser));
-    Pistache::Rest::Routes::Delete(router, "/users/:id", Pistache::Rest::Routes::bind(&UserController::doDeleteUser));
-    Pistache::Rest::Routes::Post(router, "/users", Pistache::Rest::Routes::bind(&UserController::doAddUser));
-    Pistache::Rest::Routes::Put(router, "/users/:id", Pistache::Rest::Routes::bind(&UserController::doUpdateUser));
+  using namespace angru::mvc::controller;
+  using namespace Pistache::Rest::Routes;
+
+  Post(router, "/login", bind(&UserController::doLogin));
+
+  Get(router, "/products", bind(&ProductController::doGetProducts));
+  Get(router, "/products/:id", bind(&ProductController::doGetProduct));
+  Delete(router, "/products/:id", bind(&ProductController::doDeleteProduct));
+  Post(router, "/products", bind(&ProductController::doAddProduct));
+  Put(router, "/products/:id", bind(&ProductController::doUpdateProduct));
+
+  Get(router, "/users", bind(&UserController::doGetUsers));
+  Get(router, "/users/:id", bind(&UserController::doGetUser));
+  Delete(router, "/users/:id", bind(&UserController::doDeleteUser));
+  Post(router, "/users", bind(&UserController::doAddUser));
+  Put(router, "/users/:id", bind(&UserController::doUpdateUser));
 }
 
 void REST_Server::printCookies(const Pistache::Http::Request& req) {
@@ -52,7 +59,8 @@ void REST_Server::printCookies(const Pistache::Http::Request& req) {
     std::cout << "]" << std::endl;
 }
 
-void REST_Server::handleReady(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter response) {
+void REST_Server::handleReady(const Pistache::Rest::Request&,
+  Pistache::Http::ResponseWriter response) {
     response.send(Pistache::Http::Code::Ok, "1");
 }
 
@@ -72,3 +80,6 @@ void REST_Server::start() {
 void REST_Server::shutdown() {
     httpEndpoint->shutdown();
 }
+
+} // wrapper
+} // angru

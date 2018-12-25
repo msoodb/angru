@@ -14,6 +14,10 @@
 #include "tools/_security.h"
 #include "models/userModel.h"
 
+namespace angru{
+namespace mvc{
+namespace controller{
+
 UserController::UserController(){}
 UserController::~UserController(){}
 
@@ -45,7 +49,7 @@ void UserController::doLogin(const Pistache::Rest::Request& request,
       response.send(Pistache::Http::Code::Not_Found, "Invalid Username or Password.");
     }
     std::string query = " email = '" + email + "' and password = '" + password_sha1 + "'";
-    pqxx::result R = UserModel::getUsers(1, query);
+    pqxx::result R = angru::mvc::model::UserModel::getUsers(1, query);
     pqxx::row r;
   	if (R.size() != 1){
       response.send(Pistache::Http::Code::Not_Found, "Invalid Username or Password.");
@@ -68,7 +72,7 @@ void UserController::doGetUsers(const Pistache::Rest::Request& request,
       auto value = query.get("page").get();
       page = std::stoi(value);
     }
-    boost::property_tree::ptree user_ = UserModel::getUsers_json(page);
+    boost::property_tree::ptree user_ = angru::mvc::model::UserModel::getUsers_json(page);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, user_);
 
@@ -89,7 +93,7 @@ void UserController::doGetUser(const Pistache::Rest::Request& request,
         auto value = request.param(":id");
         id = value.as<int>();
     }
-    boost::property_tree::ptree user_ = UserModel::getUser_json(id);
+    boost::property_tree::ptree user_ = angru::mvc::model::UserModel::getUser_json(id);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, user_);
 
@@ -110,7 +114,7 @@ void UserController::doDeleteUser(const Pistache::Rest::Request& request,
         auto value = request.param(":id");
         id = value.as<int>();
     }
-    UserModel::deleteUser(id);
+    angru::mvc::model::UserModel::deleteUser(id);
     response.send(Pistache::Http::Code::Ok, "User delet.");
 }
 void UserController::doAddUser(const Pistache::Rest::Request& request,
@@ -136,7 +140,7 @@ void UserController::doAddUser(const Pistache::Rest::Request& request,
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Users not found.");
     }
-    UserModel::addUser(email,password_sha1,details);
+    angru::mvc::model::UserModel::addUser(email,password_sha1,details);
     response.send(Pistache::Http::Code::Ok, "User added.");
 }
 void UserController::doUpdateUser(const Pistache::Rest::Request& request,
@@ -171,6 +175,10 @@ void UserController::doUpdateUser(const Pistache::Rest::Request& request,
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Users not found.");
     }
-    UserModel::updateUser(id,email,password_sha1,details);
+    angru::mvc::model::UserModel::updateUser(id,email,password_sha1,details);
     response.send(Pistache::Http::Code::Ok, "User updated.");
 }
+
+} // controller
+} // mvc
+} // angru

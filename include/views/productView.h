@@ -16,8 +16,8 @@ public:
 	~ProductView();
 };
 
-} // angru
-} // mvc
 } // view
+} // mvc
+} // angru
 
 #endif // ANGRU_PRODUCT_VIEW_H_

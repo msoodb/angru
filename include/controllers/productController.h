@@ -11,6 +11,10 @@
 #include <pistache/router.h>
 #include <pistache/serializer/rapidjson.h>
 
+namespace angru{
+namespace mvc{
+namespace controller{
+
 class ProductController
 {
 public:
@@ -22,5 +26,9 @@ public:
 	static void doAddProduct(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 	static void doUpdateProduct(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 };
+
+} // controller
+} // mvc
+} // angru
 
 #endif // ANGRU_PRODUCT_CONTROLLER_H_

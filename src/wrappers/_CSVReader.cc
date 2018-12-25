@@ -11,11 +11,9 @@
 #include <boost/current_function.hpp>
 #include "tools/_system.h"
 
+namespace angru{
+namespace wrapper{
 
-/*
-* Parses through csv file line by line and returns the data
-* in vector of vector of strings.
-*/
 std::vector<std::vector<std::string> > CSVReader::getData()
 {
   std::cout <<fileName<< '\n';
@@ -45,3 +43,6 @@ std::vector<std::vector<std::string> > CSVReader::getData()
 
 	return dataList;
 }
+
+} // wrapper
+} // angru

@@ -8,6 +8,9 @@
 #include "tools/_system.h"
 #include "tools/_log.h"
 
+namespace angru{
+namespace wrapper{
+
 boost::property_tree::ptree JSONReader::getData()
 {
   // Create a root
@@ -21,3 +24,6 @@ boost::property_tree::ptree JSONReader::getData()
   // Return
 	return iroot;
 }
+
+} // wrapper
+} // angru

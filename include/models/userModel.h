@@ -8,6 +8,9 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 
+namespace angru{
+namespace mvc{
+namespace model{
 
 class UserModel
 {
@@ -22,5 +25,9 @@ public:
 	static void updateUser(int, std::string, std::string, std::string);
 	static void deleteUser(int);
 };
+
+} // model
+} // mvc
+} // angru
 
 #endif // ANGRU_USER_MODEL_H_

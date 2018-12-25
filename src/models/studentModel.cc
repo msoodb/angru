@@ -4,6 +4,10 @@
 #include <string>
 #include <vector>
 
+namespace angru{
+namespace mvc{
+namespace model{
+
 StudentModel::StudentModel(int student_id_,	int entry_year_, std::string first_name_,
 	std::string middle_name_, std::string last_name_, double GPA_, char gender_) :
 	student_id(student_id_), entry_year(entry_year_), first_name(first_name_),
@@ -93,3 +97,7 @@ StudentModel& StudentModel::operator ++()
 	this->entry_year++;
 	return *this;
 }
+
+} // model
+} // mvc
+} // angru

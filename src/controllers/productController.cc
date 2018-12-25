@@ -13,6 +13,9 @@
 #include "tools/_security.h"
 #include "models/productModel.h"
 
+namespace angru{
+namespace mvc{
+namespace controller{
 
 ProductController::ProductController(){}
 ProductController::~ProductController(){}
@@ -25,7 +28,7 @@ void ProductController::doGetProducts(const Pistache::Rest::Request& request,
       auto value = query.get("page").get();
       page = std::stoi(value);
     }
-    boost::property_tree::ptree product_ = ProductModel::getProducts_json(page);
+    boost::property_tree::ptree product_ = angru::mvc::model::ProductModel::getProducts_json(page);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, product_);
 
@@ -44,7 +47,7 @@ void ProductController::doGetProduct(const Pistache::Rest::Request& request,
         auto value = request.param(":id");
         id = value.as<int>();
     }
-    boost::property_tree::ptree product_ = ProductModel::getProduct_json(id);
+    boost::property_tree::ptree product_ = angru::mvc::model::ProductModel::getProduct_json(id);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, product_);
 
@@ -64,7 +67,7 @@ void ProductController::doDeleteProduct(const Pistache::Rest::Request& request,
         auto value = request.param(":id");
         id = value.as<int>();
     }
-    ProductModel::deleteProduct(id);
+    angru::mvc::model::ProductModel::deleteProduct(id);
     response.send(Pistache::Http::Code::Ok, "Product delet.");
 }
 void ProductController::doAddProduct(const Pistache::Rest::Request& request,
@@ -88,7 +91,7 @@ void ProductController::doAddProduct(const Pistache::Rest::Request& request,
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Products not found.");
     }
-    ProductModel::addProduct(title,price,tags);
+    angru::mvc::model::ProductModel::addProduct(title,price,tags);
     response.send(Pistache::Http::Code::Ok, "Product added.");
 }
 void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
@@ -120,6 +123,10 @@ void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Products not found.");
     }
-    ProductModel::updateProduct(id,title,price,tags);
+    angru::mvc::model::ProductModel::updateProduct(id,title,price,tags);
     response.send(Pistache::Http::Code::Ok, "Products updated.");
 }
+
+} // controller
+} // mvc
+} // angru

@@ -14,6 +14,9 @@
 #include "tools/_system.h"
 #include "tools/_log.h"
 
+namespace angru{
+namespace wrapper{
+
 template<typename T>
 void JSONWriter::addDatainRow(T first, T last)
 {
@@ -44,6 +47,10 @@ void JSONWriter::addData(boost::property_tree::ptree oroot){
   boost::property_tree::write_json(fileName, oroot);
 	LOG_INFO << "end writing data in json: "<<fileName;
 }
+
+} // wrapper
+} // angru
+
 /*template<typename T>
 void JSONWriter::addData(T data)
 {

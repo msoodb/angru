@@ -12,6 +12,9 @@
 #include "tools/_system.h"
 #include "tools/_log.h"
 
+namespace angru{
+namespace wrapper{
+
 template<typename T>
 void CSVWriter::addDatainRow(T first, T last)
 {
@@ -48,3 +51,6 @@ void CSVWriter::addData(T data)
 	LOG_INFO << "end writing data in csv: "<<fileName;
 }
 template void CSVWriter::addData(pqxx::result);
+
+} // wrapper
+} // angru

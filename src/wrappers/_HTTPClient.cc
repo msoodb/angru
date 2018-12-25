@@ -8,6 +8,9 @@
 using namespace Pistache;
 using namespace Pistache::Http;
 
+namespace angru{
+namespace wrapper{
+
 void HTTP_Client::setup(){
 }
 void HTTP_Client::get(std::string const page, std::string& body, Pistache::Http::Code &code){
@@ -43,6 +46,9 @@ void HTTP_Client::get(std::string const page, std::string& body, Pistache::Http:
 
     client.shutdown();
 }
+
+} // wrapper
+} // angru
 
 /*std::string page = "http://api.timezonedb.com/v2.1/get-time-zone?key=97IQ2W4BJCT5&format=json&by=zone&zone=America/Chicago";
 std::string body="";
