@@ -8,11 +8,10 @@
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ini_parser.hpp>
 #include <jwt/jwt.hpp>
-#include "tools/_error.h"
+#include "tools/_system.h"
 #include "tools/_log.h"
 #include "wrappers/_PostgreSQL.h"
-#include "tools/_authorization.h"
-#include "tools/_cryptography.h"
+#include "tools/_security.h"
 #include "models/userModel.h"
 
 UserController::UserController(){}
@@ -20,7 +19,7 @@ UserController::~UserController(){}
 
 void UserController::doLogin(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    _Authorization::ContentTypeJSONCheck(request,response);
+    angru::security::authorization::ContentTypeJSONCheck(request,response);
     response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
     auto headers = request.headers();
     auto content_type = headers.tryGet<Pistache::Http::Header::ContentType>();
@@ -40,7 +39,7 @@ void UserController::doLogin(const Pistache::Rest::Request& request,
         boost::property_tree::read_json(ss, pt);
         email = pt.get<std::string>("email");
         password = pt.get<std::string>("password");
-        password_sha1 = _cryptography::get_sha1(password);
+        password_sha1 = angru::security::cryptography::get_sha1(password);
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Invalid Username or Password.");
@@ -52,7 +51,7 @@ void UserController::doLogin(const Pistache::Rest::Request& request,
       response.send(Pistache::Http::Code::Not_Found, "Invalid Username or Password.");
     }
 		r = R[0];
-    std::string password_jwt = _cryptography::get_jwt(email,email);
+    std::string password_jwt = angru::security::cryptography::get_jwt(email,email);
     std::string token =  password_jwt;
     if (token.empty()) {
         response.send(Pistache::Http::Code::Not_Found, "Invalid Username or Password.");
@@ -62,7 +61,7 @@ void UserController::doLogin(const Pistache::Rest::Request& request,
 }
 void UserController::doGetUsers(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    _Authorization::AuthorizationCheck(request,response);
+    angru::security::authorization::AuthorizationCheck(request,response);
     int page = 1;
     auto query = request.query();
     if(query.has("page")) {
@@ -84,7 +83,7 @@ void UserController::doGetUsers(const Pistache::Rest::Request& request,
 }
 void UserController::doGetUser(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    _Authorization::AuthorizationCheck(request,response);
+    angru::security::authorization::AuthorizationCheck(request,response);
     int id = -1;
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
@@ -105,7 +104,7 @@ void UserController::doGetUser(const Pistache::Rest::Request& request,
 }
 void UserController::doDeleteUser(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    _Authorization::AuthorizationCheck(request,response);
+    angru::security::authorization::AuthorizationCheck(request,response);
     int id = -1;
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
@@ -117,7 +116,7 @@ void UserController::doDeleteUser(const Pistache::Rest::Request& request,
 void UserController::doAddUser(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
-    _Authorization::ContentTypeJSONCheck(request,response);
+    angru::security::authorization::ContentTypeJSONCheck(request,response);
     auto body = request.body();
     std::string email;
     std::string password;
@@ -131,7 +130,7 @@ void UserController::doAddUser(const Pistache::Rest::Request& request,
       boost::property_tree::read_json(ss, pt);
       email = pt.get<std::string>("email");
       password = pt.get<std::string>("password");
-      password_sha1 = _cryptography::get_sha1(password);
+      password_sha1 = angru::security::cryptography::get_sha1(password);
       details = pt.get<std::string>("details");
     }
     catch (std::exception const& e){
@@ -142,8 +141,8 @@ void UserController::doAddUser(const Pistache::Rest::Request& request,
 }
 void UserController::doUpdateUser(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    _Authorization::AuthorizationCheck(request,response);
-    _Authorization::ContentTypeJSONCheck(request,response);
+    angru::security::authorization::AuthorizationCheck(request,response);
+    angru::security::authorization::ContentTypeJSONCheck(request,response);
     int id = -1;
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
@@ -166,7 +165,7 @@ void UserController::doUpdateUser(const Pistache::Rest::Request& request,
         id = pt.get<int>("id");
         email = pt.get<std::string>("email");
         password = pt.get<std::string>("password");
-        password_sha1 = _cryptography::get_sha1(password);
+        password_sha1 = angru::security::cryptography::get_sha1(password);
         details = pt.get<std::string>("details");
     }
     catch (std::exception const& e){

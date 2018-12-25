@@ -9,7 +9,7 @@
 
 #include <boost/algorithm/string.hpp>
 #include <boost/current_function.hpp>
-#include "tools/_error.h"
+#include "tools/_system.h"
 
 
 /*
@@ -23,7 +23,7 @@ std::vector<std::vector<std::string> > CSVReader::getData()
   std::cout << "Could not open file" << '\n';
 	if(!file.is_open())
 	{
-		throw _error("Could not open file " + fileName);
+		throw angru::system::exception::error("Could not open file " + fileName);
 	}
 
 	std::vector<std::vector<std::string> > dataList;
@@ -39,7 +39,7 @@ std::vector<std::vector<std::string> > CSVReader::getData()
 	// Close the File
 	if(!file.eof())
 	{
-		throw _error("Error reading dictionary file " + fileName);
+		throw angru::system::exception::error("Error reading dictionary file " + fileName);
 	}
 	file.close();
 

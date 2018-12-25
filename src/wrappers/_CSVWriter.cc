@@ -9,7 +9,7 @@
 
 #include <boost/algorithm/string.hpp>
 #include <pqxx/pqxx>
-#include "tools/_error.h"
+#include "tools/_system.h"
 #include "tools/_log.h"
 
 template<typename T>

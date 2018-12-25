@@ -1,6 +1,7 @@
-#include "tools/_localize.h"
+#include "tools/_system.h"
 
 #include <iostream>
+#include <pthread.h>
 #include <string>
 #include <ctime>
 #include <chrono>
@@ -9,10 +10,14 @@
 #include <boost/locale/date_time.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include "tools/_math.h"
-#include "tools/_error.h"
 #include "tools/_log.h"
 
-void _localize::setup(){
+
+namespace angru{
+namespace system{
+namespace localization{
+
+void setup(){
   //LOG_INFO << "set boost::locale::time_zone::global(\"GMT+3:30\")";
   //boost::locale::time_zone::global("GMT+3:30");
   boost::locale::generator gen;
@@ -22,8 +27,7 @@ void _localize::setup(){
   std::cout.imbue(loc);
   //boost::locale::calendar	cal(loc,"GMT+4:30");
 }
-
-void _localize::output() {
+void output() {
   //std::cout << "The language code is " << std::use_facet<boost::locale::info>(loc).language() << std::endl;
   //std::cout << "The language code is " << std::use_facet<boost::locale::info>(loc).name() << std::endl;
   //std::cout << "The language code is " << std::use_facet<boost::locale::info>(loc).country() << std::endl;
@@ -75,8 +79,7 @@ void _localize::output() {
   std::cout.imbue(std::locale{std::cout.getloc(), df});
   std::cout << d << '\n';*/
 }
-
-void _localize::init(){
+void init(){
   // current date/time based on current system
   time_t now = time(0);
 
@@ -99,10 +102,9 @@ void _localize::init(){
   std::cout<< "(strdt)[std::string strUTCdt = asctime(gmtm);]: "<< strUTCdt <<"\n";
   std::cout<< "(now)[boost::gregorian::date weekstart(2002,Feb,1);]: "<< weekstart <<"\n";
 }
-
-void _localize::sample(){
+void sample(){
   auto start = std::chrono::system_clock::now();
-  std::cout << "f(44) = " << _math::fibonacci(44) << '\n';
+  std::cout << "f(44) = " << angru::tools::math::fibonacci(44) << '\n';
   auto end = std::chrono::system_clock::now();
 
   std::chrono::duration<double> elapsed_seconds = end-start;
@@ -111,8 +113,7 @@ void _localize::sample(){
   std::cout << "finished computation at " << std::ctime(&end_time)
             << "elapsed time: " << elapsed_seconds.count() << "s\n";
 }
-
-void _localize::sampleII(){
+void sampleII(){
   /* is an absolute time, represented as the integer number of seconds
   since the UNIX epoch (midnight GMT, 1 January 1970) */
   time_t now = time(0);
@@ -155,3 +156,64 @@ void _localize::sampleII(){
   //clock_t rawclock;
   //struct tm * timeinfo;
 }
+
+} // namespace localization
+
+namespace{
+
+void signalHandler( int signum ){
+  std::cout <<"Interrupt signal ("<<signum<<") recieved.\n";
+  exit(signum);
+}
+void * PrintHello(void *threadid){
+  long tid;
+  tid = (long) threadid;
+  std::cout<<"Hello Wormald! Thread ID: "<<tid<<"\n";
+  pthread_exit(NULL);
+}
+void * CalcFib(void *threadid){
+  int n = 44;
+  long tid;
+  tid = (long) threadid;
+  // /long long j = _math::fibonacci(n);
+  std::cout<<"fibonacci ("<<n<<") is: "<<angru::tools::math::fibonacci(n)<<"\n";
+  pthread_exit(NULL);
+}
+void useThread2(){
+  /*pthread_t threads[NUM_THREADS];
+  int rc;
+  int i;
+
+  for(i=0; i<NUM_THREADS; i++)
+  {
+    std::cout <<"main() : creating thread : "<< i << std::endl;
+    rc = pthread_create(&threads[i], NULL, CalcFib, (void *)i);
+
+    if(rc){
+      std::cout << "Error : unable to create thread : " << rc <<std::endl;
+      exit(-1);
+    }
+  }
+  pthread_exit(NULL);*/
+}
+void useThread(){
+  /*pthread_t threads[NUM_THREADS];
+  int rc;
+  int i;
+
+  for(i=0; i<NUM_THREADS; i++)
+  {
+    std::cout <<"main() : creating thread : "<< i << std::endl;
+    rc = pthread_create(&threads[i], NULL, PrintHello, (void *)i);
+
+    if(rc){
+      std::cout << "Error : unable to create thread : " << rc <<std::endl;
+      exit(-1);
+    }
+  }
+  pthread_exit(NULL);*/
+}
+
+} // namespace cryptography
+} // namespace tools
+} // namespace angru

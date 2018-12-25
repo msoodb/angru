@@ -6,7 +6,7 @@
 #include <pqxx/pqxx>
 #include <boost/property_tree/ptree.hpp>
 #include "wrappers/_JSONReader.h"
-#include "tools/_error.h"
+#include "tools/_system.h"
 
  std::string _PostgreSQL::_dbname="";
  std::string _PostgreSQL::_user="";

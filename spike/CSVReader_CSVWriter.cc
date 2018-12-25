@@ -22,7 +22,7 @@ try
     writer.addDatainRow(v.begin(), v.end());
   }
 }
-catch(const _error& e)
+catch(const angru::system::exception::error& e)
 {
   std::cerr<<"Error: "<<e.what()<<std::endl;
   return 1;

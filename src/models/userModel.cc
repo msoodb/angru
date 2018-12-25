@@ -6,7 +6,7 @@
 #include <pqxx/pqxx>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-#include "tools/_error.h"
+#include "tools/_system.h"
 #include "tools/_log.h"
 #include "wrappers/_PostgreSQL.h"
 
@@ -21,7 +21,7 @@ pqxx::result UserModel::getUsers(int page, std::string query){
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
-	} catch (const _error &e) {
+	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
@@ -67,7 +67,7 @@ pqxx::row UserModel::getUser(int id){
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
-	} catch (const _error &e) {
+	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
@@ -104,7 +104,7 @@ void UserModel::addUser( 	std::string  email,
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
-	} catch (const _error &e) {
+	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
@@ -127,7 +127,7 @@ void UserModel::updateUser(int id,
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
-	} catch (const _error &e) {
+	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
@@ -146,7 +146,7 @@ void UserModel::deleteUser(int id){
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
-	} catch (const _error &e) {
+	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();

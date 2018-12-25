@@ -10,7 +10,7 @@ try
 {
   Pistache::Http::listenAndServe<HelloHandler>("*:9080");
 }
-catch(const _error& e)
+catch(const angru::system::exception::error& e)
 {
   std::cerr<<"Error: "<<e.what()<<std::endl;
   return 1;

@@ -14,7 +14,6 @@
 #include "_rapidjson.h"
 #include "_boostjson.h"
 #include "_CSVWriter.h"
-#include "_error.h"
 #include "_log.h"
 #include "_math.h"
 #include "_datetime.h"
@@ -39,7 +38,7 @@ int main(int argc, char const *argv[])
 	{
 		Pistache::Http::listenAndServe<HelloHandler>("*:9080");	  return 0;
 	}
-	catch(const _error& e)
+	catch(const angru::system::exception::error& e)
 	{
     LOG_ERROR << e.what();
 		return 1;

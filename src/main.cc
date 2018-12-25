@@ -23,9 +23,8 @@
 #include "wrappers/_JSONReader.h"
 #include "wrappers/_RESTServer.h"
 #include "wrappers/_HTTPClient.h"
-#include "tools/_cryptography.h"
-#include "tools/_localize.h"
-#include "tools/_error.h"
+#include "tools/_security.h"
+#include "tools/_system.h"
 #include "tools/_log.h"
 #include "tools/_math.h"
 #include "models/productModel.h"
@@ -55,7 +54,7 @@ int main(int argc, char const *argv[])
 		LOG_INFO << "setup database connection_string using pqxx...";
 		_PostgreSQL::setup();
 		LOG_INFO << "setup datetime and calendar using boost...";
-		_localize::setup();
+		angru::system::localization::setup();
 		LOG_INFO << "setup HTTP_Client using pistache...";
 		//HTTP_Client::setup();
 		LOG_INFO << "setup REST_Server using pistache...";
@@ -66,7 +65,7 @@ int main(int argc, char const *argv[])
 		t.join();
 		std::cout << "after join thread" << '\n';
 	}
-	catch(const _error& e)
+	catch(const angru::system::exception::error & e)
 	{
     LOG_ERROR << e.what();
 		return 1;

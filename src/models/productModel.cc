@@ -6,7 +6,7 @@
 #include <pqxx/pqxx>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-#include "tools/_error.h"
+#include "tools/_system.h"
 #include "tools/_log.h"
 #include "wrappers/_PostgreSQL.h"
 #include "wrappers/_CSVWriter.h"
@@ -22,7 +22,7 @@ pqxx::result ProductModel::getProducts(int page, std::string query, bool paging)
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
-	} catch (const _error &e) {
+	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
@@ -70,7 +70,7 @@ pqxx::row ProductModel::getProduct(int id){
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
-	} catch (const _error &e) {
+	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
@@ -108,7 +108,7 @@ void ProductModel::addProduct( std::string title,
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
-	} catch (const _error &e) {
+	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
@@ -131,7 +131,7 @@ void ProductModel::updateProduct( int id,
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
-	} catch (const _error &e) {
+	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
@@ -151,7 +151,7 @@ void ProductModel::deleteProduct(int id){
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
-	} catch (const _error &e) {
+	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();

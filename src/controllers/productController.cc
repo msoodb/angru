@@ -7,10 +7,10 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ini_parser.hpp>
-#include "tools/_error.h"
+#include "tools/_system.h"
 #include "tools/_log.h"
 #include "wrappers/_PostgreSQL.h"
-#include "tools/_authorization.h"
+#include "tools/_security.h"
 #include "models/productModel.h"
 
 
@@ -18,7 +18,7 @@ ProductController::ProductController(){}
 ProductController::~ProductController(){}
 void ProductController::doGetProducts(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    _Authorization::AuthorizationCheck(request,response);
+    angru::security::authorization::AuthorizationCheck(request,response);
     int page = 1;
     auto query = request.query();
     if(query.has("page")) {
@@ -38,7 +38,7 @@ void ProductController::doGetProducts(const Pistache::Rest::Request& request,
 }
 void ProductController::doGetProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    _Authorization::AuthorizationCheck(request,response);
+    angru::security::authorization::AuthorizationCheck(request,response);
     int id = -1;
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
@@ -58,7 +58,7 @@ void ProductController::doGetProduct(const Pistache::Rest::Request& request,
 }
 void ProductController::doDeleteProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    _Authorization::AuthorizationCheck(request,response);
+    angru::security::authorization::AuthorizationCheck(request,response);
     int id = -1;
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
@@ -69,8 +69,8 @@ void ProductController::doDeleteProduct(const Pistache::Rest::Request& request,
 }
 void ProductController::doAddProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    _Authorization::AuthorizationCheck(request,response);
-    _Authorization::ContentTypeJSONCheck(request,response);
+    angru::security::authorization::AuthorizationCheck(request,response);
+    angru::security::authorization::ContentTypeJSONCheck(request,response);
     auto body = request.body();
     std::string title;
     float price;
@@ -93,8 +93,8 @@ void ProductController::doAddProduct(const Pistache::Rest::Request& request,
 }
 void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    _Authorization::AuthorizationCheck(request,response);
-    _Authorization::ContentTypeJSONCheck(request,response);
+    angru::security::authorization::AuthorizationCheck(request,response);
+    angru::security::authorization::ContentTypeJSONCheck(request,response);
     int id = -1;
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
