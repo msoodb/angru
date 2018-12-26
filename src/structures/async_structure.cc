@@ -8,21 +8,21 @@
 #include <vector>
 #include <algorithm>
 
-int Async_Structure::add1(int x, int y){
+int AsyncStructure::add1(int x, int y){
   int count = 12;
   for (size_t i = 0; i < count; i++) {
     std::this_thread::sleep_for(std::chrono::seconds(1));
   }
   return x + y;
 }
-int Async_Structure::add2(int x, int y){
+int AsyncStructure::add2(int x, int y){
   int count = 7;
   for (size_t i = 0; i < count; i++) {
     std::this_thread::sleep_for(std::chrono::seconds(1));
   }
   return x + y;
 }
-int Async_Structure::add3(int x, int y){
+int AsyncStructure::add3(int x, int y){
   int count = 5;
   for (size_t i = 0; i < count; i++) {
     std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -30,7 +30,7 @@ int Async_Structure::add3(int x, int y){
   return x + y;
 }
 
-void Async_Structure::test_async(){
+void AsyncStructure::test_async(){
 		//------------ Sync programming
 		//int s1 = _math::add1(8, 12);
 		//std::cout << "s1 is : "<< s1 << '\n';

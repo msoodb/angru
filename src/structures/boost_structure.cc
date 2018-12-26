@@ -13,19 +13,19 @@
 #include <boost/function.hpp>
 
 //---------------------------------------------------------------------------------------------//
-Boost_Structure::Boost_Structure()
+BoostStructure::BoostStructure()
 {
 }
 
-void Boost_Structure::testMacroA()
+void BoostStructure::testMacroA()
 {
 	std::cout<<"You have called "<<BOOST_CURRENT_FUNCTION<<std::endl;
 }
-void Boost_Structure::testMacroB()
+void BoostStructure::testMacroB()
 {
 	BOOST_STATIC_ASSERT(2==2);
 }
-void Boost_Structure::testMacroC()
+void BoostStructure::testMacroC()
 {
 	std::vector<double> myVec(10);
 	BOOST_FOREACH(double& d, myVec)
@@ -37,20 +37,20 @@ void Boost_Structure::testMacroC()
 		std::cout<<"d: "<<d<<std::endl;
 	}
 }
-void Boost_Structure::testMacroD()
+void BoostStructure::testMacroD()
 {
 	BOOST_ERROR ("failure to launch");
 	double x = 0.0;
 	BOOST_TEST(x=0);
 }
 //---------------------------------------------------------------------------------------------//
-void Boost_Structure::testRawPointer()
+void BoostStructure::testRawPointer()
 {
 	/*A* ptr_myA = new A(1.0);
 	throw "Error Ocurred in Class A.";
 	delete ptr_myA;   //ptr_myA wont be deleted.!!!*/
 }
-void Boost_Structure::testSharedPointer()
+void BoostStructure::testSharedPointer()
 {
 	//boost::shared_ptr<A> bptr_myA(new A(1.0));
 	//std::cout<<bptr_myA->getValue()<<std::endl;
@@ -61,28 +61,28 @@ void Boost_Structure::testSharedPointer()
 	bptr_myA.reset(new A(3.0));*/
 }
 //---------------------------------------------------------------------------------------------//
-void Boost_Structure::distributionFunc1()
+void BoostStructure::distributionFunc1()
 {
 
 }
-void Boost_Structure::distributionFunc2()
+void BoostStructure::distributionFunc2()
 {
 
 }
 //---------------------------------------------------------------------------------------------//
-void Boost_Structure::randomFunc1()
+void BoostStructure::randomFunc1()
 {
 
 }
-void Boost_Structure::randomFunc2()
+void BoostStructure::randomFunc2()
 {
 
 }
-void Boost_Structure::randomFunc3()
+void BoostStructure::randomFunc3()
 {
 
 }
-void Boost_Structure::randomFunc4()
+void BoostStructure::randomFunc4()
 {
 
 }
