@@ -1,18 +1,68 @@
-server: 
-create user angru
-sudo apt-get install build-essential      //debian
-sudo yum groupinstall 'Development Tools' // centos
-git clone https://github.com/msoodb/angru
+angru-machine
+--------------------------------------------------------------------------
+root@198.143.183.226:LZvnVjZHauwNV7
+angru@198.143.183.226:1235
+root@198.143.183.245:xCXXyQ4UKpjZbx
+angru@198.143.183.245:1235
+--------------------------------------------------------------------------
+ssh root@198.143.183.226
+useradd angru
+passwd angru
+usermod -aG wheel angru
+su - angru
+--------------------------------------------------------------------------
+//if .ssh dose not 
+//exist mkdir .ssh
+cd ~/.ssh
+ssh-keygen
+cat id_rsa.pub
+copy id_rsa.pub to deploy key to angru project on github
+--------------------------------------------------------------------------
+sudo yum groupinstall 'Development Tools'
+git clone git@github.com:msoodb/angru.git
+cd angru
 mkdir bin
-mkdir all folder in src to build
-install Postgresql
-pg_restore data/angrudb
-sudo apt-get install rapidjson-dev
-sudo apt-get install libpqxx-dev
-sudo apt-get install libboost-dev
-sudo apt-get install openssl
-sudo apt-get install libcurl4-openssl-dev
-git clone git@github.com:arun11299/cpp-jwt.git
-install cpp-jwt
-https://github.com/oktal/pistache
-install pistache
+mkdir build
+cd build
+mkdir controllers
+mkdir models
+mkdir structures
+mkdir tools
+mkdir views
+mkdir wrappers
+--------------------------------------------------------------------------
+sudo yum install postgresql-server postgresql-contrib
+sudo postgresql-setup initdb
+sudo vi /var/lib/pgsql/data/pg_hba.conf
+
+		pg_hba.conf excerpt (original)
+host    all             all             127.0.0.1/32            ident
+host    all             all             ::1/128                 ident
+			
+		pg_hba.conf excerpt (updated)
+
+host    all             all             127.0.0.1/32            md5
+host    all             all             ::1/128                 md5
+
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
+sudo -i -u postgres
+psql
+create user angru;
+alter user angru password '1235';
+create database angrudb;
+alter database angrudb owner to angru;
+grant ALL on DATABASE angrudb to angru;
+--pg_restore -i -h localhost -p 5432 -U angru -d angrudb -v 
+		"~/angru/database/angrudb/angrudb.dump"
+--------------------------------------------------------------------------
+openssl
+boost
+rapidjson
+libpqxx
+pistache
+cmake
+curl
+nginx
+cpp-jwt
+--------------------------------------------------------------------------
