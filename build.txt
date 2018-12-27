@@ -6,6 +6,7 @@ root@198.143.183.245:xCXXyQ4UKpjZbx
 angru@198.143.183.245:1235
 --------------------------------------------------------------------------
 ssh root@198.143.183.226
+cat /etc/os-release
 useradd angru
 passwd angru
 usermod -aG wheel angru
@@ -50,11 +51,11 @@ sudo -i -u postgres
 psql
 create user angru;
 alter user angru password '1235';
+alter user angru with superuser;
 create database angrudb;
 alter database angrudb owner to angru;
 grant ALL on DATABASE angrudb to angru;
---pg_restore -i -h localhost -p 5432 -U angru -d angrudb -v 
-		"~/angru/database/angrudb/angrudb.dump"
+pg_restore --no-owner --dbname angrudb ~/angru/database/angrudb/angrudb.dump
 --------------------------------------------------------------------------
 openssl
 boost
