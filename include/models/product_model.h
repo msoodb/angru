@@ -19,7 +19,7 @@ public:
 	~ProductModel();
 	static pqxx::result GetProducts(int page=1, std::string query="", bool paging=false);
 	static boost::property_tree::ptree GetProductsJson(int page=1, std::string query="");
-  static pqxx::row GetProduct(int);
+  static pqxx::result GetProduct(int);
 	static boost::property_tree::ptree GetProductJson(int);
 	static void AddProduct(std::string, float, std::string);
 	static void UpdateProduct(int, std::string, float, std::string);

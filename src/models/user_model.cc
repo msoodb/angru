@@ -51,18 +51,17 @@ boost::property_tree::ptree UserModel::GetUsersJson(int page, std::string query)
 	int pageCount = count / OFFSET_COUNT;
 	boost::property_tree::ptree users_node;
 	boost::property_tree::ptree user_node;
-	for(pqxx::row r : R)
-	{
-		user_node.put("id", r[0]);
-		user_node.put("email", r[1]);
-		user_node.put("password", r[2]);
-		user_node.put("details", r[3]);
-		user_node.put("created_at", r[4]);
-		users_node.push_back(std::make_pair(r[0].c_str(), user_node));
+for (size_t i = 0; i < R.size(); i++) {
+		user_node.put("id", R[i][0]);
+		user_node.put("email", R[i][1]);
+		user_node.put("password", R[i][2]);
+		user_node.put("details", R[i][3]);
+		user_node.put("created_at", R[i][4]);
+		users_node.push_back(std::make_pair(R[i][0].c_str(), user_node));
 	}
 	return users_node;
 }
-pqxx::row UserModel::GetUser(int id){
+pqxx::result UserModel::GetUser(int id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -79,22 +78,18 @@ pqxx::row UserModel::GetUser(int id){
   C.prepare("find", "SELECT id, email, details, created_at \
 																FROM users where id = $1 and deleted_at is NULL ");
   pqxx::result R = W.prepared("find")(id).exec();
-	pqxx::row r;
-	if (R.size() == 1){
-		r = R[0];
-	}
   W.commit();
-	return r;
+	return R;
 }
 boost::property_tree::ptree UserModel::GetUserJson(int id){
-	pqxx::row r = GetUser(id);
+	pqxx::result R = GetUser(id);
 	boost::property_tree::ptree users_node;
 	boost::property_tree::ptree user_node;
-	user_node.put("id", r[0]);
-	user_node.put("email", r[1]);
-	user_node.put("details", r[2]);
-	user_node.put("created_at", r[3]);
-	users_node.push_back(std::make_pair(r[0].c_str(), user_node));
+	user_node.put("id", R[0][0]);
+	user_node.put("email", R[0][1]);
+	user_node.put("details", R[0][2]);
+	user_node.put("created_at", R[0][3]);
+	users_node.push_back(std::make_pair(R[0][0].c_str(), user_node));
 	return users_node;
 }
 void UserModel::AddUser( 	std::string  email,

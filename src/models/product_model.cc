@@ -54,18 +54,17 @@ boost::property_tree::ptree ProductModel::GetProductsJson(int page, std::string 
 	int pageCount = count / OFFSET_COUNT;
 	boost::property_tree::ptree products_node;
 	boost::property_tree::ptree product_node;
-	for(pqxx::row r : R)
-	{
-		product_node.put<int>("id", r[0].as<int>());
-		product_node.put("title", r[1]);
-		product_node.put("price", r[2]);
-		product_node.put("created_at", r[3]);
-		product_node.put("tags", r[4]);
-		products_node.push_back(std::make_pair(r[0].c_str(), product_node));
+	for (size_t i = 0; i < R.size(); i++) {
+		product_node.put<int>("id", R[i][0].as<int>());
+		product_node.put("title", R[i][1]);
+		product_node.put("price", R[i][2]);
+		product_node.put("created_at", R[i][3]);
+		product_node.put("tags", R[i][4]);
+		products_node.push_back(std::make_pair(R[i][0].c_str(), product_node));
 	}
 	return products_node;
 }
-pqxx::row ProductModel::GetProduct(int id){
+pqxx::result ProductModel::GetProduct(int id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -82,23 +81,19 @@ pqxx::row ProductModel::GetProduct(int id){
   C.prepare("find", "SELECT id, title, price, created_at, \
 								tags FROM products where id = $1 and deleted_at is NULL ");
   pqxx::result R = W.prepared("find")(id).exec();
-	pqxx::row r;
-	if (R.size() == 1){
-		r = R[0];
-	}
-  W.commit();
-	return r;
+	W.commit();
+	return R;
 }
 boost::property_tree::ptree ProductModel::GetProductJson(int id){
-	pqxx::row r = GetProduct(id);
+	pqxx::result R = GetProduct(id);
 	boost::property_tree::ptree products_node;
 	boost::property_tree::ptree product_node;
-	product_node.put("id", r[0]);
-	product_node.put("title", r[1]);
-	product_node.put("price", r[2]);
-	product_node.put("created_at", r[3]);
-	product_node.put("tags", r[4]);
-	products_node.push_back(std::make_pair(r[0].c_str(), product_node));
+	product_node.put("id", R[0][0]);
+	product_node.put("title", R[0][1]);
+	product_node.put("price", R[0][2]);
+	product_node.put("created_at", R[0][3]);
+	product_node.put("tags", R[0][4]);
+	products_node.push_back(std::make_pair(R[0][0].c_str(), product_node));
 	return products_node;
 }
 void ProductModel::AddProduct( std::string title,

@@ -51,11 +51,9 @@ void UserController::doLogin(const Pistache::Rest::Request& request,
     }
     std::string query = " email = '" + email + "' and password = '" + password_sha1 + "'";
     pqxx::result R = angru::mvc::model::UserModel::GetUsers(1, query);
-    pqxx::row r;
   	if (R.size() != 1){
       response.send(Pistache::Http::Code::Not_Found, "Invalid Username or Password.");
     }
-		r = R[0];
     std::string password_jwt = angru::security::cryptography::get_jwt(email,email);
     std::string token =  password_jwt;
     if (token.empty()) {

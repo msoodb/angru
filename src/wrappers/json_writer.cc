@@ -40,7 +40,7 @@ void JsonWriter::AddDataRow(T first, T last)
 template void JsonWriter::AddDataRow(std::vector<std::string>::iterator, std::vector<std::string>::iterator);
 template void JsonWriter::AddDataRow(std::deque<std::string>::iterator, std::deque<std::string>::iterator);
 template void JsonWriter::AddDataRow(std::list<std::string>::iterator, std::list<std::string>::iterator);
-template void JsonWriter::AddDataRow(pqxx::row::iterator, pqxx::row::iterator);
+//template void JsonWriter::AddDataRow(pqxx::row::iterator, pqxx::row::iterator);
 
 void JsonWriter::AddData(boost::property_tree::ptree oroot){
 	LOG_INFO << "start writing data in json: "<<fileName;

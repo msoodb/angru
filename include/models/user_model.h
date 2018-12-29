@@ -19,7 +19,7 @@ public:
 	~UserModel();
 	static pqxx::result GetUsers(int page=1, std::string query="");
 	static boost::property_tree::ptree GetUsersJson(int page=1, std::string query="");
-  static pqxx::row GetUser(int);
+  static pqxx::result  GetUser(int);
 	static boost::property_tree::ptree GetUserJson(int);
 	static void AddUser(std::string, std::string, std::string);
 	static void UpdateUser(int, std::string, std::string, std::string);

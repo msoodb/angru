@@ -38,7 +38,7 @@ void CsvWriter::AddDataRow(T first, T last)
 template void CsvWriter::AddDataRow(std::vector<std::string>::iterator, std::vector<std::string>::iterator);
 template void CsvWriter::AddDataRow(std::deque<std::string>::iterator, std::deque<std::string>::iterator);
 template void CsvWriter::AddDataRow(std::list<std::string>::iterator, std::list<std::string>::iterator);
-template void CsvWriter::AddDataRow(pqxx::row::iterator, pqxx::row::iterator);
+//template void CsvWriter::AddDataRow(pqxx::row::iterator, pqxx::row::iterator);
 
 template<typename T>
 void CsvWriter::AddData(T data)
