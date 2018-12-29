@@ -46,6 +46,7 @@ void UserController::doLogin(const Pistache::Rest::Request& request,
         password_sha1 = angru::security::cryptography::get_sha1(password);
     }
     catch (std::exception const& e){
+      LOG_ERROR << e.what();
       response.send(Pistache::Http::Code::Not_Found, "Invalid Username or Password.");
     }
     std::string query = " email = '" + email + "' and password = '" + password_sha1 + "'";

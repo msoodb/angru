@@ -1,17 +1,13 @@
 angru-machine
 --------------------------------------------------------------------------
-root@198.143.183.226:4FcxgIM6qOs9FK
-root@198.143.183.245:xVrwDVJEhaMwV3
-root@217.182.230.5:Berbidvps.ir9901
-angru@198.143.183.226:1235
-angru@198.143.183.245:1235
-angru@217.182.230.5:inassahlob
+root@198.143.183.251:gvTQuje9SOgsj5
+angru@198.143.183.251:1235
 --------------------------------------------------------------------------
 ssh root@198.143.183.245
 cat /etc/os-release
 useradd angru
 passwd angru
-usermod -aG wheel angru
+usermod -aG sudo angru
 su - angru
 exit
 exit
@@ -20,13 +16,13 @@ exit
 ssh-copy-id angru@217.182.230.5
 chmod 700 ~/.ssh
 chmod 600 ~/.ssh/authorized_keys
-ssh angru@198.143.183.245
+ssh angru@198.143.183.251
 --------------------------------------------------------------------------
-sudo yum check-update
-sudo yum -y update
-sudo yam -y upgrade
-sudo yum clean all
-sudo yum install nano wget curl net-tools lsof bash-completion
+sudo apt-get check
+sudo apt-get -y update
+sudo apt-get -y upgrade
+sudo apt-get clean all
+sudo apt-get install nano wget curl net-tools lsof bash-completion
 //if .ssh dose not 
 //exist mkdir .ssh
 cd ~/.ssh
@@ -34,7 +30,7 @@ ssh-keygen
 cat id_rsa.pub
 copy id_rsa.pub to deploy key to angru project on github
 --------------------------------------------------------------------------
-sudo yum groupinstall 'Development Tools'
+sudo apt-get install build-essential
 cd ~
 git clone git@github.com:msoodb/angru.git
 cd angru
@@ -48,7 +44,7 @@ mkdir tools
 mkdir views
 mkdir wrappers
 --------------------------------------------------------------------------
-sudo yum install postgresql-server postgresql-contrib
+sudo apt-get install postgresql-server postgresql-contrib
 sudo postgresql-setup initdb
 sudo vi /var/lib/pgsql/data/pg_hba.conf
 
@@ -65,8 +61,8 @@ sudo systemctl start postgresql
 sudo systemctl enable postgresql
 sudo -i -u postgres
 ---------------------------------------------------------------------------
-sudo yum install  https://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-redhat96-9.6-3.noarch.rpm -y
-sudo yum install postgresql96 postgresql96-server postgresql96-contrib postgresql96-libs -y
+sudo apt-get install  https://download.postgresql.org/pub/repos/apt-get/9.6/redhat/rhel-7-x86_64/pgdg-redhat96-9.6-3.noarch.rpm -y
+sudo apt-get install postgresql96 postgresql96-server postgresql96-contrib postgresql96-libs -y
 sudo /usr/pgsql-9.6/bin/postgresql96-setup initdb
 sudo systemctl enable postgresql-9.6.service
 sudo systemctl start postgresql-9.6.service
@@ -84,16 +80,15 @@ exit
 pg_restore -d angrudb -c ~/angru/database/angrudb/angrudb.dump
 //pg_dump angrudb -c -Ft -f ~/angru/database/angrudb/angrudb.dump 
 --------------------------------------------------------------------------
-yum update
-yum install epel-release
-sudo yum install openssl
-sudo yum install boost boost-thread boost-devel
-// debian sudo apt-get install libboost-all-dev
-rapidjson
-sudo yum install libpqxx-devel
-pistache
-sudo yum install cmake
-sudo yum install curl
+apt-get update
+apt-get install epel-release
+sudo apt-get install openssl
+debian sudo apt-get install libboost-all-dev
+sudo apt-get install rapidjson-dev
+sudo apt-get install libpqxx-devel
+git clone git@github.com:oktal/pistache.git
+sudo apt-get install cmake
+sudo apt-get install curl
 nginx
-cpp-jwt
+git clone git@github.com:arun11299/cpp-jwt.git
 --------------------------------------------------------------------------
