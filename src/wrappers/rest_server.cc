@@ -39,6 +39,7 @@ void RestServer::SetupRoutes() {
 
 
   Get(router, "/products", bind(&ProductController::doGetProducts));
+  Options(router, "/products", bind(&ProductController::doGetProducts));
   Get(router, "/products/:id", bind(&ProductController::doGetProduct));
   Delete(router, "/products/:id", bind(&ProductController::doDeleteProduct));
   Post(router, "/products", bind(&ProductController::doAddProduct));
