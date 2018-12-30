@@ -35,6 +35,8 @@ void RestServer::SetupRoutes() {
   using namespace Pistache::Rest::Routes;
 
   Post(router, "/login", bind(&UserController::doLogin));
+  Options(router, "/login", bind(&UserController::doLogin));
+
 
   Get(router, "/products", bind(&ProductController::doGetProducts));
   Get(router, "/products/:id", bind(&ProductController::doGetProduct));
