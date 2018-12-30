@@ -34,7 +34,6 @@ RestServer::RestServer(Pistache::Address addr) :
 void RestServer::SetupRoutes() {
   using namespace angru::mvc::controller;
   using namespace Pistache::Rest::Routes;
-
   Options(router, "/*", bind(&angru::security::authorization::doGetOptions));
   Post(router, "/login", bind(&UserController::doLogin));
 
@@ -49,6 +48,7 @@ void RestServer::SetupRoutes() {
   Delete(router, "/users/:id", bind(&UserController::doDeleteUser));
   Post(router, "/users", bind(&UserController::doAddUser));
   Put(router, "/users/:id", bind(&UserController::doUpdateUser));
+  std::cout << "000.111" << '\n';
 }
 
 void RestServer::PrintCookies(const Pistache::Http::Request& req) {

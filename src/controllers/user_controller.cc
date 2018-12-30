@@ -2,7 +2,11 @@
 
 #include <iostream>
 #include <string>
+#include <algorithm>
 
+#include <pistache/http.h>
+#include <pistache/router.h>
+#include <pistache/endpoint.h>
 #include <pqxx/pqxx>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
@@ -25,6 +29,7 @@ void UserController::doLogin(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
     auto headers = request.headers();
     auto content_type = headers.tryGet<Pistache::Http::Header::ContentType>();
     if (content_type != nullptr){
