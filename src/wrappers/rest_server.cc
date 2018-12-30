@@ -7,6 +7,7 @@
 #include <pistache/router.h>
 #include <pistache/endpoint.h>
 #include "tools/system.h"
+#include "tools/security.h"
 #include "controllers/product_controller.h"
 #include "controllers/user_controller.h"
 
@@ -34,12 +35,10 @@ void RestServer::SetupRoutes() {
   using namespace angru::mvc::controller;
   using namespace Pistache::Rest::Routes;
 
+  Options(router, "/*", bind(&angru::security::authorization::doGetOptions));
   Post(router, "/login", bind(&UserController::doLogin));
-  Options(router, "/login", bind(&UserController::doLogin));
-
 
   Get(router, "/products", bind(&ProductController::doGetProducts));
-  Options(router, "/products", bind(&ProductController::doGetProducts));
   Get(router, "/products/:id", bind(&ProductController::doGetProduct));
   Delete(router, "/products/:id", bind(&ProductController::doDeleteProduct));
   Post(router, "/products", bind(&ProductController::doAddProduct));
@@ -64,7 +63,6 @@ void RestServer::PrintCookies(const Pistache::Http::Request& req) {
 
 void RestServer::HandleReady(const Pistache::Rest::Request&,
   Pistache::Http::ResponseWriter response) {
-    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
     response.send(Pistache::Http::Code::Ok, "1");
 }
 

@@ -34,10 +34,8 @@ void ProductController::doGetProducts(const Pistache::Rest::Request& request,
 
     std::string inifile_text = oss.str();
     if (inifile_text.empty()) {
-      response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
       response.send(Pistache::Http::Code::Not_Found, "Products not found.");
     } else {
-      response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
 }
@@ -56,10 +54,8 @@ void ProductController::doGetProduct(const Pistache::Rest::Request& request,
     std::string inifile_text = oss.str();
 
     if (inifile_text.empty()) {
-      response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
       response.send(Pistache::Http::Code::Not_Found, "Products not found.");
     } else {
-      response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
 }
@@ -72,7 +68,6 @@ void ProductController::doDeleteProduct(const Pistache::Rest::Request& request,
         id = value.as<int>();
     }
     angru::mvc::model::ProductModel::DeleteProduct(id);
-    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
     response.send(Pistache::Http::Code::Ok, "Product delet.");
 }
 void ProductController::doAddProduct(const Pistache::Rest::Request& request,
@@ -94,11 +89,9 @@ void ProductController::doAddProduct(const Pistache::Rest::Request& request,
       tags = pt.get<std::string>("tags");
     }
     catch (std::exception const& e){
-      response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
       response.send(Pistache::Http::Code::Not_Found, "Products not found.");
     }
     angru::mvc::model::ProductModel::AddProduct(title,price,tags);
-    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
     response.send(Pistache::Http::Code::Ok, "Product added.");
 }
 void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
@@ -111,7 +104,6 @@ void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
         id = value.as<int>();
     }
     if(id==-1){
-      response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
       response.send(Pistache::Http::Code::Not_Found, "Products not found.");
     }
     auto body = request.body();
@@ -129,11 +121,9 @@ void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
       tags = pt.get<std::string>("tags");
     }
     catch (std::exception const& e){
-      response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
       response.send(Pistache::Http::Code::Not_Found, "Products not found.");
     }
     angru::mvc::model::ProductModel::UpdateProduct(id,title,price,tags);
-    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
     response.send(Pistache::Http::Code::Ok, "Products updated.");
 }
 

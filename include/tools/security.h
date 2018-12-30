@@ -25,6 +25,7 @@ namespace authorization{
 
 void AuthorizationCheck(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter&);
 void ContentTypeJSONCheck(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter&);
+void doGetOptions(const Pistache::Http::Request&, Pistache::Http::ResponseWriter);
 
 } // namespace authorization
 } // namespace tools
