@@ -61,6 +61,7 @@ void RestServer::PrintCookies(const Pistache::Http::Request& req) {
 
 void RestServer::HandleReady(const Pistache::Rest::Request&,
   Pistache::Http::ResponseWriter response) {
+    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
     response.send(Pistache::Http::Code::Ok, "1");
 }
 

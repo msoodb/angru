@@ -28,8 +28,10 @@ void UserController::doLogin(const Pistache::Rest::Request& request,
     auto headers = request.headers();
     auto content_type = headers.tryGet<Pistache::Http::Header::ContentType>();
     if (content_type != nullptr){
-        if (content_type->mime() != MIME(Application, Json))
+        if (content_type->mime() != MIME(Application, Json)){
           response.send(Pistache::Http::Code::Not_Found, "Invalid Username or Password.");
+          response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
+        }
     }
     auto body = request.body();
     std::string email;
@@ -47,19 +49,23 @@ void UserController::doLogin(const Pistache::Rest::Request& request,
     }
     catch (std::exception const& e){
       LOG_ERROR << e.what();
+      response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
       response.send(Pistache::Http::Code::Not_Found, "Invalid Username or Password.");
     }
     std::string query = " email = '" + email + "' and password = '" + password_sha1 + "'";
     pqxx::result R = angru::mvc::model::UserModel::GetUsers(1, query);
   	if (R.size() != 1){
+      response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
       response.send(Pistache::Http::Code::Not_Found, "Invalid Username or Password.");
     }
     std::string password_jwt = angru::security::cryptography::get_jwt(email,email);
     std::string token =  password_jwt;
     if (token.empty()) {
-        response.send(Pistache::Http::Code::Not_Found, "Invalid Username or Password.");
+      response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
+      response.send(Pistache::Http::Code::Not_Found, "Invalid Username or Password.");
     } else {
-        response.send(Pistache::Http::Code::Ok, token);
+      response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
+      response.send(Pistache::Http::Code::Ok, token);
     }
 }
 void UserController::doGetUsers(const Pistache::Rest::Request& request,
@@ -77,9 +83,11 @@ void UserController::doGetUsers(const Pistache::Rest::Request& request,
 
     std::string inifile_text = oss.str();
     if (inifile_text.empty()) {
-        response.send(Pistache::Http::Code::Not_Found, "Users not found.");
+      response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
+      response.send(Pistache::Http::Code::Not_Found, "Users not found.");
     }
     else {
+      response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
       response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
@@ -99,10 +107,12 @@ void UserController::doGetUser(const Pistache::Rest::Request& request,
     std::string inifile_text = oss.str();
 
     if (inifile_text.empty()) {
-        response.send(Pistache::Http::Code::Not_Found, "Users not found.");
+      response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
+      response.send(Pistache::Http::Code::Not_Found, "Users not found.");
     } else {
-        response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
-        response.send(Pistache::Http::Code::Ok, inifile_text);
+      response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
+      response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+      response.send(Pistache::Http::Code::Ok, inifile_text);
     }
 }
 void UserController::doDeleteUser(const Pistache::Rest::Request& request,
@@ -114,6 +124,7 @@ void UserController::doDeleteUser(const Pistache::Rest::Request& request,
         id = value.as<int>();
     }
     angru::mvc::model::UserModel::DeleteUser(id);
+    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
     response.send(Pistache::Http::Code::Ok, "User delet.");
 }
 void UserController::doAddUser(const Pistache::Rest::Request& request,
@@ -137,9 +148,11 @@ void UserController::doAddUser(const Pistache::Rest::Request& request,
       details = pt.get<std::string>("details");
     }
     catch (std::exception const& e){
+      response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
       response.send(Pistache::Http::Code::Not_Found, "Users not found.");
     }
     angru::mvc::model::UserModel::AddUser(email,password_sha1,details);
+    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
     response.send(Pistache::Http::Code::Ok, "User added.");
 }
 void UserController::doUpdateUser(const Pistache::Rest::Request& request,
@@ -152,7 +165,8 @@ void UserController::doUpdateUser(const Pistache::Rest::Request& request,
         id = value.as<int>();
     }
     if(id==-1){
-        response.send(Pistache::Http::Code::Not_Found, "Users not found.");
+      response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
+      response.send(Pistache::Http::Code::Not_Found, "Users not found.");
     }
     auto body = request.body();
     std::string email;
@@ -172,9 +186,11 @@ void UserController::doUpdateUser(const Pistache::Rest::Request& request,
         details = pt.get<std::string>("details");
     }
     catch (std::exception const& e){
+      response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
       response.send(Pistache::Http::Code::Not_Found, "Users not found.");
     }
     angru::mvc::model::UserModel::UpdateUser(id,email,password_sha1,details);
+    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
     response.send(Pistache::Http::Code::Ok, "User updated.");
 }
 

@@ -69,6 +69,7 @@ namespace authorization{
 
 void AuthorizationCheck(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter& response){
+    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
     response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
     auto headers = request.headers();
     try
@@ -78,7 +79,8 @@ void AuthorizationCheck(const Pistache::Rest::Request& request,
                         jwt::params::secret("secret"), jwt::params::verify(true));
     }
     catch (std::exception const& e){
-        response.send(Pistache::Http::Code::Unauthorized, "Authorization denied...");
+      response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
+      response.send(Pistache::Http::Code::Unauthorized, "Authorization denied...");
     }
 }
 void ContentTypeJSONCheck(const Pistache::Rest::Request& request,
@@ -88,12 +90,15 @@ void ContentTypeJSONCheck(const Pistache::Rest::Request& request,
     {
       auto content_type = headers.tryGet<Pistache::Http::Header::ContentType>();
       if (content_type != nullptr){
-          if (content_type->mime() != MIME(Application, Json))
+          if (content_type->mime() != MIME(Application, Json)){
+            response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
             response.send(Pistache::Http::Code::Not_Acceptable, "Not Acceptable...");
+          }
       }
     }
     catch (std::exception const& e){
-        response.send(Pistache::Http::Code::Not_Acceptable, "Not Acceptable...");
+      response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
+      response.send(Pistache::Http::Code::Not_Acceptable, "Not Acceptable...");
     }
   }
 
