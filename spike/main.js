@@ -8,7 +8,7 @@ $( document ).ready(function() {
     $('.ajax_form').on('submit', function (e) {
         e.preventDefault();
         $.ajax({
-            url: "http://198.143.183.251:9080/users/2",
+            url: "http://198.143.183.251:9082/users/2",
             //url: "http://127.0.0.1:9080/login",
             type: "get",
             headers: {
