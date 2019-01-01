@@ -15,7 +15,6 @@ class RestServer
 private:
   std::shared_ptr<Pistache::Http::Endpoint> httpEndpoint;
   Pistache::Rest::Router router;
-  Pistache::Rest::Description desc;
 public:
   static void Setup(int port_number, int thread_count);
   RestServer(Pistache::Address);

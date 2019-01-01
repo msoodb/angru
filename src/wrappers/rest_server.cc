@@ -17,7 +17,8 @@ namespace wrapper{
 void RestServer::Setup(int port_number, int thread_count){
   Pistache::Port port(port_number);
   Pistache::Address addr(Pistache::Ipv4::any(), port);
-  std::cout << "Using " <<  std::thread::hardware_concurrency() << " Cores" << std::endl;
+  std::cout << "Using " <<  std::thread::hardware_concurrency() <<
+    " Cores" << std::endl;
   std::cout << "Using " << port_number << " port number" << std::endl;
   std::cout << "Using " << thread_count << " threads" << std::endl;
   RestServer rest_server(addr);
@@ -26,9 +27,9 @@ void RestServer::Setup(int port_number, int thread_count){
   rest_server.Shutdown();
 }
 
+
 RestServer::RestServer(Pistache::Address addr) :
-  httpEndpoint(std::make_shared<Pistache::Http::Endpoint>(addr))
-  ,desc("angru RESTful API", "0.1"){
+  httpEndpoint(std::make_shared<Pistache::Http::Endpoint>(addr)){
 }
 
 void RestServer::SetupRoutes() {
@@ -36,7 +37,6 @@ void RestServer::SetupRoutes() {
   using namespace Pistache::Rest::Routes;
   Options(router, "/*", bind(&angru::security::authorization::doGetOptions));
   Options(router, "/*/*", bind(&angru::security::authorization::doGetOptions));
-  Options(router, "/*/*/*", bind(&angru::security::authorization::doGetOptions));
 
   Post(router, "/login", bind(&UserController::doLogin));
 
@@ -51,7 +51,6 @@ void RestServer::SetupRoutes() {
   Delete(router, "/users/:id", bind(&UserController::doDeleteUser));
   Post(router, "/users", bind(&UserController::doAddUser));
   Put(router, "/users/:id", bind(&UserController::doUpdateUser));
-  std::cout << "000.111" << '\n';
 }
 
 void RestServer::PrintCookies(const Pistache::Http::Request& req) {

@@ -5,6 +5,7 @@
 #include <future>
 #include <chrono>
 #include <thread>
+#include <experimental/filesystem>
 
 #include <pistache/http.h>
 #include <pistache/router.h>
@@ -16,6 +17,8 @@
 #include <boost/locale.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/path.hpp>
 #include "wrappers/postgresql.h"
 #include "wrappers/csv_writer.h"
 #include "wrappers/csv_reader.h"
@@ -29,12 +32,6 @@
 #include "tools/math.h"
 #include "models/product_model.h"
 #include "structures/async_structure.h"
-
-void hello() {
-	for (size_t i = 0; i < 10; i++) {
-		std::cout << "hello world!" << '\n';
-	}
-}
 
 int main(int argc, char const *argv[])
 {
@@ -50,20 +47,28 @@ int main(int argc, char const *argv[])
 				}
     }
 		//------------------------------------------------------------------
+		// std::cout << "Current path is " << std::experimental::filesystem::current_path() << '\n';
+		// std::experimental::filesystem::path p = "angru";
+		// std::cout << "Absolute path for " << p << " is " << std::experimental::filesystem::absolute(p) << '\n';
+		// std::cout << "argv[0] is " << argv[0] << std::endl ;
+		// std::cout << "boost folder system" << '\n';
+		// //current working directory
+    // boost::filesystem::path full_path( boost::filesystem::current_path() );
+    // std::cout << full_path << std::endl;
+    // std::cout << full_path.stem() << std::endl;
+    // //std::cout << fs::basepath(full_path) << std::endl;
+		// std::cout << "----------------" << '\n';
+		std::cout << boost::filesystem::system_complete(argv[0]) << '\n';
+
 		LOG_INFO << "setup logfile using boost...";
 		LOG_INFO << "setup database connection_string using pqxx...";
 		angru::wrapper::Postgresql::Setup();
 		LOG_INFO << "setup datetime and calendar using boost...";
 		angru::system::localization::Setup();
-		LOG_INFO << "setup HTTP_Client using pistache...";
+		LOG_INFO << "setup HttpClient using pistache...";
 		//angru::wrapper::HttpClient::Setup();
-		LOG_INFO << "setup REST_Server using pistache...";
-		angru::wrapper::RestServer::Setup(port, thr);
-		//------------------------------------------------------------------
-		std::thread t(hello);
-		std::cout << "before join" << '\n';
-		t.join();
-		std::cout << "after join thread" << '\n';
+		LOG_INFO << "setup RestServer using pistache...";
+		angru::wrapper::RestServer::Setup(port, thr);	
 	}
 	catch(const angru::system::exception::error & e)
 	{
