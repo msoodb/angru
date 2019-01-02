@@ -30,7 +30,7 @@ pqxx::result UserModel::GetUsers(int page, std::string query){
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	std::string complete_query = "SELECT id, email, password, details, created_at \
+	std::string complete_query = "SELECT id, email, details, created_at \
 																FROM users where deleted_at is NULL ";
 	if(!query.empty())
 	{
@@ -69,7 +69,6 @@ int UserModel::GetUsersCount(std::string query){
   pqxx::result R = W.prepared("find").exec();
   W.commit();
 	return (R[0][0]).as<int>();
-	//return 115;
 }
 boost::property_tree::ptree UserModel::GetUsersJson(int page, std::string query){
 	pqxx::result R = GetUsers(page, query);
@@ -86,21 +85,20 @@ boost::property_tree::ptree UserModel::GetUsersJson(int page, std::string query)
 	for (size_t i = 0; i < R.size(); i++) {
 		user_node.put("id", R[i][0]);
 		user_node.put("email", R[i][1]);
-		user_node.put("password", R[i][2]);
-		std::string details = R[i][3].c_str();
+		std::string details = R[i][2].c_str();
 		if (!details.empty() && details != ""){
 			std::stringstream ss;
-	  	ss << R[i][3].c_str();
+	  	ss << details;
 			boost::property_tree::read_json(ss, details_node);
 			user_node.add_child("details", details_node);
 		}
-		user_node.put("created_at", R[i][4]);
+		user_node.put("created_at", R[i][3]);
 		users_node.push_back(std::make_pair("", user_node));
 	}
-	info_node.put("page", page);
-	info_node.put("offset", OFFSET_COUNT);
-	info_node.put("page_count", pageCount);
-	info_node.put("result_count", result_count);
+	info_node.put<int>("page", page);
+	info_node.put<int>("offset", OFFSET_COUNT);
+	info_node.put<int>("page_count", pageCount);
+	info_node.put<int>("result_count", result_count);
 
 	result_node.add_child("info", info_node);
 	result_node.add_child("users", users_node);
@@ -128,14 +126,20 @@ pqxx::result UserModel::GetUser(int id){
 }
 boost::property_tree::ptree UserModel::GetUserJson(int id){
 	pqxx::result R = GetUser(id);
-	boost::property_tree::ptree users_node;
 	boost::property_tree::ptree user_node;
+	boost::property_tree::ptree details_node;
+
 	user_node.put("id", R[0][0]);
 	user_node.put("email", R[0][1]);
-	user_node.put("details", R[0][2]);
+	std::string details = R[0][2].c_str();
+	if (!details.empty() && details != ""){
+		std::stringstream ss;
+		ss << details;
+		boost::property_tree::read_json(ss, details_node);
+		user_node.add_child("details", details_node);
+	}
 	user_node.put("created_at", R[0][3]);
-	users_node.push_back(std::make_pair(R[0][0].c_str(), user_node));
-	return users_node;
+	return user_node;
 }
 void UserModel::AddUser( 	std::string  email,
 													std::string  password,

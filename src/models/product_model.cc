@@ -48,21 +48,57 @@ pqxx::result ProductModel::GetProducts(int page, std::string query, bool paging)
   W.commit();
 	return R;
 }
+int ProductModel::GetProductsCount(std::string query){
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
+	try {
+		if (C.is_open()) {
+			 LOG_INFO << "Opened database successfully: " << C.dbname();
+		} else {
+			 LOG_ERROR << "Can't open database: " << C.dbname();
+		}
+		C.disconnect ();
+	} catch (const angru::system::exception::error &e) {
+			LOG_ERROR << e.what();
+	}
+	LOG_INFO << "Connected to database: " << C.dbname();
+	pqxx::work W(C);
+	std::string complete_query = "SELECT count(id) FROM products where deleted_at is NULL ";
+	if(!query.empty())
+	{
+		complete_query += " AND ";
+		complete_query +=  query;
+	}
+  C.prepare("find", complete_query);
+  pqxx::result R = W.prepared("find").exec();
+  W.commit();
+	return (R[0][0]).as<int>();
+}
 boost::property_tree::ptree ProductModel::GetProductsJson(int page, std::string query){
 	pqxx::result R = GetProducts(page, query);
-	int count = R.size();
-	int pageCount = count / OFFSET_COUNT;
-	boost::property_tree::ptree products_node;
+	int result_count = GetProductsCount(query);
+	int pageCount = (result_count / OFFSET_COUNT) + 1;
+
+	boost::property_tree::ptree result_node;
+	boost::property_tree::ptree info_node;
 	boost::property_tree::ptree product_node;
+	boost::property_tree::ptree products_node;
+
 	for (size_t i = 0; i < R.size(); i++) {
-		product_node.put<int>("id", R[i][0].as<int>());
+		product_node.put("id", R[i][0]);
 		product_node.put("title", R[i][1]);
 		product_node.put("price", R[i][2]);
 		product_node.put("created_at", R[i][3]);
 		product_node.put("tags", R[i][4]);
-		products_node.push_back(std::make_pair(R[i][0].c_str(), product_node));
+		products_node.push_back(std::make_pair("", product_node));
 	}
-	return products_node;
+	info_node.put<int>("page", page);
+	info_node.put<int>("offset", OFFSET_COUNT);
+	info_node.put<int>("page_count", pageCount);
+	info_node.put<int>("result_count", result_count);
+
+	result_node.add_child("info", info_node);
+	result_node.add_child("products", products_node);
+	return result_node;
 }
 pqxx::result ProductModel::GetProduct(int id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
@@ -86,15 +122,15 @@ pqxx::result ProductModel::GetProduct(int id){
 }
 boost::property_tree::ptree ProductModel::GetProductJson(int id){
 	pqxx::result R = GetProduct(id);
-	boost::property_tree::ptree products_node;
 	boost::property_tree::ptree product_node;
+
 	product_node.put("id", R[0][0]);
 	product_node.put("title", R[0][1]);
 	product_node.put("price", R[0][2]);
 	product_node.put("created_at", R[0][3]);
 	product_node.put("tags", R[0][4]);
-	products_node.push_back(std::make_pair(R[0][0].c_str(), product_node));
-	return products_node;
+
+	return product_node;
 }
 void ProductModel::AddProduct( std::string title,
 													float price,

@@ -25,8 +25,8 @@ Postgresql::Postgresql(){
 
 void Postgresql::Setup()
 {
-	JsonReader config_reader("/home/angru/angru/config/config.json");
-  //JsonReader config_reader("/home/masoud/Projects/angru/config/config.json");
+	// JsonReader config_reader("/home/angru/angru/config/config.json");
+  JsonReader config_reader("/home/masoud/Projects/angru/config/config.json");
 	boost::property_tree::ptree config = config_reader.GetData();
 	dbname = config.get<std::string>("connection_string.dbname");
 	user = config.get<std::string>("connection_string.user");
