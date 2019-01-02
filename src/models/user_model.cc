@@ -45,21 +45,66 @@ pqxx::result UserModel::GetUsers(int page, std::string query){
   W.commit();
 	return R;
 }
+int UserModel::GetUsersCount(std::string query){
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
+	try {
+		if (C.is_open()) {
+			 LOG_INFO << "Opened database successfully: " << C.dbname();
+		} else {
+			 LOG_ERROR << "Can't open database: " << C.dbname();
+		}
+		C.disconnect ();
+	} catch (const angru::system::exception::error &e) {
+			LOG_ERROR << e.what();
+	}
+	LOG_INFO << "Connected to database: " << C.dbname();
+	pqxx::work W(C);
+	std::string complete_query = "SELECT count(id) FROM users where deleted_at is NULL ";
+	if(!query.empty())
+	{
+		complete_query += " and ";
+		complete_query +=  query;
+	}
+  C.prepare("find", complete_query);
+  pqxx::result R = W.prepared("find").exec();
+  W.commit();
+	return (R[0][0]).as<int>();
+	//return 115;
+}
 boost::property_tree::ptree UserModel::GetUsersJson(int page, std::string query){
 	pqxx::result R = GetUsers(page, query);
-	int count = R.size();
-	int pageCount = count / OFFSET_COUNT;
+	int result_count = GetUsersCount(query);
+	int pageCount = (result_count / OFFSET_COUNT) + 1;
+
+	boost::property_tree::ptree result_node;
+	boost::property_tree::ptree info_node;
 	boost::property_tree::ptree users_node;
 	boost::property_tree::ptree user_node;
-for (size_t i = 0; i < R.size(); i++) {
+
+	boost::property_tree::ptree details_node;
+
+	for (size_t i = 0; i < R.size(); i++) {
 		user_node.put("id", R[i][0]);
 		user_node.put("email", R[i][1]);
 		user_node.put("password", R[i][2]);
-		user_node.put("details", R[i][3]);
+		std::string details = R[i][3].c_str();
+		if (!details.empty() && details != ""){
+			std::stringstream ss;
+	  	ss << R[i][3].c_str();
+			boost::property_tree::read_json(ss, details_node);
+			user_node.add_child("details", details_node);
+		}
 		user_node.put("created_at", R[i][4]);
-		users_node.push_back(std::make_pair(R[i][0].c_str(), user_node));
+		users_node.push_back(std::make_pair("", user_node));
 	}
-	return users_node;
+	info_node.put("page", page);
+	info_node.put("offset", OFFSET_COUNT);
+	info_node.put("page_count", pageCount);
+	info_node.put("result_count", result_count);
+
+	result_node.add_child("info", info_node);
+	result_node.add_child("users", users_node);
+	return result_node;
 }
 pqxx::result UserModel::GetUser(int id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());

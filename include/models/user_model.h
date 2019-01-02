@@ -18,6 +18,7 @@ public:
 	UserModel();
 	~UserModel();
 	static pqxx::result GetUsers(int page=1, std::string query="");
+	static int GetUsersCount(std::string query="");
 	static boost::property_tree::ptree GetUsersJson(int page=1, std::string query="");
   static pqxx::result  GetUser(int);
 	static boost::property_tree::ptree GetUserJson(int);
