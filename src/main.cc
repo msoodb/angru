@@ -46,20 +46,6 @@ int main(int argc, char const *argv[])
 					thr = std::stol(argv[2]);
 				}
     }
-		//------------------------------------------------------------------
-		// std::cout << "Current path is " << std::experimental::filesystem::current_path() << '\n';
-		// std::experimental::filesystem::path p = "angru";
-		// std::cout << "Absolute path for " << p << " is " << std::experimental::filesystem::absolute(p) << '\n';
-		// std::cout << "argv[0] is " << argv[0] << std::endl ;
-		// std::cout << "boost folder system" << '\n';
-		// //current working directory
-    // boost::filesystem::path full_path( boost::filesystem::current_path() );
-    // std::cout << full_path << std::endl;
-    // std::cout << full_path.stem() << std::endl;
-    // //std::cout << fs::basepath(full_path) << std::endl;
-		// std::cout << "----------------" << '\n';
-		std::cout << boost::filesystem::system_complete(argv[0]) << '\n';
-
 		LOG_INFO << "setup logfile using boost...";
 		LOG_INFO << "setup database connection_string using pqxx...";
 		angru::wrapper::Postgresql::Setup();
@@ -68,7 +54,7 @@ int main(int argc, char const *argv[])
 		LOG_INFO << "setup HttpClient using pistache...";
 		//angru::wrapper::HttpClient::Setup();
 		LOG_INFO << "setup RestServer using pistache...";
-		angru::wrapper::RestServer::Setup(port, thr);	
+		angru::wrapper::RestServer::Setup(port, thr);
 	}
 	catch(const angru::system::exception::error & e)
 	{
