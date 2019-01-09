@@ -21,7 +21,7 @@
 #  THE SOFTWARE.
 
 
-FIND_PATH ( JWT_INCLUDE_DIR NAMES jwt PATHS "../include")
+FIND_PATH ( JWT_INCLUDE_DIR NAMES jwt PATHS SYSTEM "../include" )
 
 IF ( JWT_INCLUDE_DIR )
     SET ( JWT_FOUND TRUE )
@@ -31,5 +31,9 @@ ENDIF (  )
 IF ( JWT_FOUND )
     MESSAGE ( STATUS "Found jwt headers in ${JWT_INCLUDE_DIR}" )
 ELSE (  )
-    MESSAGE ( FATAL_ERROR "Could not find jwt" )
+    IF ( JWT_FIND_REQUIRED )
+      MESSAGE ( FATAL_ERROR "Could not find jwt..." )
+    ELSE (  )
+      MESSAGE ( STATUS "Could not find jwt" )
+    ENDIF (  )
 ENDIF (  )
