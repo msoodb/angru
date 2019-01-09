@@ -1,2 +1,90 @@
-cmake_minimum_required (VERSION 3.1.3)
-project (angru)
+CMAKE_MINIMUM_REQUIRED ( VERSION 3.7.1 FATAL_ERROR )
+
+PROJECT ( ANGRU )
+
+SET ( CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeModules" "${CMAKE_MODULE_PATH}" )
+INCLUDE ( CheckCXX11Features )
+INCLUDE ( dependencies.cmake )
+
+IF ( CMAKE_COMPILER_IS_GNUCXX )
+    SET ( IC_FLAGS "-Wall -Wextra -Wno-unused-parameter -Wno-date-time -pedantic -pipe" )
+    SET ( IC_FLAGS_DEBUG "${IC_FLAGS}" )
+    SET ( IC_FLAGS_MINSIZEREL "${IC_FLAGS} -Os -fomit-frame-pointer -ffunction-sections -fdata-sections" )
+    SET ( IC_FLAGS_RELEASE "${IC_FLAGS} -O2 -fomit-frame-pointer -ffunction-sections -fdata-sections" )
+    SET ( IC_FLAGS_RELWITHDEBINFO "${IC_FLAGS}" )
+
+    SET ( ICXX_FLAGS "-std=c++14 -Wall -Wextra -Wno-unused-parameter -Wno-date-time -pedantic -pipe" )
+    SET ( ICXX_FLAGS_DEBUG "${ICXX_FLAGS}" )
+    SET ( ICXX_FLAGS_MINSIZEREL "${ICXX_FLAGS} -Os -fomit-frame-pointer -ffunction-sections -fdata-sections" )
+    SET ( ICXX_FLAGS_RELEASE "${ICXX_FLAGS} -O2 -fomit-frame-pointer -ffunction-sections -fdata-sections" )
+    SET ( ICXX_FLAGS_RELWITHDEBINFO "${ICXX_FLAGS}" )
+
+    IF ( CMAKE_BUILD_TYPE MATCHES "MinSizeRel"
+            OR CMAKE_BUILD_TYPE MATCHES "Release" )
+        SET ( ILINKER_FLAGS "-Wl,--gc-sections" )
+    ELSE (  )
+        SET ( ILINKER_FLAGS "" )
+    ENDIF (  )
+ENDIF (  )
+
+IF ( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" )
+    SET ( IC_FLAGS "-Weverything -pedantic" )
+    SET ( IC_FLAGS_DEBUG "${IC_FLAGS}" )
+    SET ( IC_FLAGS_MINSIZEREL "${IC_FLAGS} -Oz" )
+    SET ( IC_FLAGS_RELEASE "${IC_FLAGS} -Ofast" )
+    SET ( IC_FLAGS_RELWITHDEBINFO "${IC_FLAGS}" )
+
+    SET ( ICXX_FLAGS "-Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-global-constructors -Wno-exit-time-destructors -Wno-padded -Wno-weak-vtables -Wno-date-time -pedantic" )
+    SET ( ICXX_FLAGS_DEBUG "${ICXX_FLAGS}" )
+    SET ( ICXX_FLAGS_MINSIZEREL "${IC_FLAGS} -Oz" )
+    SET ( ICXX_FLAGS_RELEASE "${IC_FLAGS} -Ofast" )
+    SET ( ICXX_FLAGS_RELWITHDEBINFO "${ICXX_FLAGS}" )
+
+    SET ( ILINKER_FLAGS "" )
+ENDIF (  )
+
+SET ( CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} ${IC_FLAGS_DEBUG}" )
+SET ( CMAKE_C_FLAGS_MINSIZEREL "${CMAKE_C_FLAGS} ${IC_FLAGS_MINSIZEREL}" )
+SET ( CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS} ${IC_FLAGS_RELEASE}" )
+SET ( CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS} ${IC_FLAGS_RELWITHDEBINFO}" )
+
+SET ( CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} ${ICXX_FLAGS_DEBUG}" )
+SET ( CMAKE_CXX_FLAGS_MINSIZEREL "${CMAKE_CXX_FLAGS} ${ICXX_FLAGS_MINSIZEREL}" )
+SET ( CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} ${ICXX_FLAGS_RELEASE}" )
+SET ( CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS} ${ICXX_FLAGS_RELWITHDEBINFO}" )
+
+IF ( CMAKE_BUILD_TYPE MATCHES "Debug" )
+    SET ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${IC_FLAGS_DEBUG}" )
+    SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ICXX_FLAGS_DEBUG}" )
+ELSEIF ( CMAKE_BUILD_TYPE MATCHES "MinSIzeRel" )
+    SET ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${IC_FLAGS_MINSIZEREL}" )
+    SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ICXX_FLAGS_MINSIZEREL}" )
+ELSEIF ( CMAKE_BUILD_TYPE MATCHES "Release" )
+    SET ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${IC_FLAGS_RELEASE}" )
+    SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ICXX_FLAGS_RELEASE}" )
+ELSEIF ( CMAKE_BUILD_TYPE MATCHES "RelWithDebInfo" )
+    SET ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${IC_FLAGS_RELWITHDEBINFO}" )
+    SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ICXX_FLAGS_RELWITHDEBINFO}" )
+ENDIF (  )
+
+SET ( CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${ILINKER_FLAGS}" )
+
+MESSAGE ( STATUS "The Compiler C flags (Debug): ${CMAKE_C_FLAGS_DEBUG}" )
+MESSAGE ( STATUS "The Compiler C flags (MinSizeRel): ${CMAKE_C_FLAGS_MINSIZEREL}" )
+MESSAGE ( STATUS "The Compiler C flags (Release): ${CMAKE_C_FLAGS_RELEASE}" )
+MESSAGE ( STATUS "The Compiler C flags (RelWithDebInfo): ${CMAKE_C_FLAGS_RELWITHDEBINFO}" )
+
+MESSAGE ( STATUS "The Compiler CXX flags (Debug): ${CMAKE_CXX_FLAGS_DEBUG}" )
+MESSAGE ( STATUS "The Compiler CXX flags (MinSizeRel): ${CMAKE_CXX_FLAGS_MINSIZEREL}" )
+MESSAGE ( STATUS "The Compiler CXX flags (Release): ${CMAKE_CXX_FLAGS_RELEASE}" )
+MESSAGE ( STATUS "The Compiler CXX flags (RelWithDebInfo): ${CMAKE_CXX_FLAGS_RELWITHDEBINFO}" )
+
+MESSAGE ( STATUS "Build type: ${CMAKE_BUILD_TYPE}" )
+MESSAGE ( STATUS "The Compiler C flags: ${CMAKE_C_FLAGS}" )
+MESSAGE ( STATUS "The Compiler CXX flags: ${CMAKE_CXX_FLAGS}" )
+MESSAGE ( STATUS "The linker flags: ${CMAKE_EXE_LINKER_FLAGS}" )
+
+INCLUDE_DIRECTORIES(.)
+INCLUDE ( cotire )
+
+SUBDIRS( src )

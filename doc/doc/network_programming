@@ -1,11 +1,10 @@
 sudo apt-get install netcat-openbsd tcpdump traceroute mtr
 ping -c3 8.8.8.8
 printf 'HEAD / HTTP/1.1\r\nHost: en.wikipedia.org\r\n\r\n' | nc en.wikipedia.org 80
-printf 'HEAD / HTTP/1.1\r\nHost: www.google.com\r\n\r\n' | nc www.google.com 80
 curl
 nc -l 2345
 nc 127.0.0.1 2345
-TCP Prt rang [1024-65535]
+TCP port rang [1024-65535]
 sudo lsof -i
 host google.com
 host -t a google.com
