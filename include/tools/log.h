@@ -5,9 +5,8 @@
 #include <boost/log/sources/global_logger_storage.hpp>
 
 // the logs are also written to LOGFILE
-//#define LOGFILE "/home/angru/angru/bin/logfile.log"
-//#define LOGFILE "/home/angru/angru/bin/log/file_%5N.log"
- #define LOGFILE "/home/masoud/Projects/angru/bin/log/file_%5N.log"
+#define LOGFILE "/home/angru/angru/log/file_%5N.log"
+//#define LOGFILE "/home/masoud/Projects/angru/log/file_%5N.log"
 
 
 // just log messages with severity >= SEVERITY_THRESHOLD are written

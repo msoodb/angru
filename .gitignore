@@ -1,4 +1,5 @@
 /build
 /bin
+/deploy
 **/bin/log
 **/bin/report
