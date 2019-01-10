@@ -21,20 +21,12 @@
 #  THE SOFTWARE.
 
 
-FIND_PATH ( OPENSSL_INCLUDE_DIR NAMES openssl PATHS /usr/include/ /usr/local/include/ )
-FIND_LIBRARY ( OPENSSL_LIBRARY
-                NAMES openssl
-                PATHS /usr/lib /usr/local/lib /usr/lib/x86_64-linux-gnu/
-                PATH_SUFFIXES openssl )
-
-IF ( OPENSSL_INCLUDE_DIR AND OPENSSL_LIBRARY )
-    SET ( OPENSSL_FOUND TRUE )
-ENDIF (  )
-
+find_package(PkgConfig REQUIRED)
+pkg_search_module(OPENSSL REQUIRED openssl)
 
 IF ( OPENSSL_FOUND )
-    #MESSAGE ( STATUS "Found Openssl headers in ${OPENSSL_INCLUDE_DIR}" )
-    MESSAGE ( STATUS "Found Openssl library: ${OPENSSL_LIBRARY}" )
+    MESSAGE ( STATUS "Found Openssl headers in ${OPENSSL_INCLUDE_DIRS}" )
+    MESSAGE ( STATUS "Found Openssl library version ${OPENSSL_VERSION}: ${OPENSSL_LIBRARIES}" )
 ELSE (  )
     IF ( OPENSSL_FIND_REQUIRED )
         MESSAGE ( FATAL_ERROR "Could not find Openssl" )
