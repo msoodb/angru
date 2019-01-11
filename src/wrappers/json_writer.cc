@@ -43,9 +43,9 @@ template void JsonWriter::AddDataRow(std::list<std::string>::iterator, std::list
 //template void JsonWriter::AddDataRow(pqxx::row::iterator, pqxx::row::iterator);
 
 void JsonWriter::AddData(boost::property_tree::ptree oroot){
-	LOG_INFO << "start writing data in json: "<<fileName;
+	LOG_INFO << "start writing data in json: "<< fileName;
   boost::property_tree::write_json(fileName, oroot);
-	LOG_INFO << "end writing data in json: "<<fileName;
+	LOG_INFO << "end writing data in json: "<< fileName;
 }
 
 } // wrapper

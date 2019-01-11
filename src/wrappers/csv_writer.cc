@@ -43,12 +43,12 @@ template void CsvWriter::AddDataRow(std::list<std::string>::iterator, std::list<
 template<typename T>
 void CsvWriter::AddData(T data)
 {
-	LOG_INFO << "start writing data in csv: "<<fileName;
+	LOG_INFO << "start writing data in csv: "<< fileName;
 	for (auto row : data)
 	{
 		AddDataRow(row.begin(), row.end());
 	}
-	LOG_INFO << "end writing data in csv: "<<fileName;
+	LOG_INFO << "end writing data in csv: "<< fileName;
 }
 template void CsvWriter::AddData(pqxx::result);
 
