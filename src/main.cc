@@ -35,7 +35,7 @@
 
 int main(int argc, char const *argv[])
 {
-	std::cout<<"angru version .010"<<std::endl;
+	std::cout<<"angru version .011"<<std::endl;
 	try
 	{
 		int thr = 2;
