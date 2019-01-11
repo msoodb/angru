@@ -52,7 +52,7 @@ IF ( VMIME_FOUND )
             ARGS "${VMIME_VERSION_DEFINE_STRING} | ${PERL_EXECUTABLE} -pe 'if(($_)=/([0-9]+([.][0-9]+)+)/){}'"
             OUTPUT_VARIABLE VMIME_VERSION_RAW_STRING )
         EXEC_PROGRAM ( "echo"
-            ARGS "${VMIME_API_DEFINE_STRING} | ${PERL_EXECUTABLE} -pe 'if(($_)=/([0-9]+([.][0-9]+)+)/){}'"
+            ARGS "${VMIME_API_DEFINE_STRING} | ${PERL_EXECUTABLE} -pe 'if(($_)=/([0-9]+([.|:][0-9]+)+)/){}'"
             OUTPUT_VARIABLE VMIME_API_RAW_STRING )
     ELSE (  )
         IF ( DEFINED AWK_EXECUTABLE )
