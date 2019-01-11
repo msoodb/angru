@@ -27,15 +27,15 @@ class error : public std::runtime_error {
 
 } // namespace exception
 
-namespace{
-
-void signalHandler(int);
-void *PrintHello(void *threadid);
-void *CalcFib(void *threadid);
-void useThread();
-void useThread2();
-
-} // namespace
+// namespace{
+//
+// void signalHandler(int);
+// void *PrintHello(void *threadid);
+// void *CalcFib(void *threadid);
+// void useThread();
+// void useThread2();
+//
+// } // namespace
 } // namespace tools
 } // namespace angru
 

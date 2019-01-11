@@ -10,21 +10,21 @@
 
 int AsyncStructure::add1(int x, int y){
   int count = 12;
-  for (size_t i = 0; i < count; i++) {
+  for (int i = 0; i < count; i++) {
     std::this_thread::sleep_for(std::chrono::seconds(1));
   }
   return x + y;
 }
 int AsyncStructure::add2(int x, int y){
   int count = 7;
-  for (size_t i = 0; i < count; i++) {
+  for (int i = 0; i < count; i++) {
     std::this_thread::sleep_for(std::chrono::seconds(1));
   }
   return x + y;
 }
 int AsyncStructure::add3(int x, int y){
   int count = 5;
-  for (size_t i = 0; i < count; i++) {
+  for (int i = 0; i < count; i++) {
     std::this_thread::sleep_for(std::chrono::seconds(1));
   }
   return x + y;

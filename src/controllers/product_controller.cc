@@ -76,7 +76,7 @@ void ProductController::doAddProduct(const Pistache::Rest::Request& request,
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     auto body = request.body();
     std::string title;
-    float price;
+    float price = 0.0;
     std::string tags;
     try
     {
@@ -87,12 +87,12 @@ void ProductController::doAddProduct(const Pistache::Rest::Request& request,
       title = pt.get<std::string>("title");
       price = pt.get<float>("price");
       tags = pt.get<std::string>("tags");
+      angru::mvc::model::ProductModel::AddProduct(title,price,tags);
+      response.send(Pistache::Http::Code::Ok, "Product added.");
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Products not found.");
     }
-    angru::mvc::model::ProductModel::AddProduct(title,price,tags);
-    response.send(Pistache::Http::Code::Ok, "Product added.");
 }
 void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
@@ -108,7 +108,7 @@ void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
     }
     auto body = request.body();
     std::string title;
-    float price;
+    float price = 0.0;
     std::string tags;
     try
     {
@@ -119,12 +119,12 @@ void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
       title = pt.get<std::string>("title");
       price = pt.get<float>("price");
       tags = pt.get<std::string>("tags");
+      angru::mvc::model::ProductModel::UpdateProduct(id,title,price,tags);
+      response.send(Pistache::Http::Code::Ok, "Products updated.");
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Products not found.");
-    }
-    angru::mvc::model::ProductModel::UpdateProduct(id,title,price,tags);
-    response.send(Pistache::Http::Code::Ok, "Products updated.");
+    }    
 }
 
 } // controller

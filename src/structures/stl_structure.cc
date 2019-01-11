@@ -19,7 +19,7 @@ int vectorSample()
 	vec.push_back(25);
 	std::cout<<"vec size is: "<<vec.size()<<std::endl;
 
-	for (int i = 0; i < vec.size(); ++i)
+	for (unsigned int i = 0; i < vec.size(); ++i)
 	{
 		std::cout<<" vec["<<i<<"] is: "<<vec[i]<<"\n";
 	}
