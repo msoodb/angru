@@ -5,6 +5,8 @@
 #include <future>
 #include <chrono>
 #include <thread>
+#include <locale>
+#include <clocale>
 #include <experimental/filesystem>
 
 #include <pistache/http.h>

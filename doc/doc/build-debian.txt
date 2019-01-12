@@ -82,13 +82,13 @@ pg_restore -d angrudb -c ~/angru/database/angrudb/angrudb.dump
 --------------------------------------------------------------------------
 apt-get update
 sudo apt-get install openssl
-debian sudo apt-get install libboost-all-dev
+sudo apt-get install libboost-all-dev
 sudo apt-get install rapidjson-dev
 sudo apt-get install libpqxx-devel
 sudo apt-get install libvmime-dev
-git clone git@github.com:oktal/pistache.git
 sudo apt-get install cmake
 sudo apt-get install curl
+git clone git@github.com:oktal/pistache.git
 git clone git@github.com:arun11299/cpp-jwt.git
 --------------------------------------------------------------------------
 ....nginx
