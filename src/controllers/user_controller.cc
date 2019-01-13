@@ -50,22 +50,22 @@ void UserController::doLogin(const Pistache::Rest::Request& request,
         email = pt.get<std::string>("email");
         password = pt.get<std::string>("password");
         password_sha1 = angru::security::cryptography::get_sha1(password);
+        std::string query = " email = '" + email + "' and password = '" + password_sha1 + "'";
+        pqxx::result R = angru::mvc::model::UserModel::GetUsers(1, query);
+      	if (R.size() != 1){
+          response.send(Pistache::Http::Code::Not_Found, "Invalid Username or Password.");
+        }
+        std::string password_jwt = angru::security::cryptography::get_jwt(email,email);
+        std::string token =  password_jwt;
+        if (token.empty()) {
+          response.send(Pistache::Http::Code::Not_Found, "Invalid Username or Password.");
+        } else {
+          response.send(Pistache::Http::Code::Ok, token);
+        }
     }
     catch (std::exception const& e){
       LOG_ERROR << e.what();
       response.send(Pistache::Http::Code::Not_Found, "Invalid Username or Password.");
-    }
-    std::string query = " email = '" + email + "' and password = '" + password_sha1 + "'";
-    pqxx::result R = angru::mvc::model::UserModel::GetUsers(1, query);
-  	if (R.size() != 1){
-      response.send(Pistache::Http::Code::Not_Found, "Invalid Username or Password.");
-    }
-    std::string password_jwt = angru::security::cryptography::get_jwt(email,email);
-    std::string token =  password_jwt;
-    if (token.empty()) {
-      response.send(Pistache::Http::Code::Not_Found, "Invalid Username or Password.");
-    } else {
-      response.send(Pistache::Http::Code::Ok, token);
     }
 }
 void UserController::doGetUsers(const Pistache::Rest::Request& request,
@@ -130,7 +130,6 @@ void UserController::doAddUser(const Pistache::Rest::Request& request,
     std::string email;
     std::string password;
     std::string password_sha1;
-    std::string details;
     try
     {
       std::stringstream ss;
@@ -140,13 +139,12 @@ void UserController::doAddUser(const Pistache::Rest::Request& request,
       email = pt.get<std::string>("email");
       password = pt.get<std::string>("password");
       password_sha1 = angru::security::cryptography::get_sha1(password);
-      details = pt.get<std::string>("details");
+      angru::mvc::model::UserModel::AddUser(email,password_sha1);
+      response.send(Pistache::Http::Code::Ok, "User added.");
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Users not found.");
     }
-    angru::mvc::model::UserModel::AddUser(email,password_sha1,details);
-    response.send(Pistache::Http::Code::Ok, "User added.");
 }
 void UserController::doUpdateUser(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
@@ -176,12 +174,12 @@ void UserController::doUpdateUser(const Pistache::Rest::Request& request,
         password = pt.get<std::string>("password");
         password_sha1 = angru::security::cryptography::get_sha1(password);
         details = pt.get<std::string>("details");
+        angru::mvc::model::UserModel::UpdateUser(id,email,password_sha1,details);
+        response.send(Pistache::Http::Code::Ok, "User updated.");
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Users not found.");
     }
-    angru::mvc::model::UserModel::UpdateUser(id,email,password_sha1,details);
-    response.send(Pistache::Http::Code::Ok, "User updated.");
 }
 
 } // controller

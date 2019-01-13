@@ -1,0 +1,162 @@
+0000001 | 2019-01-13, 14:03:14.444597 [info] - setup logfile using boost...
+0000002 | 2019-01-13, 14:03:14.444788 [info] - setup database connection_string using pqxx...
+0000003 | 2019-01-13, 14:03:14.444809 [info] - start reading data from json: /home/masoud/Projects/angru/config/config.json
+0000004 | 2019-01-13, 14:03:14.445761 [info] - end reading data from json: /home/masoud/Projects/angru/config/config.json
+0000005 | 2019-01-13, 14:03:14.445815 [info] - setup datetime and calendar using boost...
+0000006 | 2019-01-13, 14:03:14.445842 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000007 | 2019-01-13, 14:03:14.447399 [info] - setup HttpClient using pistache...
+0000008 | 2019-01-13, 14:03:14.447433 [info] - setup RestServer using pistache...
+0000009 | 2019-01-13, 14:03:19.397818 [info] - Opened database successfully: angrudb
+0000010 | 2019-01-13, 14:03:19.398019 [info] - Connected to database: angrudb
+0000011 | 2019-01-13, 14:03:27.142631 [info] - Opened database successfully: angrudb
+0000012 | 2019-01-13, 14:03:27.142817 [info] - Connected to database: angrudb
+0000013 | 2019-01-13, 14:03:27.166478 [info] - Opened database successfully: angrudb
+0000014 | 2019-01-13, 14:03:27.166627 [info] - Connected to database: angrudb
+0000015 | 2019-01-13, 14:03:40.263179 [info] - Opened database successfully: angrudb
+0000016 | 2019-01-13, 14:03:40.263335 [info] - Connected to database: angrudb
+0000017 | 2019-01-13, 14:03:50.652839 [info] - Opened database successfully: angrudb
+0000018 | 2019-01-13, 14:03:50.653006 [info] - Connected to database: angrudb
+0000019 | 2019-01-13, 14:04:01.575922 [info] - Opened database successfully: angrudb
+0000020 | 2019-01-13, 14:04:01.576053 [info] - Connected to database: angrudb
+0000021 | 2019-01-13, 14:04:01.588244 [info] - Opened database successfully: angrudb
+0000022 | 2019-01-13, 14:04:01.588352 [info] - Connected to database: angrudb
+0000023 | 2019-01-13, 14:04:24.865188 [info] - Opened database successfully: angrudb
+0000024 | 2019-01-13, 14:04:24.865333 [info] - Connected to database: angrudb
+0000001 | 2019-01-13, 14:16:18.057562 [info] - setup logfile using boost...
+0000002 | 2019-01-13, 14:16:18.057865 [info] - setup database connection_string using pqxx...
+0000003 | 2019-01-13, 14:16:18.057910 [info] - start reading data from json: /home/masoud/Projects/angru/config/config.json
+0000004 | 2019-01-13, 14:16:18.058070 [info] - end reading data from json: /home/masoud/Projects/angru/config/config.json
+0000005 | 2019-01-13, 14:16:18.058124 [info] - setup datetime and calendar using boost...
+0000006 | 2019-01-13, 14:16:18.058176 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000007 | 2019-01-13, 14:16:18.060610 [info] - setup HttpClient using pistache...
+0000008 | 2019-01-13, 14:16:18.060671 [info] - setup RestServer using pistache...
+0000009 | 2019-01-13, 14:19:31.221691 [info] - Opened database successfully: angrudb
+0000010 | 2019-01-13, 14:19:31.221874 [info] - Connected to database: angrudb
+0000001 | 2019-01-13, 14:23:25.567578 [info] - setup logfile using boost...
+0000002 | 2019-01-13, 14:23:25.567837 [info] - setup database connection_string using pqxx...
+0000003 | 2019-01-13, 14:23:25.567871 [info] - start reading data from json: /home/masoud/Projects/angru/config/config.json
+0000004 | 2019-01-13, 14:23:25.568000 [info] - end reading data from json: /home/masoud/Projects/angru/config/config.json
+0000005 | 2019-01-13, 14:23:25.568037 [info] - setup datetime and calendar using boost...
+0000006 | 2019-01-13, 14:23:25.568076 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000007 | 2019-01-13, 14:23:25.569740 [info] - setup HttpClient using pistache...
+0000008 | 2019-01-13, 14:23:25.569780 [info] - setup RestServer using pistache...
+0000009 | 2019-01-13, 14:23:36.031822 [info] - Opened database successfully: angrudb
+0000010 | 2019-01-13, 14:23:36.032093 [info] - Connected to database: angrudb
+0000011 | 2019-01-13, 14:23:37.924584 [info] - Opened database successfully: angrudb
+0000012 | 2019-01-13, 14:23:37.924734 [info] - Connected to database: angrudb
+0000001 | 2019-01-13, 14:29:04.166341 [info] - setup logfile using boost...
+0000002 | 2019-01-13, 14:29:04.166646 [info] - setup database connection_string using pqxx...
+0000003 | 2019-01-13, 14:29:04.166686 [info] - start reading data from json: /home/masoud/Projects/angru/config/config.json
+0000004 | 2019-01-13, 14:29:04.166823 [info] - end reading data from json: /home/masoud/Projects/angru/config/config.json
+0000005 | 2019-01-13, 14:29:04.166868 [info] - setup datetime and calendar using boost...
+0000006 | 2019-01-13, 14:29:04.166910 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000007 | 2019-01-13, 14:29:04.168967 [info] - setup HttpClient using pistache...
+0000008 | 2019-01-13, 14:29:04.169017 [info] - setup RestServer using pistache...
+0000009 | 2019-01-13, 14:31:59.766993 [info] - Opened database successfully: angrudb
+0000010 | 2019-01-13, 14:31:59.767310 [info] - Connected to database: angrudb
+0000011 | 2019-01-13, 14:37:08.064288 [info] - Opened database successfully: angrudb
+0000012 | 2019-01-13, 14:37:08.064519 [info] - Connected to database: angrudb
+0000013 | 2019-01-13, 14:37:18.912406 [info] - Opened database successfully: angrudb
+0000014 | 2019-01-13, 14:37:18.912623 [info] - Connected to database: angrudb
+0000015 | 2019-01-13, 15:12:39.911537 [info] - Opened database successfully: angrudb
+0000016 | 2019-01-13, 15:12:39.911702 [info] - Connected to database: angrudb
+0000017 | 2019-01-13, 15:13:29.646178 [info] - Opened database successfully: angrudb
+0000018 | 2019-01-13, 15:13:29.646311 [info] - Connected to database: angrudb
+0000019 | 2019-01-13, 15:14:45.010634 [info] - Opened database successfully: angrudb
+0000020 | 2019-01-13, 15:14:45.010798 [info] - Connected to database: angrudb
+0000021 | 2019-01-13, 15:15:35.546669 [info] - Opened database successfully: angrudb
+0000022 | 2019-01-13, 15:15:35.546827 [info] - Connected to database: angrudb
+0000023 | 2019-01-13, 15:21:32.610327 [info] - Opened database successfully: angrudb
+0000024 | 2019-01-13, 15:21:32.610572 [info] - Connected to database: angrudb
+0000025 | 2019-01-13, 15:22:07.973169 [info] - Opened database successfully: angrudb
+0000026 | 2019-01-13, 15:22:07.973349 [info] - Connected to database: angrudb
+0000027 | 2019-01-13, 15:24:22.390388 [info] - Opened database successfully: angrudb
+0000028 | 2019-01-13, 15:24:22.390530 [info] - Connected to database: angrudb
+0000029 | 2019-01-13, 15:25:20.166587 [info] - Opened database successfully: angrudb
+0000030 | 2019-01-13, 15:25:20.166759 [info] - Connected to database: angrudb
+0000031 | 2019-01-13, 15:27:06.427333 [info] - Opened database successfully: angrudb
+0000032 | 2019-01-13, 15:27:06.427496 [info] - Connected to database: angrudb
+0000033 | 2019-01-13, 15:30:05.542027 [info] - Opened database successfully: angrudb
+0000034 | 2019-01-13, 15:30:05.542144 [info] - Connected to database: angrudb
+0000035 | 2019-01-13, 15:31:59.401639 [info] - Opened database successfully: angrudb
+0000036 | 2019-01-13, 15:31:59.401855 [info] - Connected to database: angrudb
+0000037 | 2019-01-13, 15:35:34.959208 [info] - Opened database successfully: angrudb
+0000038 | 2019-01-13, 15:35:34.959390 [info] - Connected to database: angrudb
+0000039 | 2019-01-13, 15:36:02.518920 [info] - Opened database successfully: angrudb
+0000040 | 2019-01-13, 15:36:02.519100 [info] - Connected to database: angrudb
+0000041 | 2019-01-13, 15:45:16.184882 [info] - Opened database successfully: angrudb
+0000042 | 2019-01-13, 15:45:16.185041 [info] - Connected to database: angrudb
+0000043 | 2019-01-13, 16:01:45.226703 [info] - Opened database successfully: angrudb
+0000044 | 2019-01-13, 16:01:45.227160 [info] - Connected to database: angrudb
+0000045 | 2019-01-13, 16:02:54.115757 [info] - Opened database successfully: angrudb
+0000046 | 2019-01-13, 16:02:54.115939 [info] - Connected to database: angrudb
+0000047 | 2019-01-13, 16:10:27.928038 [info] - Opened database successfully: angrudb
+0000048 | 2019-01-13, 16:10:27.928205 [info] - Connected to database: angrudb
+0000049 | 2019-01-13, 16:11:03.513115 [info] - Opened database successfully: angrudb
+0000050 | 2019-01-13, 16:11:03.513298 [info] - Connected to database: angrudb
+0000051 | 2019-01-13, 16:11:14.480574 [info] - Opened database successfully: angrudb
+0000052 | 2019-01-13, 16:11:14.480815 [info] - Connected to database: angrudb
+0000053 | 2019-01-13, 16:11:23.762655 [info] - Opened database successfully: angrudb
+0000054 | 2019-01-13, 16:11:23.762886 [info] - Connected to database: angrudb
+0000055 | 2019-01-13, 16:11:27.941614 [info] - Opened database successfully: angrudb
+0000056 | 2019-01-13, 16:11:27.941812 [info] - Connected to database: angrudb
+0000057 | 2019-01-13, 16:12:12.604941 [info] - Opened database successfully: angrudb
+0000058 | 2019-01-13, 16:12:12.605121 [info] - Connected to database: angrudb
+0000059 | 2019-01-13, 16:12:21.569891 [info] - Opened database successfully: angrudb
+0000060 | 2019-01-13, 16:12:21.570071 [info] - Connected to database: angrudb
+0000061 | 2019-01-13, 16:29:11.731198 [info] - Opened database successfully: angrudb
+0000062 | 2019-01-13, 16:29:11.731333 [info] - Connected to database: angrudb
+0000063 | 2019-01-13, 16:56:39.533889 [info] - Opened database successfully: angrudb
+0000064 | 2019-01-13, 16:56:39.534082 [info] - Connected to database: angrudb
+0000065 | 2019-01-13, 16:56:56.159045 [info] - Opened database successfully: angrudb
+0000066 | 2019-01-13, 16:56:56.159199 [info] - Connected to database: angrudb
+0000067 | 2019-01-13, 17:01:58.790411 [info] - Opened database successfully: angrudb
+0000068 | 2019-01-13, 17:01:58.790614 [info] - Connected to database: angrudb
+0000069 | 2019-01-13, 17:13:02.212646 [info] - Opened database successfully: angrudb
+0000070 | 2019-01-13, 17:13:02.212793 [info] - Connected to database: angrudb
+0000071 | 2019-01-13, 17:15:05.390316 [info] - Opened database successfully: angrudb
+0000072 | 2019-01-13, 17:15:05.390493 [info] - Connected to database: angrudb
+0000073 | 2019-01-13, 19:43:28.970343 [info] - Opened database successfully: angrudb
+0000074 | 2019-01-13, 19:43:28.970496 [info] - Connected to database: angrudb
+0000075 | 2019-01-13, 19:53:20.357321 [info] - Opened database successfully: angrudb
+0000076 | 2019-01-13, 19:53:20.357458 [info] - Connected to database: angrudb
+0000077 | 2019-01-13, 19:55:10.070652 [info] - Opened database successfully: angrudb
+0000078 | 2019-01-13, 19:55:10.070827 [info] - Connected to database: angrudb
+0000079 | 2019-01-13, 19:55:54.290985 [info] - Opened database successfully: angrudb
+0000080 | 2019-01-13, 19:55:54.291176 [info] - Connected to database: angrudb
+0000081 | 2019-01-13, 19:56:51.211367 [info] - Opened database successfully: angrudb
+0000082 | 2019-01-13, 19:56:51.211607 [info] - Connected to database: angrudb
+0000083 | 2019-01-13, 19:57:19.631199 [info] - Opened database successfully: angrudb
+0000084 | 2019-01-13, 19:57:19.631340 [info] - Connected to database: angrudb
+0000085 | 2019-01-13, 19:59:21.935362 [info] - Opened database successfully: angrudb
+0000086 | 2019-01-13, 19:59:21.935557 [info] - Connected to database: angrudb
+0000087 | 2019-01-13, 20:12:54.437094 [info] - Opened database successfully: angrudb
+0000088 | 2019-01-13, 20:12:54.437264 [info] - Connected to database: angrudb
+0000089 | 2019-01-13, 20:14:37.769486 [info] - Opened database successfully: angrudb
+0000090 | 2019-01-13, 20:14:37.769641 [info] - Connected to database: angrudb
+0000091 | 2019-01-13, 22:14:32.877151 [info] - Opened database successfully: angrudb
+0000092 | 2019-01-13, 22:14:32.877313 [info] - Connected to database: angrudb
+0000093 | 2019-01-13, 22:23:39.075175 [info] - Opened database successfully: angrudb
+0000094 | 2019-01-13, 22:23:39.075330 [info] - Connected to database: angrudb
+0000001 | 2019-01-13, 22:36:24.698149 [info] - setup logfile using boost...
+0000002 | 2019-01-13, 22:36:24.698313 [info] - setup database connection_string using pqxx...
+0000003 | 2019-01-13, 22:36:24.698334 [info] - start reading data from json: /home/masoud/Projects/angru/config/config.json
+0000004 | 2019-01-13, 22:36:24.698415 [info] - end reading data from json: /home/masoud/Projects/angru/config/config.json
+0000005 | 2019-01-13, 22:36:24.698442 [info] - setup datetime and calendar using boost...
+0000006 | 2019-01-13, 22:36:24.698479 [info] - set std::locale loc = gen("en-US.UTF-8");
+0000007 | 2019-01-13, 22:36:24.700100 [info] - setup HttpClient using pistache...
+0000008 | 2019-01-13, 22:36:24.700143 [info] - setup RestServer using pistache...
+0000009 | 2019-01-13, 22:36:39.004004 [info] - Opened database successfully: angrudb
+0000010 | 2019-01-13, 22:36:39.004187 [info] - Connected to database: angrudb
+0000011 | 2019-01-13, 22:44:11.269931 [info] - Opened database successfully: angrudb
+0000012 | 2019-01-13, 22:44:11.270063 [info] - Connected to database: angrudb
+0000013 | 2019-01-13, 23:07:10.394809 [info] - Opened database successfully: angrudb
+0000014 | 2019-01-13, 23:07:10.394974 [info] - Connected to database: angrudb
+0000015 | 2019-01-13, 23:07:10.429324 [info] - Opened database successfully: angrudb
+0000016 | 2019-01-13, 23:07:10.429488 [info] - Connected to database: angrudb
+0000017 | 2019-01-13, 23:09:20.229642 [info] - Opened database successfully: angrudb
+0000018 | 2019-01-13, 23:09:20.229860 [info] - Connected to database: angrudb
+0000019 | 2019-01-13, 23:24:00.683308 [info] - Opened database successfully: angrudb
+0000020 | 2019-01-13, 23:24:00.683529 [info] - Connected to database: angrudb
+0000021 | 2019-01-13, 23:24:25.995132 [info] - Opened database successfully: angrudb
+0000022 | 2019-01-13, 23:24:25.995292 [info] - Connected to database: angrudb

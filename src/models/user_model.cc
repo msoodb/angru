@@ -142,8 +142,7 @@ boost::property_tree::ptree UserModel::GetUserJson(int id){
 	return user_node;
 }
 void UserModel::AddUser( 	std::string  email,
-													std::string  password,
-													std::string  details){
+													std::string  password){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -159,8 +158,8 @@ void UserModel::AddUser( 	std::string  email,
 	pqxx::work W(C);
 	C.prepare("insert", "INSERT INTO users \
 												(id, email, password, details, created_at, deleted_at) VALUES \
-												(DEFAULT, $1, $2, $3, now(), NULL)");
-  pqxx::result R = W.prepared("insert")(email)(password)(details).exec();
+												(DEFAULT, $1, $2, NULL, now(), NULL)");
+  pqxx::result R = W.prepared("insert")(email)(password).exec();
   W.commit();
 }
 void UserModel::UpdateUser(int id,
