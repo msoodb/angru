@@ -27,9 +27,10 @@ UserController::~UserController(){}
 
 void UserController::doLogin(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    angru::security::authorization::ContentTypeJSONCheck(request,response);
+    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
+    response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
     response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
-    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
+    angru::security::authorization::ContentTypeJSONCheck(request,response);
     auto headers = request.headers();
     auto content_type = headers.tryGet<Pistache::Http::Header::ContentType>();
     if (content_type != nullptr){
@@ -64,12 +65,15 @@ void UserController::doLogin(const Pistache::Rest::Request& request,
         }
     }
     catch (std::exception const& e){
-      LOG_ERROR << e.what();
       response.send(Pistache::Http::Code::Not_Found, "Invalid Username or Password.");
     }
 }
 void UserController::doGetUsers(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
+    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
+    response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
+    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+    angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
     int page = 1;
     auto query = request.query();
@@ -86,12 +90,15 @@ void UserController::doGetUsers(const Pistache::Rest::Request& request,
       response.send(Pistache::Http::Code::Not_Found, "Users not found.");
     }
     else {
-      response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
 }
 void UserController::doGetUser(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
+    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
+    response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
+    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+    angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
     int id = -1;
     if (request.hasParam(":id")) {
@@ -107,12 +114,15 @@ void UserController::doGetUser(const Pistache::Rest::Request& request,
     if (inifile_text.empty()) {
       response.send(Pistache::Http::Code::Not_Found, "Users not found.");
     } else {
-      response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
 }
 void UserController::doDeleteUser(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
+    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
+    response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
+    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+    angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
     int id = -1;
     if (request.hasParam(":id")) {
@@ -124,6 +134,8 @@ void UserController::doDeleteUser(const Pistache::Rest::Request& request,
 }
 void UserController::doAddUser(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
+    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
+    response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
     response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     auto body = request.body();
@@ -148,8 +160,11 @@ void UserController::doAddUser(const Pistache::Rest::Request& request,
 }
 void UserController::doUpdateUser(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    angru::security::authorization::AuthorizationCheck(request,response);
+    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
+    response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
+    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
     angru::security::authorization::ContentTypeJSONCheck(request,response);
+    angru::security::authorization::AuthorizationCheck(request,response);
     int id = -1;
     if (request.hasParam(":id")) {
         auto value = request.param(":id");

@@ -21,6 +21,10 @@ ProductController::ProductController(){}
 ProductController::~ProductController(){}
 void ProductController::doGetProducts(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
+    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
+    response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
+    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+    angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
     int page = 1;
     auto query = request.query();
@@ -41,6 +45,10 @@ void ProductController::doGetProducts(const Pistache::Rest::Request& request,
 }
 void ProductController::doGetProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
+    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
+    response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
+    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+    angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
     int id = -1;
     if (request.hasParam(":id")) {
@@ -61,6 +69,10 @@ void ProductController::doGetProduct(const Pistache::Rest::Request& request,
 }
 void ProductController::doDeleteProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
+    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
+    response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
+    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+    angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
     int id = -1;
     if (request.hasParam(":id")) {
@@ -72,8 +84,11 @@ void ProductController::doDeleteProduct(const Pistache::Rest::Request& request,
 }
 void ProductController::doAddProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    angru::security::authorization::AuthorizationCheck(request,response);
+    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
+    response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
+    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
     angru::security::authorization::ContentTypeJSONCheck(request,response);
+    angru::security::authorization::AuthorizationCheck(request,response);
     auto body = request.body();
     std::string title;
     float price = 0.0;
@@ -96,8 +111,11 @@ void ProductController::doAddProduct(const Pistache::Rest::Request& request,
 }
 void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    angru::security::authorization::AuthorizationCheck(request,response);
+    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
+    response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
+    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
     angru::security::authorization::ContentTypeJSONCheck(request,response);
+    angru::security::authorization::AuthorizationCheck(request,response);
     int id = -1;
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
@@ -124,7 +142,7 @@ void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Products not found.");
-    }    
+    }
 }
 
 } // controller

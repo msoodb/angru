@@ -97,7 +97,7 @@ void ContentTypeJSONCheck(const Pistache::Rest::Request& request,
       response.send(Pistache::Http::Code::Not_Acceptable, "Not Acceptable...");
     }
 }
-void doGetOptions(const Pistache::Http::Request& req,
+void doGetOptions(const Pistache::Rest::Request& req,
     Pistache::Http::ResponseWriter response) {
       response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
       response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
