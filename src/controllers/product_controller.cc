@@ -69,7 +69,8 @@ void ProductController::doGetProduct(const Pistache::Rest::Request& request,
 }
 void ProductController::doDeleteProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
+    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
+    response.headers().add<Pistache::Http::Header::AccessControlAllowMethods>("OPTIONS, GET, POST, DELETE");
     response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
     response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
     angru::security::authorization::ContentTypeJSONCheck(request,response);
@@ -80,7 +81,7 @@ void ProductController::doDeleteProduct(const Pistache::Rest::Request& request,
         id = value.as<int>();
     }
     angru::mvc::model::ProductModel::DeleteProduct(id);
-    response.send(Pistache::Http::Code::Ok, "Product delet.");
+    response.send(Pistache::Http::Code::Ok, "Product deleted.");
 }
 void ProductController::doAddProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {

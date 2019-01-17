@@ -100,6 +100,7 @@ void ContentTypeJSONCheck(const Pistache::Rest::Request& request,
 void doGetOptions(const Pistache::Rest::Request& req,
     Pistache::Http::ResponseWriter response) {
       response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
+      response.headers().add<Pistache::Http::Header::AccessControlAllowMethods>("OPTIONS, GET, POST, DELETE");
       response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
       response.send(Pistache::Http::Code::Ok, "{\"message\":\"success\"}");
 }

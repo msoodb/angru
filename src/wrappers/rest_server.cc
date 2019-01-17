@@ -37,6 +37,9 @@ void RestServer::SetupRoutes() {
   using namespace Pistache::Rest::Routes;
   Options(router, "/*", bind(&angru::security::authorization::doGetOptions));
   Options(router, "/*/*", bind(&angru::security::authorization::doGetOptions));
+  Options(router, "/:", bind(&angru::security::authorization::doGetOptions));
+  Options(router, "/*/:", bind(&angru::security::authorization::doGetOptions));
+  Options(router, "/*/:*", bind(&angru::security::authorization::doGetOptions));
 
   Post(router, "/login", bind(&UserController::doLogin));
 
