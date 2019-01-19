@@ -70,7 +70,7 @@ void ProductController::doGetProduct(const Pistache::Rest::Request& request,
 void ProductController::doDeleteProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
-    response.headers().add<Pistache::Http::Header::AccessControlAllowMethods>("OPTIONS, GET, POST, DELETE");
+    response.headers().add<Pistache::Http::Header::AccessControlAllowMethods>("OPTIONS, GET, POST, DELETE, PUT");
     response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
     response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
     angru::security::authorization::ContentTypeJSONCheck(request,response);
@@ -112,7 +112,8 @@ void ProductController::doAddProduct(const Pistache::Rest::Request& request,
 }
 void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
+    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
+    response.headers().add<Pistache::Http::Header::AccessControlAllowMethods>("OPTIONS, GET, POST, DELETE, PUT");
     response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
     response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
     angru::security::authorization::ContentTypeJSONCheck(request,response);
@@ -122,7 +123,7 @@ void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
         auto value = request.param(":id");
         id = value.as<int>();
     }
-    if(id==-1){
+    if(id == -1){
       response.send(Pistache::Http::Code::Not_Found, "Products not found.");
     }
     auto body = request.body();
@@ -142,6 +143,7 @@ void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
       response.send(Pistache::Http::Code::Ok, "Products updated.");
     }
     catch (std::exception const& e){
+      std::cout << e.what() << '\n';
       response.send(Pistache::Http::Code::Not_Found, "Products not found.");
     }
 }

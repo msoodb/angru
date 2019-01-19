@@ -38,6 +38,7 @@ pqxx::result ProductModel::GetProducts(int page, std::string query, bool paging)
 		complete_query += " AND ";
 		complete_query +=  query;
 	}
+	complete_query += " order by id ";
 	if(!paging){
 		complete_query += " limit 20 offset ";
 		int offset = (page-1)* OFFSET_COUNT ;
@@ -150,7 +151,7 @@ void ProductModel::AddProduct( std::string title,
 	pqxx::work W(C);
 	C.prepare("insert", "INSERT INTO products \
 												(id, title, price, created_at, deleted_at, tags) VALUES \
-												(DEFAULT, $1, $2, now(), NULL, $4)");
+												(DEFAULT, $1, $2, now(), NULL, $3)");
   pqxx::result R = W.prepared("insert")(title)(price)(tags).exec();
   W.commit();
 }
@@ -162,20 +163,21 @@ void ProductModel::UpdateProduct( int id,
 	try {
 		if (C.is_open()) {
 			 LOG_INFO << "Opened database successfully: " << C.dbname();
+			 LOG_INFO << "Connected to database: " << C.dbname();
+		 	pqxx::work W(C);
+		 	C.prepare("update", "UPDATE products SET \
+		 												title = $2, price = $3, tags = $4 \
+		 												WHERE id = $1");
+		   W.prepared("update")(id)(title)(price)(tags).exec();
+		   W.commit();
 		} else {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
-			LOG_ERROR << e.what();
+		std::cout << e.what() << '\n';
+		LOG_ERROR << e.what();
 	}
-	LOG_INFO << "Connected to database: " << C.dbname();
-	pqxx::work W(C);
-	C.prepare("update", "UPDATE products SET \
-												title = $2, price = $3, tags = $5 \
-												WHERE id = $1");
-  W.prepared("update")(id)(title)(price)(tags).exec();
-  W.commit();
 }
 void ProductModel::DeleteProduct(int id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
