@@ -92,8 +92,15 @@ void ProductController::doAddProduct(const Pistache::Rest::Request& request,
     angru::security::authorization::AuthorizationCheck(request,response);
     auto body = request.body();
     std::string title;
-    float price = 0.0;
-    std::string tags;
+		float price = 0.0;
+		std::string  tags;
+		bool expirable;
+		std::string details;
+		std::string name;
+		std::string code;
+		bool active;
+		bool taxable;
+		std::string description;
     try
     {
       std::stringstream ss;
@@ -103,7 +110,24 @@ void ProductController::doAddProduct(const Pistache::Rest::Request& request,
       title = pt.get<std::string>("title");
       price = pt.get<float>("price");
       tags = pt.get<std::string>("tags");
-      angru::mvc::model::ProductModel::AddProduct(title,price,tags);
+      expirable = pt.get<bool>("expirable");
+      details = pt.get<std::string>("details");
+      name = pt.get<std::string>("name");
+      code = pt.get<std::string>("code");
+      active = pt.get<bool>("active");
+      taxable = pt.get<bool>("taxable");
+      description = pt.get<std::string>("description");
+
+      angru::mvc::model::ProductModel::AddProduct(title,
+                                                  price,
+                                                  tags,
+                                                  expirable,
+                                                  details,
+                                                  name,
+                                                  code,
+                                                  active,
+                                                  taxable,
+                                                  description);
       response.send(Pistache::Http::Code::Ok, "Product added.");
     }
     catch (std::exception const& e){
@@ -128,8 +152,15 @@ void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
     }
     auto body = request.body();
     std::string title;
-    float price = 0.0;
-    std::string tags;
+		float price = 0.0;
+		std::string  tags;
+		bool expirable;
+		std::string details;
+		std::string name;
+		std::string code;
+		bool active;
+		bool taxable;
+		std::string description;
     try
     {
       std::stringstream ss;
@@ -139,7 +170,24 @@ void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
       title = pt.get<std::string>("title");
       price = pt.get<float>("price");
       tags = pt.get<std::string>("tags");
-      angru::mvc::model::ProductModel::UpdateProduct(id,title,price,tags);
+      expirable = pt.get<bool>("expirable");
+      details = pt.get<std::string>("details");
+      name = pt.get<std::string>("name");
+      code = pt.get<std::string>("code");
+      active = pt.get<bool>("active");
+      taxable = pt.get<bool>("taxable");
+      description = pt.get<std::string>("description");
+      angru::mvc::model::ProductModel::UpdateProduct(id,
+                  																	 title,
+                  																	 price,
+                  																	 tags,
+                  																	 expirable,
+                  																	 details,
+    																                 name,
+                  																	 code,
+                  																	 active,
+                  																	 taxable,
+                  																	 description);
       response.send(Pistache::Http::Code::Ok, "Products updated.");
     }
     catch (std::exception const& e){

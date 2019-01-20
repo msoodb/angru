@@ -22,8 +22,27 @@ public:
 	static boost::property_tree::ptree GetProductsJson(int page=1, std::string query="");
   static pqxx::result GetProduct(int);
 	static boost::property_tree::ptree GetProductJson(int);
-	static void AddProduct(std::string, float, std::string);
-	static void UpdateProduct(int, std::string, float, std::string);
+	static void AddProduct(std::string title,
+													float price,
+													std::string  tags,
+													bool expirable,
+													std::string details,
+													std::string name,
+													std::string code,
+													bool active,
+													bool taxable,
+													std::string description);
+	static void UpdateProduct(int id,
+														std::string title,
+														float price,
+														std::string  tags,
+														bool expirable,
+														std::string details,
+														std::string name,
+														std::string code,
+														bool active,
+														bool taxable,
+														std::string description);
 	static void DeleteProduct(int);
 	static void CreateReport();
 };
