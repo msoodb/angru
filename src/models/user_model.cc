@@ -129,16 +129,18 @@ boost::property_tree::ptree UserModel::GetUserJson(int id){
 	boost::property_tree::ptree user_node;
 	boost::property_tree::ptree details_node;
 
-	user_node.put("id", R[0][0]);
-	user_node.put("email", R[0][1]);
-	std::string details = R[0][2].c_str();
-	if (!details.empty() && details != ""){
-		std::stringstream ss;
-		ss << details;
-		boost::property_tree::read_json(ss, details_node);
-		user_node.add_child("details", details_node);
+	if(R.size() == 1){
+		user_node.put("id", R[0][0]);
+		user_node.put("email", R[0][1]);
+		std::string details = R[0][2].c_str();
+		if (!details.empty() && details != ""){
+			std::stringstream ss;
+			ss << details;
+			boost::property_tree::read_json(ss, details_node);
+			user_node.add_child("details", details_node);
+		}
+		user_node.put("created_at", R[0][3]);
 	}
-	user_node.put("created_at", R[0][3]);
 	return user_node;
 }
 void UserModel::AddUser( 	std::string  email,

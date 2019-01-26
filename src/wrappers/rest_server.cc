@@ -9,6 +9,7 @@
 #include "tools/system.h"
 #include "tools/security.h"
 #include "controllers/product_controller.h"
+#include "controllers/product_document_controller.h"
 #include "controllers/user_controller.h"
 
 namespace angru{
@@ -40,6 +41,10 @@ void RestServer::SetupRoutes() {
   Options(router, "/:", bind(&angru::security::authorization::doGetOptions));
   Options(router, "/*/:", bind(&angru::security::authorization::doGetOptions));
   Options(router, "/*/:*", bind(&angru::security::authorization::doGetOptions));
+  Options(router, "/*/:*/*", bind(&angru::security::authorization::doGetOptions));
+  Options(router, "/*/:*/*/:*", bind(&angru::security::authorization::doGetOptions));
+
+
 
   Post(router, "/login", bind(&UserController::doLogin));
 
@@ -48,6 +53,13 @@ void RestServer::SetupRoutes() {
   Delete(router, "/products/:id", bind(&ProductController::doDeleteProduct));
   Post(router, "/products", bind(&ProductController::doAddProduct));
   Put(router, "/products/:id", bind(&ProductController::doUpdateProduct));
+
+  Get(router, "/products/:product_id/documents", bind(&ProductDocumentController::doGetProductDocuments));
+  Get(router, "/products/:product_id/documents/:id", bind(&ProductDocumentController::doGetProductDocument));
+  Delete(router, "/products/:product_id/documents/:id", bind(&ProductDocumentController::doDeleteProductDocument));
+  Post(router, "/products/:product_id/documents", bind(&ProductDocumentController::doAddProductDocument));
+  Put(router, "/products/:product_id/documents/:id", bind(&ProductDocumentController::doUpdateProductDocument));
+
 
   Get(router, "/users", bind(&UserController::doGetUsers));
   Get(router, "/users/:id", bind(&UserController::doGetUser));

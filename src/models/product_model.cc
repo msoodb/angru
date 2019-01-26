@@ -33,7 +33,10 @@ pqxx::result ProductModel::GetProducts(int page, std::string query, bool paging)
 	pqxx::work W(C);
 	std::string complete_query = "SELECT id, name, title, code, price, details, expirable, \
 																		taxable, active, description, created_at, updated_at, \
-																		tags FROM products where deleted_at is NULL ";
+																		tags, \
+																		(select count(product_documents.id) from product_documents where product_id = products.id \
+																		and deleted_at is NULL) as attachments \
+																		FROM products where deleted_at is NULL ";
 	if(!query.empty())
 	{
 		complete_query += " AND ";
@@ -99,6 +102,7 @@ boost::property_tree::ptree ProductModel::GetProductsJson(int page, std::string 
 		product_node.put("created_at", R[i][10]);
 		product_node.put("updated_at", R[i][11]);
 		product_node.put("tags", R[i][12]);
+		product_node.put("attachments", R[i][13]);
 		products_node.push_back(std::make_pair("", product_node));
 	}
 	info_node.put<int>("page", page);
@@ -135,19 +139,21 @@ boost::property_tree::ptree ProductModel::GetProductJson(int id){
 	pqxx::result R = GetProduct(id);
 	boost::property_tree::ptree product_node;
 
-	product_node.put("id", R[0][0]);
-	product_node.put("name", R[0][1]);
-	product_node.put("title", R[0][2]);
-	product_node.put("code", R[0][3]);
-	product_node.put("price", R[0][4]);
-	product_node.put("details", R[0][5]);
-	product_node.put("expirable", R[0][6]);
-	product_node.put("taxable", R[0][7]);
-	product_node.put("active", R[0][8]);
-	product_node.put("description", R[0][9]);
-	product_node.put("created_at", R[0][10]);
-	product_node.put("updated_at", R[0][11]);
-	product_node.put("tags", R[0][12]);
+	if(R.size() == 1){
+		product_node.put("id", R[0][0]);
+		product_node.put("name", R[0][1]);
+		product_node.put("title", R[0][2]);
+		product_node.put("code", R[0][3]);
+		product_node.put("price", R[0][4]);
+		product_node.put("details", R[0][5]);
+		product_node.put("expirable", R[0][6]);
+		product_node.put("taxable", R[0][7]);
+		product_node.put("active", R[0][8]);
+		product_node.put("description", R[0][9]);
+		product_node.put("created_at", R[0][10]);
+		product_node.put("updated_at", R[0][11]);
+		product_node.put("tags", R[0][12]);
+	}
 	return product_node;
 }
 void ProductModel::AddProduct( std::string title,
