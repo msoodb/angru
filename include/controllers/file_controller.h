@@ -23,7 +23,7 @@ public:
 	static void doGetFile(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 	static void doDeleteFile(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 	static void doAddFile(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
-  static void writeToFile(const std::string & url, const std::string & data);
+  static void writeToFile(const std::string & path, const std::string & data);
 };
 
 } // controller

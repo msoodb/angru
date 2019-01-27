@@ -31,8 +31,8 @@ pqxx::result ProductDocumentModel::GetProductDocuments(int product_id){
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	std::string complete_query = "SELECT id, name, title, path, \
-                                        extention, size, created_at, \
+	std::string complete_query = "SELECT id, name, path, \
+                                        size, created_at, \
                                         updated_at, tags, details, active, description \
                                         FROM product_documents \
                                         where deleted_at is NULL and product_id=$1 \
@@ -74,16 +74,14 @@ boost::property_tree::ptree ProductDocumentModel::GetProductDocumentsJson(int pr
 	for (size_t i = 0; i < R.size(); i++) {
 		product_document_node.put("id", R[i][0]);
 		product_document_node.put("name", R[i][1]);
-		product_document_node.put("title", R[i][2]);
-		product_document_node.put("path", R[i][3]);
-		product_document_node.put("extention", R[i][4]);
-		product_document_node.put("size", R[i][5]);
-		product_document_node.put("created_at", R[i][6]);
-		product_document_node.put("updated_at", R[i][7]);
-		product_document_node.put("tags", R[i][8]);
-		product_document_node.put("details", R[i][9]);
-		product_document_node.put("active", R[i][10]);
-		product_document_node.put("description", R[i][11]);
+		product_document_node.put("path", R[i][2]);
+		product_document_node.put("size", R[i][3]);
+		product_document_node.put("created_at", R[i][4]);
+		product_document_node.put("updated_at", R[i][5]);
+		product_document_node.put("tags", R[i][6]);
+		product_document_node.put("details", R[i][7]);
+		product_document_node.put("active", R[i][8]);
+		product_document_node.put("description", R[i][9]);
 		product_documents_node.push_back(std::make_pair("", product_document_node));
 	}
 	info_node.put<int>("result_count", result_count);
@@ -106,8 +104,8 @@ pqxx::result ProductDocumentModel::GetProductDocument(int id, int product_id){
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-  std::string complete_query = "SELECT id, name, title, path, \
-                                        extention, size, created_at, \
+  std::string complete_query = "SELECT id, name, path, \
+                                        size, created_at, \
                                         updated_at, tags, details, active, description \
                                         FROM product_documents \
                                         where deleted_at is NULL and id=$1 and product_id=$2";
@@ -123,24 +121,20 @@ boost::property_tree::ptree ProductDocumentModel::GetProductDocumentJson(int id,
 	if(R.size() == 1){
 		product_document_node.put("id", R[0][0]);
 	  product_document_node.put("name", R[0][1]);
-	  product_document_node.put("title", R[0][2]);
-	  product_document_node.put("path", R[0][3]);
-	  product_document_node.put("extention", R[0][4]);
-	  product_document_node.put("size", R[0][5]);
-	  product_document_node.put("created_at", R[0][6]);
-	  product_document_node.put("updated_at", R[0][7]);
-	  product_document_node.put("tags", R[0][8]);
-	  product_document_node.put("details", R[0][9]);
-	  product_document_node.put("active", R[0][10]);
-	  product_document_node.put("description", R[0][11]);
+	  product_document_node.put("path", R[0][2]);
+	  product_document_node.put("size", R[0][3]);
+	  product_document_node.put("created_at", R[0][4]);
+	  product_document_node.put("updated_at", R[0][5]);
+	  product_document_node.put("tags", R[0][6]);
+	  product_document_node.put("details", R[0][7]);
+	  product_document_node.put("active", R[0][8]);
+	  product_document_node.put("description", R[0][9]);
 	}
 	return product_document_node;
 }
 void ProductDocumentModel::AddProductDocument( int product_id,
 																			std::string name,
-																			std::string title,
 																			std::string path,
-																			std::string extention,
 																			float size,
 																			std::string tags,
 																			std::string details,
@@ -160,18 +154,16 @@ void ProductDocumentModel::AddProductDocument( int product_id,
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	C.prepare("insert", "INSERT INTO product_documents \
-												(id, product_id, name, title, path, extention, size, created_at, deleted_at, \
+												(id, product_id, name, path, size, created_at, deleted_at, \
 												updated_at, tags, details, active, description) VALUES \
-												(DEFAULT, $1, $2, $3, $4, $5, $6, now(), NULL, NULL, $7, $8, $9, $10)");
-  pqxx::result R = W.prepared("insert")(product_id)(name)(title)(path)(extention)(size)(tags)(details)(active)(description).exec();
+												(DEFAULT, $1, $2, $3, $4,now(), NULL, NULL, $5, $6, $7, $8)");
+  pqxx::result R = W.prepared("insert")(product_id)(name)(path)(size)(tags)(details)(active)(description).exec();
   W.commit();
 }
 void ProductDocumentModel::UpdateProductDocument( int id,
 												int product_id,
 												std::string name,
-												std::string title,
 												std::string path,
-												std::string extention,
 												float size,
 												std::string tags,
 												std::string details,
@@ -185,17 +177,15 @@ void ProductDocumentModel::UpdateProductDocument( int id,
 		 	pqxx::work W(C);
 		 	C.prepare("update", "UPDATE product_documents SET \
 		 												name = $3, \
-														title = $4, \
-														path = $5, \
-														extention = $6, \
-														size = $7, \
+														path = $4, \
+														size = $5, \
 														updated_at = now(), \
-														tags = $8, \
-														details = $9, \
-														active = $10, \
-														description = $11 \
+														tags = $6, \
+														details = $7, \
+														active = $8, \
+														description = $9 \
 		 												WHERE id = $1 and product_id = $2");
-		   W.prepared("update")(id)(product_id)(name)(title)(path)(extention)(size)(tags)(details)(active)(description).exec();
+		   W.prepared("update")(id)(product_id)(name)(path)(size)(tags)(details)(active)(description).exec();
 		   W.commit();
 		} else {
 			 LOG_ERROR << "Can't open database: " << C.dbname();

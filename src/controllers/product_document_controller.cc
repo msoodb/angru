@@ -121,9 +121,7 @@ void ProductDocumentController::doAddProductDocument(const Pistache::Rest::Reque
     auto body = request.body();
     int product_id;
 		std::string name;
-		std::string title;
 		std::string path;
-		std::string extention;
 		float size;
 		std::string tags;
 		std::string details;
@@ -138,9 +136,7 @@ void ProductDocumentController::doAddProductDocument(const Pistache::Rest::Reque
       boost::property_tree::read_json(ss, pt);
       product_id = pt.get<int>("product_id");
       name = pt.get<std::string>("name");
-      title = pt.get<std::string>("title");
       path = pt.get<std::string>("path");
-      extention = pt.get<std::string>("extention");
       size = pt.get<float>("size");
       tags = pt.get<std::string>("tags");
       details = pt.get<std::string>("details");
@@ -149,9 +145,7 @@ void ProductDocumentController::doAddProductDocument(const Pistache::Rest::Reque
 
       angru::mvc::model::ProductDocumentModel::AddProductDocument(product_id,
       																			name,
-      																			title,
       																			path,
-      																			extention,
       																			size,
       																			tags,
       																			details,
@@ -183,9 +177,7 @@ void ProductDocumentController::doUpdateProductDocument(const Pistache::Rest::Re
     }
     auto body = request.body();
 		std::string name;
-		std::string title;
 		std::string path;
-		std::string extention;
 		float size;
 		std::string tags;
 		std::string details;
@@ -198,9 +190,7 @@ void ProductDocumentController::doUpdateProductDocument(const Pistache::Rest::Re
       boost::property_tree::ptree pt;
       boost::property_tree::read_json(ss, pt);
       name = pt.get<std::string>("name");
-      title = pt.get<std::string>("title");
       path = pt.get<std::string>("path");
-      extention = pt.get<std::string>("extention");
       size = pt.get<float>("size");
       tags = pt.get<std::string>("tags");
       details = pt.get<std::string>("details");
@@ -209,9 +199,7 @@ void ProductDocumentController::doUpdateProductDocument(const Pistache::Rest::Re
       angru::mvc::model::ProductDocumentModel::UpdateProductDocument(id,
                                                               product_id,
                                                               name,
-                                                              title,
                                                               path,
-                                                              extention,
                                                               size,
                                                               tags,
                                                               details,

@@ -3,6 +3,9 @@
 #include <iostream>
 #include <string>
 #include <chrono>
+#include <fstream>
+#include <cstdio>
+
 
 #include <pqxx/pqxx>
 #include <boost/property_tree/ptree.hpp>
@@ -53,13 +56,27 @@ void FileController::doDeleteFile(const Pistache::Rest::Request& request,
     response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
-    int id = -1;
-    if (request.hasParam(":id")) {
-        auto value = request.param(":id");
-        id = value.as<int>();
+    auto body = request.body();
+    std::string path = "";
+    try{
+      std::stringstream ss;
+      ss << body;
+      boost::property_tree::ptree pt;
+      boost::property_tree::read_json(ss, pt);
+      path = pt.get<std::string>("path");
+      if( std::remove(path.c_str()) != 0 ){
+        response.send(Pistache::Http::Code::Not_Found, "Error deleting file.");
+      }
+      else{
+        response.send(Pistache::Http::Code::Ok, "File successfully deleted");
+      }
     }
+    catch (std::exception const& e){
+      response.send(Pistache::Http::Code::Not_Found, "Error deleting file.");
+    }
+
     //angru::mvc::model::FileModel::DeleteFile(id);
-    response.send(Pistache::Http::Code::Ok, "File deleted.");
+    //response.send(Pistache::Http::Code::Ok, "File deleted.");
 }
 void FileController::doAddFile(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
@@ -75,20 +92,19 @@ void FileController::doAddFile(const Pistache::Rest::Request& request,
 
 
     std::string name = std::to_string(ms.count());
-    std::string url= "/home/masoud/Projects/angru/files/"+name;
+    std::string path= "/home/masoud/Projects/angru/files/"+name;
     try
     {
-      FileController::writeToFile(url, body);
-      response.send(Pistache::Http::Code::Ok, "{\"message\":\"success\", \"url\":\"" + url+name + "\"}");
+      FileController::writeToFile(path, body);
+      response.send(Pistache::Http::Code::Ok, "{\"message\":\"success\", \"path\":\"" + path+name + "\"}");
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Files not added.");
     }
 }
-void FileController::writeToFile(const std::string & url, const std::string & data) {
-    std::cout << url <<'\n';
-    std::ofstream out(url);
-    //out.open(filename.c_str());
+void FileController::writeToFile(const std::string & path, const std::string & data) {
+    std::cout << path <<'\n';
+    std::ofstream out(path);
     out << data ;
     out.close();
 }

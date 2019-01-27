@@ -1,0 +1,21 @@
+-----------------------------19545959971450352164300690660
+Content-Disposition: form-data; name="file"; filename="composer.json"
+Content-Type: application/json
+
+{
+    "name": "secondtruth/startmin",
+    "description": "Admin dashboard template for Bootstrap",
+    "homepage": "http://www.secondtruth.de",
+    "keywords": ["backend", "admin", "template", "theme", "web"],
+    "license": "ISC",
+    "authors": [
+        {
+            "name": "Christian Neff",
+            "email": "christian.neff@gmail.com",
+            "homepage": "http://www.secondtruth.de",
+            "role": "Developer"
+        }
+    ]
+}
+
+-----------------------------19545959971450352164300690660--
