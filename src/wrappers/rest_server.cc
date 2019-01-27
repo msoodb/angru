@@ -8,6 +8,7 @@
 #include <pistache/endpoint.h>
 #include "tools/system.h"
 #include "tools/security.h"
+#include "controllers/file_controller.h"
 #include "controllers/product_controller.h"
 #include "controllers/product_document_controller.h"
 #include "controllers/user_controller.h"
@@ -44,9 +45,11 @@ void RestServer::SetupRoutes() {
   Options(router, "/*/:*/*", bind(&angru::security::authorization::doGetOptions));
   Options(router, "/*/:*/*/:*", bind(&angru::security::authorization::doGetOptions));
 
-
-
   Post(router, "/login", bind(&UserController::doLogin));
+
+  Get(router, "/files/:id", bind(&FileController::doGetFile));
+  Delete(router, "/files/:id", bind(&FileController::doDeleteFile));
+  Post(router, "/files", bind(&FileController::doAddFile));
 
   Get(router, "/products", bind(&ProductController::doGetProducts));
   Get(router, "/products/:id", bind(&ProductController::doGetProduct));
@@ -59,7 +62,6 @@ void RestServer::SetupRoutes() {
   Delete(router, "/products/:product_id/documents/:id", bind(&ProductDocumentController::doDeleteProductDocument));
   Post(router, "/products/:product_id/documents", bind(&ProductDocumentController::doAddProductDocument));
   Put(router, "/products/:product_id/documents/:id", bind(&ProductDocumentController::doUpdateProductDocument));
-
 
   Get(router, "/users", bind(&UserController::doGetUsers));
   Get(router, "/users/:id", bind(&UserController::doGetUser));
