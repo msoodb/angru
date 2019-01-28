@@ -48,7 +48,6 @@ void RestServer::SetupRoutes() {
   Post(router, "/login", bind(&UserController::doLogin));
 
   Get(router, "/files/:id", bind(&FileController::doGetFile));
-  Delete(router, "/files/:id", bind(&FileController::doDeleteFile));
   Post(router, "/files", bind(&FileController::doAddFile));
 
   Get(router, "/products", bind(&ProductController::doGetProducts));

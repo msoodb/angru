@@ -48,36 +48,6 @@ void FileController::doGetFile(const Pistache::Rest::Request& request,
     // }
     response.send(Pistache::Http::Code::Ok, "File.");
 }
-void FileController::doDeleteFile(const Pistache::Rest::Request& request,
-  Pistache::Http::ResponseWriter response) {
-    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
-    response.headers().add<Pistache::Http::Header::AccessControlAllowMethods>("OPTIONS, GET, POST, DELETE, PUT");
-    response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
-    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
-    angru::security::authorization::ContentTypeJSONCheck(request,response);
-    angru::security::authorization::AuthorizationCheck(request,response);
-    int id = -1;
-    if (request.hasParam(":id")) {
-        auto value = request.param(":id");
-        id = value.as<int>();
-    }
-    //std::string path = "";
-    // try
-    // {
-    //   if( std::remove(path.c_str()) != 0 ){
-    //     response.send(Pistache::Http::Code::Not_Found, "Error deleting file.");
-    //   }
-    //   else{
-    //     response.send(Pistache::Http::Code::Ok, "File successfully deleted");
-    //   }
-    // }
-    // catch (std::exception const& e){
-    //   response.send(Pistache::Http::Code::Not_Found, "Error deleting file.");
-    // }
-
-    //angru::mvc::model::FileModel::DeleteFile(id);
-    //response.send(Pistache::Http::Code::Ok, "File deleted.");
-}
 void FileController::doAddFile(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;

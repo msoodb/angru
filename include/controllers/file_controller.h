@@ -21,7 +21,6 @@ public:
 	FileController();
 	~FileController();
 	static void doGetFile(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
-	static void doDeleteFile(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 	static void doAddFile(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 };
 
