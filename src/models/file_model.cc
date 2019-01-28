@@ -2,6 +2,9 @@
 
 #include <iostream>
 #include <string>
+#include <chrono>
+#include <fstream>
+#include <cstdio>
 
 #include <pqxx/pqxx>
 #include <boost/property_tree/ptree.hpp>
@@ -21,12 +24,27 @@ FileModel::~FileModel(){}
 pqxx::result FileModel::GetFile(int id){
 
 }
-void FileModel::AddFile(){
+std::string FileModel::AddFile(const std::string & data){
 
+  std::chrono::milliseconds ms = std::chrono::duration_cast< std::chrono::milliseconds >(
+      std::chrono::system_clock::now().time_since_epoch());
+  std::string name = std::to_string(ms.count());
+  std::string path= "/home/masoud/Projects/angru/files/" + name;
+  std::ofstream out(path);
+  out << data ;
+  out.close();
+  return path;
 }
 
-void FileModel::DeleteFile(int id){
-
+bool FileModel::DeleteFile(const std::string & path){
+  std::string deleted_path = path + ".deleted";
+  int result = std::rename(path.c_str(), deleted_path.c_str());
+  if( result != 0 ){
+    return false;
+  }
+  else{
+    return true;
+  }
 }
 
 

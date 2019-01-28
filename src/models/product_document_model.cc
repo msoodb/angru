@@ -10,6 +10,8 @@
 #include "tools/log.h"
 #include "wrappers/postgresql.h"
 #include "wrappers/csv_writer.h"
+#include "models/file_model.h"
+
 
 namespace angru{
 namespace mvc{
@@ -132,7 +134,7 @@ boost::property_tree::ptree ProductDocumentModel::GetProductDocumentJson(int id,
 	}
 	return product_document_node;
 }
-void ProductDocumentModel::AddProductDocument( int product_id,
+std::string ProductDocumentModel::AddProductDocument( int product_id,
 																			std::string name,
 																			std::string path,
 																			float size,
@@ -156,9 +158,14 @@ void ProductDocumentModel::AddProductDocument( int product_id,
 	C.prepare("insert", "INSERT INTO product_documents \
 												(id, product_id, name, path, size, created_at, deleted_at, \
 												updated_at, tags, details, active, description) VALUES \
-												(DEFAULT, $1, $2, $3, $4,now(), NULL, NULL, $5, $6, $7, $8)");
+												(DEFAULT, $1, $2, $3, $4,now(), NULL, NULL, $5, $6, $7, $8) RETURNING id");
   pqxx::result R = W.prepared("insert")(product_id)(name)(path)(size)(tags)(details)(active)(description).exec();
   W.commit();
+	std::string id="";
+	if(R.size() == 1){
+		id = R[0][0].as<std::string>();
+	}
+	return id;
 }
 void ProductDocumentModel::UpdateProductDocument( int id,
 												int product_id,
@@ -192,7 +199,6 @@ void ProductDocumentModel::UpdateProductDocument( int id,
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
-		std::cout << e.what() << '\n';
 		LOG_ERROR << e.what();
 	}
 }
@@ -209,12 +215,18 @@ void ProductDocumentModel::DeleteProductDocument(int id, int product_id){
 			LOG_ERROR << e.what();
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
+	pqxx::result R = GetProductDocument(id, product_id);
 	pqxx::work W(C);
 	C.prepare("update", "UPDATE product_documents SET \
 												deleted_at = now()  \
 												WHERE id = $1 and product_id=$2");
   W.prepared("update")(id)(product_id).exec();
   W.commit();
+	std::string path="";
+	if(R.size() == 1){
+		path = R[0][2].as<std::string>();
+	}
+	angru::mvc::model::FileModel::DeleteFile(path);
 }
 
 } // model

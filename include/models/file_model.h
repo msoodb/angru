@@ -18,8 +18,8 @@ public:
 	FileModel();
 	~FileModel();
   static pqxx::result GetFile(int);
-	static void AddFile();
-	static void DeleteFile(int);
+	static std::string AddFile(const std::string & data);
+	static bool DeleteFile(const std::string & path);
 };
 
 } // model

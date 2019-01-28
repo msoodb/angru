@@ -22,7 +22,7 @@ public:
 	static boost::property_tree::ptree GetProductDocumentsJson(int product_id);
   static pqxx::result GetProductDocument(int id, int product_id);
 	static boost::property_tree::ptree GetProductDocumentJson(int id, int product_id);
-	static void AddProductDocument(int product_id,
+	static std::string AddProductDocument(int product_id,
 													std::string name,
 													std::string path,
 													float size,

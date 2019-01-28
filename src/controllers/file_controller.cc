@@ -56,24 +56,24 @@ void FileController::doDeleteFile(const Pistache::Rest::Request& request,
     response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
-    auto body = request.body();
-    std::string path = "";
-    try{
-      std::stringstream ss;
-      ss << body;
-      boost::property_tree::ptree pt;
-      boost::property_tree::read_json(ss, pt);
-      path = pt.get<std::string>("path");
-      if( std::remove(path.c_str()) != 0 ){
-        response.send(Pistache::Http::Code::Not_Found, "Error deleting file.");
-      }
-      else{
-        response.send(Pistache::Http::Code::Ok, "File successfully deleted");
-      }
+    int id = -1;
+    if (request.hasParam(":id")) {
+        auto value = request.param(":id");
+        id = value.as<int>();
     }
-    catch (std::exception const& e){
-      response.send(Pistache::Http::Code::Not_Found, "Error deleting file.");
-    }
+    //std::string path = "";
+    // try
+    // {
+    //   if( std::remove(path.c_str()) != 0 ){
+    //     response.send(Pistache::Http::Code::Not_Found, "Error deleting file.");
+    //   }
+    //   else{
+    //     response.send(Pistache::Http::Code::Ok, "File successfully deleted");
+    //   }
+    // }
+    // catch (std::exception const& e){
+    //   response.send(Pistache::Http::Code::Not_Found, "Error deleting file.");
+    // }
 
     //angru::mvc::model::FileModel::DeleteFile(id);
     //response.send(Pistache::Http::Code::Ok, "File deleted.");
@@ -86,27 +86,15 @@ void FileController::doAddFile(const Pistache::Rest::Request& request,
     //angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
     auto body = request.body();
-
-    std::chrono::milliseconds ms = std::chrono::duration_cast< std::chrono::milliseconds >(
-        std::chrono::system_clock::now().time_since_epoch());
-
-
-    std::string name = std::to_string(ms.count());
-    std::string path= "/home/masoud/Projects/angru/files/"+name;
+    std::string path= "";
     try
     {
-      FileController::writeToFile(path, body);
-      response.send(Pistache::Http::Code::Ok, "{\"message\":\"success\", \"path\":\"" + path+name + "\"}");
+      std::string path = angru::mvc::model::FileModel::AddFile(body);
+      response.send(Pistache::Http::Code::Ok, "{\"message\":\"success\", \"path\":\"" + path + "\"}");
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Files not added.");
     }
-}
-void FileController::writeToFile(const std::string & path, const std::string & data) {
-    std::cout << path <<'\n';
-    std::ofstream out(path);
-    out << data ;
-    out.close();
 }
 
 } // controller
