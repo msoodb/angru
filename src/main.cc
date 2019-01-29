@@ -54,9 +54,17 @@ int main(int argc, char const *argv[])
 		LOG_INFO << "setup datetime and calendar using boost...";
 		angru::system::localization::Setup();
 		LOG_INFO << "setup HttpClient using pistache...";
-		//angru::wrapper::HttpClient::Setup();
+		angru::wrapper::HttpClient::Setup();
+
+		std::string page = "http://www.boost.org/LICENSE_1_0.txt";
+		std::string body="";
+		Pistache::Http::Code code;
+
+
+		angru::wrapper::HttpClient::Get(page, body, code);
+		std::cout << "/* message */" << '\n';
 		LOG_INFO << "setup RestServer using pistache...";
-		angru::wrapper::RestServer::Setup(port, thr);
+		//angru::wrapper::RestServer::Setup(port, thr);
 	}
 	catch(const angru::system::exception::error & e)
 	{

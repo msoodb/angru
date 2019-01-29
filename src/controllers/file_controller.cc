@@ -59,6 +59,8 @@ void FileController::doAddFile(const Pistache::Rest::Request& request,
     std::string path= "";
     try
     {
+      std::stringstream ss;
+      ss << body;
       std::string path = angru::mvc::model::FileModel::AddFile(body);
       response.send(Pistache::Http::Code::Ok, "{\"message\":\"success\", \"path\":\"" + path + "\"}");
     }
