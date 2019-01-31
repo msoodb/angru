@@ -29,7 +29,8 @@ std::string FileModel::AddFile(const std::string & data){
   std::chrono::milliseconds ms = std::chrono::duration_cast< std::chrono::milliseconds >(
       std::chrono::system_clock::now().time_since_epoch());
   std::string name = std::to_string(ms.count());
-  std::string path= "/home/masoud/Projects/angru/files/" + name;
+  std::string path= "/home/angru/angru/files/" + name;
+  //std::string path= "/home/masoud/Projects/angru/files/" + name;
   std::ofstream out(path);
   out << data ;
   out.close();

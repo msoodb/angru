@@ -78,7 +78,7 @@ grant ALL on DATABASE angrudb to angru;
 \q
 exit
 pg_restore -d angrudb -c ~/angru/database/angrudb/angrudb.dump
-//pg_dump angrudb -c -Ft -f ~/angru/database/angrudb/angrudb.dump 
+//pg_dump angrudb -c -Ft -f ~/Projects/angru/database/angrudb/angrudb.dump 
 --------------------------------------------------------------------------
 apt-get update
 sudo apt-get install openssl

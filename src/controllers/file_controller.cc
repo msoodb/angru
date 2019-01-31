@@ -30,11 +30,11 @@ void FileController::doGetFile(const Pistache::Rest::Request& request,
     response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
     //angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
-    int id = -1;
-    if (request.hasParam(":id")) {
-        auto value = request.param(":id");
-        id = value.as<int>();
-    }
+    // int id = -1;
+    // if (request.hasParam(":id")) {
+    //     auto value = request.param(":id");
+    //     id = value.as<int>();
+    // }
     // boost::property_tree::ptree file = angru::mvc::model::FileModel::GetFileJson(id);
     // std::ostringstream oss;
     // boost::property_tree::write_json(oss, file);

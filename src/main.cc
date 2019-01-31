@@ -54,21 +54,9 @@ int main(int argc, char const *argv[])
 		LOG_INFO << "setup datetime and calendar using boost...";
 		angru::system::localization::Setup();
 		LOG_INFO << "setup RestServer using pistache...";
-		//angru::wrapper::RestServer::Setup(port, thr);
+		angru::wrapper::RestServer::Setup(port, thr);
 		LOG_INFO << "setup HttpClient using pistache...";
 		//angru::wrapper::HttpClient::Setup();
-//---------------------------------------------------------------------------
-		//std::string page="http://api.timezonedb.com:80/v2.1/get-time-zone";
-		std::string page="http://jsonplaceholder.typicode.com:80/todos/1";
-    Pistache::Http::Uri::Query query;
-    query.add("key","97IQ2W4BJCT5");
-    query.add("format","json");
-    query.add("by","zone");
-    query.add("zone","America/Chicago");
-		std::string body;
-		Pistache::Http::Code code;
-		angru::wrapper::HttpClient::Get(page, body, code);
-
 	}
 	catch(const angru::system::exception::error & e)
 	{
