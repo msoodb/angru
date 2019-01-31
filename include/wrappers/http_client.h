@@ -16,7 +16,7 @@ private:
 
 public:
   static void Setup();
-  static void Get(std::string const page, std::string& body, Pistache::Http::Code &code);
+  static void Get(std::string page, std::string body, Pistache::Http::Code code);
 };
 
 } // wrapper
