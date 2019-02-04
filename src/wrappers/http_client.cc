@@ -12,8 +12,8 @@ namespace angru{
 namespace wrapper{
 
 void HttpClient::Setup(){
-  //std::string page="http://api.timezonedb.com:80/v2.1/get-time-zone";
-  std::string page="http://jsonplaceholder.typicode.com:80/todos/1";
+  std::string page="http://api.timezonedb.com:80/v2.1/get-time-zone";
+  //std::string page="http://jsonplaceholder.typicode.com:80/todos/1";
   Pistache::Http::Uri::Query query;
   query.add("key","97IQ2W4BJCT5");
   query.add("format","json");
@@ -38,7 +38,7 @@ void HttpClient::Setup(){
   auto start = std::chrono::system_clock::now();
 
   for (int i = 0; i < count; ++i) {
-      auto resp = client.get(page).cookie(Pistache::Http::Cookie("FOO", "bar")).send();
+      auto resp = client.get(page).params(query).cookie(Pistache::Http::Cookie("FOO", "bar")).send();
       resp.then([&](Pistache::Http::Response response) {
               ++completedRequests;
           std::cout << "Response code = " << response.code() << std::endl;

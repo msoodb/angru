@@ -34,6 +34,8 @@
 #include "tools/math.h"
 #include "models/product_model.h"
 #include "structures/async_structure.h"
+#include "tools/file_generator_factory.h"
+
 
 int main(int argc, char const *argv[])
 {
@@ -54,9 +56,11 @@ int main(int argc, char const *argv[])
 		LOG_INFO << "setup datetime and calendar using boost...";
 		angru::system::localization::Setup();
 		LOG_INFO << "setup RestServer using pistache...";
-		angru::wrapper::RestServer::Setup(port, thr);
+		//angru::wrapper::RestServer::Setup(port, thr);
 		LOG_INFO << "setup HttpClient using pistache...";
 		//angru::wrapper::HttpClient::Setup();
+		LOG_INFO << "generate files using file_generator_factory...";
+		angru::tools::factory::generate();
 	}
 	catch(const angru::system::exception::error & e)
 	{

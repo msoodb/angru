@@ -3,7 +3,7 @@ angru-machine
 root@198.143.183.251:gvTQuje9SOgsj5
 angru@198.143.183.251:1235
 --------------------------------------------------------------------------
-ssh root@198.143.183.245
+ssh root@198.143.183.251
 cat /etc/os-release
 useradd angru
 passwd angru
@@ -13,7 +13,7 @@ exit
 exit
 --------------------------------------------------------------------------
 //create ssh-key on development machine
-ssh-copy-id angru@217.182.230.5
+ssh-copy-id angru@198.143.183.251
 chmod 700 ~/.ssh
 chmod 600 ~/.ssh/authorized_keys
 ssh angru@198.143.183.251
@@ -34,15 +34,10 @@ sudo apt-get install build-essential
 cd ~
 git clone git@github.com:msoodb/angru.git
 cd angru
-mkdir bin
 mkdir build
 cd build
-mkdir controllers
-mkdir models
-mkdir structures
-mkdir tools
-mkdir views
-mkdir wrappers
+cmake -DCMAKE_BUILD_TYPE=Release ../
+make
 --------------------------------------------------------------------------
 sudo apt-get install postgresql-server postgresql-contrib
 sudo postgresql-setup initdb
@@ -89,6 +84,14 @@ sudo apt-get install libvmime-dev
 sudo apt-get install cmake
 sudo apt-get install curl
 git clone git@github.com:oktal/pistache.git
+git pull
+vi common.h //change file uplaod size to 1024*1024*1024
+cd pistache
+mkdir build
+cd build
+cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ..
+make
+sudo make install
 git clone git@github.com:arun11299/cpp-jwt.git
 --------------------------------------------------------------------------
 ....nginx
@@ -98,6 +101,12 @@ sudo lsof -i:80 // check if apache2 is installed
 sudo apt-get install nginx
 sudo systemctl restart nginx
 sudo systemctl start nginx
+-------------------------------------------------------------------------
+sudo supervisorctl // restart all instance of angru
+-------------------------------------------------------------------------
+HTTPS:
+sudo apt-get install certbot python-certbot-nginx -t stretch-backports
+sudo certbot --nginx
 
 
 

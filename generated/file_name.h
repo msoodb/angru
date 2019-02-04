@@ -1,5 +1,5 @@
-#ifndef ANGRU_PRODUCT_MODEL_H_
-#define ANGRU_PRODUCT_MODEL_H_
+#ifndef ANGRU_FILE_NAME_H_
+#define ANGRU_FILE_NAME_H_
 
 #include <iostream>
 #include <vector>
@@ -12,18 +12,17 @@ namespace angru{
 namespace mvc{
 namespace model{
 
-class ProductModel
+class FileName
 {
 public:
-	ProductModel();
-	~ProductModel();
-	static pqxx::result GetProducts(int page=1, std::string query="");
-	static int GetProductsCount(std::string query="");
-	static boost::property_tree::ptree GetProductsJson(int page=1, std::string query="");
+	FileName();
+	~FileName();
+	static pqxx::result GetProducts(int page=1, std::string query=);
+	static int GetProductsCount(std::string query=);
+	static boost::property_tree::ptree GetProductsJson(int page=1, std::string query=);
   static pqxx::result GetProduct(int);
 	static boost::property_tree::ptree GetProductJson(int);
-	static std::string AddProduct(
-													std::string title,
+	static std::string AddProduct(std::string title,
 													float price,
 													std::string  tags,
 													bool expirable,
@@ -32,10 +31,8 @@ public:
 													std::string code,
 													bool active,
 													bool taxable,
-													std::string description
-													);
-	static void UpdateProduct(
-														int id,
+													std::string description);
+	static void UpdateProduct(int id,
 														std::string title,
 														float price,
 														std::string  tags,
@@ -45,8 +42,7 @@ public:
 														std::string code,
 														bool active,
 														bool taxable,
-														std::string description
-														);
+														std::string description);
 	static void DeleteProduct(int);
 };
 
@@ -54,4 +50,4 @@ public:
 } // mvc
 } // angru
 
-#endif // ANGRU_PRODUCT_MODEL_H_
+#endif // ANGRU_FILE_NAME_H_
