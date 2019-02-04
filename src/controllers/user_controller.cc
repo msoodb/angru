@@ -27,9 +27,7 @@ UserController::~UserController(){}
 
 void UserController::doLogin(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
-    response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
-    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+    angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     auto headers = request.headers();
     auto content_type = headers.tryGet<Pistache::Http::Header::ContentType>();
@@ -70,9 +68,7 @@ void UserController::doLogin(const Pistache::Rest::Request& request,
 }
 void UserController::doGetUsers(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
-    response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
-    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+    angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
     int page = 1;
@@ -95,9 +91,7 @@ void UserController::doGetUsers(const Pistache::Rest::Request& request,
 }
 void UserController::doGetUser(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
-    response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
-    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+    angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
     int id = -1;
@@ -119,9 +113,7 @@ void UserController::doGetUser(const Pistache::Rest::Request& request,
 }
 void UserController::doDeleteUser(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
-    response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
-    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+    angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
     int id = -1;
@@ -134,9 +126,7 @@ void UserController::doDeleteUser(const Pistache::Rest::Request& request,
 }
 void UserController::doAddUser(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
-    response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
-    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+    angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     auto body = request.body();
     std::string email;
@@ -160,9 +150,7 @@ void UserController::doAddUser(const Pistache::Rest::Request& request,
 }
 void UserController::doUpdateUser(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
-    response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
-    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+    angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
     int id = -1;

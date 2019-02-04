@@ -20,14 +20,14 @@ class ProductController
 public:
 	ProductController();
 	~ProductController();
-	static void doGetProducts(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
-	static void doGetProduct(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
-	static void doDeleteProduct(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
-	static void doAddProduct(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
-	static void doUpdateProduct(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+	static void	doGetProducts(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+	static void	doGetProduct(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+  static void	doDeleteProduct(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+	static void	doAddProduct(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+	static void	doUpdateProduct(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 };
 
-} // controller
+} // model
 } // mvc
 } // angru
 

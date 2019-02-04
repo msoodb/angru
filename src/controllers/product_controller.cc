@@ -6,7 +6,6 @@
 #include <pqxx/pqxx>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-#include <boost/property_tree/ini_parser.hpp>
 #include "tools/system.h"
 #include "tools/log.h"
 #include "wrappers/postgresql.h"
@@ -86,16 +85,16 @@ void ProductController::doAddProduct(const Pistache::Rest::Request& request,
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
     auto body = request.body();
-    std::string title;
-		float price = 0.0;
-		std::string  tags;
-		bool expirable;
-		std::string details;
-		std::string name;
-		std::string code;
-		bool active;
-		bool taxable;
-		std::string description;
+    std::string	title;
+    float	price;
+    std::string	tags;
+    bool	expirable;
+    std::string	details;
+    std::string	name;
+    std::string	code;
+    bool	active;
+    bool	taxable;
+    std::string	description;
     try
     {
       std::stringstream ss;
@@ -113,7 +112,8 @@ void ProductController::doAddProduct(const Pistache::Rest::Request& request,
       taxable = pt.get<bool>("taxable");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::ProductModel::AddProduct(title,
+      angru::mvc::model::ProductModel::AddProduct(
+                                                  title,
                                                   price,
                                                   tags,
                                                   expirable,
@@ -122,7 +122,7 @@ void ProductController::doAddProduct(const Pistache::Rest::Request& request,
                                                   code,
                                                   active,
                                                   taxable,
-                                                  description);
+                                                  description );
       response.send(Pistache::Http::Code::Ok, "Product added.");
     }
     catch (std::exception const& e){
@@ -138,23 +138,23 @@ void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
     int id = -1;
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
-        id = value.as<int>();
+      id = value.as<int>();
     }
     if(id == -1){
       response.send(Pistache::Http::Code::Not_Found, "Products not found.");
     }
     auto body = request.body();
-    std::string title;
-		float price = 0.0;
-		std::string  tags;
-		bool expirable;
-		std::string details;
-		std::string name;
-		std::string code;
-		bool active;
-		bool taxable;
-		std::string description;
-    try
+    std::string	title;
+    float	price;
+    std::string	tags;
+    bool	expirable;
+    std::string	details;
+    std::string	name;
+    std::string	code;
+    bool	active;
+    bool	taxable;
+    std::string	description;
+   try
     {
       std::stringstream ss;
       ss << body;
@@ -170,25 +170,25 @@ void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
       active = pt.get<bool>("active");
       taxable = pt.get<bool>("taxable");
       description = pt.get<std::string>("description");
-      angru::mvc::model::ProductModel::UpdateProduct(id,
-                  																	 title,
-                  																	 price,
-                  																	 tags,
-                  																	 expirable,
-                  																	 details,
-    																                 name,
-                  																	 code,
-                  																	 active,
-                  																	 taxable,
-                  																	 description);
+      angru::mvc::model::ProductModel::UpdateProduct(
+                                                  id,
+                                                  title,
+                                                  price,
+                                                  tags,
+                                                  expirable,
+                                                  details,
+                                                  name,
+                                                  code,
+                                                  active,
+                                                  taxable,
+                                                  description );
       response.send(Pistache::Http::Code::Ok, "Products updated.");
     }
     catch (std::exception const& e){
-      std::cout << e.what() << '\n';
       response.send(Pistache::Http::Code::Not_Found, "Products not found.");
     }
-}
+ }
 
-} // controller
+} // model
 } // mvc
 } // angru

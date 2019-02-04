@@ -483,12 +483,14 @@ void controllerGenerator(std::string entity_name, std::vector<std::pair<std::str
   std::string table_name = entity_name;
   boost::to_lower(table_name);
 
-  std::string file_name= table_name + "_controller";
-  std::string file_model_name= table_name + "_model";
-  std::string class_name= entity_name + "Controller";
+  std::string file_name = table_name + "_controller";
+  std::string file_model_name = table_name + "_model";
+  std::string class_name = entity_name + "Controller";
 
   std::string guard = "ANGRU_" + file_name + "_H_";
   boost::to_upper(guard);
+
+  int field_added = 0;
 
   std::vector<std::pair<std::string, std::string>>::iterator itr;
   std::string path_h= "/home/masoud/Projects/angru/generated/controller/" + file_name + ".h";
@@ -554,6 +556,214 @@ void controllerGenerator(std::string entity_name, std::vector<std::pair<std::str
   out_cc << '\n';
   out_cc << class_name << "::" << class_name << "(){}" << '\n';
   out_cc << class_name << "::~"<< class_name << "(){}" << '\n';
+  out_cc << '\n';
+  out_cc << "void " << class_name << "::doGet" << entity_name << "s(const Pistache::Rest::Request& request," << '\n';
+  out_cc << "  Pistache::Http::ResponseWriter response) {" << '\n';
+  out_cc << "    angru::security::authorization::CORS(request,response);" << '\n';
+  out_cc << "    angru::security::authorization::ContentTypeJSONCheck(request,response);" << '\n';
+  out_cc << "    angru::security::authorization::AuthorizationCheck(request,response);" << '\n';
+  out_cc << "    int page = 1;" << '\n';
+  out_cc << "    auto query = request.query();" << '\n';
+  out_cc << "    if(query.has(\"page\")) {" << '\n';
+  out_cc << "      auto value = query.get(\"page\").get();" << '\n';
+  out_cc << "      page = std::stoi(value);" << '\n';
+  out_cc << "    }" << '\n';
+  out_cc << "    boost::property_tree::ptree " << table_name << "s = angru::mvc::model::" << entity_name << "Model::Get" << entity_name << "sJson(page);" << '\n';
+  out_cc << "    std::ostringstream oss;" << '\n';
+  out_cc << "    boost::property_tree::write_json(oss, " << table_name << "s);" << '\n';
+  out_cc << '\n';
+  out_cc << "    std::string inifile_text = oss.str();" << '\n';
+  out_cc << "    if (inifile_text.empty()) {" << '\n';
+  out_cc << "      response.send(Pistache::Http::Code::Not_Found, \"" << entity_name << "s not found.\");" << '\n';
+  out_cc << "    } else {" << '\n';
+  out_cc << "      response.send(Pistache::Http::Code::Ok, inifile_text);" << '\n';
+  out_cc << "    }" << '\n';
+  out_cc << "}" << '\n';
+  out_cc << '\n';
+  out_cc << "void " << class_name << "::doGet" << entity_name << "(const Pistache::Rest::Request& request," << '\n';
+  out_cc << "  Pistache::Http::ResponseWriter response) {" << '\n';
+  out_cc << "    angru::security::authorization::CORS(request,response);" << '\n';
+  out_cc << "    angru::security::authorization::ContentTypeJSONCheck(request,response);" << '\n';
+  out_cc << "    angru::security::authorization::AuthorizationCheck(request,response);" << '\n';
+  out_cc << "    int id = -1;" << '\n';
+  out_cc << "    if (request.hasParam(\":id\")) {" << '\n';
+  out_cc << "        auto value = request.param(\":id\");" << '\n';
+  out_cc << "        id = value.as<int>();" << '\n';
+  out_cc << "    }" << '\n';
+  out_cc << "    boost::property_tree::ptree " << table_name << " = angru::mvc::model::" << entity_name << "Model::Get" << entity_name << "Json(id);" << '\n';
+  out_cc << "    std::ostringstream oss;" << '\n';
+  out_cc << "    boost::property_tree::write_json(oss, " << table_name << ");" << '\n';
+  out_cc << '\n';
+  out_cc << "    std::string inifile_text = oss.str();" << '\n';
+  out_cc << '\n';
+  out_cc << "    if (inifile_text.empty()) {" << '\n';
+  out_cc << "      response.send(Pistache::Http::Code::Not_Found, \"" << entity_name << "s not found.\");" << '\n';
+  out_cc << "    } else {" << '\n';
+  out_cc << "      response.send(Pistache::Http::Code::Ok, inifile_text);" << '\n';
+  out_cc << "    }" << '\n';
+  out_cc << "}" << '\n';
+  out_cc << '\n';
+  out_cc << "void " << class_name << "::doDelete" << entity_name << "(const Pistache::Rest::Request& request," << '\n';
+  out_cc << "  Pistache::Http::ResponseWriter response) {" << '\n';
+  out_cc << "    angru::security::authorization::CORS(request,response);" << '\n';
+  out_cc << "    angru::security::authorization::ContentTypeJSONCheck(request,response);" << '\n';
+  out_cc << "    angru::security::authorization::AuthorizationCheck(request,response);" << '\n';
+  out_cc << "    int id = -1;" << '\n';
+  out_cc << "    if (request.hasParam(\":id\")) {" << '\n';
+  out_cc << "        auto value = request.param(\":id\");" << '\n';
+  out_cc << "        id = value.as<int>();" << '\n';
+  out_cc << "    }" << '\n';
+  out_cc << "    angru::mvc::model::" << entity_name << "Model::Delete" << entity_name << "(id);" << '\n';
+  out_cc << "    response.send(Pistache::Http::Code::Ok, \"" << entity_name << " deleted.\");" << '\n';
+  out_cc << "}" << '\n';
+  out_cc << '\n';
+  out_cc << "void " << class_name << "::doAdd" << entity_name << "(const Pistache::Rest::Request& request," << '\n';
+  out_cc << "  Pistache::Http::ResponseWriter response) {" << '\n';
+  out_cc << "    angru::security::authorization::CORS(request,response);" << '\n';
+  out_cc << "    angru::security::authorization::ContentTypeJSONCheck(request,response);" << '\n';
+  out_cc << "    angru::security::authorization::AuthorizationCheck(request,response);" << '\n';
+  out_cc << "    auto body = request.body();" << '\n';
+  for (itr = fields.begin(); itr != fields.end(); ++itr) {
+    if(itr->second == "id"){
+      continue;
+    }
+    else if(itr->second == "created_at"){
+      continue;
+    }
+    else if(itr->second == "deleted_at"){
+      continue;
+    }
+    else if(itr->second == "updated_at"){
+      continue;
+    }
+    out_cc << "    " << itr->first << '\t' << itr->second << ";" << '\n';
+  }
+  out_cc << "    try" << '\n';
+  out_cc << "    {" << '\n';
+  out_cc << "      std::stringstream ss;" << '\n';
+  out_cc << "      ss << body;" << '\n';
+  out_cc << "      boost::property_tree::ptree pt;" << '\n';
+  out_cc << "      boost::property_tree::read_json(ss, pt);" << '\n';
+  for (itr = fields.begin(); itr != fields.end(); ++itr) {
+    if(itr->second == "id"){
+      continue;
+    }
+    else if(itr->second == "created_at"){
+      continue;
+    }
+    else if(itr->second == "deleted_at"){
+      continue;
+    }
+    else if(itr->second == "updated_at"){
+      continue;
+    }
+    out_cc << "      " << itr->second << " = pt.get<" << itr->first << ">(\"" << itr->second << "\");" << '\n';
+  }
+  out_cc << '\n';
+  out_cc << "      angru::mvc::model::" << entity_name << "Model::Add" << entity_name << "(" << '\n';
+  field_added =0;
+  for (itr = fields.begin(); itr != fields.end(); ++itr) {
+    if(itr->second == "id"){
+      continue;
+    }
+    else if(itr->second == "created_at"){
+      continue;
+    }
+    else if(itr->second == "deleted_at"){
+      continue;
+    }
+    else if(itr->second == "updated_at"){
+      continue;
+    }
+    if(field_added > 0){
+      out_cc << ", " << '\n';
+    }
+    out_cc << "                                                  " << itr->second;
+    field_added++;
+  }
+  out_cc << " );" << '\n';
+  out_cc << "      response.send(Pistache::Http::Code::Ok, \"" << entity_name << " added.\");" << '\n';
+  out_cc << "    }" << '\n';
+  out_cc << "    catch (std::exception const& e){" << '\n';
+  out_cc << "      response.send(Pistache::Http::Code::Not_Found, \"" << entity_name << "s not found.\");" << '\n';
+  out_cc << "    }" << '\n';
+  out_cc << "}" << '\n';
+  out_cc << '\n';
+  out_cc << "void " << class_name << "::doUpdate" << entity_name << "(const Pistache::Rest::Request& request," << '\n';
+  out_cc << "  Pistache::Http::ResponseWriter response) {" << '\n';
+  out_cc << "    angru::security::authorization::CORS(request,response);" << '\n';
+  out_cc << "    angru::security::authorization::ContentTypeJSONCheck(request,response);" << '\n';
+  out_cc << "    angru::security::authorization::AuthorizationCheck(request,response);" << '\n';
+  out_cc << "    int id = -1;" << '\n';
+  out_cc << "    if (request.hasParam(\":id\")) {" << '\n';
+  out_cc << "        auto value = request.param(\":id\");" << '\n';
+  out_cc << "      id = value.as<int>();" << '\n';
+  out_cc << "    }" << '\n';
+  out_cc << "    if(id == -1){" << '\n';
+  out_cc << "      response.send(Pistache::Http::Code::Not_Found, \"" << entity_name << "s not found.\");" << '\n';
+  out_cc << "    }" << '\n';
+  out_cc << "    auto body = request.body();" << '\n';
+  for (itr = fields.begin(); itr != fields.end(); ++itr) {
+    if(itr->second == "id"){
+      continue;
+    }
+    else if(itr->second == "created_at"){
+      continue;
+    }
+    else if(itr->second == "deleted_at"){
+      continue;
+    }
+    else if(itr->second == "updated_at"){
+      continue;
+    }
+    out_cc << "    " << itr->first << '\t' << itr->second << ";" << '\n';
+  }
+  out_cc << "   try" << '\n';
+  out_cc << "    {" << '\n';
+  out_cc << "      std::stringstream ss;" << '\n';
+  out_cc << "      ss << body;" << '\n';
+  out_cc << "      boost::property_tree::ptree pt;" << '\n';
+  out_cc << "      boost::property_tree::read_json(ss, pt);" << '\n';
+  for (itr = fields.begin(); itr != fields.end(); ++itr) {
+    if(itr->second == "id"){
+      continue;
+    }
+    else if(itr->second == "created_at"){
+      continue;
+    }
+    else if(itr->second == "deleted_at"){
+      continue;
+    }
+    else if(itr->second == "updated_at"){
+      continue;
+    }
+    out_cc << "      " << itr->second << " = pt.get<" << itr->first << ">(\"" << itr->second << "\");" << '\n';
+  }
+  out_cc << "      angru::mvc::model::" << entity_name << "Model::Update" << entity_name << "(" << '\n';
+  field_added =0;
+  for (itr = fields.begin(); itr != fields.end(); ++itr) {
+    if(itr->second == "created_at"){
+      continue;
+    }
+    else if(itr->second == "deleted_at"){
+      continue;
+    }
+    else if(itr->second == "updated_at"){
+      continue;
+    }
+    if(field_added > 0){
+      out_cc << ", " << '\n';
+    }
+    out_cc << "                                                  " << itr->second;
+    field_added++;
+  }
+  out_cc << " );" << '\n';
+  out_cc << "      response.send(Pistache::Http::Code::Ok, \"" << entity_name << "s updated.\");" << '\n';
+  out_cc << "    }" << '\n';
+  out_cc << "    catch (std::exception const& e){" << '\n';
+  out_cc << "      response.send(Pistache::Http::Code::Not_Found, \"" << entity_name << "s not found.\");" << '\n';
+  out_cc << "    }" << '\n';
+  out_cc << " }" << '\n';
   out_cc << '\n';
   out_cc << "} // model" << '\n';
   out_cc << "} // mvc" << '\n';
