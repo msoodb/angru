@@ -20,10 +20,17 @@ public:
 	static pqxx::result GetUsers(int page=1, std::string query="");
 	static int GetUsersCount(std::string query="");
 	static boost::property_tree::ptree GetUsersJson(int page=1, std::string query="");
-  static pqxx::result  GetUser(int);
+  static pqxx::result GetUser(int);
 	static boost::property_tree::ptree GetUserJson(int);
-	static std::string AddUser(std::string, std::string);
-	static void UpdateUser(int, std::string, std::string, std::string);
+	static std::string AddUser(
+													std::string	email,
+													std::string	password,
+													std::string	details);
+	static void UpdateUser(
+													int	id,
+													std::string	email,
+													std::string	password,
+													std::string	details);
 	static void DeleteUser(int);
 };
 

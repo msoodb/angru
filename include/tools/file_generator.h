@@ -5,8 +5,9 @@ namespace angru{
 namespace tools{
 namespace generator{
 
-void modelGenerator(std::string file_name, std::string entity_name,
-  std::string class_name, std::vector<std::pair<std::string, std::string>> fields);
+void modelGenerator(std::string entity_name, std::vector<std::pair<std::string, std::string>> fields);
+
+void controllerGenerator(std::string entity_name, std::vector<std::pair<std::string, std::string>> fields);
 
 } // namespace generator
 } // namespace tools

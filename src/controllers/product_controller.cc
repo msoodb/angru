@@ -19,11 +19,10 @@ namespace controller{
 
 ProductController::ProductController(){}
 ProductController::~ProductController(){}
+
 void ProductController::doGetProducts(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
-    response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
-    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+    angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
     int page = 1;
@@ -43,11 +42,10 @@ void ProductController::doGetProducts(const Pistache::Rest::Request& request,
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
 }
+
 void ProductController::doGetProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
-    response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
-    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+    angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
     int id = -1;
@@ -67,12 +65,10 @@ void ProductController::doGetProduct(const Pistache::Rest::Request& request,
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
 }
+
 void ProductController::doDeleteProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
-    response.headers().add<Pistache::Http::Header::AccessControlAllowMethods>("OPTIONS, GET, POST, DELETE, PUT");
-    response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
-    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+    angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
     int id = -1;
@@ -83,11 +79,10 @@ void ProductController::doDeleteProduct(const Pistache::Rest::Request& request,
     angru::mvc::model::ProductModel::DeleteProduct(id);
     response.send(Pistache::Http::Code::Ok, "Product deleted.");
 }
+
 void ProductController::doAddProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*") ;
-    response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
-    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+    angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
     auto body = request.body();
@@ -134,12 +129,10 @@ void ProductController::doAddProduct(const Pistache::Rest::Request& request,
       response.send(Pistache::Http::Code::Not_Found, "Products not found.");
     }
 }
+
 void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
-    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
-    response.headers().add<Pistache::Http::Header::AccessControlAllowMethods>("OPTIONS, GET, POST, DELETE, PUT");
-    response.headers().add<Pistache::Http::Header::AccessControlAllowHeaders>("DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,dataType,Content-Type,api_type,Authorization") ;
-    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+    angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
     int id = -1;

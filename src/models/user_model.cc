@@ -9,6 +9,7 @@
 #include "tools/system.h"
 #include "tools/log.h"
 #include "wrappers/postgresql.h"
+#include "wrappers/csv_writer.h"
 
 namespace angru{
 namespace mvc{
@@ -16,6 +17,7 @@ namespace model{
 
 UserModel::UserModel(){}
 UserModel::~UserModel(){}
+
 pqxx::result UserModel::GetUsers(int page, std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -30,13 +32,18 @@ pqxx::result UserModel::GetUsers(int page, std::string query){
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	std::string complete_query = "SELECT id, email, details, created_at \
-																FROM users where deleted_at is NULL ";
+	std::string complete_query = "SELECT \
+									      				id , \
+									      				email , \
+									      				password , \
+									      				details , \
+									      				created_at  FROM users where deleted_at is NULL ";
 	if(!query.empty())
 	{
-		complete_query += " and ";
+		complete_query += " AND ";
 		complete_query +=  query;
 	}
+	complete_query += " order by id ";
 	complete_query += " limit 20 offset ";
 	int offset = (page-1)* OFFSET_COUNT ;
 	complete_query += std::to_string(offset);
@@ -45,6 +52,7 @@ pqxx::result UserModel::GetUsers(int page, std::string query){
   W.commit();
 	return R;
 }
+
 int UserModel::GetUsersCount(std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -62,7 +70,7 @@ int UserModel::GetUsersCount(std::string query){
 	std::string complete_query = "SELECT count(id) FROM users where deleted_at is NULL ";
 	if(!query.empty())
 	{
-		complete_query += " and ";
+		complete_query += " AND ";
 		complete_query +=  query;
 	}
   C.prepare("find", complete_query);
@@ -70,6 +78,7 @@ int UserModel::GetUsersCount(std::string query){
   W.commit();
 	return (R[0][0]).as<int>();
 }
+
 boost::property_tree::ptree UserModel::GetUsersJson(int page, std::string query){
 	pqxx::result R = GetUsers(page, query);
 	int result_count = GetUsersCount(query);
@@ -77,22 +86,15 @@ boost::property_tree::ptree UserModel::GetUsersJson(int page, std::string query)
 
 	boost::property_tree::ptree result_node;
 	boost::property_tree::ptree info_node;
-	boost::property_tree::ptree users_node;
 	boost::property_tree::ptree user_node;
-
-	boost::property_tree::ptree details_node;
+	boost::property_tree::ptree users_node;
 
 	for (size_t i = 0; i < R.size(); i++) {
 		user_node.put("id", R[i][0]);
 		user_node.put("email", R[i][1]);
-		std::string details = R[i][2].c_str();
-		if (!details.empty() && details != ""){
-			std::stringstream ss;
-	  	ss << details;
-			boost::property_tree::read_json(ss, details_node);
-			user_node.add_child("details", details_node);
-		}
-		user_node.put("created_at", R[i][3]);
+		user_node.put("password", R[i][2]);
+		user_node.put("details", R[i][3]);
+		user_node.put("created_at", R[i][4]);
 		users_node.push_back(std::make_pair("", user_node));
 	}
 	info_node.put<int>("page", page);
@@ -104,6 +106,7 @@ boost::property_tree::ptree UserModel::GetUsersJson(int page, std::string query)
 	result_node.add_child("users", users_node);
 	return result_node;
 }
+
 pqxx::result UserModel::GetUser(int id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -118,33 +121,35 @@ pqxx::result UserModel::GetUser(int id){
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-  C.prepare("find", "SELECT id, email, details, created_at \
-																FROM users where id = $1 and deleted_at is NULL ");
+  C.prepare("find", "SELECT \
+									      				id , \
+									      				email , \
+									      				password , \
+									      				details , \
+									      				created_at  FROM users where id = $1 and deleted_at is NULL ");
   pqxx::result R = W.prepared("find")(id).exec();
-  W.commit();
+	W.commit();
 	return R;
 }
+
 boost::property_tree::ptree UserModel::GetUserJson(int id){
 	pqxx::result R = GetUser(id);
 	boost::property_tree::ptree user_node;
-	boost::property_tree::ptree details_node;
 
 	if(R.size() == 1){
 		user_node.put("id", R[0][0]);
 		user_node.put("email", R[0][1]);
-		std::string details = R[0][2].c_str();
-		if (!details.empty() && details != ""){
-			std::stringstream ss;
-			ss << details;
-			boost::property_tree::read_json(ss, details_node);
-			user_node.add_child("details", details_node);
-		}
-		user_node.put("created_at", R[0][3]);
+		user_node.put("password", R[0][2]);
+		user_node.put("details", R[0][3]);
+		user_node.put("created_at", R[0][4]);
 	}
 	return user_node;
 }
-std::string UserModel::AddUser( 	std::string  email,
-													std::string  password){
+
+std::string UserModel::AddUser(
+													std::string	email,
+													std::string	password,
+													std::string	details){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -158,10 +163,25 @@ std::string UserModel::AddUser( 	std::string  email,
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	C.prepare("insert", "INSERT INTO users \
-												(id, email, password, details, created_at, deleted_at) VALUES \
-												(DEFAULT, $1, $2, NULL, now(), NULL) RETURNING id");
-  pqxx::result R = W.prepared("insert")(email)(password).exec();
+	C.prepare("insert", "INSERT INTO user ( \
+													id, \
+													email, \
+													password, \
+													details, \
+													created_at, \
+													deleted_at	) VALUES (\
+												   DEFAULT, \
+												   $1, \
+												   $2, \
+												   $3, \
+												   now(), \
+												   NULL ) RETURNING id");
+
+  pqxx::result R = W.prepared("insert")
+                 (email)
+                 (password)
+                 (details)
+         .exec();
   W.commit();
 	std::string id="";
 	if(R.size() == 1){
@@ -169,10 +189,12 @@ std::string UserModel::AddUser( 	std::string  email,
 	}
 	return id;
 }
-void UserModel::UpdateUser(int id,
-													std::string  email,
-													std::string  password,
-													std::string  details){
+
+void UserModel::UpdateUser(
+													int	id,
+													std::string	email,
+													std::string	password,
+													std::string	details ){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -187,10 +209,18 @@ void UserModel::UpdateUser(int id,
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	C.prepare("update", "UPDATE users SET \
-												email = $2, password = $3, details = $4 WHERE id = $1");
-  W.prepared("update")(id)(email)(password).exec();
-  W.commit();
+													email = $2, \
+													password = $3, \
+													details = $4	WHERE id = $1");
+	W.prepared("update")
+                 (id)
+                 (email)
+                 (password)
+                 (details)
+         .exec();
+	W.commit();
 }
+
 void UserModel::DeleteUser(int id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -200,16 +230,17 @@ void UserModel::DeleteUser(int id){
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
-	} catch (const angru::system::exception::error &e) {
+	 } catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
-	}
-	LOG_INFO << "Connected to database: " << C.dbname();
-	pqxx::work W(C);
-	C.prepare("update", "UPDATE users SET deleted_at = now() \
-													WHERE id = $1");
-	W.prepared("update")(id).exec();
-  W.commit();
-}
+	 }
+	 LOG_INFO << "Connected to database: " << C.dbname();
+	 pqxx::work W(C);
+	 C.prepare("update", "UPDATE users SET \
+												deleted_at = now()  \
+												WHERE id = $1");
+   W.prepared("update")(id).exec();
+   W.commit();
+  }
 
 } // model
 } // mvc

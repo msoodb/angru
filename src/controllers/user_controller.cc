@@ -151,7 +151,7 @@ void UserController::doAddUser(const Pistache::Rest::Request& request,
       email = pt.get<std::string>("email");
       password = pt.get<std::string>("password");
       password_sha1 = angru::security::cryptography::get_sha1(password);
-      angru::mvc::model::UserModel::AddUser(email,password_sha1);
+      angru::mvc::model::UserModel::AddUser(email,password_sha1, NULL);
       response.send(Pistache::Http::Code::Ok, "User added.");
     }
     catch (std::exception const& e){
