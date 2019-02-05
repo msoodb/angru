@@ -6,8 +6,8 @@ namespace tools{
 namespace generator{
 
 void modelGenerator(std::string entity_name, std::vector<std::pair<std::string, std::string>> fields);
-
 void controllerGenerator(std::string entity_name, std::vector<std::pair<std::string, std::string>> fields);
+void routerGenerator(std::string entity_name);
 
 } // namespace generator
 } // namespace tools

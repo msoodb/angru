@@ -774,6 +774,28 @@ void controllerGenerator(std::string entity_name, std::vector<std::pair<std::str
   return;
 }
 
+  void routerGenerator(std::string entity_name)
+  {
+    std::string table_name = entity_name;
+    boost::to_lower(table_name);
+
+    std::string file_name= table_name + "_router";
+    std::string class_name= entity_name + "Controller";
+
+    std::vector<std::pair<std::string, std::string>>::iterator itr;
+    std::string path_h= "/home/masoud/Projects/angru/generated/router/" + file_name + ".r";
+    std::ofstream out_r(path_h);
+    //-----------------------------    .r     -------------------------------
+    out_r << '\n';
+    out_r << "	Get(router, \"/" << table_name << "s\", bind(&" << class_name << "::doGet" << entity_name << "s));" << '\n';
+    out_r << "	Get(router, \"/" << table_name << "s/:id\", bind(&" << class_name << "::doGet" << entity_name << "));" << '\n';
+    out_r << "	Delete(router, \"/" << table_name << "s/:id\", bind(&" << class_name << "::doDelete" << entity_name << "));" << '\n';
+    out_r << "  Post(router, \"/" << table_name << "s\", bind(&" << class_name << "::doAdd" << entity_name << "));" << '\n';
+    out_r << "	Put(router, \"/" << table_name << "s/:id\", bind(&" << class_name << "::doUpdate" << entity_name << "));" << '\n';
+    out_r << '\n';
+    //----------------------------------------------------------------------------
+    out_r.close();
+}
 } // namespace generator
 } // namespace tools
 } // namespace angru

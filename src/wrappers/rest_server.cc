@@ -8,6 +8,7 @@
 #include <pistache/endpoint.h>
 #include "tools/system.h"
 #include "tools/security.h"
+#include "controllers/aggrigator_controller.h"
 #include "controllers/file_controller.h"
 #include "controllers/product_controller.h"
 #include "controllers/product_document_controller.h"
@@ -49,6 +50,12 @@ void RestServer::SetupRoutes() {
 
   Get(router, "/files/:id", bind(&FileController::doGetFile));
   Post(router, "/files", bind(&FileController::doAddFile));
+
+  Get(router, "/aggrigators", bind(&AggrigatorController::doGetAggrigators));
+  Get(router, "/aggrigators/:id", bind(&AggrigatorController::doGetAggrigator));
+  Delete(router, "/aggrigators/:id", bind(&AggrigatorController::doDeleteAggrigator));
+  Post(router, "/aggrigators", bind(&AggrigatorController::doAddAggrigator));
+  Put(router, "/aggrigators/:id", bind(&AggrigatorController::doUpdateAggrigator));
 
   Get(router, "/products", bind(&ProductController::doGetProducts));
   Get(router, "/products/:id", bind(&ProductController::doGetProduct));
