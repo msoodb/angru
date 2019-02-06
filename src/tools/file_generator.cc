@@ -310,7 +310,7 @@ void modelGenerator(std::string entity_name, std::vector<std::pair<std::string, 
   out_cc << "	}" << '\n';
   out_cc << "	LOG_INFO << \"Connected to database: \" << C.dbname();" << '\n';
   out_cc << "	pqxx::work W(C);" << '\n';
-  out_cc << "	C.prepare(\"insert\", \"INSERT INTO " << table_name << " ( \\" << '\n';
+  out_cc << "	C.prepare(\"insert\", \"INSERT INTO " << table_name << "s( \\" << '\n';
   field_added=0;
   for (itr = fields.begin(); itr != fields.end(); ++itr) {
     if(field_added > 0){
@@ -419,12 +419,19 @@ void modelGenerator(std::string entity_name, std::vector<std::pair<std::string, 
       continue;
     }
     else if(itr->second == "updated_at"){
+      if(field_added > 0){
+        out_cc << ", \\" << '\n';
+      }
+      out_cc << "													" << itr->second << " = now()";
+      field_added++;
       continue;
     }
-    if(field_added > 0){
-      out_cc << ", \\" << '\n';
+    else{
+      if(field_added > 0){
+        out_cc << ", \\" << '\n';
+      }
+      out_cc << "													" << itr->second << " = $" << i;
     }
-    out_cc << "													" << itr->second << " = $" << i;
     field_added++;
     i++;
   }

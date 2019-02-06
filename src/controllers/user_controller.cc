@@ -163,8 +163,6 @@ void UserController::doUpdateUser(const Pistache::Rest::Request& request,
     }
     auto body = request.body();
     std::string email;
-    std::string password;
-    std::string password_sha1;
     std::string details;
     try
     {
@@ -174,10 +172,8 @@ void UserController::doUpdateUser(const Pistache::Rest::Request& request,
         boost::property_tree::read_json(ss, pt);
         id = pt.get<int>("id");
         email = pt.get<std::string>("email");
-        password = pt.get<std::string>("password");
-        password_sha1 = angru::security::cryptography::get_sha1(password);
         details = pt.get<std::string>("details");
-        angru::mvc::model::UserModel::UpdateUser(id,email,password_sha1,details);
+        angru::mvc::model::UserModel::UpdateUser(id,email,details);
         response.send(Pistache::Http::Code::Ok, "User updated.");
     }
     catch (std::exception const& e){

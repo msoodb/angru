@@ -1,4 +1,4 @@
-#include "models/product_model.h"
+#include "models/content_provider_model.h"
 
 #include <iostream>
 #include <string>
@@ -15,10 +15,10 @@ namespace angru{
 namespace mvc{
 namespace model{
 
-ProductModel::ProductModel(){}
-ProductModel::~ProductModel(){}
+Content_providerModel::Content_providerModel(){}
+Content_providerModel::~Content_providerModel(){}
 
-pqxx::result ProductModel::GetProducts(int page, std::string query){
+pqxx::result Content_providerModel::GetContent_providers(int page, std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -34,21 +34,14 @@ pqxx::result ProductModel::GetProducts(int page, std::string query){
 	pqxx::work W(C);
 	std::string complete_query = "SELECT \
 									      				id , \
-									      				title , \
-									      				price , \
-									      				created_at , \
-									      				tags , \
-									      				expirable , \
-									      				details , \
-									      				updated_at , \
 									      				name , \
-									      				code , \
-									      				active , \
-									      				taxable , \
-									      				description, \
-																(select count(product_documents.id) from product_documents where product_id = products.id \
-																and deleted_at is NULL) as attachments \
-																FROM products where deleted_at is NULL ";
+									      				title , \
+									      				phone , \
+									      				email , \
+									      				created_at , \
+									      				updated_at , \
+									      				details , \
+									      				description  FROM content_providers where deleted_at is NULL ";
 	if(!query.empty())
 	{
 		complete_query += " AND ";
@@ -64,7 +57,7 @@ pqxx::result ProductModel::GetProducts(int page, std::string query){
 	return R;
 }
 
-int ProductModel::GetProductsCount(std::string query){
+int Content_providerModel::GetContent_providersCount(std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -78,7 +71,7 @@ int ProductModel::GetProductsCount(std::string query){
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	std::string complete_query = "SELECT count(id) FROM products where deleted_at is NULL ";
+	std::string complete_query = "SELECT count(id) FROM content_providers where deleted_at is NULL ";
 	if(!query.empty())
 	{
 		complete_query += " AND ";
@@ -90,32 +83,27 @@ int ProductModel::GetProductsCount(std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree ProductModel::GetProductsJson(int page, std::string query){
-	pqxx::result R = GetProducts(page, query);
-	int result_count = GetProductsCount(query);
+boost::property_tree::ptree Content_providerModel::GetContent_providersJson(int page, std::string query){
+	pqxx::result R = GetContent_providers(page, query);
+	int result_count = GetContent_providersCount(query);
 	int pageCount = (result_count / OFFSET_COUNT) + 1;
 
 	boost::property_tree::ptree result_node;
 	boost::property_tree::ptree info_node;
-	boost::property_tree::ptree product_node;
-	boost::property_tree::ptree products_node;
+	boost::property_tree::ptree content_provider_node;
+	boost::property_tree::ptree content_providers_node;
 
 	for (size_t i = 0; i < R.size(); i++) {
-		product_node.put("id", R[i][0]);
-		product_node.put("title", R[i][1]);
-		product_node.put("price", R[i][2]);
-		product_node.put("created_at", R[i][3]);
-		product_node.put("tags", R[i][4]);
-		product_node.put("expirable", R[i][5]);
-		product_node.put("details", R[i][6]);
-		product_node.put("updated_at", R[i][7]);
-		product_node.put("name", R[i][8]);
-		product_node.put("code", R[i][9]);
-		product_node.put("active", R[i][10]);
-		product_node.put("taxable", R[i][11]);
-		product_node.put("description", R[i][12]);
-		product_node.put("attachments", R[i][13]);
-		products_node.push_back(std::make_pair("", product_node));
+		content_provider_node.put("id", R[i][0]);
+		content_provider_node.put("name", R[i][1]);
+		content_provider_node.put("title", R[i][2]);
+		content_provider_node.put("phone", R[i][3]);
+		content_provider_node.put("email", R[i][4]);
+		content_provider_node.put("created_at", R[i][5]);
+		content_provider_node.put("updated_at", R[i][6]);
+		content_provider_node.put("details", R[i][7]);
+		content_provider_node.put("description", R[i][8]);
+		content_providers_node.push_back(std::make_pair("", content_provider_node));
 	}
 	info_node.put<int>("page", page);
 	info_node.put<int>("offset", OFFSET_COUNT);
@@ -123,11 +111,11 @@ boost::property_tree::ptree ProductModel::GetProductsJson(int page, std::string 
 	info_node.put<int>("result_count", result_count);
 
 	result_node.add_child("info", info_node);
-	result_node.add_child("products", products_node);
+	result_node.add_child("content_providers", content_providers_node);
 	return result_node;
 }
 
-pqxx::result ProductModel::GetProduct(int id){
+pqxx::result Content_providerModel::GetContent_provider(int id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -143,55 +131,43 @@ pqxx::result ProductModel::GetProduct(int id){
 	pqxx::work W(C);
   C.prepare("find", "SELECT \
 									      				id , \
-									      				title , \
-									      				price , \
-									      				created_at , \
-									      				tags , \
-									      				expirable , \
-									      				details , \
-									      				updated_at , \
 									      				name , \
-									      				code , \
-									      				active , \
-									      				taxable , \
-									      				description  FROM products where id = $1 and deleted_at is NULL ");
+									      				title , \
+									      				phone , \
+									      				email , \
+									      				created_at , \
+									      				updated_at , \
+									      				details , \
+									      				description  FROM content_providers where id = $1 and deleted_at is NULL ");
   pqxx::result R = W.prepared("find")(id).exec();
 	W.commit();
 	return R;
 }
 
-boost::property_tree::ptree ProductModel::GetProductJson(int id){
-	pqxx::result R = GetProduct(id);
-	boost::property_tree::ptree product_node;
+boost::property_tree::ptree Content_providerModel::GetContent_providerJson(int id){
+	pqxx::result R = GetContent_provider(id);
+	boost::property_tree::ptree content_provider_node;
 
 	if(R.size() == 1){
-		product_node.put("id", R[0][0]);
-		product_node.put("title", R[0][1]);
-		product_node.put("price", R[0][2]);
-		product_node.put("created_at", R[0][3]);
-		product_node.put("tags", R[0][4]);
-		product_node.put("expirable", R[0][5]);
-		product_node.put("details", R[0][6]);
-		product_node.put("updated_at", R[0][7]);
-		product_node.put("name", R[0][8]);
-		product_node.put("code", R[0][9]);
-		product_node.put("active", R[0][10]);
-		product_node.put("taxable", R[0][11]);
-		product_node.put("description", R[0][12]);
+		content_provider_node.put("id", R[0][0]);
+		content_provider_node.put("name", R[0][1]);
+		content_provider_node.put("title", R[0][2]);
+		content_provider_node.put("phone", R[0][3]);
+		content_provider_node.put("email", R[0][4]);
+		content_provider_node.put("created_at", R[0][5]);
+		content_provider_node.put("updated_at", R[0][6]);
+		content_provider_node.put("details", R[0][7]);
+		content_provider_node.put("description", R[0][8]);
 	}
-	return product_node;
+	return content_provider_node;
 }
 
-std::string ProductModel::AddProduct(
-													std::string	title,
-													float	price,
-													std::string	tags,
-													bool	expirable,
-													std::string	details,
-													std::string	name,
-													std::string	code,
-													bool	active,
-													bool	taxable,
+std::string Content_providerModel::AddContent_provider(
+													std::string	name, 
+													std::string	title, 
+													std::string	phone, 
+													std::string	email, 
+													std::string	details, 
 													std::string	description){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -206,46 +182,34 @@ std::string ProductModel::AddProduct(
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	C.prepare("insert", "INSERT INTO products( \
+	C.prepare("insert", "INSERT INTO content_providers( \
 													id, \
+													name, \
 													title, \
-													price, \
+													phone, \
+													email, \
 													created_at, \
 													deleted_at, \
-													tags, \
-													expirable, \
-													details, \
 													updated_at, \
-													name, \
-													code, \
-													active, \
-													taxable, \
+													details, \
 													description	) VALUES (\
 												   DEFAULT, \
 												   $1, \
 												   $2, \
-												   now(), \
-												   NULL, \
 												   $3, \
 												   $4, \
-												   $5, \
+												   now(), \
 												   NULL, \
-												   $6, \
-												   $7, \
-												   $8, \
-												   $9, \
-												   $10 ) RETURNING id");
+												   NULL, \
+												   $5, \
+												   $6 ) RETURNING id");
 
   pqxx::result R = W.prepared("insert")
-                 (title)
-                 (price)
-                 (tags)
-                 (expirable)
-                 (details)
                  (name)
-                 (code)
-                 (active)
-                 (taxable)
+                 (title)
+                 (phone)
+                 (email)
+                 (details)
                  (description)
          .exec();
   W.commit();
@@ -256,17 +220,13 @@ std::string ProductModel::AddProduct(
 	return id;
 }
 
-void ProductModel::UpdateProduct(
+void Content_providerModel::UpdateContent_provider( 
 													int	id,
-													std::string	title,
-													float	price,
-													std::string	tags,
-													bool	expirable,
-													std::string	details,
 													std::string	name,
-													std::string	code,
-													bool	active,
-													bool	taxable,
+													std::string	title,
+													std::string	phone,
+													std::string	email,
+													std::string	details,
 													std::string	description ){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -281,35 +241,27 @@ void ProductModel::UpdateProduct(
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	C.prepare("update", "UPDATE products SET \
-													title = $2, \
-													price = $3, \
-													tags = $4, \
-													expirable = $5, \
-													details = $6, \
+	C.prepare("update", "UPDATE content_providers SET \
+													name = $2, \
+													title = $3, \
+													phone = $4, \
+													email = $5, \
 													updated_at = now(), \
-													name = $7, \
-													code = $8, \
-													active = $9, \
-													taxable = $10, \
-													description = $11	WHERE id = $1");
+													details = $6, \
+													description = $7	WHERE id = $1");
 	W.prepared("update")
                  (id)
-                 (title)
-                 (price)
-                 (tags)
-                 (expirable)
-                 (details)
                  (name)
-                 (code)
-                 (active)
-                 (taxable)
+                 (title)
+                 (phone)
+                 (email)
+                 (details)
                  (description)
          .exec();
 	W.commit();
 }
 
-void ProductModel::DeleteProduct(int id){
+void Content_providerModel::DeleteContent_provider(int id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -323,7 +275,7 @@ void ProductModel::DeleteProduct(int id){
 	 }
 	 LOG_INFO << "Connected to database: " << C.dbname();
 	 pqxx::work W(C);
-	 C.prepare("update", "UPDATE products SET \
+	 C.prepare("update", "UPDATE content_providers SET \
 												deleted_at = now()  \
 												WHERE id = $1");
    W.prepared("update")(id).exec();

@@ -29,7 +29,6 @@ public:
 	static void UpdateUser(
 													int	id,
 													std::string	email,
-													std::string	password,
 													std::string	details);
 	static void DeleteUser(int);
 };

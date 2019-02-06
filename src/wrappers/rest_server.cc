@@ -9,6 +9,7 @@
 #include "tools/system.h"
 #include "tools/security.h"
 #include "controllers/aggrigator_controller.h"
+#include "controllers/content_provider_controller.h"
 #include "controllers/file_controller.h"
 #include "controllers/product_controller.h"
 #include "controllers/product_document_controller.h"
@@ -56,6 +57,12 @@ void RestServer::SetupRoutes() {
   Delete(router, "/aggrigators/:id", bind(&AggrigatorController::doDeleteAggrigator));
   Post(router, "/aggrigators", bind(&AggrigatorController::doAddAggrigator));
   Put(router, "/aggrigators/:id", bind(&AggrigatorController::doUpdateAggrigator));
+
+  Get(router, "/content_providers", bind(&Content_providerController::doGetContent_providers));
+  Get(router, "/content_providers/:id", bind(&Content_providerController::doGetContent_provider));
+  Delete(router, "/content_providers/:id", bind(&Content_providerController::doDeleteContent_provider));
+  Post(router, "/content_providers", bind(&Content_providerController::doAddContent_provider));
+  Put(router, "/content_providers/:id", bind(&Content_providerController::doUpdateContent_provider));
 
   Get(router, "/products", bind(&ProductController::doGetProducts));
   Get(router, "/products/:id", bind(&ProductController::doGetProduct));

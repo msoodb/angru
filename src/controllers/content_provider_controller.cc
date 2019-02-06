@@ -1,4 +1,4 @@
-#include "controllers/aggrigator_controller.h"
+#include "controllers/content_provider_controller.h"
 
 #include <iostream>
 #include <string>
@@ -10,16 +10,16 @@
 #include "tools/log.h"
 #include "wrappers/postgresql.h"
 #include "tools/security.h"
-#include "models/aggrigator_model.h"
+#include "models/content_provider_model.h"
 
 namespace angru{
 namespace mvc{
 namespace controller{
 
-AggrigatorController::AggrigatorController(){}
-AggrigatorController::~AggrigatorController(){}
+Content_providerController::Content_providerController(){}
+Content_providerController::~Content_providerController(){}
 
-void AggrigatorController::doGetAggrigators(const Pistache::Rest::Request& request,
+void Content_providerController::doGetContent_providers(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
@@ -30,19 +30,19 @@ void AggrigatorController::doGetAggrigators(const Pistache::Rest::Request& reque
       auto value = query.get("page").get();
       page = std::stoi(value);
     }
-    boost::property_tree::ptree aggrigators = angru::mvc::model::AggrigatorModel::GetAggrigatorsJson(page);
+    boost::property_tree::ptree content_providers = angru::mvc::model::Content_providerModel::GetContent_providersJson(page);
     std::ostringstream oss;
-    boost::property_tree::write_json(oss, aggrigators);
+    boost::property_tree::write_json(oss, content_providers);
 
     std::string inifile_text = oss.str();
     if (inifile_text.empty()) {
-      response.send(Pistache::Http::Code::Not_Found, "Aggrigators not found.");
+      response.send(Pistache::Http::Code::Not_Found, "Content_providers not found.");
     } else {
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
 }
 
-void AggrigatorController::doGetAggrigator(const Pistache::Rest::Request& request,
+void Content_providerController::doGetContent_provider(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
@@ -52,20 +52,20 @@ void AggrigatorController::doGetAggrigator(const Pistache::Rest::Request& reques
         auto value = request.param(":id");
         id = value.as<int>();
     }
-    boost::property_tree::ptree aggrigator = angru::mvc::model::AggrigatorModel::GetAggrigatorJson(id);
+    boost::property_tree::ptree content_provider = angru::mvc::model::Content_providerModel::GetContent_providerJson(id);
     std::ostringstream oss;
-    boost::property_tree::write_json(oss, aggrigator);
+    boost::property_tree::write_json(oss, content_provider);
 
     std::string inifile_text = oss.str();
 
     if (inifile_text.empty()) {
-      response.send(Pistache::Http::Code::Not_Found, "Aggrigators not found.");
+      response.send(Pistache::Http::Code::Not_Found, "Content_providers not found.");
     } else {
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
 }
 
-void AggrigatorController::doDeleteAggrigator(const Pistache::Rest::Request& request,
+void Content_providerController::doDeleteContent_provider(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
@@ -75,11 +75,11 @@ void AggrigatorController::doDeleteAggrigator(const Pistache::Rest::Request& req
         auto value = request.param(":id");
         id = value.as<int>();
     }
-    angru::mvc::model::AggrigatorModel::DeleteAggrigator(id);
-    response.send(Pistache::Http::Code::Ok, "Aggrigator deleted.");
+    angru::mvc::model::Content_providerModel::DeleteContent_provider(id);
+    response.send(Pistache::Http::Code::Ok, "Content_provider deleted.");
 }
 
-void AggrigatorController::doAddAggrigator(const Pistache::Rest::Request& request,
+void Content_providerController::doAddContent_provider(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
@@ -104,23 +104,21 @@ void AggrigatorController::doAddAggrigator(const Pistache::Rest::Request& reques
       details = pt.get<std::string>("details");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::AggrigatorModel::AddAggrigator(
-                                                  name,
-                                                  title,
-                                                  phone,
-                                                  email,
-                                                  details,
+      angru::mvc::model::Content_providerModel::AddContent_provider(
+                                                  name, 
+                                                  title, 
+                                                  phone, 
+                                                  email, 
+                                                  details, 
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "Aggrigator added.");
+      response.send(Pistache::Http::Code::Ok, "Content_provider added.");
     }
     catch (std::exception const& e){
-      std::cout << e.what() << '\n';
-      LOG_ERROR << e.what();
-      response.send(Pistache::Http::Code::Not_Found, "Aggrigators not found.");
+      response.send(Pistache::Http::Code::Not_Found, "Content_providers not found.");
     }
 }
 
-void AggrigatorController::doUpdateAggrigator(const Pistache::Rest::Request& request,
+void Content_providerController::doUpdateContent_provider(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
@@ -131,7 +129,7 @@ void AggrigatorController::doUpdateAggrigator(const Pistache::Rest::Request& req
       id = value.as<int>();
     }
     if(id == -1){
-      response.send(Pistache::Http::Code::Not_Found, "Aggrigators not found.");
+      response.send(Pistache::Http::Code::Not_Found, "Content_providers not found.");
     }
     auto body = request.body();
     std::string	name;
@@ -152,18 +150,18 @@ void AggrigatorController::doUpdateAggrigator(const Pistache::Rest::Request& req
       email = pt.get<std::string>("email");
       details = pt.get<std::string>("details");
       description = pt.get<std::string>("description");
-      angru::mvc::model::AggrigatorModel::UpdateAggrigator(
-                                                  id,
-                                                  name,
-                                                  title,
-                                                  phone,
-                                                  email,
-                                                  details,
+      angru::mvc::model::Content_providerModel::UpdateContent_provider(
+                                                  id, 
+                                                  name, 
+                                                  title, 
+                                                  phone, 
+                                                  email, 
+                                                  details, 
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "Aggrigators updated.");
+      response.send(Pistache::Http::Code::Ok, "Content_providers updated.");
     }
     catch (std::exception const& e){
-      response.send(Pistache::Http::Code::Not_Found, "Aggrigators not found.");
+      response.send(Pistache::Http::Code::Not_Found, "Content_providers not found.");
     }
  }
 

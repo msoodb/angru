@@ -182,7 +182,7 @@ std::string AggrigatorModel::AddAggrigator(
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	C.prepare("insert", "INSERT INTO aggrigator ( \
+	C.prepare("insert", "INSERT INTO aggrigators( \
 													id, \
 													name, \
 													title, \
@@ -246,6 +246,7 @@ void AggrigatorModel::UpdateAggrigator(
 													title = $3, \
 													phone = $4, \
 													email = $5, \
+													updated_at = now(), \
 													details = $6, \
 													description = $7	WHERE id = $1");
 	W.prepared("update")
