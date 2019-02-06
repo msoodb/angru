@@ -87,9 +87,11 @@ void AggrigatorController::doAddAggrigator(const Pistache::Rest::Request& reques
     auto body = request.body();
     std::string	name;
     std::string	title;
+    std::string	code;
     std::string	phone;
     std::string	email;
     std::string	details;
+    int	status;
     std::string	description;
     try
     {
@@ -99,23 +101,25 @@ void AggrigatorController::doAddAggrigator(const Pistache::Rest::Request& reques
       boost::property_tree::read_json(ss, pt);
       name = pt.get<std::string>("name");
       title = pt.get<std::string>("title");
+      code = pt.get<std::string>("code");
       phone = pt.get<std::string>("phone");
       email = pt.get<std::string>("email");
       details = pt.get<std::string>("details");
+      status = pt.get<int>("status");
       description = pt.get<std::string>("description");
 
       angru::mvc::model::AggrigatorModel::AddAggrigator(
-                                                  name,
-                                                  title,
-                                                  phone,
-                                                  email,
-                                                  details,
+                                                  name, 
+                                                  title, 
+                                                  code, 
+                                                  phone, 
+                                                  email, 
+                                                  details, 
+                                                  status, 
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Aggrigator added.");
     }
     catch (std::exception const& e){
-      std::cout << e.what() << '\n';
-      LOG_ERROR << e.what();
       response.send(Pistache::Http::Code::Not_Found, "Aggrigators not found.");
     }
 }
@@ -136,9 +140,11 @@ void AggrigatorController::doUpdateAggrigator(const Pistache::Rest::Request& req
     auto body = request.body();
     std::string	name;
     std::string	title;
+    std::string	code;
     std::string	phone;
     std::string	email;
     std::string	details;
+    int	status;
     std::string	description;
    try
     {
@@ -148,17 +154,21 @@ void AggrigatorController::doUpdateAggrigator(const Pistache::Rest::Request& req
       boost::property_tree::read_json(ss, pt);
       name = pt.get<std::string>("name");
       title = pt.get<std::string>("title");
+      code = pt.get<std::string>("code");
       phone = pt.get<std::string>("phone");
       email = pt.get<std::string>("email");
       details = pt.get<std::string>("details");
+      status = pt.get<int>("status");
       description = pt.get<std::string>("description");
       angru::mvc::model::AggrigatorModel::UpdateAggrigator(
-                                                  id,
-                                                  name,
-                                                  title,
-                                                  phone,
-                                                  email,
-                                                  details,
+                                                  id, 
+                                                  name, 
+                                                  title, 
+                                                  code, 
+                                                  phone, 
+                                                  email, 
+                                                  details, 
+                                                  status, 
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Aggrigators updated.");
     }

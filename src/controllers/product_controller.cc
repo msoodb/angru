@@ -85,15 +85,15 @@ void ProductController::doAddProduct(const Pistache::Rest::Request& request,
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
     auto body = request.body();
-    std::string	title;
-    float	price;
-    std::string	tags;
-    bool	expirable;
-    std::string	details;
     std::string	name;
+    std::string	title;
     std::string	code;
-    bool	active;
+    float	price;
+    bool	expirable;
     bool	taxable;
+    std::string	tags;
+    std::string	details;
+    int	status;
     std::string	description;
     try
     {
@@ -101,27 +101,27 @@ void ProductController::doAddProduct(const Pistache::Rest::Request& request,
       ss << body;
       boost::property_tree::ptree pt;
       boost::property_tree::read_json(ss, pt);
-      title = pt.get<std::string>("title");
-      price = pt.get<float>("price");
-      tags = pt.get<std::string>("tags");
-      expirable = pt.get<bool>("expirable");
-      details = pt.get<std::string>("details");
       name = pt.get<std::string>("name");
+      title = pt.get<std::string>("title");
       code = pt.get<std::string>("code");
-      active = pt.get<bool>("active");
+      price = pt.get<float>("price");
+      expirable = pt.get<bool>("expirable");
       taxable = pt.get<bool>("taxable");
+      tags = pt.get<std::string>("tags");
+      details = pt.get<std::string>("details");
+      status = pt.get<int>("status");
       description = pt.get<std::string>("description");
 
       angru::mvc::model::ProductModel::AddProduct(
-                                                  title,
-                                                  price,
-                                                  tags,
-                                                  expirable,
-                                                  details,
-                                                  name,
-                                                  code,
-                                                  active,
-                                                  taxable,
+                                                  name, 
+                                                  title, 
+                                                  code, 
+                                                  price, 
+                                                  expirable, 
+                                                  taxable, 
+                                                  tags, 
+                                                  details, 
+                                                  status, 
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Product added.");
     }
@@ -144,15 +144,15 @@ void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
       response.send(Pistache::Http::Code::Not_Found, "Products not found.");
     }
     auto body = request.body();
-    std::string	title;
-    float	price;
-    std::string	tags;
-    bool	expirable;
-    std::string	details;
     std::string	name;
+    std::string	title;
     std::string	code;
-    bool	active;
+    float	price;
+    bool	expirable;
     bool	taxable;
+    std::string	tags;
+    std::string	details;
+    int	status;
     std::string	description;
    try
     {
@@ -160,27 +160,27 @@ void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
       ss << body;
       boost::property_tree::ptree pt;
       boost::property_tree::read_json(ss, pt);
-      title = pt.get<std::string>("title");
-      price = pt.get<float>("price");
-      tags = pt.get<std::string>("tags");
-      expirable = pt.get<bool>("expirable");
-      details = pt.get<std::string>("details");
       name = pt.get<std::string>("name");
+      title = pt.get<std::string>("title");
       code = pt.get<std::string>("code");
-      active = pt.get<bool>("active");
+      price = pt.get<float>("price");
+      expirable = pt.get<bool>("expirable");
       taxable = pt.get<bool>("taxable");
+      tags = pt.get<std::string>("tags");
+      details = pt.get<std::string>("details");
+      status = pt.get<int>("status");
       description = pt.get<std::string>("description");
       angru::mvc::model::ProductModel::UpdateProduct(
-                                                  id,
-                                                  title,
-                                                  price,
-                                                  tags,
-                                                  expirable,
-                                                  details,
-                                                  name,
-                                                  code,
-                                                  active,
-                                                  taxable,
+                                                  id, 
+                                                  name, 
+                                                  title, 
+                                                  code, 
+                                                  price, 
+                                                  expirable, 
+                                                  taxable, 
+                                                  tags, 
+                                                  details, 
+                                                  status, 
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Products updated.");
     }

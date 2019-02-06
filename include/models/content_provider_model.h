@@ -12,32 +12,36 @@ namespace angru{
 namespace mvc{
 namespace model{
 
-class Content_providerModel
+class ContentProviderModel
 {
 public:
-	Content_providerModel();
-	~Content_providerModel();
-	static pqxx::result GetContent_providers(int page=1, std::string query="");
-	static int GetContent_providersCount(std::string query="");
-	static boost::property_tree::ptree GetContent_providersJson(int page=1, std::string query="");
-  static pqxx::result GetContent_provider(int);
-	static boost::property_tree::ptree GetContent_providerJson(int);
-	static std::string AddContent_provider(
+	ContentProviderModel();
+	~ContentProviderModel();
+	static pqxx::result GetContentProviders(int page=1, std::string query="");
+	static int GetContentProvidersCount(std::string query="");
+	static boost::property_tree::ptree GetContentProvidersJson(int page=1, std::string query="");
+  static pqxx::result GetContentProvider(int);
+	static boost::property_tree::ptree GetContentProviderJson(int);
+	static std::string AddContentProvider(
 													std::string	name,
 													std::string	title,
+													std::string	code,
 													std::string	phone,
 													std::string	email,
 													std::string	details,
+													int	status,
 													std::string	description);
-	static void UpdateContent_provider(
+	static void UpdateContentProvider(
 													int	id,
 													std::string	name,
 													std::string	title,
+													std::string	code,
 													std::string	phone,
 													std::string	email,
 													std::string	details,
+													int	status,
 													std::string	description);
-	static void DeleteContent_provider(int);
+	static void DeleteContentProvider(int);
 };
 
 } // model

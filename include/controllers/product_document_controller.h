@@ -20,14 +20,14 @@ class ProductDocumentController
 public:
 	ProductDocumentController();
 	~ProductDocumentController();
-	static void doGetProductDocuments(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
-	static void doGetProductDocument(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
-	static void doDeleteProductDocument(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
-	static void doAddProductDocument(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
-	static void doUpdateProductDocument(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+	static void	doGetProductDocuments(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+	static void	doGetProductDocument(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+  static void	doDeleteProductDocument(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+	static void	doAddProductDocument(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+	static void	doUpdateProductDocument(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 };
 
-} // controller
+} // model
 } // mvc
 } // angru
 

@@ -17,29 +17,33 @@ class ProductDocumentModel
 public:
 	ProductDocumentModel();
 	~ProductDocumentModel();
-	static pqxx::result GetProductDocuments(int product_id);
-	static int GetProductDocumentsCount(int product_id);
-	static boost::property_tree::ptree GetProductDocumentsJson(int product_id);
-  static pqxx::result GetProductDocument(int id, int product_id);
-	static boost::property_tree::ptree GetProductDocumentJson(int id, int product_id);
-	static std::string AddProductDocument(int product_id,
-													std::string name,
-													std::string path,
-													float size,
-													std::string tags,
-													std::string details,
-													bool active,
-													std::string description);
-	static void UpdateProductDocument(int id,
-													int product_id,
-													std::string name,
-													std::string path,
-													float size,
-													std::string tags,
-													std::string details,
-													bool active,
-													std::string description);
-	static void DeleteProductDocument(int id, int product_id);
+	static pqxx::result GetProductDocuments(int page=1, std::string query="");
+	static int GetProductDocumentsCount(std::string query="");
+	static boost::property_tree::ptree GetProductDocumentsJson(int page=1, std::string query="");
+  static pqxx::result GetProductDocument(int);
+	static boost::property_tree::ptree GetProductDocumentJson(int);
+	static std::string AddProductDocument(
+													int	product_id,
+													std::string	name,
+													std::string	title,
+													std::string	path,
+													float	size,
+													std::string	tags,
+													std::string	details,
+													int	status,
+													std::string	description);
+	static void UpdateProductDocument(
+													int	id,
+													int	product_id,
+													std::string	name,
+													std::string	title,
+													std::string	path,
+													float	size,
+													std::string	tags,
+													std::string	details,
+													int	status,
+													std::string	description);
+	static void DeleteProductDocument(int);
 };
 
 } // model

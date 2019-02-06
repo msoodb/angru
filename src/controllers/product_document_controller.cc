@@ -6,7 +6,6 @@
 #include <pqxx/pqxx>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-#include <boost/property_tree/ini_parser.hpp>
 #include "tools/system.h"
 #include "tools/log.h"
 #include "wrappers/postgresql.h"
@@ -19,33 +18,30 @@ namespace controller{
 
 ProductDocumentController::ProductDocumentController(){}
 ProductDocumentController::~ProductDocumentController(){}
+
 void ProductDocumentController::doGetProductDocuments(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
-    int product_id = -1;
-    if (request.hasParam(":product_id")) {
-        auto value = request.param(":product_id");
-        product_id = value.as<int>();
+    int page = 1;
+    auto query = request.query();
+    if(query.has("page")) {
+      auto value = query.get("page").get();
+      page = std::stoi(value);
     }
-    try
-    {
-      boost::property_tree::ptree product_documents = angru::mvc::model::ProductDocumentModel::GetProductDocumentsJson(product_id);
-      std::ostringstream oss;
-      boost::property_tree::write_json(oss, product_documents);
+    boost::property_tree::ptree product_documents = angru::mvc::model::ProductDocumentModel::GetProductDocumentsJson(page);
+    std::ostringstream oss;
+    boost::property_tree::write_json(oss, product_documents);
 
-      std::string inifile_text = oss.str();
-      if (inifile_text.empty()) {
-        response.send(Pistache::Http::Code::Not_Found, "ProductDocuments not found.");
-      } else {
-        response.send(Pistache::Http::Code::Ok, inifile_text);
-      }
-    }
-    catch (std::exception const& e){
+    std::string inifile_text = oss.str();
+    if (inifile_text.empty()) {
       response.send(Pistache::Http::Code::Not_Found, "ProductDocuments not found.");
+    } else {
+      response.send(Pistache::Http::Code::Ok, inifile_text);
     }
 }
+
 void ProductDocumentController::doGetProductDocument(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
@@ -56,36 +52,19 @@ void ProductDocumentController::doGetProductDocument(const Pistache::Rest::Reque
         auto value = request.param(":id");
         id = value.as<int>();
     }
-    int product_id = -1;
-    if (request.hasParam(":product_id")) {
-        auto value = request.param(":product_id");
-        product_id = value.as<int>();
-    }
-    try
-    {
-      boost::property_tree::ptree product_document = angru::mvc::model::ProductDocumentModel::GetProductDocumentJson(id, product_id);
-      std::ostringstream oss;
-      boost::property_tree::write_json(oss, product_document);
+    boost::property_tree::ptree product_document = angru::mvc::model::ProductDocumentModel::GetProductDocumentJson(id);
+    std::ostringstream oss;
+    boost::property_tree::write_json(oss, product_document);
 
-      std::string inifile_text = oss.str();
+    std::string inifile_text = oss.str();
 
-      if (inifile_text.empty()) {
-        response.send(Pistache::Http::Code::Not_Found, "ProductDocuments not found.");
-      }
-      else {
-        response.send(Pistache::Http::Code::Ok, inifile_text);
-      }
-    }
-    catch (std::exception const& e){
-      LOG_ERROR << e.what();
+    if (inifile_text.empty()) {
       response.send(Pistache::Http::Code::Not_Found, "ProductDocuments not found.");
+    } else {
+      response.send(Pistache::Http::Code::Ok, inifile_text);
     }
-    catch(...)
-  	{
-      LOG_ERROR << "Error: unknown exception";
-      response.send(Pistache::Http::Code::Not_Found, "ProductDocuments not found.");
-  	}
 }
+
 void ProductDocumentController::doDeleteProductDocument(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
@@ -96,29 +75,25 @@ void ProductDocumentController::doDeleteProductDocument(const Pistache::Rest::Re
         auto value = request.param(":id");
         id = value.as<int>();
     }
-    int product_id = -1;
-    if (request.hasParam(":product_id")) {
-        auto value = request.param(":product_id");
-        product_id = value.as<int>();
-    }
-    angru::mvc::model::ProductDocumentModel::DeleteProductDocument(id, product_id);
+    angru::mvc::model::ProductDocumentModel::DeleteProductDocument(id);
     response.send(Pistache::Http::Code::Ok, "ProductDocument deleted.");
 }
+
 void ProductDocumentController::doAddProductDocument(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
     auto body = request.body();
-    int product_id;
-		std::string name;
-		std::string path;
-		float size;
-		std::string tags;
-		std::string details;
-		bool active;
-		std::string description;
-
+    int	product_id;
+    std::string	name;
+    std::string	title;
+    std::string	path;
+    float	size;
+    std::string	tags;
+    std::string	details;
+    int	status;
+    std::string	description;
     try
     {
       std::stringstream ss;
@@ -127,27 +102,31 @@ void ProductDocumentController::doAddProductDocument(const Pistache::Rest::Reque
       boost::property_tree::read_json(ss, pt);
       product_id = pt.get<int>("product_id");
       name = pt.get<std::string>("name");
+      title = pt.get<std::string>("title");
       path = pt.get<std::string>("path");
       size = pt.get<float>("size");
       tags = pt.get<std::string>("tags");
       details = pt.get<std::string>("details");
-      active = pt.get<bool>("active");
+      status = pt.get<int>("status");
       description = pt.get<std::string>("description");
 
-      std::string id=angru::mvc::model::ProductDocumentModel::AddProductDocument(product_id,
-      																			name,
-      																			path,
-      																			size,
-      																			tags,
-      																			details,
-      																			active,
-      																			description);
-      response.send(Pistache::Http::Code::Ok, "{\"message\":\"success\", \"id\":\"" + id + "\"}");
+      angru::mvc::model::ProductDocumentModel::AddProductDocument(
+                                                  product_id, 
+                                                  name, 
+                                                  title, 
+                                                  path, 
+                                                  size, 
+                                                  tags, 
+                                                  details, 
+                                                  status, 
+                                                  description );
+      response.send(Pistache::Http::Code::Ok, "ProductDocument added.");
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "ProductDocuments not found.");
     }
 }
+
 void ProductDocumentController::doUpdateProductDocument(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
@@ -156,51 +135,54 @@ void ProductDocumentController::doUpdateProductDocument(const Pistache::Rest::Re
     int id = -1;
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
-        id = value.as<int>();
+      id = value.as<int>();
     }
-    int product_id = -1;
-    if (request.hasParam(":product_id")) {
-        auto value = request.param(":product_id");
-        product_id = value.as<int>();
+    if(id == -1){
+      response.send(Pistache::Http::Code::Not_Found, "ProductDocuments not found.");
     }
     auto body = request.body();
-		std::string name;
-		std::string path;
-		float size;
-		std::string tags;
-		std::string details;
-		bool active;
-		std::string description;
-    try
+    int	product_id;
+    std::string	name;
+    std::string	title;
+    std::string	path;
+    float	size;
+    std::string	tags;
+    std::string	details;
+    int	status;
+    std::string	description;
+   try
     {
       std::stringstream ss;
       ss << body;
       boost::property_tree::ptree pt;
       boost::property_tree::read_json(ss, pt);
+      product_id = pt.get<int>("product_id");
       name = pt.get<std::string>("name");
+      title = pt.get<std::string>("title");
       path = pt.get<std::string>("path");
       size = pt.get<float>("size");
       tags = pt.get<std::string>("tags");
       details = pt.get<std::string>("details");
-      active = pt.get<bool>("active");
+      status = pt.get<int>("status");
       description = pt.get<std::string>("description");
-      angru::mvc::model::ProductDocumentModel::UpdateProductDocument(id,
-                                                              product_id,
-                                                              name,
-                                                              path,
-                                                              size,
-                                                              tags,
-                                                              details,
-                                                              active,
-                                                              description);
+      angru::mvc::model::ProductDocumentModel::UpdateProductDocument(
+                                                  id, 
+                                                  product_id, 
+                                                  name, 
+                                                  title, 
+                                                  path, 
+                                                  size, 
+                                                  tags, 
+                                                  details, 
+                                                  status, 
+                                                  description );
       response.send(Pistache::Http::Code::Ok, "ProductDocuments updated.");
     }
     catch (std::exception const& e){
-      std::cout << e.what() << '\n';
       response.send(Pistache::Http::Code::Not_Found, "ProductDocuments not found.");
     }
-}
+ }
 
-} // controller
+} // model
 } // mvc
 } // angru

@@ -11,21 +11,16 @@ namespace angru{
 namespace tools{
 namespace generator{
 
-void modelGenerator(std::string entity_name, std::vector<std::pair<std::string, std::string>> fields)
+void modelGenerator(std::string table_name_single, std::string entity_name,
+    std::vector<std::pair<std::string, std::string>> fields)
 {
-  std::string table_name = entity_name;
-  boost::to_lower(table_name);
-
-  std::string file_name= table_name + "_model";
-  std::string class_name= entity_name + "Model";
-
-  std::string guard = "ANGRU_" + file_name + "_H_";
-  boost::to_upper(guard);
-
+  std::string table_name = table_name_single;
+  std::string file_name = table_name_single + "_model";
+  std::string class_name = entity_name + "Model";
+  std::string guard = "ANGRU_" + file_name + "_H_"; boost::to_upper(guard);
   int field_added=0;
-
   std::vector<std::pair<std::string, std::string>>::iterator itr;
-  std::string path_h= "/home/masoud/Projects/angru/generated/model/" + file_name + ".h";
+  std::string path_h= "/home/masoud/Projects/angru/generated/model_h/" + file_name + ".h";
   std::ofstream out_h(path_h);
   //-----------------------------    .h     -------------------------------
   out_h << "#ifndef " << guard << '\n';
@@ -104,7 +99,7 @@ void modelGenerator(std::string entity_name, std::vector<std::pair<std::string, 
   //----------------------------------------------------------------------------
   out_h.close();
 
-  std::string path_cc= "/home/masoud/Projects/angru/generated/model/" + file_name + ".cc";
+  std::string path_cc= "/home/masoud/Projects/angru/generated/model_cc/" + file_name + ".cc";
   std::ofstream out_cc(path_cc);
   //-----------------------------    .cc     -------------------------------
   out_cc << "#include \"models/" << file_name << ".h\"" << '\n';
@@ -485,22 +480,18 @@ void modelGenerator(std::string entity_name, std::vector<std::pair<std::string, 
   return;
 }
 
-void controllerGenerator(std::string entity_name, std::vector<std::pair<std::string, std::string>> fields)
+void controllerGenerator(std::string table_name_single, std::string entity_name,
+  std::vector<std::pair<std::string, std::string>> fields)
 {
-  std::string table_name = entity_name;
-  boost::to_lower(table_name);
-
-  std::string file_name = table_name + "_controller";
-  std::string file_model_name = table_name + "_model";
+  std::string table_name = table_name_single;
+  std::string file_name = table_name_single + "_controller";
+  std::string file_model_name = table_name_single + "_model";
   std::string class_name = entity_name + "Controller";
-
-  std::string guard = "ANGRU_" + file_name + "_H_";
-  boost::to_upper(guard);
-
-  int field_added = 0;
-
+  std::string guard = "ANGRU_" + file_name + "_H_"; boost::to_upper(guard);
+  int field_added=0;
   std::vector<std::pair<std::string, std::string>>::iterator itr;
-  std::string path_h= "/home/masoud/Projects/angru/generated/controller/" + file_name + ".h";
+  std::string path_h= "/home/masoud/Projects/angru/generated/controller_h/" + file_name + ".h";
+
   std::ofstream out_h(path_h);
   //-----------------------------    .h     -------------------------------
   out_h << "#ifndef " << guard << '\n';
@@ -540,7 +531,7 @@ void controllerGenerator(std::string entity_name, std::vector<std::pair<std::str
   //----------------------------------------------------------------------------
   out_h.close();
 
-  std::string path_cc= "/home/masoud/Projects/angru/generated/controller/" + file_name + ".cc";
+  std::string path_cc= "/home/masoud/Projects/angru/generated/controller_cc/" + file_name + ".cc";
   std::ofstream out_cc(path_cc);
   //-----------------------------    .cc     -------------------------------
   out_cc << "#include \"controllers/" << file_name << ".h\"" << '\n';
@@ -781,27 +772,25 @@ void controllerGenerator(std::string entity_name, std::vector<std::pair<std::str
   return;
 }
 
-  void routerGenerator(std::string entity_name)
-  {
-    std::string table_name = entity_name;
-    boost::to_lower(table_name);
+void routerGenerator(std::string table_name_single, std::string entity_name)
+{
+  std::string table_name = table_name_single;
+  std::string file_name = table_name_single + "_router";
+  std::string class_name = entity_name + "Controller";
 
-    std::string file_name= table_name + "_router";
-    std::string class_name= entity_name + "Controller";
-
-    std::vector<std::pair<std::string, std::string>>::iterator itr;
-    std::string path_h= "/home/masoud/Projects/angru/generated/router/" + file_name + ".r";
-    std::ofstream out_r(path_h);
-    //-----------------------------    .r     -------------------------------
-    out_r << '\n';
-    out_r << "	Get(router, \"/" << table_name << "s\", bind(&" << class_name << "::doGet" << entity_name << "s));" << '\n';
-    out_r << "	Get(router, \"/" << table_name << "s/:id\", bind(&" << class_name << "::doGet" << entity_name << "));" << '\n';
-    out_r << "	Delete(router, \"/" << table_name << "s/:id\", bind(&" << class_name << "::doDelete" << entity_name << "));" << '\n';
-    out_r << "  Post(router, \"/" << table_name << "s\", bind(&" << class_name << "::doAdd" << entity_name << "));" << '\n';
-    out_r << "	Put(router, \"/" << table_name << "s/:id\", bind(&" << class_name << "::doUpdate" << entity_name << "));" << '\n';
-    out_r << '\n';
-    //----------------------------------------------------------------------------
-    out_r.close();
+  std::vector<std::pair<std::string, std::string>>::iterator itr;
+  std::string path_h= "/home/masoud/Projects/angru/generated/router/" + file_name + ".r";
+  std::ofstream out_r(path_h);
+  //-----------------------------    .r     -------------------------------
+  out_r << '\n';
+  out_r << "	Get(router, \"/" << table_name << "s\", bind(&" << class_name << "::doGet" << entity_name << "s));" << '\n';
+  out_r << "	Get(router, \"/" << table_name << "s/:id\", bind(&" << class_name << "::doGet" << entity_name << "));" << '\n';
+  out_r << "	Delete(router, \"/" << table_name << "s/:id\", bind(&" << class_name << "::doDelete" << entity_name << "));" << '\n';
+  out_r << "  Post(router, \"/" << table_name << "s\", bind(&" << class_name << "::doAdd" << entity_name << "));" << '\n';
+  out_r << "	Put(router, \"/" << table_name << "s/:id\", bind(&" << class_name << "::doUpdate" << entity_name << "));" << '\n';
+  out_r << '\n';
+  //----------------------------------------------------------------------------
+  out_r.close();
 }
 } // namespace generator
 } // namespace tools

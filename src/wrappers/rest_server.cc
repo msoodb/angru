@@ -58,11 +58,11 @@ void RestServer::SetupRoutes() {
   Post(router, "/aggrigators", bind(&AggrigatorController::doAddAggrigator));
   Put(router, "/aggrigators/:id", bind(&AggrigatorController::doUpdateAggrigator));
 
-  Get(router, "/content_providers", bind(&Content_providerController::doGetContent_providers));
-  Get(router, "/content_providers/:id", bind(&Content_providerController::doGetContent_provider));
-  Delete(router, "/content_providers/:id", bind(&Content_providerController::doDeleteContent_provider));
-  Post(router, "/content_providers", bind(&Content_providerController::doAddContent_provider));
-  Put(router, "/content_providers/:id", bind(&Content_providerController::doUpdateContent_provider));
+  Get(router, "/content_providers", bind(&ContentProviderController::doGetContentProviders));
+	Get(router, "/content_providers/:id", bind(&ContentProviderController::doGetContentProvider));
+	Delete(router, "/content_providers/:id", bind(&ContentProviderController::doDeleteContentProvider));
+  Post(router, "/content_providers", bind(&ContentProviderController::doAddContentProvider));
+	Put(router, "/content_providers/:id", bind(&ContentProviderController::doUpdateContentProvider));
 
   Get(router, "/products", bind(&ProductController::doGetProducts));
   Get(router, "/products/:id", bind(&ProductController::doGetProduct));

@@ -25,17 +25,21 @@ public:
 	static std::string AddAggrigator(
 													std::string	name,
 													std::string	title,
+													std::string	code,
 													std::string	phone,
 													std::string	email,
 													std::string	details,
+													int	status,
 													std::string	description);
 	static void UpdateAggrigator(
 													int	id,
 													std::string	name,
 													std::string	title,
+													std::string	code,
 													std::string	phone,
 													std::string	email,
 													std::string	details,
+													int	status,
 													std::string	description);
 	static void DeleteAggrigator(int);
 };

@@ -23,27 +23,27 @@ public:
   static pqxx::result GetProduct(int);
 	static boost::property_tree::ptree GetProductJson(int);
 	static std::string AddProduct(
-													std::string	title,
-													float	price,
-													std::string	tags,
-													bool	expirable,
-													std::string	details,
 													std::string	name,
+													std::string	title,
 													std::string	code,
-													bool	active,
+													float	price,
+													bool	expirable,
 													bool	taxable,
+													std::string	tags,
+													std::string	details,
+													int	status,
 													std::string	description);
 	static void UpdateProduct(
 													int	id,
-													std::string	title,
-													float	price,
-													std::string	tags,
-													bool	expirable,
-													std::string	details,
 													std::string	name,
+													std::string	title,
 													std::string	code,
-													bool	active,
+													float	price,
+													bool	expirable,
 													bool	taxable,
+													std::string	tags,
+													std::string	details,
+													int	status,
 													std::string	description);
 	static void DeleteProduct(int);
 };

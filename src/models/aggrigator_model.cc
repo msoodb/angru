@@ -36,11 +36,13 @@ pqxx::result AggrigatorModel::GetAggrigators(int page, std::string query){
 									      				id , \
 									      				name , \
 									      				title , \
+									      				code , \
 									      				phone , \
 									      				email , \
 									      				created_at , \
 									      				updated_at , \
 									      				details , \
+									      				status , \
 									      				description  FROM aggrigators where deleted_at is NULL ";
 	if(!query.empty())
 	{
@@ -97,12 +99,14 @@ boost::property_tree::ptree AggrigatorModel::GetAggrigatorsJson(int page, std::s
 		aggrigator_node.put("id", R[i][0]);
 		aggrigator_node.put("name", R[i][1]);
 		aggrigator_node.put("title", R[i][2]);
-		aggrigator_node.put("phone", R[i][3]);
-		aggrigator_node.put("email", R[i][4]);
-		aggrigator_node.put("created_at", R[i][5]);
-		aggrigator_node.put("updated_at", R[i][6]);
-		aggrigator_node.put("details", R[i][7]);
-		aggrigator_node.put("description", R[i][8]);
+		aggrigator_node.put("code", R[i][3]);
+		aggrigator_node.put("phone", R[i][4]);
+		aggrigator_node.put("email", R[i][5]);
+		aggrigator_node.put("created_at", R[i][6]);
+		aggrigator_node.put("updated_at", R[i][7]);
+		aggrigator_node.put("details", R[i][8]);
+		aggrigator_node.put("status", R[i][9]);
+		aggrigator_node.put("description", R[i][10]);
 		aggrigators_node.push_back(std::make_pair("", aggrigator_node));
 	}
 	info_node.put<int>("page", page);
@@ -133,11 +137,13 @@ pqxx::result AggrigatorModel::GetAggrigator(int id){
 									      				id , \
 									      				name , \
 									      				title , \
+									      				code , \
 									      				phone , \
 									      				email , \
 									      				created_at , \
 									      				updated_at , \
 									      				details , \
+									      				status , \
 									      				description  FROM aggrigators where id = $1 and deleted_at is NULL ");
   pqxx::result R = W.prepared("find")(id).exec();
 	W.commit();
@@ -152,12 +158,14 @@ boost::property_tree::ptree AggrigatorModel::GetAggrigatorJson(int id){
 		aggrigator_node.put("id", R[0][0]);
 		aggrigator_node.put("name", R[0][1]);
 		aggrigator_node.put("title", R[0][2]);
-		aggrigator_node.put("phone", R[0][3]);
-		aggrigator_node.put("email", R[0][4]);
-		aggrigator_node.put("created_at", R[0][5]);
-		aggrigator_node.put("updated_at", R[0][6]);
-		aggrigator_node.put("details", R[0][7]);
-		aggrigator_node.put("description", R[0][8]);
+		aggrigator_node.put("code", R[0][3]);
+		aggrigator_node.put("phone", R[0][4]);
+		aggrigator_node.put("email", R[0][5]);
+		aggrigator_node.put("created_at", R[0][6]);
+		aggrigator_node.put("updated_at", R[0][7]);
+		aggrigator_node.put("details", R[0][8]);
+		aggrigator_node.put("status", R[0][9]);
+		aggrigator_node.put("description", R[0][10]);
 	}
 	return aggrigator_node;
 }
@@ -165,9 +173,11 @@ boost::property_tree::ptree AggrigatorModel::GetAggrigatorJson(int id){
 std::string AggrigatorModel::AddAggrigator(
 													std::string	name, 
 													std::string	title, 
+													std::string	code, 
 													std::string	phone, 
 													std::string	email, 
 													std::string	details, 
+													int	status, 
 													std::string	description){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -186,30 +196,36 @@ std::string AggrigatorModel::AddAggrigator(
 													id, \
 													name, \
 													title, \
+													code, \
 													phone, \
 													email, \
 													created_at, \
 													deleted_at, \
 													updated_at, \
 													details, \
+													status, \
 													description	) VALUES (\
 												   DEFAULT, \
 												   $1, \
 												   $2, \
 												   $3, \
 												   $4, \
+												   $5, \
 												   now(), \
 												   NULL, \
 												   NULL, \
-												   $5, \
-												   $6 ) RETURNING id");
+												   $6, \
+												   $7, \
+												   $8 ) RETURNING id");
 
   pqxx::result R = W.prepared("insert")
                  (name)
                  (title)
+                 (code)
                  (phone)
                  (email)
                  (details)
+                 (status)
                  (description)
          .exec();
   W.commit();
@@ -224,9 +240,11 @@ void AggrigatorModel::UpdateAggrigator(
 													int	id,
 													std::string	name,
 													std::string	title,
+													std::string	code,
 													std::string	phone,
 													std::string	email,
 													std::string	details,
+													int	status,
 													std::string	description ){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -244,18 +262,22 @@ void AggrigatorModel::UpdateAggrigator(
 	C.prepare("update", "UPDATE aggrigators SET \
 													name = $2, \
 													title = $3, \
-													phone = $4, \
-													email = $5, \
+													code = $4, \
+													phone = $5, \
+													email = $6, \
 													updated_at = now(), \
-													details = $6, \
-													description = $7	WHERE id = $1");
+													details = $7, \
+													status = $8, \
+													description = $9	WHERE id = $1");
 	W.prepared("update")
                  (id)
                  (name)
                  (title)
+                 (code)
                  (phone)
                  (email)
                  (details)
+                 (status)
                  (description)
          .exec();
 	W.commit();

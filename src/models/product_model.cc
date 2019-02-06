@@ -34,20 +34,20 @@ pqxx::result ProductModel::GetProducts(int page, std::string query){
 	pqxx::work W(C);
 	std::string complete_query = "SELECT \
 									      				id , \
+									      				name , \
 									      				title , \
+									      				code , \
 									      				price , \
 									      				created_at , \
-									      				tags , \
-									      				expirable , \
-									      				details , \
 									      				updated_at , \
-									      				name , \
-									      				code , \
-									      				active , \
+									      				expirable , \
 									      				taxable , \
+									      				tags , \
+									      				details , \
+									      				status , \
 									      				description, \
 																(select count(product_documents.id) from product_documents where product_id = products.id \
-																and deleted_at is NULL) as attachments \
+																		and deleted_at is NULL) as attachments \
 																FROM products where deleted_at is NULL ";
 	if(!query.empty())
 	{
@@ -102,17 +102,17 @@ boost::property_tree::ptree ProductModel::GetProductsJson(int page, std::string 
 
 	for (size_t i = 0; i < R.size(); i++) {
 		product_node.put("id", R[i][0]);
-		product_node.put("title", R[i][1]);
-		product_node.put("price", R[i][2]);
-		product_node.put("created_at", R[i][3]);
-		product_node.put("tags", R[i][4]);
-		product_node.put("expirable", R[i][5]);
-		product_node.put("details", R[i][6]);
-		product_node.put("updated_at", R[i][7]);
-		product_node.put("name", R[i][8]);
-		product_node.put("code", R[i][9]);
-		product_node.put("active", R[i][10]);
-		product_node.put("taxable", R[i][11]);
+		product_node.put("name", R[i][1]);
+		product_node.put("title", R[i][2]);
+		product_node.put("code", R[i][3]);
+		product_node.put("price", R[i][4]);
+		product_node.put("created_at", R[i][5]);
+		product_node.put("updated_at", R[i][6]);
+		product_node.put("expirable", R[i][7]);
+		product_node.put("taxable", R[i][8]);
+		product_node.put("tags", R[i][9]);
+		product_node.put("details", R[i][10]);
+		product_node.put("status", R[i][11]);
 		product_node.put("description", R[i][12]);
 		product_node.put("attachments", R[i][13]);
 		products_node.push_back(std::make_pair("", product_node));
@@ -143,17 +143,17 @@ pqxx::result ProductModel::GetProduct(int id){
 	pqxx::work W(C);
   C.prepare("find", "SELECT \
 									      				id , \
+									      				name , \
 									      				title , \
+									      				code , \
 									      				price , \
 									      				created_at , \
-									      				tags , \
-									      				expirable , \
-									      				details , \
 									      				updated_at , \
-									      				name , \
-									      				code , \
-									      				active , \
+									      				expirable , \
 									      				taxable , \
+									      				tags , \
+									      				details , \
+									      				status , \
 									      				description  FROM products where id = $1 and deleted_at is NULL ");
   pqxx::result R = W.prepared("find")(id).exec();
 	W.commit();
@@ -166,32 +166,32 @@ boost::property_tree::ptree ProductModel::GetProductJson(int id){
 
 	if(R.size() == 1){
 		product_node.put("id", R[0][0]);
-		product_node.put("title", R[0][1]);
-		product_node.put("price", R[0][2]);
-		product_node.put("created_at", R[0][3]);
-		product_node.put("tags", R[0][4]);
-		product_node.put("expirable", R[0][5]);
-		product_node.put("details", R[0][6]);
-		product_node.put("updated_at", R[0][7]);
-		product_node.put("name", R[0][8]);
-		product_node.put("code", R[0][9]);
-		product_node.put("active", R[0][10]);
-		product_node.put("taxable", R[0][11]);
+		product_node.put("name", R[0][1]);
+		product_node.put("title", R[0][2]);
+		product_node.put("code", R[0][3]);
+		product_node.put("price", R[0][4]);
+		product_node.put("created_at", R[0][5]);
+		product_node.put("updated_at", R[0][6]);
+		product_node.put("expirable", R[0][7]);
+		product_node.put("taxable", R[0][8]);
+		product_node.put("tags", R[0][9]);
+		product_node.put("details", R[0][10]);
+		product_node.put("status", R[0][11]);
 		product_node.put("description", R[0][12]);
 	}
 	return product_node;
 }
 
 std::string ProductModel::AddProduct(
-													std::string	title,
-													float	price,
-													std::string	tags,
-													bool	expirable,
-													std::string	details,
 													std::string	name,
+													std::string	title,
 													std::string	code,
-													bool	active,
+													float	price,
+													bool	expirable,
 													bool	taxable,
+													std::string	tags,
+													std::string	details,
+													int	status,
 													std::string	description){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -208,28 +208,28 @@ std::string ProductModel::AddProduct(
 	pqxx::work W(C);
 	C.prepare("insert", "INSERT INTO products( \
 													id, \
+													name, \
 													title, \
+													code, \
 													price, \
 													created_at, \
 													deleted_at, \
-													tags, \
-													expirable, \
-													details, \
 													updated_at, \
-													name, \
-													code, \
-													active, \
+													expirable, \
 													taxable, \
+													tags, \
+													details, \
+													status, \
 													description	) VALUES (\
 												   DEFAULT, \
 												   $1, \
 												   $2, \
-												   now(), \
-												   NULL, \
 												   $3, \
 												   $4, \
-												   $5, \
+												   now(), \
 												   NULL, \
+												   NULL, \
+												   $5, \
 												   $6, \
 												   $7, \
 												   $8, \
@@ -237,15 +237,15 @@ std::string ProductModel::AddProduct(
 												   $10 ) RETURNING id");
 
   pqxx::result R = W.prepared("insert")
-                 (title)
-                 (price)
-                 (tags)
-                 (expirable)
-                 (details)
                  (name)
+                 (title)
                  (code)
-                 (active)
+                 (price)
+                 (expirable)
                  (taxable)
+                 (tags)
+                 (details)
+                 (status)
                  (description)
          .exec();
   W.commit();
@@ -258,15 +258,15 @@ std::string ProductModel::AddProduct(
 
 void ProductModel::UpdateProduct(
 													int	id,
-													std::string	title,
-													float	price,
-													std::string	tags,
-													bool	expirable,
-													std::string	details,
 													std::string	name,
+													std::string	title,
 													std::string	code,
-													bool	active,
+													float	price,
+													bool	expirable,
 													bool	taxable,
+													std::string	tags,
+													std::string	details,
+													int	status,
 													std::string	description ){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -282,28 +282,28 @@ void ProductModel::UpdateProduct(
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	C.prepare("update", "UPDATE products SET \
-													title = $2, \
-													price = $3, \
-													tags = $4, \
-													expirable = $5, \
-													details = $6, \
+													name = $2, \
+													title = $3, \
+													code = $4, \
+													price = $5, \
 													updated_at = now(), \
-													name = $7, \
-													code = $8, \
-													active = $9, \
-													taxable = $10, \
+													expirable = $6, \
+													taxable = $7, \
+													tags = $8, \
+													details = $9, \
+													status = $10, \
 													description = $11	WHERE id = $1");
 	W.prepared("update")
                  (id)
-                 (title)
-                 (price)
-                 (tags)
-                 (expirable)
-                 (details)
                  (name)
+                 (title)
                  (code)
-                 (active)
+                 (price)
+                 (expirable)
                  (taxable)
+                 (tags)
+                 (details)
+                 (status)
                  (description)
          .exec();
 	W.commit();
