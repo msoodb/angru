@@ -25,12 +25,17 @@ void AggrigatorController::doGetAggrigators(const Pistache::Rest::Request& reque
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
     int page = 1;
+    std::string filter;
     auto query = request.query();
     if(query.has("page")) {
       auto value = query.get("page").get();
       page = std::stoi(value);
     }
-    boost::property_tree::ptree aggrigators = angru::mvc::model::AggrigatorModel::GetAggrigatorsJson(page);
+    if(query.has("filter")) {
+      auto value = query.get("filter").get();
+      filter = angru::security::cryptography::decode_base64(value);
+    }
+    boost::property_tree::ptree aggrigators = angru::mvc::model::AggrigatorModel::GetAggrigatorsJson(page, filter);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, aggrigators);
 
@@ -109,13 +114,13 @@ void AggrigatorController::doAddAggrigator(const Pistache::Rest::Request& reques
       description = pt.get<std::string>("description");
 
       angru::mvc::model::AggrigatorModel::AddAggrigator(
-                                                  name, 
-                                                  title, 
-                                                  code, 
-                                                  phone, 
-                                                  email, 
-                                                  details, 
-                                                  status, 
+                                                  name,
+                                                  title,
+                                                  code,
+                                                  phone,
+                                                  email,
+                                                  details,
+                                                  status,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Aggrigator added.");
     }
@@ -161,14 +166,14 @@ void AggrigatorController::doUpdateAggrigator(const Pistache::Rest::Request& req
       status = pt.get<int>("status");
       description = pt.get<std::string>("description");
       angru::mvc::model::AggrigatorModel::UpdateAggrigator(
-                                                  id, 
-                                                  name, 
-                                                  title, 
-                                                  code, 
-                                                  phone, 
-                                                  email, 
-                                                  details, 
-                                                  status, 
+                                                  id,
+                                                  name,
+                                                  title,
+                                                  code,
+                                                  phone,
+                                                  email,
+                                                  details,
+                                                  status,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Aggrigators updated.");
     }

@@ -3,9 +3,17 @@
 #include <iostream>
 #include <string>
 #include <chrono>
+#include <algorithm>
 
 #include <boost/uuid/sha1.hpp>
+#include <boost/archive/iterators/base64_from_binary.hpp>
+#include <boost/archive/iterators/binary_from_base64.hpp>
+#include <boost/archive/iterators/transform_width.hpp>
+#include <boost/archive/iterators/insert_linebreaks.hpp>
+#include <boost/archive/iterators/remove_whitespace.hpp>
 #include <jwt/jwt.hpp>
+
+
 
 namespace angru{
 namespace security{
@@ -13,6 +21,27 @@ namespace cryptography{
 
 std::string get_base64(const std::string& p_arg){
   return "";
+}
+std::string decode_base64(std::string input){
+  using namespace boost::archive::iterators;
+  typedef transform_width<binary_from_base64<remove_whitespace
+      <std::string::const_iterator> >, 8, 6> ItBinaryT;
+  try
+  {
+    // If the input isn't a multiple of 4, pad with =
+    size_t num_pad_chars((4 - input.size() % 4) % 4);
+    input.append(num_pad_chars, '=');
+
+    size_t pad_chars(std::count(input.begin(), input.end(), '='));
+    std::replace(input.begin(), input.end(), '=', 'A');
+    std::string output(ItBinaryT(input.begin()), ItBinaryT(input.end()));
+    output.erase(output.end() - pad_chars, output.end());
+    return output;
+  }
+  catch (std::exception const&)
+  {
+    return std::string("");
+  }
 }
 std::string get_md5(const std::string& p_arg){
   return "";

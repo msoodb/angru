@@ -14,6 +14,7 @@ namespace security{
 namespace cryptography{
 
 std::string get_base64(const std::string&);
+std::string decode_base64(std::string input);
 std::string get_md5(const std::string&);
 std::string get_sha1(const std::string&);
 std::string get_sha256(const std::string&);

@@ -113,15 +113,15 @@ void ProductController::doAddProduct(const Pistache::Rest::Request& request,
       description = pt.get<std::string>("description");
 
       angru::mvc::model::ProductModel::AddProduct(
-                                                  name, 
-                                                  title, 
-                                                  code, 
-                                                  price, 
-                                                  expirable, 
-                                                  taxable, 
-                                                  tags, 
-                                                  details, 
-                                                  status, 
+                                                  name,
+                                                  title,
+                                                  code,
+                                                  price,
+                                                  expirable,
+                                                  taxable,
+                                                  tags,
+                                                  details,
+                                                  status,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Product added.");
     }
@@ -171,16 +171,16 @@ void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
       status = pt.get<int>("status");
       description = pt.get<std::string>("description");
       angru::mvc::model::ProductModel::UpdateProduct(
-                                                  id, 
-                                                  name, 
-                                                  title, 
-                                                  code, 
-                                                  price, 
-                                                  expirable, 
-                                                  taxable, 
-                                                  tags, 
-                                                  details, 
-                                                  status, 
+                                                  id,
+                                                  name,
+                                                  title,
+                                                  code,
+                                                  price,
+                                                  expirable,
+                                                  taxable,
+                                                  tags,
+                                                  details,
+                                                  status,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Products updated.");
     }

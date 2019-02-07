@@ -35,6 +35,8 @@
 #include "models/product_model.h"
 #include "structures/async_structure.h"
 #include "tools/file_generator_factory.h"
+#include "tools/data_generator_factory.h"
+
 
 int main(int argc, char const *argv[])
 {
@@ -60,6 +62,8 @@ int main(int argc, char const *argv[])
 		//angru::wrapper::HttpClient::Setup();
 		LOG_INFO << "generate files using file_generator_factory...";
 		//angru::tools::factory::generate();
+		LOG_INFO << "generate fake data using data_generator_factory...";
+		//angru::tools::factory::GenerateFakeData();
 	}
 	catch(const angru::system::exception::error & e)
 	{
