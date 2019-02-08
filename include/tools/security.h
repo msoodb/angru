@@ -24,7 +24,7 @@ std::string get_jwt(const std::string&, const std::string&);
 
 namespace authorization{
 
-void AuthorizationCheck(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter&);
+std::string AuthorizationCheck(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter&);
 void ContentTypeJSONCheck(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter&);
 void CORS(const Pistache::Rest::Request& request, Pistache::Http::ResponseWriter&);
 void doGetOptions(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);

@@ -23,13 +23,28 @@ public:
   static pqxx::result GetUser(int);
 	static boost::property_tree::ptree GetUserJson(int);
 	static std::string AddUser(
+													std::string	first_name,
+													std::string	middle_name,
+													std::string	last_name,
+													std::string	user_name,
 													std::string	email,
 													std::string	password,
-													std::string	details);
+													int	type,
+													std::string	details,
+													int	status,
+													std::string	description);
 	static void UpdateUser(
 													int	id,
+													std::string	first_name,
+													std::string	middle_name,
+													std::string	last_name,
+													std::string	user_name,
 													std::string	email,
-													std::string	details);
+													std::string	password,
+													int	type,
+													std::string	details,
+													int	status,
+													std::string	description);
 	static void DeleteUser(int);
 };
 

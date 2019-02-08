@@ -5,6 +5,8 @@
 #include <chrono>
 #include <algorithm>
 
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
 #include <boost/uuid/sha1.hpp>
 #include <boost/archive/iterators/base64_from_binary.hpp>
 #include <boost/archive/iterators/binary_from_base64.hpp>
@@ -52,7 +54,6 @@ std::string get_sha1(const std::string& p_arg){
     unsigned hash[5] = {0};
     sha1.get_digest(hash);
 
-    // Back to string
     char buf[41] = {0};
 
     for (int i = 0; i < 5; i++)
@@ -64,39 +65,23 @@ std::string get_sha1(const std::string& p_arg){
 std::string get_sha256(const std::string& p_arg){
   return "";
 }
-std::string get_jwt(const std::string& id, const std::string&email){
+std::string get_jwt(const std::string& user_id, const std::string&email){
   using namespace jwt::params;
-
-  auto key = "secret"; //Secret to use for the algorithm
-  //Create JWT object
+  auto key = "secret";
   jwt::jwt_object obj{algorithm("HS256"), payload({{"user", "admin"}}), secret(key)};
-
-  //Use add_claim API to add claim values which are
-  // _not_ strings.
-  // For eg: `iat` and `exp` claims below.
-  // Other claims could have been added in the payload
-  // function above as they are just stringy things.
   obj.add_claim("iss", email)
        .add_claim("sub", "test")
-       .add_claim("id", id)
+       .add_claim("id", user_id)
        .add_claim("iat", 1513862371)
        .add_claim("exp", std::chrono::system_clock::now() + std::chrono::seconds{259200});
-  //Get the encoded string/assertion
   auto enc_str = obj.signature();
-  //std::cout << enc_str << std::endl;
-
-  //Decode
-  //auto dec_obj = jwt::decode(enc_str, algorithms({"hs256"}), secret(key));
-  //std::cout << dec_obj.header() << std::endl;
-  //std::cout << dec_obj.payload() << std::endl;
-
   return enc_str;
   }
 } // namespace cryptography
 
 namespace authorization{
 
-void AuthorizationCheck(const Pistache::Rest::Request& request,
+std::string AuthorizationCheck(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter& response){
     response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
     auto headers = request.headers();
@@ -105,6 +90,12 @@ void AuthorizationCheck(const Pistache::Rest::Request& request,
         auto enc_str = headers.getRaw("Authorization");
         auto dec_obj = jwt::decode(enc_str.value(), jwt::params::algorithms({"hs256"}),
                         jwt::params::secret("secret"), jwt::params::verify(true));
+        std::stringstream ss;
+        ss << dec_obj.payload();
+        boost::property_tree::ptree pt;
+        boost::property_tree::read_json(ss, pt);
+        std::string user_id = pt.get<std::string>("id");
+        return user_id;
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Unauthorized, "Authorization denied...");

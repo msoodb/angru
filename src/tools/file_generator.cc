@@ -561,12 +561,17 @@ void controllerGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "    angru::security::authorization::ContentTypeJSONCheck(request,response);" << '\n';
   out_cc << "    angru::security::authorization::AuthorizationCheck(request,response);" << '\n';
   out_cc << "    int page = 1;" << '\n';
+  out_cc << "    std::string filter;" << '\n';
   out_cc << "    auto query = request.query();" << '\n';
   out_cc << "    if(query.has(\"page\")) {" << '\n';
   out_cc << "      auto value = query.get(\"page\").get();" << '\n';
   out_cc << "      page = std::stoi(value);" << '\n';
   out_cc << "    }" << '\n';
-  out_cc << "    boost::property_tree::ptree " << table_name << "s = angru::mvc::model::" << entity_name << "Model::Get" << entity_name << "sJson(page);" << '\n';
+  out_cc << "    if(query.has(\"filter\")) {" << '\n';
+  out_cc << "      auto value = query.get(\"filter\").get();" << '\n';
+  out_cc << "      filter = angru::security::cryptography::decode_base64(value);" << '\n';
+  out_cc << "    }" << '\n';
+  out_cc << "    boost::property_tree::ptree " << table_name << "s = angru::mvc::model::" << entity_name << "Model::Get" << entity_name << "sJson(page, filter);" << '\n';
   out_cc << "    std::ostringstream oss;" << '\n';
   out_cc << "    boost::property_tree::write_json(oss, " << table_name << "s);" << '\n';
   out_cc << '\n';

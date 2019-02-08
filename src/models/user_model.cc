@@ -34,10 +34,18 @@ pqxx::result UserModel::GetUsers(int page, std::string query){
 	pqxx::work W(C);
 	std::string complete_query = "SELECT \
 									      				id , \
+									      				first_name , \
+									      				middle_name , \
+									      				last_name , \
+									      				user_name , \
 									      				email , \
-									      				details , \
+									      				password , \
+									      				type , \
 									      				created_at , \
-									      				updated_at  FROM users where deleted_at is NULL ";
+									      				updated_at , \
+									      				details , \
+									      				status , \
+									      				description  FROM users where deleted_at is NULL ";
 	if(!query.empty())
 	{
 		complete_query += " AND ";
@@ -91,10 +99,18 @@ boost::property_tree::ptree UserModel::GetUsersJson(int page, std::string query)
 
 	for (size_t i = 0; i < R.size(); i++) {
 		user_node.put("id", R[i][0]);
-		user_node.put("email", R[i][1]);
-		user_node.put("details", R[i][2]);
-		user_node.put("created_at", R[i][3]);
-		user_node.put("updated_at", R[i][4]);
+		user_node.put("first_name", R[i][1]);
+		user_node.put("middle_name", R[i][2]);
+		user_node.put("last_name", R[i][3]);
+		user_node.put("user_name", R[i][4]);
+		user_node.put("email", R[i][5]);
+		user_node.put("password", R[i][6]);
+		user_node.put("type", R[i][7]);
+		user_node.put("created_at", R[i][8]);
+		user_node.put("updated_at", R[i][9]);
+		user_node.put("details", R[i][10]);
+		user_node.put("status", R[i][11]);
+		user_node.put("description", R[i][12]);
 		users_node.push_back(std::make_pair("", user_node));
 	}
 	info_node.put<int>("page", page);
@@ -123,10 +139,18 @@ pqxx::result UserModel::GetUser(int id){
 	pqxx::work W(C);
   C.prepare("find", "SELECT \
 									      				id , \
+									      				first_name , \
+									      				middle_name , \
+									      				last_name , \
+									      				user_name , \
 									      				email , \
-									      				details , \
+									      				password , \
+									      				type , \
 									      				created_at , \
-									      				updated_at  FROM users where id = $1 and deleted_at is NULL ");
+									      				updated_at , \
+									      				details , \
+									      				status , \
+									      				description  FROM users where id = $1 and deleted_at is NULL ");
   pqxx::result R = W.prepared("find")(id).exec();
 	W.commit();
 	return R;
@@ -138,18 +162,33 @@ boost::property_tree::ptree UserModel::GetUserJson(int id){
 
 	if(R.size() == 1){
 		user_node.put("id", R[0][0]);
-		user_node.put("email", R[0][1]);
-		user_node.put("details", R[0][2]);
-		user_node.put("created_at", R[0][3]);
-		user_node.put("updated_at", R[0][4]);
+		user_node.put("first_name", R[0][1]);
+		user_node.put("middle_name", R[0][2]);
+		user_node.put("last_name", R[0][3]);
+		user_node.put("user_name", R[0][4]);
+		user_node.put("email", R[0][5]);
+		user_node.put("password", R[0][6]);
+		user_node.put("type", R[0][7]);
+		user_node.put("created_at", R[0][8]);
+		user_node.put("updated_at", R[0][9]);
+		user_node.put("details", R[0][10]);
+		user_node.put("status", R[0][11]);
+		user_node.put("description", R[0][12]);
 	}
 	return user_node;
 }
 
 std::string UserModel::AddUser(
+													std::string	first_name,
+													std::string	middle_name,
+													std::string	last_name,
+													std::string	user_name,
 													std::string	email,
 													std::string	password,
-													std::string	details){
+													int	type,
+													std::string	details,
+													int	status,
+													std::string	description){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -165,24 +204,45 @@ std::string UserModel::AddUser(
 	pqxx::work W(C);
 	C.prepare("insert", "INSERT INTO users( \
 													id, \
+													first_name, \
+													middle_name, \
+													last_name, \
+													user_name, \
 													email, \
 													password, \
-													details, \
+													type, \
 													created_at, \
 													deleted_at, \
-													updated_at	) VALUES (\
+													updated_at, \
+													details, \
+													status, \
+													description	) VALUES (\
 												   DEFAULT, \
 												   $1, \
 												   $2, \
 												   $3, \
+												   $4, \
+												   $5, \
+												   $6, \
+												   $7, \
 												   now(), \
 												   NULL, \
-												   NULL ) RETURNING id");
+												   NULL, \
+												   $8, \
+												   $9, \
+												   $10 ) RETURNING id");
 
   pqxx::result R = W.prepared("insert")
+                 (first_name)
+                 (middle_name)
+                 (last_name)
+                 (user_name)
                  (email)
                  (password)
+                 (type)
                  (details)
+                 (status)
+                 (description)
          .exec();
   W.commit();
 	std::string id="";
@@ -194,8 +254,16 @@ std::string UserModel::AddUser(
 
 void UserModel::UpdateUser(
 													int	id,
+													std::string	first_name,
+													std::string	middle_name,
+													std::string	last_name,
+													std::string	user_name,
 													std::string	email,
-													std::string	details ){
+													std::string	password,
+													int	type,
+													std::string	details,
+													int	status,
+													std::string	description ){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -210,13 +278,29 @@ void UserModel::UpdateUser(
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	C.prepare("update", "UPDATE users SET \
-													email = $2, \
-													details = $3, \
-													updated_at = now()	WHERE id = $1");
+													first_name = $2, \
+													middle_name = $3, \
+													last_name = $4, \
+													user_name = $5, \
+													email = $6, \
+													password = $7, \
+													type = $8, \
+													updated_at = now(), \
+													details = $9, \
+													status = $10, \
+													description = $11	WHERE id = $1 AND id!=1");
 	W.prepared("update")
                  (id)
+                 (first_name)
+                 (middle_name)
+                 (last_name)
+                 (user_name)
                  (email)
+                 (password)
+                 (type)
                  (details)
+                 (status)
+                 (description)
          .exec();
 	W.commit();
 }
@@ -237,7 +321,7 @@ void UserModel::DeleteUser(int id){
 	 pqxx::work W(C);
 	 C.prepare("update", "UPDATE users SET \
 												deleted_at = now()  \
-												WHERE id = $1");
+												WHERE id = $1 AND id!=1");
    W.prepared("update")(id).exec();
    W.commit();
   }
