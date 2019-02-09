@@ -96,10 +96,10 @@ void UserController::doGetUser(const Pistache::Rest::Request& request,
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
-    int id = -1;
+    std::string id = "";
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
-        id = value.as<int>();
+        id = value.as<std::string>();
     }
     boost::property_tree::ptree user = angru::mvc::model::UserModel::GetUserJson(id);
     std::ostringstream oss;
@@ -119,10 +119,10 @@ void UserController::doDeleteUser(const Pistache::Rest::Request& request,
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
-    int id = -1;
+    std::string id = "";
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
-        id = value.as<int>();
+        id = value.as<std::string>();
     }
     angru::mvc::model::UserModel::DeleteUser(id);
     response.send(Pistache::Http::Code::Ok, "User deleted.");
@@ -189,14 +189,14 @@ void UserController::doUpdateUser(const Pistache::Rest::Request& request,
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
-    int id = -1;
+    std::string id = "";
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
-      id = value.as<int>();
+        id = value.as<std::string>();
     }
-    if(id == -1){
-      response.send(Pistache::Http::Code::Not_Found, "Users not found.");
-    }
+    // if(id == -1){
+    //   response.send(Pistache::Http::Code::Not_Found, "Users not found.");
+    // }
     auto body = request.body();
     std::string	first_name;
     std::string	middle_name;

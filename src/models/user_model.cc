@@ -123,7 +123,7 @@ boost::property_tree::ptree UserModel::GetUsersJson(int page, std::string query)
 	return result_node;
 }
 
-pqxx::result UserModel::GetUser(int id){
+pqxx::result UserModel::GetUser(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -156,7 +156,7 @@ pqxx::result UserModel::GetUser(int id){
 	return R;
 }
 
-boost::property_tree::ptree UserModel::GetUserJson(int id){
+boost::property_tree::ptree UserModel::GetUserJson(std::string id){
 	pqxx::result R = GetUser(id);
 	boost::property_tree::ptree user_node;
 
@@ -253,7 +253,7 @@ std::string UserModel::AddUser(
 }
 
 void UserModel::UpdateUser(
-													int	id,
+													std::string id,
 													std::string	first_name,
 													std::string	middle_name,
 													std::string	last_name,
@@ -288,7 +288,7 @@ void UserModel::UpdateUser(
 													updated_at = now(), \
 													details = $9, \
 													status = $10, \
-													description = $11	WHERE id = $1 AND id!=1");
+													description = $11	WHERE id = $1");
 	W.prepared("update")
                  (id)
                  (first_name)
@@ -305,7 +305,7 @@ void UserModel::UpdateUser(
 	W.commit();
 }
 
-void UserModel::DeleteUser(int id){
+void UserModel::DeleteUser(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -321,7 +321,7 @@ void UserModel::DeleteUser(int id){
 	 pqxx::work W(C);
 	 C.prepare("update", "UPDATE users SET \
 												deleted_at = now()  \
-												WHERE id = $1 AND id!=1");
+												WHERE id = $1");
    W.prepared("update")(id).exec();
    W.commit();
   }

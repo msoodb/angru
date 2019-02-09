@@ -20,8 +20,8 @@ public:
 	static pqxx::result GetUsers(int page=1, std::string query="");
 	static int GetUsersCount(std::string query="");
 	static boost::property_tree::ptree GetUsersJson(int page=1, std::string query="");
-  static pqxx::result GetUser(int);
-	static boost::property_tree::ptree GetUserJson(int);
+  static pqxx::result GetUser(std::string);
+	static boost::property_tree::ptree GetUserJson(std::string);
 	static std::string AddUser(
 													std::string	first_name,
 													std::string	middle_name,
@@ -34,7 +34,7 @@ public:
 													int	status,
 													std::string	description);
 	static void UpdateUser(
-													int	id,
+													std::string,
 													std::string	first_name,
 													std::string	middle_name,
 													std::string	last_name,
@@ -45,7 +45,7 @@ public:
 													std::string	details,
 													int	status,
 													std::string	description);
-	static void DeleteUser(int);
+	static void DeleteUser(std::string);
 };
 
 } // model
