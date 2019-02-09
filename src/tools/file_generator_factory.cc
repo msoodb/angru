@@ -77,7 +77,7 @@ void generate()
   fields.push_back(std::pair<std::string, std::string>("std::string", "updated_at"));
   fields.push_back(std::pair<std::string, std::string>("std::string", "details"));
   fields.push_back(std::pair<std::string, std::string>("int", "status"));
-  fields.push_back(std::pair<std::string, std::string>("int", "active"));
+  fields.push_back(std::pair<std::string, std::string>("int", "situation"));
   fields.push_back(std::pair<std::string, std::string>("std::string", "description"));
   angru::tools::generator::modelGenerator(table_name_single,entity_name, fields);
   angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);

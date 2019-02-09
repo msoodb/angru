@@ -617,7 +617,7 @@ void controllerGenerator(std::string table_name_single, std::string entity_name,
     else if(itr->second == "created_at" || itr->second == "deleted_at" || itr->second == "updated_at"){
       continue;
     }
-    else if(itr->second == "updated_by" || itr->second == "deleted_by"){
+    else if(itr->second == "created_by" || itr->second == "updated_by" || itr->second == "deleted_by"){
       continue;
     }
     out_cc << "    " << itr->first << '\t' << itr->second << ";" << '\n';
