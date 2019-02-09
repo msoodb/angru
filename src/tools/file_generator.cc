@@ -45,21 +45,18 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
   out_h << "	static pqxx::result Get" << entity_name << "s(int page=1, std::string query=\"\");" << '\n';
   out_h << "	static int Get" << entity_name << "sCount(std::string query=\"\");" << '\n';
   out_h << "	static boost::property_tree::ptree Get" << entity_name << "sJson(int page=1, std::string query=\"\");" << '\n';
-  out_h << "  static pqxx::result Get" << entity_name << "(int);" << '\n';
-  out_h << "	static boost::property_tree::ptree Get" << entity_name << "Json(int);" << '\n';
+  out_h << "  static pqxx::result Get" << entity_name << "(std::string id);" << '\n';
+  out_h << "	static boost::property_tree::ptree Get" << entity_name << "Json(std::string id);" << '\n';
   out_h << "	static std::string Add" << entity_name << "(" << '\n';
   field_added=0;
   for (itr = fields.begin(); itr != fields.end(); ++itr) {
     if(itr->second == "id"){
       continue;
     }
-    else if(itr->second == "created_at"){
+    else if(itr->second == "created_at" || itr->second == "deleted_at" || itr->second == "updated_at"){
       continue;
     }
-    else if(itr->second == "deleted_at"){
-      continue;
-    }
-    else if(itr->second == "updated_at"){
+    else if(itr->second == "updated_by" || itr->second == "deleted_by"){
       continue;
     }
     if(field_added > 0){
@@ -72,13 +69,10 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
   out_h << "	static void Update" << entity_name << "(" << '\n';
   field_added=0;
   for (itr = fields.begin(); itr != fields.end(); ++itr) {
-    if(itr->second == "created_at"){
+    if(itr->second == "created_at" || itr->second == "deleted_at" || itr->second == "updated_at"){
       continue;
     }
-    else if(itr->second == "deleted_at"){
-      continue;
-    }
-    else if(itr->second == "updated_at"){
+    else if(itr->second == "created_by" || itr->second == "deleted_by"){
       continue;
     }
     if(field_added > 0){
@@ -88,7 +82,7 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
     field_added++;
   }
   out_h << ");" << '\n';
-  out_h << "	static void Delete" << entity_name << "(int);" << '\n';
+  out_h << "	static void Delete" << entity_name << "(std::string id);" << '\n';
   out_h << "};" << '\n';
   out_h << '\n';
   out_h << "} // model" << '\n';
@@ -139,7 +133,7 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "	std::string complete_query = \"SELECT \\" << '\n';
   field_added=0;
   for (itr = fields.begin(); itr != fields.end(); ++itr) {
-    if(itr->second == "deleted_at"){
+    if(itr->second == "deleted_at" || itr->second == "deleted_by"){
       continue;
     }
     if(field_added > 0){
@@ -203,7 +197,7 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "	for (size_t i = 0; i < R.size(); i++) {" << '\n';
   int i=0;
   for (itr = fields.begin(); itr != fields.end(); ++itr) {
-    if(itr->second == "deleted_at"){
+    if(itr->second == "deleted_at" || itr->second == "deleted_by"){
       continue;
     }
     out_cc << "		" << table_name << "_node.put(\"" << itr->second << "\", R[i][" << i << "]);" << '\n';
@@ -221,7 +215,7 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "	return result_node;" << '\n';
   out_cc << "}" << '\n';
   out_cc << '\n';
-  out_cc << "pqxx::result " << class_name << "::Get" << entity_name << "(int id){" << '\n';
+  out_cc << "pqxx::result " << class_name << "::Get" << entity_name << "(std::string id){" << '\n';
   out_cc << "	pqxx::connection C(angru::wrapper::Postgresql::connection_string());" << '\n';
   out_cc << "	try {" << '\n';
   out_cc << "		if (C.is_open()) {" << '\n';
@@ -238,7 +232,7 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "  C.prepare(\"find\", \"SELECT \\" << '\n';
   field_added=0;
   for (itr = fields.begin(); itr != fields.end(); ++itr) {
-    if(itr->second == "deleted_at"){
+    if(itr->second == "deleted_at" || itr->second == "deleted_by"){
       continue;
     }
     if(field_added > 0){
@@ -253,14 +247,14 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "	return R;" << '\n';
   out_cc << "}" << '\n';
   out_cc << '\n';
-  out_cc << "boost::property_tree::ptree " << class_name << "::Get" << entity_name << "Json(int id){" << '\n';
+  out_cc << "boost::property_tree::ptree " << class_name << "::Get" << entity_name << "Json(std::string id){" << '\n';
   out_cc << "	pqxx::result R = Get" << entity_name << "(id);" << '\n';
   out_cc << "	boost::property_tree::ptree " << table_name << "_node;" << '\n';
   out_cc << '\n';
   out_cc << "	if(R.size() == 1){" << '\n';
   i=0;
   for (itr = fields.begin(); itr != fields.end(); ++itr) {
-    if(itr->second == "deleted_at"){
+    if(itr->second == "deleted_at" || itr->second == "deleted_by"){
       continue;
     }
     out_cc << "		" << table_name << "_node.put(\"" << itr->second << "\", R[0][" << i << "]);" << '\n';
@@ -276,13 +270,10 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
     if(itr->second == "id"){
       continue;
     }
-    else if(itr->second == "created_at"){
+    else if(itr->second == "created_at" || itr->second == "deleted_at" || itr->second == "updated_at"){
       continue;
     }
-    else if(itr->second == "deleted_at"){
-      continue;
-    }
-    else if(itr->second == "updated_at"){
+    else if(itr->second == "updated_by" || itr->second == "deleted_by"){
       continue;
     }
     if(field_added > 0){
@@ -327,10 +318,10 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
     else if(itr->second == "created_at"){
       out_cc << "												   now()";
     }
-    else if(itr->second == "deleted_at"){
+    else if(itr->second == "deleted_at" || itr->second == "updated_at"){
       out_cc << "												   NULL";
     }
-    else if(itr->second == "updated_at"){
+    else if(itr->second == "deleted_by" || itr->second == "updated_by"){
       out_cc << "												   NULL";
     }
     else{
@@ -346,13 +337,10 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
     if(itr->second == "id"){
       continue;
     }
-    else if(itr->second == "created_at"){
+    else if(itr->second == "created_at" || itr->second == "deleted_at" || itr->second == "updated_at"){
       continue;
     }
-    else if(itr->second == "deleted_at"){
-      continue;
-    }
-    else if(itr->second == "updated_at"){
+    else if(itr->second == "updated_by" || itr->second == "deleted_by"){
       continue;
     }
     else{
@@ -371,13 +359,10 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "void " << class_name << "::Update" << entity_name << "( " << '\n';
   field_added=0;
   for (itr = fields.begin(); itr != fields.end(); ++itr) {
-    if(itr->second == "created_at"){
+    if(itr->second == "created_at" || itr->second == "deleted_at" || itr->second == "updated_at"){
       continue;
     }
-    else if(itr->second == "deleted_at"){
-      continue;
-    }
-    else if(itr->second == "updated_at"){
+    else if(itr->second == "created_by" || itr->second == "deleted_by"){
       continue;
     }
     if(field_added > 0){
@@ -407,10 +392,10 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
     if(itr->second == "id"){
       continue;
     }
-    if(itr->second == "created_at"){
+    else if(itr->second == "created_at" || itr->second == "deleted_at"){
       continue;
     }
-    else if(itr->second == "deleted_at"){
+    else if(itr->second == "created_by" || itr->second == "deleted_by"){
       continue;
     }
     else if(itr->second == "updated_at"){
@@ -433,13 +418,10 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "	WHERE id = $1\");" << '\n';
   out_cc << "	W.prepared(\"update\")" << '\n';
   for (itr = fields.begin(); itr != fields.end(); ++itr) {
-    if(itr->second == "created_at"){
+    if(itr->second == "created_at" || itr->second == "deleted_at" || itr->second == "updated_at"){
       continue;
     }
-    else if(itr->second == "deleted_at"){
-      continue;
-    }
-    else if(itr->second == "updated_at"){
+    else if(itr->second == "created_by" || itr->second == "deleted_by"){
       continue;
     }
     else{
@@ -450,7 +432,7 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "	W.commit();" << '\n';
   out_cc << "}" << '\n';
   out_cc << '\n';
-  out_cc << "void " << class_name << "::Delete" << entity_name << "(int id){" << '\n';
+  out_cc << "void " << class_name << "::Delete" << entity_name << "(std::string id){" << '\n';
   out_cc << "	pqxx::connection C(angru::wrapper::Postgresql::connection_string());" << '\n';
   out_cc << "	try {" << '\n';
   out_cc << "		if (C.is_open()) {" << '\n';
@@ -559,7 +541,7 @@ void controllerGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "  Pistache::Http::ResponseWriter response) {" << '\n';
   out_cc << "    angru::security::authorization::CORS(request,response);" << '\n';
   out_cc << "    angru::security::authorization::ContentTypeJSONCheck(request,response);" << '\n';
-  out_cc << "    angru::security::authorization::AuthorizationCheck(request,response);" << '\n';
+  out_cc << "    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);" << '\n';
   out_cc << "    int page = 1;" << '\n';
   out_cc << "    std::string filter;" << '\n';
   out_cc << "    auto query = request.query();" << '\n';
@@ -587,11 +569,11 @@ void controllerGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "  Pistache::Http::ResponseWriter response) {" << '\n';
   out_cc << "    angru::security::authorization::CORS(request,response);" << '\n';
   out_cc << "    angru::security::authorization::ContentTypeJSONCheck(request,response);" << '\n';
-  out_cc << "    angru::security::authorization::AuthorizationCheck(request,response);" << '\n';
-  out_cc << "    int id = -1;" << '\n';
+  out_cc << "    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);" << '\n';
+  out_cc << "    std::string id = \"\";" << '\n';
   out_cc << "    if (request.hasParam(\":id\")) {" << '\n';
   out_cc << "        auto value = request.param(\":id\");" << '\n';
-  out_cc << "        id = value.as<int>();" << '\n';
+  out_cc << "        id = value.as<std::string>();" << '\n';
   out_cc << "    }" << '\n';
   out_cc << "    boost::property_tree::ptree " << table_name << " = angru::mvc::model::" << entity_name << "Model::Get" << entity_name << "Json(id);" << '\n';
   out_cc << "    std::ostringstream oss;" << '\n';
@@ -610,11 +592,12 @@ void controllerGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "  Pistache::Http::ResponseWriter response) {" << '\n';
   out_cc << "    angru::security::authorization::CORS(request,response);" << '\n';
   out_cc << "    angru::security::authorization::ContentTypeJSONCheck(request,response);" << '\n';
-  out_cc << "    angru::security::authorization::AuthorizationCheck(request,response);" << '\n';
-  out_cc << "    int id = -1;" << '\n';
+  out_cc << "    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);" << '\n';
+  out_cc << "    std::string deleted_by = user_id;" << '\n';
+  out_cc << "    std::string id = \"\";" << '\n';
   out_cc << "    if (request.hasParam(\":id\")) {" << '\n';
   out_cc << "        auto value = request.param(\":id\");" << '\n';
-  out_cc << "        id = value.as<int>();" << '\n';
+  out_cc << "        id = value.as<std::string>();" << '\n';
   out_cc << "    }" << '\n';
   out_cc << "    angru::mvc::model::" << entity_name << "Model::Delete" << entity_name << "(id);" << '\n';
   out_cc << "    response.send(Pistache::Http::Code::Ok, \"" << entity_name << " deleted.\");" << '\n';
@@ -624,19 +607,17 @@ void controllerGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "  Pistache::Http::ResponseWriter response) {" << '\n';
   out_cc << "    angru::security::authorization::CORS(request,response);" << '\n';
   out_cc << "    angru::security::authorization::ContentTypeJSONCheck(request,response);" << '\n';
-  out_cc << "    angru::security::authorization::AuthorizationCheck(request,response);" << '\n';
+  out_cc << "    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);" << '\n';
   out_cc << "    auto body = request.body();" << '\n';
+  out_cc << "    std::string created_by = user_id;" << '\n';
   for (itr = fields.begin(); itr != fields.end(); ++itr) {
     if(itr->second == "id"){
       continue;
     }
-    else if(itr->second == "created_at"){
+    else if(itr->second == "created_at" || itr->second == "deleted_at" || itr->second == "updated_at"){
       continue;
     }
-    else if(itr->second == "deleted_at"){
-      continue;
-    }
-    else if(itr->second == "updated_at"){
+    else if(itr->second == "updated_by" || itr->second == "deleted_by"){
       continue;
     }
     out_cc << "    " << itr->first << '\t' << itr->second << ";" << '\n';
@@ -651,13 +632,10 @@ void controllerGenerator(std::string table_name_single, std::string entity_name,
     if(itr->second == "id"){
       continue;
     }
-    else if(itr->second == "created_at"){
+    else if(itr->second == "created_at" || itr->second == "deleted_at" || itr->second == "updated_at"){
       continue;
     }
-    else if(itr->second == "deleted_at"){
-      continue;
-    }
-    else if(itr->second == "updated_at"){
+    else if(itr->second == "created_by" || itr->second == "updated_by" || itr->second == "deleted_by"){
       continue;
     }
     out_cc << "      " << itr->second << " = pt.get<" << itr->first << ">(\"" << itr->second << "\");" << '\n';
@@ -669,13 +647,10 @@ void controllerGenerator(std::string table_name_single, std::string entity_name,
     if(itr->second == "id"){
       continue;
     }
-    else if(itr->second == "created_at"){
+    else if(itr->second == "created_at" || itr->second == "deleted_at" || itr->second == "updated_at"){
       continue;
     }
-    else if(itr->second == "deleted_at"){
-      continue;
-    }
-    else if(itr->second == "updated_at"){
+    else if(itr->second == "updated_by" || itr->second == "deleted_by"){
       continue;
     }
     if(field_added > 0){
@@ -696,27 +671,22 @@ void controllerGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "  Pistache::Http::ResponseWriter response) {" << '\n';
   out_cc << "    angru::security::authorization::CORS(request,response);" << '\n';
   out_cc << "    angru::security::authorization::ContentTypeJSONCheck(request,response);" << '\n';
-  out_cc << "    angru::security::authorization::AuthorizationCheck(request,response);" << '\n';
-  out_cc << "    int id = -1;" << '\n';
+  out_cc << "    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);" << '\n';
+  out_cc << "    std::string updated_by = user_id;" << '\n';
+  out_cc << "    std::string id = \"\";" << '\n';
   out_cc << "    if (request.hasParam(\":id\")) {" << '\n';
   out_cc << "        auto value = request.param(\":id\");" << '\n';
-  out_cc << "      id = value.as<int>();" << '\n';
-  out_cc << "    }" << '\n';
-  out_cc << "    if(id == -1){" << '\n';
-  out_cc << "      response.send(Pistache::Http::Code::Not_Found, \"" << entity_name << "s not found.\");" << '\n';
+  out_cc << "      id = value.as<std::string>();" << '\n';
   out_cc << "    }" << '\n';
   out_cc << "    auto body = request.body();" << '\n';
   for (itr = fields.begin(); itr != fields.end(); ++itr) {
     if(itr->second == "id"){
       continue;
     }
-    else if(itr->second == "created_at"){
+    else if(itr->second == "created_at" || itr->second == "deleted_at" || itr->second == "updated_at"){
       continue;
     }
-    else if(itr->second == "deleted_at"){
-      continue;
-    }
-    else if(itr->second == "updated_at"){
+    else if(itr->second == "created_by" || itr->second == "deleted_by" || itr->second == "updated_by"){
       continue;
     }
     out_cc << "    " << itr->first << '\t' << itr->second << ";" << '\n';
@@ -731,13 +701,10 @@ void controllerGenerator(std::string table_name_single, std::string entity_name,
     if(itr->second == "id"){
       continue;
     }
-    else if(itr->second == "created_at"){
+    else if(itr->second == "created_at" || itr->second == "deleted_at" || itr->second == "updated_at"){
       continue;
     }
-    else if(itr->second == "deleted_at"){
-      continue;
-    }
-    else if(itr->second == "updated_at"){
+    else if(itr->second == "created_by" || itr->second == "deleted_by" || itr->second == "updated_by"){
       continue;
     }
     out_cc << "      " << itr->second << " = pt.get<" << itr->first << ">(\"" << itr->second << "\");" << '\n';
@@ -745,13 +712,10 @@ void controllerGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "      angru::mvc::model::" << entity_name << "Model::Update" << entity_name << "(" << '\n';
   field_added =0;
   for (itr = fields.begin(); itr != fields.end(); ++itr) {
-    if(itr->second == "created_at"){
+    if(itr->second == "created_at" || itr->second == "deleted_at" || itr->second == "updated_at"){
       continue;
     }
-    else if(itr->second == "deleted_at"){
-      continue;
-    }
-    else if(itr->second == "updated_at"){
+    else if(itr->second == "created_by" || itr->second == "deleted_by"){
       continue;
     }
     if(field_added > 0){

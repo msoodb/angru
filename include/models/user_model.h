@@ -34,7 +34,7 @@ public:
 													int	status,
 													std::string	description);
 	static void UpdateUser(
-													std::string,
+													std::string id,
 													std::string	first_name,
 													std::string	middle_name,
 													std::string	last_name,
