@@ -18,7 +18,11 @@ public:
 	FileModel();
 	~FileModel();
   static pqxx::result GetFile(int);
-	static std::string AddFile(const std::string & data);
+	static std::string AddFile(
+														const std::string & filename,
+														const std::string & data,
+	      										size_t offset,
+														size_t length);
 	static bool DeleteFile(const std::string & path);
 };
 

@@ -66,27 +66,19 @@ void FileController::doAddFile(const Pistache::Rest::Request& request,
         parse_multipart_formdata(boundary, body, files);
 
         for (MultipartFileIterator it = files.begin(); it != files.end(); it++){
-          std::cout << it->first << ": " << it->second.filename << std::endl;
+          std::cout << "name : " << it->first << '\n';
+          std::cout << "filename : " << it->second.filename << '\n';
+          std::cout << "content_type : " << it->second.content_type << '\n';
+          std::cout << "offset : " << it->second.offset << '\n';
+          std::cout << "length : " << it->second.length << '\n';
+          std::string path = angru::mvc::model::FileModel::AddFile(
+                                                  it->second.filename,
+                                                  body,
+                                                  it->second.offset,
+                                                  it->second.length);
+          response.send(Pistache::Http::Code::Ok, "{\"message\":\"success\", \"path\":\"" + path + "\"}");
         }
-
-        // for (size_t i = 0; i < files.size(); i++) {
-        //   std::cout << "/* message */" << '\n';
-        // }
-      }
-      std::string path= "";
-      // std::stringstream ss;
-      // ss << body;
-      // var parts = BodyParse(ss, boundary);
-      // if(parts.length > 1)
-      // {
-      //   auto part = parts[0]; // only one file
-      //   std::string path = angru::mvc::model::FileModel::AddFile(body);
-      //   response.send(Pistache::Http::Code::Ok, "{\"message\":\"success\", \"path\":\"" + path + "\"}");
-      // }
-      std::stringstream ss;
-      ss << body;
-      path = angru::mvc::model::FileModel::AddFile(body);
-      response.send(Pistache::Http::Code::Ok, "{\"message\":\"success\", \"path\":\"" + path + "\"}");
+      }    
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Files not added.");
