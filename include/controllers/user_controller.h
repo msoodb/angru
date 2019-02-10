@@ -26,6 +26,7 @@ public:
   static void	doDeleteUser(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 	static void	doAddUser(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 	static void	doUpdateUser(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+	static void	doChangePassword(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 };
 
 } // model

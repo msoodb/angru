@@ -174,7 +174,7 @@ void UserController::doAddUser(const Pistache::Rest::Request& request,
         situation = pt.get<int>("situation");
         description = pt.get<std::string>("description");
 
-        angru::mvc::model::UserModel::AddUser(
+        std::string id = angru::mvc::model::UserModel::AddUser(
                                                     first_name,
                                                     middle_name,
                                                     last_name,
@@ -187,7 +187,7 @@ void UserController::doAddUser(const Pistache::Rest::Request& request,
                                                     status,
                                                     situation,
                                                     description );
-        response.send(Pistache::Http::Code::Ok, "User added.");
+        response.send(Pistache::Http::Code::Ok, id);
       }
       else{
         response.send(Pistache::Http::Code::Not_Found, "User with type=0 or zeus denied.");
@@ -260,6 +260,38 @@ void UserController::doUpdateUser(const Pistache::Rest::Request& request,
       response.send(Pistache::Http::Code::Not_Found, "Users not found.");
     }
  }
+
+ void UserController::doChangePassword(const Pistache::Rest::Request& request,
+   Pistache::Http::ResponseWriter response) {
+     angru::security::authorization::CORS(request,response);
+     angru::security::authorization::ContentTypeJSONCheck(request,response);
+     std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);
+     std::string updated_by = user_id;
+     std::string id = "";
+     if (request.hasParam(":id")) {
+         auto value = request.param(":id");
+       id = value.as<std::string>();
+     }
+     auto body = request.body();
+     std::string	password;
+     std::string	password_sha1;
+    try
+     {
+       std::stringstream ss;
+       ss << body;
+       boost::property_tree::ptree pt;
+       boost::property_tree::read_json(ss, pt);
+       password = pt.get<std::string>("password");
+       password_sha1 = angru::security::cryptography::get_sha1(password);
+       angru::mvc::model::UserModel::ChangePassword(
+                                                   id,
+                                                   password_sha1);
+       response.send(Pistache::Http::Code::Ok, "Users updated.");
+     }
+     catch (std::exception const& e){
+       response.send(Pistache::Http::Code::Not_Found, "Users not found.");
+     }
+  }
 
 } // model
 } // mvc

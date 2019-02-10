@@ -48,6 +48,9 @@ public:
 													int	status,
 													int	situation,
 													std::string	description);
+	static void ChangePassword(
+													std::string	id,
+													std::string	password);
 	static void DeleteUser(std::string id);
 };
 

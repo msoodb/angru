@@ -11,6 +11,7 @@
 #include "controllers/aggrigator_controller.h"
 #include "controllers/content_provider_controller.h"
 #include "controllers/file_controller.h"
+#include "controllers/avatar_controller.h"
 #include "controllers/product_controller.h"
 #include "controllers/product_document_controller.h"
 #include "controllers/user_controller.h"
@@ -81,6 +82,9 @@ void RestServer::SetupRoutes() {
   Delete(router, "/users/:id", bind(&UserController::doDeleteUser));
   Post(router, "/users", bind(&UserController::doAddUser));
   Put(router, "/users/:id", bind(&UserController::doUpdateUser));
+  Put(router, "/users/:id/password", bind(&UserController::doChangePassword));
+  Post(router, "/users/:id/avatars", bind(&AvatarController::doAddAvatar));
+
 }
 
 void RestServer::PrintCookies(const Pistache::Http::Request& req) {

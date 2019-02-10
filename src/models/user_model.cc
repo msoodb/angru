@@ -332,6 +332,31 @@ void UserModel::UpdateUser(
 	W.commit();
 }
 
+void UserModel::ChangePassword(
+													std::string	id,
+													std::string password ){
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
+	try {
+		if (C.is_open()) {
+			 LOG_INFO << "Opened database successfully: " << C.dbname();
+		} else {
+			 LOG_ERROR << "Can't open database: " << C.dbname();
+		}
+		C.disconnect ();
+	} catch (const angru::system::exception::error &e) {
+			LOG_ERROR << e.what();
+	}
+	LOG_INFO << "Connected to database: " << C.dbname();
+	pqxx::work W(C);
+	C.prepare("update", "UPDATE users SET \
+													password = $2	WHERE id = $1");
+	W.prepared("update")
+                 (id)
+                 (password)
+         .exec();
+	W.commit();
+}
+
 void UserModel::DeleteUser(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
