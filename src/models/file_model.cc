@@ -32,12 +32,6 @@ std::string FileModel::AddFile(const std::string & filename, const std::string &
   std::string name = std::to_string(ms.count()) + filename;
   std::string path= "/home/masoud/Projects/angru/files/" + name;
   std::ofstream out(path);
-
-  // std::streampos begin, end;
-  // begin = out.tellg();
-  // out.seekg (0, ios::end);
-  // end = out.tellg();
-
   out << data.substr(offset,length);
   out.close();
   return path;

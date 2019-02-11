@@ -18,7 +18,11 @@ public:
 	AvatarModel();
 	~AvatarModel();
   static pqxx::result GetAvatar(int);
-	static std::string AddAvatar(std::string id, std::string ext, const std::string & data);
+	static std::string AddAvatar(
+																const std::string & filename,
+																const std::string & data,
+																size_t offset,
+																size_t length);
 	static bool DeleteAvatar(const std::string & path);
 };
 

@@ -2,7 +2,7 @@
 #define ANGRU_AVATAR_CONTROLLER_H_
 
 #include <iostream>
-#include <vector>
+
 #include <pqxx/pqxx>
 
 #include <pistache/http.h>

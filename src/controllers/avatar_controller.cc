@@ -16,6 +16,8 @@
 #include "wrappers/postgresql.h"
 #include "tools/security.h"
 #include "models/avatar_model.h"
+#include "tools/body_parser.h"
+
 
 namespace angru{
 namespace mvc{
@@ -26,7 +28,6 @@ AvatarController::~AvatarController(){}
 void AvatarController::doGetAvatar(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
-    //angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
     // int id = -1;
     // if (request.hasParam(":id")) {
@@ -49,21 +50,33 @@ void AvatarController::doGetAvatar(const Pistache::Rest::Request& request,
 void AvatarController::doAddAvatar(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
-    //angru::security::authorization::ContentTypeJSONCheck(request,response);
     angru::security::authorization::AuthorizationCheck(request,response);
     try
     {
       auto body = request.body();
+      auto headers = request.headers();
       std::string id = "";
       if (request.hasParam(":id")) {
           auto value = request.param(":id");
         id = value.as<std::string>();
       }
-      std::string path= "";
-      std::stringstream ss;
-      ss << body;
-      path = angru::mvc::model::AvatarModel::AddAvatar(id, "jpg", body);
-      response.send(Pistache::Http::Code::Ok, "{\"message\":\"success\", \"path\":\"" + path + "\"}");
+      auto content_type = headers.tryGet<Pistache::Http::Header::ContentType>();
+      std::string boundary;
+      angru::tools::parser::MultipartFiles files;
+
+      if (content_type != nullptr && content_type->mime() == MIME(Multipart, FormData)){
+        angru::tools::parser::parse_multipart_boundary(content_type->mime().toString(), boundary);
+        angru::tools::parser::parse_multipart_formdata(boundary, body, files);
+
+        for (angru::tools::parser::MultipartFileIterator it = files.begin(); it != files.end(); it++){
+          std::string path = angru::mvc::model::AvatarModel::AddAvatar(
+                                                  id,
+                                                  body,
+                                                  it->second.offset,
+                                                  it->second.length);
+          response.send(Pistache::Http::Code::Ok, "{\"message\":\"success\", \"path\":\"" + path + "\"}");
+        }
+      }
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Avatar not added.");

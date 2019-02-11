@@ -24,14 +24,11 @@ AvatarModel::~AvatarModel(){}
 pqxx::result AvatarModel::GetAvatar(int id){
 
 }
-std::string AvatarModel::AddAvatar(std::string id, std::string ext, const std::string & data){
-
-  std::chrono::milliseconds ms = std::chrono::duration_cast< std::chrono::milliseconds >(
-      std::chrono::system_clock::now().time_since_epoch());
-  std::string name = std::to_string(ms.count());
-  std::string path= "/home/masoud/Projects/angru/avatars/" + id + "." + ext;
+std::string AvatarModel::AddAvatar(const std::string & filename, const std::string & data,
+      size_t offset, size_t length){
+  std::string path= "/home/masoud/Projects/angru/avatars/" + filename;
   std::ofstream out(path);
-  out << data ;
+  out << data.substr(offset, length);
   out.close();
   return path;
 }
