@@ -84,6 +84,7 @@ void RestServer::SetupRoutes() {
   Put(router, "/users/:id", bind(&UserController::doUpdateUser));
   Put(router, "/users/:id/password", bind(&UserController::doChangePassword));
   Post(router, "/users/:id/avatars", bind(&AvatarController::doAddAvatar));
+  Get(router, "/users/:id/avatars", bind(&AvatarController::doGetAvatar));
 
 }
 

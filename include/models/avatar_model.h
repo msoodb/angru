@@ -17,7 +17,7 @@ class AvatarModel
 public:
 	AvatarModel();
 	~AvatarModel();
-  static pqxx::result GetAvatar(int);
+  static std::string GetAvatar(std::string & filename);
 	static std::string AddAvatar(
 																const std::string & filename,
 																const std::string & data,

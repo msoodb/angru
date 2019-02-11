@@ -85,9 +85,9 @@ std::string AuthorizationCheck(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter& response){
     response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
     auto headers = request.headers();
+    auto enc_str = headers.getRaw("Authorization");
     try
     {
-        auto enc_str = headers.getRaw("Authorization");
         auto dec_obj = jwt::decode(enc_str.value(), jwt::params::algorithms({"hs256"}),
                         jwt::params::secret("secret"), jwt::params::verify(true));
         std::stringstream ss;
@@ -98,6 +98,10 @@ std::string AuthorizationCheck(const Pistache::Rest::Request& request,
         return user_id;
     }
     catch (std::exception const& e){
+      response.send(Pistache::Http::Code::Unauthorized, "Authorization denied...");
+    }
+    catch(...)
+    {
       response.send(Pistache::Http::Code::Unauthorized, "Authorization denied...");
     }
 }

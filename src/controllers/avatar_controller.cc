@@ -28,24 +28,26 @@ AvatarController::~AvatarController(){}
 void AvatarController::doGetAvatar(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
-    angru::security::authorization::AuthorizationCheck(request,response);
-    // int id = -1;
-    // if (request.hasParam(":id")) {
-    //     auto value = request.param(":id");
-    //     id = value.as<int>();
-    // }
-    // boost::property_tree::ptree avatar = angru::mvc::model::AvatarModel::GetAvatarJson(id);
-    // std::ostringstream oss;
-    // boost::property_tree::write_json(oss, avatar);
-    //
-    // std::string iniavatar_text = oss.str();
-    //
-    // if (iniavatar_text.empty()) {
-    //   response.send(Pistache::Http::Code::Not_Found, "Avatars not found.");
-    // } else {
-    //   response.send(Pistache::Http::Code::Ok, iniavatar_text);
-    // }
-    response.send(Pistache::Http::Code::Ok, "Avatar.");
+    try
+    {
+      auto body = request.body();
+      auto headers = request.headers();
+      std::string id = "";
+      if (request.hasParam(":id")) {
+          auto value = request.param(":id");
+        id = value.as<std::string>();
+      }
+      std::string path = angru::mvc::model::AvatarModel::GetAvatar(id);
+      std::cout << path << '\n';
+      Pistache::Http::serveFile(response, path);
+    }
+    catch (std::exception const& e){
+      response.send(Pistache::Http::Code::Not_Found, "Avatar not found.");
+    }
+    catch(...)
+    {
+      response.send(Pistache::Http::Code::Not_Found, "Avatar not found.");
+    }
 }
 void AvatarController::doAddAvatar(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
@@ -70,7 +72,7 @@ void AvatarController::doAddAvatar(const Pistache::Rest::Request& request,
 
         for (angru::tools::parser::MultipartFileIterator it = files.begin(); it != files.end(); it++){
           std::string path = angru::mvc::model::AvatarModel::AddAvatar(
-                                                  id,
+                                                  id+it->second.filename,
                                                   body,
                                                   it->second.offset,
                                                   it->second.length);
@@ -80,6 +82,10 @@ void AvatarController::doAddAvatar(const Pistache::Rest::Request& request,
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Avatar not added.");
+    }
+    catch(...)
+    {
+      response.send(Pistache::Http::Code::Not_Found, "Avatar not found.");
     }
 }
 

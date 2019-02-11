@@ -5,6 +5,8 @@
 #include <chrono>
 #include <fstream>
 #include <cstdio>
+#include <sys/types.h>
+#include <dirent.h>
 
 #include <pqxx/pqxx>
 #include <boost/property_tree/ptree.hpp>
@@ -21,8 +23,23 @@ namespace model{
 AvatarModel::AvatarModel(){}
 AvatarModel::~AvatarModel(){}
 
-pqxx::result AvatarModel::GetAvatar(int id){
-
+std::string AvatarModel::GetAvatar(std::string & filename){
+  std::string path= "/home/masoud/Projects/angru/avatars/";
+  DIR* dirp = opendir(path.c_str());
+  struct dirent * dp;
+  while ((dp = readdir(dirp)) != NULL) {
+    std::string fn(dp->d_name);
+    if (fn.find(filename) != std::string::npos) {
+      closedir(dirp);
+      return path+fn;
+    }
+    // if(dp->d_name == filename){
+    //   closedir(dirp);
+    //   return path+filename;
+    // }
+  }
+  closedir(dirp);
+  return path+"default_male.jpg";
 }
 std::string AvatarModel::AddAvatar(const std::string & filename, const std::string & data,
       size_t offset, size_t length){
