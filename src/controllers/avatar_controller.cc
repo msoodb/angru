@@ -38,7 +38,6 @@ void AvatarController::doGetAvatar(const Pistache::Rest::Request& request,
         id = value.as<std::string>();
       }
       std::string path = angru::mvc::model::AvatarModel::GetAvatar(id);
-      std::cout << path << '\n';
       Pistache::Http::serveFile(response, path);
     }
     catch (std::exception const& e){
@@ -72,7 +71,8 @@ void AvatarController::doAddAvatar(const Pistache::Rest::Request& request,
 
         for (angru::tools::parser::MultipartFileIterator it = files.begin(); it != files.end(); it++){
           std::string path = angru::mvc::model::AvatarModel::AddAvatar(
-                                                  id+it->second.filename,
+                                                  id,
+                                                  it->second.filename,
                                                   body,
                                                   it->second.offset,
                                                   it->second.length);

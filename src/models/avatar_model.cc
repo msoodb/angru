@@ -23,27 +23,34 @@ namespace model{
 AvatarModel::AvatarModel(){}
 AvatarModel::~AvatarModel(){}
 
-std::string AvatarModel::GetAvatar(std::string & filename){
+std::string AvatarModel::GetAvatar(std::string & user_id){
   std::string path= "/home/masoud/Projects/angru/avatars/";
   DIR* dirp = opendir(path.c_str());
   struct dirent * dp;
   while ((dp = readdir(dirp)) != NULL) {
     std::string fn(dp->d_name);
-    if (fn.find(filename) != std::string::npos) {
+    if ((fn.find(user_id) != std::string::npos) && (fn.find(".deleted") == std::string::npos)) {
       closedir(dirp);
       return path+fn;
     }
-    // if(dp->d_name == filename){
-    //   closedir(dirp);
-    //   return path+filename;
-    // }
   }
   closedir(dirp);
   return path+"default_male.jpg";
 }
-std::string AvatarModel::AddAvatar(const std::string & filename, const std::string & data,
+std::string AvatarModel::AddAvatar(const std::string & user_id, const std::string & filename, const std::string & data,
       size_t offset, size_t length){
-  std::string path= "/home/masoud/Projects/angru/avatars/" + filename;
+
+  std::string path= "/home/masoud/Projects/angru/avatars/";
+  DIR* dirp = opendir(path.c_str());
+  struct dirent * dp;
+  while ((dp = readdir(dirp)) != NULL) {
+    std::string fn(dp->d_name);
+    if ((fn.find(user_id) != std::string::npos) && (fn.find(".deleted") == std::string::npos)) {
+      closedir(dirp);
+      DeleteAvatar(path+fn);
+    }
+  }
+  path= "/home/masoud/Projects/angru/avatars/" + user_id + filename;
   std::ofstream out(path);
   out << data.substr(offset, length);
   out.close();

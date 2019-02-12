@@ -17,8 +17,9 @@ class AvatarModel
 public:
 	AvatarModel();
 	~AvatarModel();
-  static std::string GetAvatar(std::string & filename);
+  static std::string GetAvatar(std::string & user_id);
 	static std::string AddAvatar(
+																const std::string & user_id,
 																const std::string & filename,
 																const std::string & data,
 																size_t offset,
