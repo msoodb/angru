@@ -1,257 +1,99 @@
---
--- PostgreSQL database dump
---
 
--- Dumped from database version 9.6.10
--- Dumped by pg_dump version 9.6.10
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+-- id uuid NOT NULL DEFAULT uuid_generate_v5(uuid_ns_url(), (uuid_generate_v4())::text),
 
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-SET row_security = off;
 
-SET default_tablespace = '';
+-- Table: public.users
 
-SET default_with_oids = false;
+-- DROP TABLE public.users;
 
---
--- Name: products; Type: TABLE; Schema: public; Owner: masoud
---
-
-CREATE TABLE public.products (
-    id integer NOT NULL,
-    title character varying(255),
-    price numeric,
-    created_at timestamp with time zone,
-    deleted_at timestamp with time zone,
-    tags json,
-    expirable boolean,
-    details json,
-    updated_at timestamp with time zone,
-    name character varying(255),
-    code character varying(255),
-    active boolean,
-    taxable boolean,
-    description character varying
+CREATE TABLE public.users
+(
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  first_name character varying(255),
+  middle_name character varying(255),
+  last_name character varying(255),
+  username character varying(255) NOT NULL,
+  email character varying(255) NOT NULL,
+  password character varying(255) NOT NULL,
+  type integer NOT NULL,
+  created_by uuid,
+  deleted_by uuid,
+  updated_by uuid,
+  created_at timestamp with time zone,
+  deleted_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  details json,
+  status integer NOT NULL,
+  situation integer NOT NULL,
+  description character varying,
+  CONSTRAINT users_pkey PRIMARY KEY (id),
+  CONSTRAINT users_created_by_fkey FOREIGN KEY (created_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT users_deleted_by_fkey FOREIGN KEY (deleted_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT users_updated_by_fkey FOREIGN KEY (updated_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT users_ukey_email UNIQUE (email),
+  CONSTRAINT users_ukey_username UNIQUE (username)
+)
+WITH (
+  OIDS=FALSE
 );
+ALTER TABLE public.users
+  OWNER TO masoud;
 
 
-ALTER TABLE public.products OWNER TO masoud;
-
---
--- Name: products_id_seq; Type: SEQUENCE; Schema: public; Owner: masoud
---
-
-CREATE SEQUENCE public.products_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+INSERT INTO public.users(
+            id, first_name, middle_name, last_name, username, email, password, 
+            type, created_by, deleted_by, updated_by, created_at, deleted_at, 
+            updated_at, details, status, situation, description)
+    VALUES (Default, 'zeus', 'G', 'god', 'zeus', 'zeus@olympus.god', '7c4a8d09ca3762af61e59520943dc26494f8941b',
+            0, NULL, NULL, NULL, now(), NULL,
+            NULL, '{}', 1, 1, 'Zeus is the sky and thunder god in ancient Greek religion, who rules as king of the gods of Mount Olympus. His name is cognate with the first element of his Roman equivalent Jupiter. His mythologies and powers are similar, though not identical, to those of Indo-European deities such as Indra, Jupiter, Perkūnas, Perun, and Thor');
 
 
-ALTER TABLE public.products_id_seq OWNER TO masoud;
+-- Table: public.aggrigators
 
---
--- Name: products_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: masoud
---
+-- DROP TABLE public.aggrigators;
 
-ALTER SEQUENCE public.products_id_seq OWNED BY public.products.id;
-
-
---
--- Name: purchase_items; Type: TABLE; Schema: public; Owner: masoud
---
-
-CREATE TABLE public.purchase_items (
-    id integer NOT NULL,
-    purchase_id integer,
-    product_id integer,
-    price numeric,
-    quantity integer,
-    state character varying(255)
+CREATE TABLE public.aggrigators
+(
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  name character varying(255) NOT NULL,
+  title character varying(255),
+  code character varying(255),
+  phone character varying(255),
+  email character varying(255),
+  created_by uuid,
+  deleted_by uuid,
+  updated_by uuid,
+  created_at timestamp with time zone,
+  deleted_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  details json,
+  status integer NOT NULL,
+  situation integer NOT NULL,
+  description character varying,
+  CONSTRAINT aggrigators_pkey PRIMARY KEY (id),
+  CONSTRAINT users_created_by_fkey FOREIGN KEY (created_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT users_deleted_by_fkey FOREIGN KEY (deleted_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT users_updated_by_fkey FOREIGN KEY (updated_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
 );
+ALTER TABLE public.aggrigators
+  OWNER TO masoud;
 
 
-ALTER TABLE public.purchase_items OWNER TO masoud;
 
---
--- Name: purchase_items_id_seq; Type: SEQUENCE; Schema: public; Owner: masoud
---
-
-CREATE SEQUENCE public.purchase_items_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.purchase_items_id_seq OWNER TO masoud;
-
---
--- Name: purchase_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: masoud
---
-
-ALTER SEQUENCE public.purchase_items_id_seq OWNED BY public.purchase_items.id;
-
-
---
--- Name: purchases; Type: TABLE; Schema: public; Owner: masoud
---
-
-CREATE TABLE public.purchases (
-    id integer NOT NULL,
-    created_at timestamp with time zone,
-    name character varying(255),
-    address character varying(255),
-    state character varying(2),
-    zipcode integer,
-    user_id integer
-);
-
-
-ALTER TABLE public.purchases OWNER TO masoud;
-
---
--- Name: purchases_id_seq; Type: SEQUENCE; Schema: public; Owner: masoud
---
-
-CREATE SEQUENCE public.purchases_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.purchases_id_seq OWNER TO masoud;
-
---
--- Name: purchases_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: masoud
---
-
-ALTER SEQUENCE public.purchases_id_seq OWNED BY public.purchases.id;
-
-
---
--- Name: users; Type: TABLE; Schema: public; Owner: masoud
---
-
-CREATE TABLE public.users (
-    id integer NOT NULL,
-    email character varying(255),
-    password character varying(255),
-    details json,
-    created_at timestamp with time zone,
-    deleted_at timestamp with time zone
-);
-
-
-ALTER TABLE public.users OWNER TO masoud;
-
---
--- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: masoud
---
-
-CREATE SEQUENCE public.users_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.users_id_seq OWNER TO masoud;
-
---
--- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: masoud
---
-
-ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
-
-
---
--- Name: products id; Type: DEFAULT; Schema: public; Owner: masoud
---
-
-ALTER TABLE ONLY public.products ALTER COLUMN id SET DEFAULT nextval('public.products_id_seq'::regclass);
-
-
---
--- Name: purchase_items id; Type: DEFAULT; Schema: public; Owner: masoud
---
-
-ALTER TABLE ONLY public.purchase_items ALTER COLUMN id SET DEFAULT nextval('public.purchase_items_id_seq'::regclass);
-
-
---
--- Name: purchases id; Type: DEFAULT; Schema: public; Owner: masoud
---
-
-ALTER TABLE ONLY public.purchases ALTER COLUMN id SET DEFAULT nextval('public.purchases_id_seq'::regclass);
-
-
---
--- Name: users id; Type: DEFAULT; Schema: public; Owner: masoud
---
-
-ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
-
-
---
--- Name: products products_pkey; Type: CONSTRAINT; Schema: public; Owner: masoud
---
-
-ALTER TABLE ONLY public.products
-    ADD CONSTRAINT products_pkey PRIMARY KEY (id);
-
-
---
--- Name: purchases purchases_pkey; Type: CONSTRAINT; Schema: public; Owner: masoud
---
-
-ALTER TABLE ONLY public.purchases
-    ADD CONSTRAINT purchases_pkey PRIMARY KEY (id);
-
-
---
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: masoud
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
-
-
---
--- Name: purchase_items purchase_items_product_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: masoud
---
-
-ALTER TABLE ONLY public.purchase_items
-    ADD CONSTRAINT purchase_items_product_id_fkey FOREIGN KEY (product_id) REFERENCES public.products(id);
-
-
---
--- Name: purchase_items purchase_items_purchase_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: masoud
---
-
-ALTER TABLE ONLY public.purchase_items
-    ADD CONSTRAINT purchase_items_purchase_id_fkey FOREIGN KEY (purchase_id) REFERENCES public.purchases(id);
-
-
---
--- Name: purchases purchases_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: masoud
---
-
-ALTER TABLE ONLY public.purchases
-    ADD CONSTRAINT purchases_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id);
-
-
---
--- PostgreSQL database dump complete
---

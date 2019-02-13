@@ -23,7 +23,7 @@ void AggrigatorController::doGetAggrigators(const Pistache::Rest::Request& reque
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    angru::security::authorization::AuthorizationCheck(request,response);
+    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);
     int page = 1;
     std::string filter;
     auto query = request.query();
@@ -51,11 +51,11 @@ void AggrigatorController::doGetAggrigator(const Pistache::Rest::Request& reques
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    angru::security::authorization::AuthorizationCheck(request,response);
-    int id = -1;
+    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);
+    std::string id = "";
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
-        id = value.as<int>();
+        id = value.as<std::string>();
     }
     boost::property_tree::ptree aggrigator = angru::mvc::model::AggrigatorModel::GetAggrigatorJson(id);
     std::ostringstream oss;
@@ -74,11 +74,12 @@ void AggrigatorController::doDeleteAggrigator(const Pistache::Rest::Request& req
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    angru::security::authorization::AuthorizationCheck(request,response);
-    int id = -1;
+    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);
+    std::string deleted_by = user_id;
+    std::string id = "";
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
-        id = value.as<int>();
+        id = value.as<std::string>();
     }
     angru::mvc::model::AggrigatorModel::DeleteAggrigator(id);
     response.send(Pistache::Http::Code::Ok, "Aggrigator deleted.");
@@ -88,8 +89,9 @@ void AggrigatorController::doAddAggrigator(const Pistache::Rest::Request& reques
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    angru::security::authorization::AuthorizationCheck(request,response);
+    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);
     auto body = request.body();
+    std::string created_by = user_id;
     std::string	name;
     std::string	title;
     std::string	code;
@@ -97,6 +99,7 @@ void AggrigatorController::doAddAggrigator(const Pistache::Rest::Request& reques
     std::string	email;
     std::string	details;
     int	status;
+    int	situation;
     std::string	description;
     try
     {
@@ -111,6 +114,7 @@ void AggrigatorController::doAddAggrigator(const Pistache::Rest::Request& reques
       email = pt.get<std::string>("email");
       details = pt.get<std::string>("details");
       status = pt.get<int>("status");
+      situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
       angru::mvc::model::AggrigatorModel::AddAggrigator(
@@ -119,8 +123,10 @@ void AggrigatorController::doAddAggrigator(const Pistache::Rest::Request& reques
                                                   code,
                                                   phone,
                                                   email,
+                                                  created_by,
                                                   details,
                                                   status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Aggrigator added.");
     }
@@ -133,14 +139,12 @@ void AggrigatorController::doUpdateAggrigator(const Pistache::Rest::Request& req
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    angru::security::authorization::AuthorizationCheck(request,response);
-    int id = -1;
+    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);
+    std::string updated_by = user_id;
+    std::string id = "";
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
-      id = value.as<int>();
-    }
-    if(id == -1){
-      response.send(Pistache::Http::Code::Not_Found, "Aggrigators not found.");
+      id = value.as<std::string>();
     }
     auto body = request.body();
     std::string	name;
@@ -150,6 +154,7 @@ void AggrigatorController::doUpdateAggrigator(const Pistache::Rest::Request& req
     std::string	email;
     std::string	details;
     int	status;
+    int	situation;
     std::string	description;
    try
     {
@@ -164,6 +169,7 @@ void AggrigatorController::doUpdateAggrigator(const Pistache::Rest::Request& req
       email = pt.get<std::string>("email");
       details = pt.get<std::string>("details");
       status = pt.get<int>("status");
+      situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
       angru::mvc::model::AggrigatorModel::UpdateAggrigator(
                                                   id,
@@ -172,8 +178,10 @@ void AggrigatorController::doUpdateAggrigator(const Pistache::Rest::Request& req
                                                   code,
                                                   phone,
                                                   email,
+                                                  updated_by,
                                                   details,
                                                   status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Aggrigators updated.");
     }

@@ -28,7 +28,6 @@ std::string GenerateRandomAlphaNum(const int minlen, const int maxlen) {
         ch = alphanum[rand() % (sizeof(alphanum) - 1)];
         random_string = random_string + ch;
     }
-    std::cout << random_string << '\n';
     return random_string;
 }
 std::string GenerateRandomAlpha(const int minlen, const int maxlen) {
@@ -42,7 +41,6 @@ std::string GenerateRandomAlpha(const int minlen, const int maxlen) {
         ch = alphanum[rand() % (sizeof(alphanum) - 1)];
         random_string = random_string + ch;
     }
-    std::cout << random_string << '\n';
     return random_string;
 }
 std::string GenerateRandomNum(const int minlen, const int maxlen) {
@@ -54,7 +52,6 @@ std::string GenerateRandomNum(const int minlen, const int maxlen) {
         ch = alphanum[rand() % (sizeof(alphanum) - 1)];
         random_string = random_string + ch;
     }
-    std::cout << random_string << '\n';
     return random_string;
 }
 
@@ -65,30 +62,38 @@ void GenerateAggrigator(){
   std::string	code;
   std::string	phone;
   std::string	email;
+  std::string created_by = "9979027d-1672-4108-95a4-eb5d346545a0";
   std::string	details;
   int	status;
+  int	situation;
   std::string	description;
 
+  std::cout << "aggrigator ";
   for (int i = 0; i < count; i++) {
-    name = GenerateRandomAlpha(10, 20);
-    title = GenerateRandomAlpha(10, 20);
+    name = GenerateRandomAlpha(10, 15);
+    title = GenerateRandomAlpha(5, 10);
     code = GenerateRandomNum(5, 10);
     phone = GenerateRandomNum(12, 12);
     email = "info@" + name + ".com";
     details = "{}";
     status = rand()%2;
-    description = GenerateRandomAlpha(10, 50);
+    situation = 0;
+    description = GenerateRandomAlpha(10, 30);
 
-    //std::cout << name << '\n';
     angru::mvc::model::AggrigatorModel::AddAggrigator(
-                            													name,
-                            													title,
-                            													code,
-                            													phone,
-                            													email,
-                            													details,
-                            													status,
-                            													description);
+                                                      name,
+                                                      title,
+                                                      code,
+                                                      phone,
+                                                      email,
+                                                      created_by,
+                                                      details,
+                                                      status,
+                                                      situation,
+                                                      description );
+    if(i%10 == 0){
+      std::cout << ".";
+    }
   }
  }
 

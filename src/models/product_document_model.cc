@@ -50,7 +50,6 @@ pqxx::result ProductDocumentModel::GetProductDocuments(int page, std::string que
 		complete_query += " AND ";
 		complete_query +=  query;
 	}
-	complete_query += " order by id ";
 	complete_query += " limit 20 offset ";
 	int offset = (page-1)* OFFSET_COUNT ;
 	complete_query += std::to_string(offset);
@@ -175,14 +174,14 @@ boost::property_tree::ptree ProductDocumentModel::GetProductDocumentJson(int id)
 }
 
 std::string ProductDocumentModel::AddProductDocument(
-													int	product_id, 
-													std::string	name, 
-													std::string	title, 
-													std::string	path, 
-													float	size, 
-													std::string	tags, 
-													std::string	details, 
-													int	status, 
+													int	product_id,
+													std::string	name,
+													std::string	title,
+													std::string	path,
+													float	size,
+													std::string	tags,
+													std::string	details,
+													int	status,
 													std::string	description){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -244,7 +243,7 @@ std::string ProductDocumentModel::AddProductDocument(
 	return id;
 }
 
-void ProductDocumentModel::UpdateProductDocument( 
+void ProductDocumentModel::UpdateProductDocument(
 													int	id,
 													int	product_id,
 													std::string	name,

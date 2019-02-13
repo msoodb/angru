@@ -49,7 +49,6 @@ pqxx::result ContentProviderModel::GetContentProviders(int page, std::string que
 		complete_query += " AND ";
 		complete_query +=  query;
 	}
-	complete_query += " order by id ";
 	complete_query += " limit 20 offset ";
 	int offset = (page-1)* OFFSET_COUNT ;
 	complete_query += std::to_string(offset);
@@ -171,13 +170,13 @@ boost::property_tree::ptree ContentProviderModel::GetContentProviderJson(int id)
 }
 
 std::string ContentProviderModel::AddContentProvider(
-													std::string	name, 
-													std::string	title, 
-													std::string	code, 
-													std::string	phone, 
-													std::string	email, 
-													std::string	details, 
-													int	status, 
+													std::string	name,
+													std::string	title,
+													std::string	code,
+													std::string	phone,
+													std::string	email,
+													std::string	details,
+													int	status,
 													std::string	description){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -236,7 +235,7 @@ std::string ContentProviderModel::AddContentProvider(
 	return id;
 }
 
-void ContentProviderModel::UpdateContentProvider( 
+void ContentProviderModel::UpdateContentProvider(
 													int	id,
 													std::string	name,
 													std::string	title,

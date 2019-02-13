@@ -54,7 +54,6 @@ pqxx::result ProductModel::GetProducts(int page, std::string query){
 		complete_query += " AND ";
 		complete_query +=  query;
 	}
-	complete_query += " order by id ";
 	complete_query += " limit 20 offset ";
 	int offset = (page-1)* OFFSET_COUNT ;
 	complete_query += std::to_string(offset);

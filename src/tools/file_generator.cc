@@ -136,19 +136,23 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
     if(itr->second == "deleted_at" || itr->second == "deleted_by"){
       continue;
     }
+    else if(itr->second == "created_by" || itr->second == "updated_by"){
+      out_cc << "(select username from users where id = main." << itr->second << ") as  " << itr->second <<" ";
+    }
+    else{
+      out_cc << "									      				" << itr->second << " ";
+    }
     if(field_added > 0){
       out_cc << ", \\" << '\n';
     }
-    out_cc << "									      				" << itr->second << " ";
     field_added++;
   }
-  out_cc << " FROM " << table_name << "s where deleted_at is NULL \";" << '\n';
+  out_cc << " FROM " << table_name << "s AS main where deleted_at is NULL \";" << '\n';
   out_cc << "	if(!query.empty())" << '\n';
   out_cc << "	{" << '\n';
   out_cc << "		complete_query += \" AND \";" << '\n';
   out_cc << "		complete_query +=  query;" << '\n';
   out_cc << "	}" << '\n';
-  out_cc << "	complete_query += \" order by id \";" << '\n';
   out_cc << "	complete_query += \" limit 20 offset \";" << '\n';
   out_cc << "	int offset = (page-1)* OFFSET_COUNT ;" << '\n';
   out_cc << "	complete_query += std::to_string(offset);" << '\n';
@@ -235,10 +239,15 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
     if(itr->second == "deleted_at" || itr->second == "deleted_by"){
       continue;
     }
+    else if(itr->second == "created_by" || itr->second == "updated_by"){
+      out_cc << "(select username from users where id = main." << itr->second << ") as  " << itr->second <<" ";
+    }
+    else{
+      out_cc << "									      				" << itr->second << " ";
+    }
     if(field_added > 0){
       out_cc << ", \\" << '\n';
     }
-    out_cc << "									      				" << itr->second << " ";
     field_added++;
   }
   out_cc << " FROM " << table_name << "s where id = $1 and deleted_at is NULL \");" << '\n';
