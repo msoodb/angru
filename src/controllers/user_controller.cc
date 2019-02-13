@@ -27,7 +27,7 @@ void UserController::doLogin(const Pistache::Rest::Request& request,
     auto content_type = headers.tryGet<Pistache::Http::Header::ContentType>();
     if (content_type != nullptr){
         if (content_type->mime() != MIME(Application, Json)){
-          response.send(Pistache::Http::Code::Not_Found, "Invalid Username or Password.");
+          response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Invalid Username or Password.\"}");
         }
     }
     auto body = request.body();
@@ -54,18 +54,18 @@ void UserController::doLogin(const Pistache::Rest::Request& request,
           std::string password_jwt = angru::security::cryptography::get_jwt(user_id, input);
           std::string token =  password_jwt;
           if (token.empty()) {
-            response.send(Pistache::Http::Code::Not_Found, "Invalid Username or Password.");
+            response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Invalid Username or Password.\"}");
           } else {
-            response.send(Pistache::Http::Code::Ok, token);
+            response.send(Pistache::Http::Code::Ok, "{\"message\":\"success\", \"token\":\"" + token + "\", \"user_id\":\"" + user_id + "\"}");
           }
         }
         else{
-          response.send(Pistache::Http::Code::Not_Found, "Invalid Username or Password.");
+          response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Invalid Username or Password.\"}");
         }
 
     }
     catch (std::exception const& e){
-      response.send(Pistache::Http::Code::Not_Found, "Invalid Username or Password.");
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Invalid Username or Password.\"}");
     }
 }
 
