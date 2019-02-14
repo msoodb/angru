@@ -8,6 +8,7 @@
 #include <pistache/endpoint.h>
 #include "tools/system.h"
 #include "tools/security.h"
+#include "controllers/mobile_operator_controller.h"
 #include "controllers/aggrigator_controller.h"
 #include "controllers/content_provider_controller.h"
 #include "controllers/file_controller.h"
@@ -52,6 +53,12 @@ void RestServer::SetupRoutes() {
 
   Get(router, "/files/:id", bind(&FileController::doGetFile));
   Post(router, "/files", bind(&FileController::doAddFile));
+
+  Get(router, "/mobile_operators", bind(&MobileOperatorController::doGetMobileOperators));
+	Get(router, "/mobile_operators/:id", bind(&MobileOperatorController::doGetMobileOperator));
+	Delete(router, "/mobile_operators/:id", bind(&MobileOperatorController::doDeleteMobileOperator));
+  Post(router, "/mobile_operators", bind(&MobileOperatorController::doAddMobileOperator));
+	Put(router, "/mobile_operators/:id", bind(&MobileOperatorController::doUpdateMobileOperator));
 
   Get(router, "/aggrigators", bind(&AggrigatorController::doGetAggrigators));
   Get(router, "/aggrigators/:id", bind(&AggrigatorController::doGetAggrigator));

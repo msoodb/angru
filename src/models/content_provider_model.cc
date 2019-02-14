@@ -114,7 +114,7 @@ boost::property_tree::ptree ContentProviderModel::GetContentProvidersJson(int pa
 	info_node.put<int>("result_count", result_count);
 
 	result_node.add_child("info", info_node);
-	result_node.add_child("content_providers", content_providers_node);
+	result_node.add_child("items", content_providers_node);
 	return result_node;
 }
 

@@ -116,7 +116,7 @@ boost::property_tree::ptree ProductDocumentModel::GetProductDocumentsJson(int pa
 	info_node.put<int>("result_count", result_count);
 
 	result_node.add_child("info", info_node);
-	result_node.add_child("product_documents", product_documents_node);
+	result_node.add_child("items", product_documents_node);
 	return result_node;
 }
 

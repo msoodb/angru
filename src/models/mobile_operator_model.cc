@@ -1,4 +1,4 @@
-#include "models/aggrigator_model.h"
+#include "models/mobile_operator_model.h"
 
 #include <iostream>
 #include <string>
@@ -15,10 +15,10 @@ namespace angru{
 namespace mvc{
 namespace model{
 
-AggrigatorModel::AggrigatorModel(){}
-AggrigatorModel::~AggrigatorModel(){}
+MobileOperatorModel::MobileOperatorModel(){}
+MobileOperatorModel::~MobileOperatorModel(){}
 
-pqxx::result AggrigatorModel::GetAggrigators(int page, std::string query){
+pqxx::result MobileOperatorModel::GetMobileOperators(int page, std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -39,14 +39,14 @@ pqxx::result AggrigatorModel::GetAggrigators(int page, std::string query){
 									      				code , \
 									      				phone , \
 									      				email , \
-																(select username from users where id = main.created_by) as created_by, \
-       													(select username from users where id = main.updated_by) as updated_by, \
+(select username from users where id = main.created_by) as  created_by , \
+(select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
 									      				details , \
 									      				status , \
 									      				situation , \
-									      				description  FROM aggrigators AS main where deleted_at is NULL ";
+									      				description  FROM mobile_operators AS main where deleted_at is NULL ";
 	if(!query.empty())
 	{
 		complete_query += " AND ";
@@ -61,7 +61,7 @@ pqxx::result AggrigatorModel::GetAggrigators(int page, std::string query){
 	return R;
 }
 
-int AggrigatorModel::GetAggrigatorsCount(std::string query){
+int MobileOperatorModel::GetMobileOperatorsCount(std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -75,7 +75,7 @@ int AggrigatorModel::GetAggrigatorsCount(std::string query){
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	std::string complete_query = "SELECT count(id) FROM aggrigators where deleted_at is NULL ";
+	std::string complete_query = "SELECT count(id) FROM mobile_operators where deleted_at is NULL ";
 	if(!query.empty())
 	{
 		complete_query += " AND ";
@@ -87,32 +87,32 @@ int AggrigatorModel::GetAggrigatorsCount(std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree AggrigatorModel::GetAggrigatorsJson(int page, std::string query){
-	pqxx::result R = GetAggrigators(page, query);
-	int result_count = GetAggrigatorsCount(query);
+boost::property_tree::ptree MobileOperatorModel::GetMobileOperatorsJson(int page, std::string query){
+	pqxx::result R = GetMobileOperators(page, query);
+	int result_count = GetMobileOperatorsCount(query);
 	int pageCount = (result_count / OFFSET_COUNT) + 1;
 
 	boost::property_tree::ptree result_node;
 	boost::property_tree::ptree info_node;
-	boost::property_tree::ptree aggrigator_node;
-	boost::property_tree::ptree aggrigators_node;
+	boost::property_tree::ptree mobile_operator_node;
+	boost::property_tree::ptree mobile_operators_node;
 
 	for (size_t i = 0; i < R.size(); i++) {
-		aggrigator_node.put("id", R[i][0]);
-		aggrigator_node.put("name", R[i][1]);
-		aggrigator_node.put("title", R[i][2]);
-		aggrigator_node.put("code", R[i][3]);
-		aggrigator_node.put("phone", R[i][4]);
-		aggrigator_node.put("email", R[i][5]);
-		aggrigator_node.put("created_by", R[i][6]);
-		aggrigator_node.put("updated_by", R[i][7]);
-		aggrigator_node.put("created_at", R[i][8]);
-		aggrigator_node.put("updated_at", R[i][9]);
-		aggrigator_node.put("details", R[i][10]);
-		aggrigator_node.put("status", R[i][11]);
-		aggrigator_node.put("situation", R[i][12]);
-		aggrigator_node.put("description", R[i][13]);
-		aggrigators_node.push_back(std::make_pair("", aggrigator_node));
+		mobile_operator_node.put("id", R[i][0]);
+		mobile_operator_node.put("name", R[i][1]);
+		mobile_operator_node.put("title", R[i][2]);
+		mobile_operator_node.put("code", R[i][3]);
+		mobile_operator_node.put("phone", R[i][4]);
+		mobile_operator_node.put("email", R[i][5]);
+		mobile_operator_node.put("created_by", R[i][6]);
+		mobile_operator_node.put("updated_by", R[i][7]);
+		mobile_operator_node.put("created_at", R[i][8]);
+		mobile_operator_node.put("updated_at", R[i][9]);
+		mobile_operator_node.put("details", R[i][10]);
+		mobile_operator_node.put("status", R[i][11]);
+		mobile_operator_node.put("situation", R[i][12]);
+		mobile_operator_node.put("description", R[i][13]);
+		mobile_operators_node.push_back(std::make_pair("", mobile_operator_node));
 	}
 	info_node.put<int>("page", page);
 	info_node.put<int>("offset", OFFSET_COUNT);
@@ -120,11 +120,11 @@ boost::property_tree::ptree AggrigatorModel::GetAggrigatorsJson(int page, std::s
 	info_node.put<int>("result_count", result_count);
 
 	result_node.add_child("info", info_node);
-	result_node.add_child("items", aggrigators_node);
+	result_node.add_child("items", mobile_operators_node);
 	return result_node;
 }
 
-pqxx::result AggrigatorModel::GetAggrigator(std::string id){
+pqxx::result MobileOperatorModel::GetMobileOperator(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -145,43 +145,43 @@ pqxx::result AggrigatorModel::GetAggrigator(std::string id){
 									      				code , \
 									      				phone , \
 									      				email , \
-																(select username from users where id = main.created_by) as created_by, \
-       													(select username from users where id = main.updated_by) as updated_by, \
+(select username from users where id = main.created_by) as  created_by , \
+(select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
 									      				details , \
 									      				status , \
 									      				situation , \
-									      				description  FROM aggrigators AS main where id = $1 and deleted_at is NULL ");
+									      				description  FROM mobile_operators AS main where id = $1 and deleted_at is NULL ");
   pqxx::result R = W.prepared("find")(id).exec();
 	W.commit();
 	return R;
 }
 
-boost::property_tree::ptree AggrigatorModel::GetAggrigatorJson(std::string id){
-	pqxx::result R = GetAggrigator(id);
-	boost::property_tree::ptree aggrigator_node;
+boost::property_tree::ptree MobileOperatorModel::GetMobileOperatorJson(std::string id){
+	pqxx::result R = GetMobileOperator(id);
+	boost::property_tree::ptree mobile_operator_node;
 
 	if(R.size() == 1){
-		aggrigator_node.put("id", R[0][0]);
-		aggrigator_node.put("name", R[0][1]);
-		aggrigator_node.put("title", R[0][2]);
-		aggrigator_node.put("code", R[0][3]);
-		aggrigator_node.put("phone", R[0][4]);
-		aggrigator_node.put("email", R[0][5]);
-		aggrigator_node.put("created_by", R[0][6]);
-		aggrigator_node.put("updated_by", R[0][7]);
-		aggrigator_node.put("created_at", R[0][8]);
-		aggrigator_node.put("updated_at", R[0][9]);
-		aggrigator_node.put("details", R[0][10]);
-		aggrigator_node.put("status", R[0][11]);
-		aggrigator_node.put("situation", R[0][12]);
-		aggrigator_node.put("description", R[0][13]);
+		mobile_operator_node.put("id", R[0][0]);
+		mobile_operator_node.put("name", R[0][1]);
+		mobile_operator_node.put("title", R[0][2]);
+		mobile_operator_node.put("code", R[0][3]);
+		mobile_operator_node.put("phone", R[0][4]);
+		mobile_operator_node.put("email", R[0][5]);
+		mobile_operator_node.put("created_by", R[0][6]);
+		mobile_operator_node.put("updated_by", R[0][7]);
+		mobile_operator_node.put("created_at", R[0][8]);
+		mobile_operator_node.put("updated_at", R[0][9]);
+		mobile_operator_node.put("details", R[0][10]);
+		mobile_operator_node.put("status", R[0][11]);
+		mobile_operator_node.put("situation", R[0][12]);
+		mobile_operator_node.put("description", R[0][13]);
 	}
-	return aggrigator_node;
+	return mobile_operator_node;
 }
 
-std::string AggrigatorModel::AddAggrigator(
+std::string MobileOperatorModel::AddMobileOperator(
 													std::string	name,
 													std::string	title,
 													std::string	code,
@@ -205,7 +205,7 @@ std::string AggrigatorModel::AddAggrigator(
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	C.prepare("insert", "INSERT INTO aggrigators( \
+	C.prepare("insert", "INSERT INTO mobile_operators( \
 													id, \
 													name, \
 													title, \
@@ -259,7 +259,7 @@ std::string AggrigatorModel::AddAggrigator(
 	return id;
 }
 
-void AggrigatorModel::UpdateAggrigator(
+void MobileOperatorModel::UpdateMobileOperator(
 													std::string	id,
 													std::string	name,
 													std::string	title,
@@ -284,7 +284,7 @@ void AggrigatorModel::UpdateAggrigator(
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	C.prepare("update", "UPDATE aggrigators SET \
+	C.prepare("update", "UPDATE mobile_operators SET \
 													name = $2, \
 													title = $3, \
 													code = $4, \
@@ -312,7 +312,7 @@ void AggrigatorModel::UpdateAggrigator(
 	W.commit();
 }
 
-void AggrigatorModel::DeleteAggrigator(std::string id){
+void MobileOperatorModel::DeleteMobileOperator(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -326,7 +326,7 @@ void AggrigatorModel::DeleteAggrigator(std::string id){
 	 }
 	 LOG_INFO << "Connected to database: " << C.dbname();
 	 pqxx::work W(C);
-	 C.prepare("update", "UPDATE aggrigators SET \
+	 C.prepare("update", "UPDATE mobile_operators SET \
 												deleted_at = now()  \
 												WHERE id = $1");
    W.prepared("update")(id).exec();

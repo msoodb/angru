@@ -122,7 +122,7 @@ boost::property_tree::ptree ProductModel::GetProductsJson(int page, std::string 
 	info_node.put<int>("result_count", result_count);
 
 	result_node.add_child("info", info_node);
-	result_node.add_child("products", products_node);
+	result_node.add_child("items", products_node);
 	return result_node;
 }
 

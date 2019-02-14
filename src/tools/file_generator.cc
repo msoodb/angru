@@ -136,14 +136,14 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
     if(itr->second == "deleted_at" || itr->second == "deleted_by"){
       continue;
     }
-    else if(itr->second == "created_by" || itr->second == "updated_by"){
+    if(field_added > 0){
+      out_cc << ", \\" << '\n';
+    }
+    if(itr->second == "created_by" || itr->second == "updated_by"){
       out_cc << "(select username from users where id = main." << itr->second << ") as  " << itr->second <<" ";
     }
     else{
       out_cc << "									      				" << itr->second << " ";
-    }
-    if(field_added > 0){
-      out_cc << ", \\" << '\n';
     }
     field_added++;
   }
@@ -215,7 +215,7 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "	info_node.put<int>(\"result_count\", result_count);" << '\n';
   out_cc << '\n';
   out_cc << "	result_node.add_child(\"info\", info_node);" << '\n';
-  out_cc << "	result_node.add_child(\"" << table_name << "s\", " << table_name << "s_node);" << '\n';
+  out_cc << "	result_node.add_child(\"" << "item" << "s\", " << table_name << "s_node);" << '\n';
   out_cc << "	return result_node;" << '\n';
   out_cc << "}" << '\n';
   out_cc << '\n';
@@ -239,18 +239,18 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
     if(itr->second == "deleted_at" || itr->second == "deleted_by"){
       continue;
     }
-    else if(itr->second == "created_by" || itr->second == "updated_by"){
+    if(field_added > 0){
+      out_cc << ", \\" << '\n';
+    }
+    if(itr->second == "created_by" || itr->second == "updated_by"){
       out_cc << "(select username from users where id = main." << itr->second << ") as  " << itr->second <<" ";
     }
     else{
       out_cc << "									      				" << itr->second << " ";
     }
-    if(field_added > 0){
-      out_cc << ", \\" << '\n';
-    }
     field_added++;
   }
-  out_cc << " FROM " << table_name << "s where id = $1 and deleted_at is NULL \");" << '\n';
+  out_cc << " FROM " << table_name << "s AS main where id = $1 and deleted_at is NULL \");" << '\n';
   out_cc << "  pqxx::result R = W.prepared(\"find\")(id).exec();" << '\n';
   out_cc << "	W.commit();" << '\n';
   out_cc << "	return R;" << '\n';
@@ -760,6 +760,7 @@ void routerGenerator(std::string table_name_single, std::string entity_name)
   std::string path_h= "/home/masoud/Projects/angru/generated/router/" + file_name + ".r";
   std::ofstream out_r(path_h);
   //-----------------------------    .r     -------------------------------
+  out_r << "#include \"controllers/" << table_name << "_controller.h\"" << '\n';
   out_r << '\n';
   out_r << "	Get(router, \"/" << table_name << "s\", bind(&" << class_name << "::doGet" << entity_name << "s));" << '\n';
   out_r << "	Get(router, \"/" << table_name << "s/:id\", bind(&" << class_name << "::doGet" << entity_name << "));" << '\n';

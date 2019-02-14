@@ -56,13 +56,13 @@ std::string GenerateRandomNum(const int minlen, const int maxlen) {
 }
 
 void GenerateAggrigator(){
-  int count = 1000;
+  int count = 300;
   std::string	name;
   std::string	title;
   std::string	code;
   std::string	phone;
   std::string	email;
-  std::string created_by = "9979027d-1672-4108-95a4-eb5d346545a0";
+  std::string created_by = "9979027d-1672-4108-95a4-eb5d346545a0"; //zeus
   std::string	details;
   int	status;
   int	situation;
@@ -91,9 +91,7 @@ void GenerateAggrigator(){
                                                       status,
                                                       situation,
                                                       description );
-    if(i%10 == 0){
-      std::cout << ".";
-    }
+    std::cout << ".";
   }
  }
 

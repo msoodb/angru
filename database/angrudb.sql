@@ -97,3 +97,43 @@ ALTER TABLE public.aggrigators
 
 
 
+-- Table: public.mobile_operators
+
+-- DROP TABLE public.mobile_operators;
+
+CREATE TABLE public.mobile_operators
+(
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  name character varying(255) NOT NULL,
+  title character varying(255),
+  code character varying(255),
+  phone character varying(255),
+  email character varying(255),
+  created_by uuid,
+  deleted_by uuid,
+  updated_by uuid,
+  created_at timestamp with time zone,
+  deleted_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  details json,
+  status integer NOT NULL,
+  situation integer NOT NULL,
+  description character varying,
+  CONSTRAINT mobile_operators_pkey PRIMARY KEY (id),
+  CONSTRAINT mobile_operators_created_by_fkey FOREIGN KEY (created_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT mobile_operators_deleted_by_fkey FOREIGN KEY (deleted_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT mobile_operators_updated_by_fkey FOREIGN KEY (updated_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.mobile_operators
+  OWNER TO masoud;
+
+

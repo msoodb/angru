@@ -124,7 +124,7 @@ boost::property_tree::ptree UserModel::GetUsersJson(int page, std::string query)
 	info_node.put<int>("result_count", result_count);
 
 	result_node.add_child("info", info_node);
-	result_node.add_child("users", users_node);
+	result_node.add_child("items", users_node);
 	return result_node;
 }
 
