@@ -8,6 +8,10 @@
 #include <pistache/endpoint.h>
 #include "tools/system.h"
 #include "tools/security.h"
+#include "controllers/entitie_controller.h"
+#include "controllers/privilege_controller.h"
+#include "controllers/security_role_controller.h"
+#include "controllers/users_security_role_controller.h"
 #include "controllers/mobile_operator_controller.h"
 #include "controllers/aggrigator_controller.h"
 #include "controllers/content_provider_controller.h"
@@ -93,6 +97,29 @@ void RestServer::SetupRoutes() {
   Post(router, "/users/:id/avatars", bind(&AvatarController::doAddAvatar));
   Get(router, "/users/:id/avatars", bind(&AvatarController::doGetAvatar));
 
+	Get(router, "/entities", bind(&EntitieController::doGetEntities));
+	Get(router, "/entities/:id", bind(&EntitieController::doGetEntitie));
+	Delete(router, "/entities/:id", bind(&EntitieController::doDeleteEntitie));
+  Post(router, "/entities", bind(&EntitieController::doAddEntitie));
+	Put(router, "/entities/:id", bind(&EntitieController::doUpdateEntitie));
+
+  Get(router, "/privileges", bind(&PrivilegeController::doGetPrivileges));
+	Get(router, "/privileges/:id", bind(&PrivilegeController::doGetPrivilege));
+	Delete(router, "/privileges/:id", bind(&PrivilegeController::doDeletePrivilege));
+  Post(router, "/privileges", bind(&PrivilegeController::doAddPrivilege));
+	Put(router, "/privileges/:id", bind(&PrivilegeController::doUpdatePrivilege));
+
+  Get(router, "/security_roles", bind(&SecurityRolesController::doGetSecurityRoless));
+	Get(router, "/security_roles/:id", bind(&SecurityRolesController::doGetSecurityRoles));
+	Delete(router, "/security_roles/:id", bind(&SecurityRolesController::doDeleteSecurityRoles));
+  Post(router, "/security_roles", bind(&SecurityRolesController::doAddSecurityRoles));
+	Put(router, "/security_roles/:id", bind(&SecurityRolesController::doUpdateSecurityRoles));
+
+  Get(router, "/users_security_roles", bind(&UsersSecurityRoleController::doGetUsersSecurityRoles));
+	Get(router, "/users_security_roles/:id", bind(&UsersSecurityRoleController::doGetUsersSecurityRole));
+	Delete(router, "/users_security_roles/:id", bind(&UsersSecurityRoleController::doDeleteUsersSecurityRole));
+  Post(router, "/users_security_roles", bind(&UsersSecurityRoleController::doAddUsersSecurityRole));
+	Put(router, "/users_security_roles/:id", bind(&UsersSecurityRoleController::doUpdateUsersSecurityRole));
 }
 
 void RestServer::PrintCookies(const Pistache::Http::Request& req) {
