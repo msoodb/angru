@@ -34,8 +34,8 @@ pqxx::result PrivilegeModel::GetPrivileges(int page, std::string query){
 	pqxx::work W(C);
 	std::string complete_query = "SELECT \
 									      				id , \
-									      				security_role , \
-									      				entity , \
+									      				(select name from security_roles where id = main.security_role) as  security_role , \
+																(select name from entities where id = main.entity) as  entity , \
 									      				privilege_string , \
 (select username from users where id = main.created_by) as  created_by , \
 (select username from users where id = main.updated_by) as  updated_by , \
@@ -134,8 +134,8 @@ pqxx::result PrivilegeModel::GetPrivilege(std::string id){
 	pqxx::work W(C);
   C.prepare("find", "SELECT \
 									      				id , \
-									      				security_role , \
-									      				entity , \
+									      				(select name from security_roles where id = main.security_role) as  security_role , \
+									      				(select name from entities where id = main.entity) as  entity , \
 									      				privilege_string , \
 (select username from users where id = main.created_by) as  created_by , \
 (select username from users where id = main.updated_by) as  updated_by , \
@@ -170,12 +170,12 @@ boost::property_tree::ptree PrivilegeModel::GetPrivilegeJson(std::string id){
 }
 
 std::string PrivilegeModel::AddPrivilege(
-													std::string	security_role, 
-													std::string	entity, 
-													std::string	privilege_string, 
-													std::string	created_by, 
-													int	status, 
-													int	situation, 
+													std::string	security_role,
+													std::string	entity,
+													std::string	privilege_string,
+													std::string	created_by,
+													int	status,
+													int	situation,
 													std::string	description){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -235,7 +235,7 @@ std::string PrivilegeModel::AddPrivilege(
 	return id;
 }
 
-void PrivilegeModel::UpdatePrivilege( 
+void PrivilegeModel::UpdatePrivilege(
 													std::string	id,
 													std::string	security_role,
 													std::string	entity,

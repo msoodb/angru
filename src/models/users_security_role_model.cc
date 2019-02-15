@@ -34,8 +34,8 @@ pqxx::result UsersSecurityRoleModel::GetUsersSecurityRoles(int page, std::string
 	pqxx::work W(C);
 	std::string complete_query = "SELECT \
 									      				id , \
-									      				_user_ , \
-									      				security_role , \
+																(select username from users where id = main._user_) as  _user_ , \
+																(select name from security_roles where id = main.security_role) as  security_role , \
 (select username from users where id = main.created_by) as  created_by , \
 (select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
@@ -132,8 +132,8 @@ pqxx::result UsersSecurityRoleModel::GetUsersSecurityRole(std::string id){
 	pqxx::work W(C);
   C.prepare("find", "SELECT \
 									      				id , \
-									      				_user_ , \
-									      				security_role , \
+																(select username from users where id = main._user_) as  _user_ , \
+																(select name from security_roles where id = main.security_role) as  security_role , \
 (select username from users where id = main.created_by) as  created_by , \
 (select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
@@ -166,11 +166,11 @@ boost::property_tree::ptree UsersSecurityRoleModel::GetUsersSecurityRoleJson(std
 }
 
 std::string UsersSecurityRoleModel::AddUsersSecurityRole(
-													std::string	_user_, 
-													std::string	security_role, 
-													std::string	created_by, 
-													int	status, 
-													int	situation, 
+													std::string	_user_,
+													std::string	security_role,
+													std::string	created_by,
+													int	status,
+													int	situation,
 													std::string	description){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -227,7 +227,7 @@ std::string UsersSecurityRoleModel::AddUsersSecurityRole(
 	return id;
 }
 
-void UsersSecurityRoleModel::UpdateUsersSecurityRole( 
+void UsersSecurityRoleModel::UpdateUsersSecurityRole(
 													std::string	id,
 													std::string	_user_,
 													std::string	security_role,

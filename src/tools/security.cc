@@ -98,11 +98,11 @@ std::string AuthorizationCheck(const Pistache::Rest::Request& request,
         return user_id;
     }
     catch (std::exception const& e){
-      response.send(Pistache::Http::Code::Unauthorized, "Authorization denied...");
+      response.send(Pistache::Http::Code::Unauthorized, "{\"message\":\"Authorization denied.\"}");
     }
     catch(...)
     {
-      response.send(Pistache::Http::Code::Unauthorized, "Authorization denied...");
+      response.send(Pistache::Http::Code::Unauthorized, "{\"message\":\"Authorization denied.\"}");
     }
 }
 void ContentTypeJSONCheck(const Pistache::Rest::Request& request,

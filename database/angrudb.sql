@@ -93,6 +93,19 @@ ALTER TABLE public.security_roles
   OWNER TO masoud;
 
 
+INSERT INTO public.security_roles(
+            id, name, title, created_by, deleted_by, updated_by, created_at, 
+            deleted_at, updated_at, status, situation, description)
+    VALUES (DEFAULT, 'uploader', 'uploader', (select id from users where username='zeus'), NULL, NULL, NOW(), 
+            NULL, NULL, 1, 0, '');
+
+INSERT INTO public.security_roles(
+            id, name, title, created_by, deleted_by, updated_by, created_at, 
+            deleted_at, updated_at, status, situation, description)
+    VALUES (DEFAULT, 'reporter', 'reporter', (select id from users where username='zeus'), NULL, NULL, NOW(), 
+            NULL, NULL, 1, 0, '');
+
+
 -- Table: public.users_security_roles
 
 -- DROP TABLE public.users_security_roles;
