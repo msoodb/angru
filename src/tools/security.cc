@@ -17,6 +17,7 @@
 
 
 
+
 namespace angru{
 namespace security{
 namespace cryptography{
@@ -81,7 +82,7 @@ std::string get_jwt(const std::string& user_id, const std::string&email){
 
 namespace authorization{
 
-std::string AuthorizationCheck(const Pistache::Rest::Request& request,
+std::string AuthenticationCheck(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter& response){
     response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
     auto headers = request.headers();
@@ -105,6 +106,7 @@ std::string AuthorizationCheck(const Pistache::Rest::Request& request,
       response.send(Pistache::Http::Code::Unauthorized, "{\"message\":\"Authorization denied.\"}");
     }
 }
+
 void ContentTypeJSONCheck(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter& response){
     auto headers = request.headers();

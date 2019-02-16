@@ -11,6 +11,8 @@
 #include "wrappers/postgresql.h"
 #include "tools/security.h"
 #include "models/aggrigator_model.h"
+#include "models/privilege_model.h"
+
 
 namespace angru{
 namespace mvc{
@@ -23,7 +25,11 @@ void AggrigatorController::doGetAggrigators(const Pistache::Rest::Request& reque
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);
+    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "aggrigators", GET_ITEMS);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+    }
     int page = 1;
     std::string filter;
     auto query = request.query();
@@ -51,7 +57,11 @@ void AggrigatorController::doGetAggrigator(const Pistache::Rest::Request& reques
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);
+    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "aggrigators", GET_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+    }
     std::string id = "";
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
@@ -74,7 +84,11 @@ void AggrigatorController::doDeleteAggrigator(const Pistache::Rest::Request& req
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);
+    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "aggrigators", DELETE_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+    }
     std::string deleted_by = user_id;
     std::string id = "";
     if (request.hasParam(":id")) {
@@ -89,7 +103,11 @@ void AggrigatorController::doAddAggrigator(const Pistache::Rest::Request& reques
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);
+    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "aggrigators", ADD_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+    }
     auto body = request.body();
     std::string created_by = user_id;
     std::string	name;
@@ -139,7 +157,11 @@ void AggrigatorController::doUpdateAggrigator(const Pistache::Rest::Request& req
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);
+    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "aggrigators", UPDATE_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+    }
     std::string updated_by = user_id;
     std::string id = "";
     if (request.hasParam(":id")) {

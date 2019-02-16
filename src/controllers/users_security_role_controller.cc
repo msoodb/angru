@@ -23,7 +23,7 @@ void UsersSecurityRoleController::doGetUsersSecurityRoles(const Pistache::Rest::
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);
+    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
     int page = 1;
     std::string filter;
     auto query = request.query();
@@ -51,7 +51,7 @@ void UsersSecurityRoleController::doGetUsersSecurityRole(const Pistache::Rest::R
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);
+    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
     std::string id = "";
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
@@ -74,7 +74,7 @@ void UsersSecurityRoleController::doDeleteUsersSecurityRole(const Pistache::Rest
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);
+    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
     std::string deleted_by = user_id;
     std::string id = "";
     if (request.hasParam(":id")) {
@@ -89,7 +89,7 @@ void UsersSecurityRoleController::doAddUsersSecurityRole(const Pistache::Rest::R
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);
+    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
     auto body = request.body();
     std::string created_by = user_id;
     std::string	_user_;
@@ -127,7 +127,7 @@ void UsersSecurityRoleController::doUpdateUsersSecurityRole(const Pistache::Rest
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);
+    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
     std::string updated_by = user_id;
     std::string id = "";
     if (request.hasParam(":id")) {

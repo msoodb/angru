@@ -23,7 +23,7 @@ void ProductController::doGetProducts(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    angru::security::authorization::AuthorizationCheck(request,response);
+    angru::security::authorization::AuthenticationCheck(request,response);
     int page = 1;
     auto query = request.query();
     if(query.has("page")) {
@@ -46,7 +46,7 @@ void ProductController::doGetProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    angru::security::authorization::AuthorizationCheck(request,response);
+    angru::security::authorization::AuthenticationCheck(request,response);
     int id = -1;
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
@@ -69,7 +69,7 @@ void ProductController::doDeleteProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    angru::security::authorization::AuthorizationCheck(request,response);
+    angru::security::authorization::AuthenticationCheck(request,response);
     int id = -1;
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
@@ -83,7 +83,7 @@ void ProductController::doAddProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    angru::security::authorization::AuthorizationCheck(request,response);
+    angru::security::authorization::AuthenticationCheck(request,response);
     auto body = request.body();
     std::string	name;
     std::string	title;
@@ -134,7 +134,7 @@ void ProductController::doUpdateProduct(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    angru::security::authorization::AuthorizationCheck(request,response);
+    angru::security::authorization::AuthenticationCheck(request,response);
     int id = -1;
     if (request.hasParam(":id")) {
         auto value = request.param(":id");

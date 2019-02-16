@@ -18,6 +18,67 @@ namespace model{
 PrivilegeModel::PrivilegeModel(){}
 PrivilegeModel::~PrivilegeModel(){}
 
+bool PrivilegeModel::AuthorizationCheck(std::string user_id, std::string entity_name, int action){
+	if(user_id == "9979027d-1672-4108-95a4-eb5d346545a0"){       //zeus
+		return true;
+	}
+  bool result = false;
+  try
+  {
+    pqxx::result PrivilegeStrings = GetPrivilegeStrings(user_id, entity_name);
+    char ch = '0';
+    for (size_t i = 0; i < PrivilegeStrings.size(); i++) {
+      std::string privilege = PrivilegeStrings[i][0].as<std::string>();
+			std::cout << "privilege : " << privilege << '\n';
+      ch = ch | privilege[action];
+			std::cout << "ch : " << ch << '\n';
+    }
+    if(ch=='1'){
+      result = true;
+    }
+		std::cout << "result : " << result <<'\n';
+    return result;
+  }
+  catch (std::exception const& e){
+    return false;
+  }
+  catch(...)
+  {
+    return false;
+  }
+}
+
+pqxx::result PrivilegeModel::GetPrivilegeStrings(std::string user_id, std::string entity_name){
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
+	try {
+		if (C.is_open()) {
+			 LOG_INFO << "Opened database successfully: " << C.dbname();
+		} else {
+			 LOG_ERROR << "Can't open database: " << C.dbname();
+		}
+		C.disconnect ();
+	} catch (const angru::system::exception::error &e) {
+			LOG_ERROR << e.what();
+	}
+	LOG_INFO << "Connected to database: " << C.dbname();
+	pqxx::work W(C);
+	std::string complete_query = "SELECT \
+									      				public.privileges.privilege_string \
+																FROM public.users join public.users_security_roles on public.users.id = public.users_security_roles._user_ \
+																join public.security_roles on public.users_security_roles.security_role = public.security_roles.id \
+																join public.privileges on public.privileges.security_role = public.security_roles.id \
+																join public.entities on public.privileges.entity = public.entities.id \
+																WHERE public.users.id = $1 and public.entities.name = $2 \
+																AND public.users.deleted_at is NULL \
+																AND public.users_security_roles.deleted_at is NULL \
+																AND public.privileges.deleted_at is NULL \
+																AND public.entities.deleted_at is NULL ";
+  C.prepare("find", complete_query);
+  pqxx::result R = W.prepared("find")(user_id)(entity_name).exec();
+	W.commit();
+	return R;
+}
+
 pqxx::result PrivilegeModel::GetPrivileges(int page, std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {

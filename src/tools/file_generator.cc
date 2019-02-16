@@ -550,7 +550,7 @@ void controllerGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "  Pistache::Http::ResponseWriter response) {" << '\n';
   out_cc << "    angru::security::authorization::CORS(request,response);" << '\n';
   out_cc << "    angru::security::authorization::ContentTypeJSONCheck(request,response);" << '\n';
-  out_cc << "    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);" << '\n';
+  out_cc << "    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);" << '\n';
   out_cc << "    int page = 1;" << '\n';
   out_cc << "    std::string filter;" << '\n';
   out_cc << "    auto query = request.query();" << '\n';
@@ -578,7 +578,7 @@ void controllerGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "  Pistache::Http::ResponseWriter response) {" << '\n';
   out_cc << "    angru::security::authorization::CORS(request,response);" << '\n';
   out_cc << "    angru::security::authorization::ContentTypeJSONCheck(request,response);" << '\n';
-  out_cc << "    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);" << '\n';
+  out_cc << "    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);" << '\n';
   out_cc << "    std::string id = \"\";" << '\n';
   out_cc << "    if (request.hasParam(\":id\")) {" << '\n';
   out_cc << "        auto value = request.param(\":id\");" << '\n';
@@ -601,7 +601,7 @@ void controllerGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "  Pistache::Http::ResponseWriter response) {" << '\n';
   out_cc << "    angru::security::authorization::CORS(request,response);" << '\n';
   out_cc << "    angru::security::authorization::ContentTypeJSONCheck(request,response);" << '\n';
-  out_cc << "    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);" << '\n';
+  out_cc << "    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);" << '\n';
   out_cc << "    std::string deleted_by = user_id;" << '\n';
   out_cc << "    std::string id = \"\";" << '\n';
   out_cc << "    if (request.hasParam(\":id\")) {" << '\n';
@@ -616,7 +616,7 @@ void controllerGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "  Pistache::Http::ResponseWriter response) {" << '\n';
   out_cc << "    angru::security::authorization::CORS(request,response);" << '\n';
   out_cc << "    angru::security::authorization::ContentTypeJSONCheck(request,response);" << '\n';
-  out_cc << "    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);" << '\n';
+  out_cc << "    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);" << '\n';
   out_cc << "    auto body = request.body();" << '\n';
   out_cc << "    std::string created_by = user_id;" << '\n';
   for (itr = fields.begin(); itr != fields.end(); ++itr) {
@@ -680,7 +680,7 @@ void controllerGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "  Pistache::Http::ResponseWriter response) {" << '\n';
   out_cc << "    angru::security::authorization::CORS(request,response);" << '\n';
   out_cc << "    angru::security::authorization::ContentTypeJSONCheck(request,response);" << '\n';
-  out_cc << "    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);" << '\n';
+  out_cc << "    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);" << '\n';
   out_cc << "    std::string updated_by = user_id;" << '\n';
   out_cc << "    std::string id = \"\";" << '\n';
   out_cc << "    if (request.hasParam(\":id\")) {" << '\n';

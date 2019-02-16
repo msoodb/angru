@@ -27,7 +27,7 @@ FileController::~FileController(){}
 void FileController::doGetFile(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
-    angru::security::authorization::AuthorizationCheck(request,response);
+    angru::security::authorization::AuthenticationCheck(request,response);
     // int id = -1;
     // if (request.hasParam(":id")) {
     //     auto value = request.param(":id");
@@ -49,7 +49,7 @@ void FileController::doGetFile(const Pistache::Rest::Request& request,
 void FileController::doAddFile(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
-    angru::security::authorization::AuthorizationCheck(request,response);
+    angru::security::authorization::AuthenticationCheck(request,response);
     try
     {
       auto body = request.body();

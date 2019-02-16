@@ -23,7 +23,7 @@ void EntitieController::doGetEntities(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);
+    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
     int page = 1;
     std::string filter;
     auto query = request.query();
@@ -51,7 +51,7 @@ void EntitieController::doGetEntitie(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);
+    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
     std::string id = "";
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
@@ -74,7 +74,7 @@ void EntitieController::doDeleteEntitie(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);
+    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
     std::string deleted_by = user_id;
     std::string id = "";
     if (request.hasParam(":id")) {
@@ -89,7 +89,7 @@ void EntitieController::doAddEntitie(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);
+    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
     auto body = request.body();
     std::string created_by = user_id;
     std::string	name;
@@ -127,7 +127,7 @@ void EntitieController::doUpdateEntitie(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    std::string user_id = angru::security::authorization::AuthorizationCheck(request,response);
+    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
     std::string updated_by = user_id;
     std::string id = "";
     if (request.hasParam(":id")) {

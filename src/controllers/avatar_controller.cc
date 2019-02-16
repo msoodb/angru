@@ -51,7 +51,7 @@ void AvatarController::doGetAvatar(const Pistache::Rest::Request& request,
 void AvatarController::doAddAvatar(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
-    angru::security::authorization::AuthorizationCheck(request,response);
+    angru::security::authorization::AuthenticationCheck(request,response);
     try
     {
       auto body = request.body();
