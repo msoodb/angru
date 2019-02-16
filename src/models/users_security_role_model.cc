@@ -36,8 +36,8 @@ pqxx::result UsersSecurityRoleModel::GetUsersSecurityRoles(int page, std::string
 									      				id , \
 																(select username from users where id = main._user_) as  _user_ , \
 																(select name from security_roles where id = main.security_role) as  security_role , \
-(select username from users where id = main.created_by) as  created_by , \
-(select username from users where id = main.updated_by) as  updated_by , \
+																(select username from users where id = main.created_by) as  created_by , \
+																(select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
 									      				status , \
@@ -132,10 +132,10 @@ pqxx::result UsersSecurityRoleModel::GetUsersSecurityRole(std::string id){
 	pqxx::work W(C);
   C.prepare("find", "SELECT \
 									      				id , \
-																(select username from users where id = main._user_) as  _user_ , \
-																(select name from security_roles where id = main.security_role) as  security_role , \
-(select username from users where id = main.created_by) as  created_by , \
-(select username from users where id = main.updated_by) as  updated_by , \
+																_user_ , \
+																security_role , \
+																(select username from users where id = main.created_by) as  created_by , \
+																(select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
 									      				status , \
