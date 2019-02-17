@@ -195,11 +195,11 @@ pqxx::result PrivilegeModel::GetPrivilege(std::string id){
 	pqxx::work W(C);
   C.prepare("find", "SELECT \
 									      				id , \
-									      				(select name from security_roles where id = main.security_role) as  security_role , \
-									      				(select name from entities where id = main.entity) as  entity , \
+									      				security_role , \
+									      				entity , \
 									      				privilege_string , \
-(select username from users where id = main.created_by) as  created_by , \
-(select username from users where id = main.updated_by) as  updated_by , \
+																(select username from users where id = main.created_by) as  created_by , \
+																(select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
 									      				status , \
