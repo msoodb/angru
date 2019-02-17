@@ -11,6 +11,8 @@
 #include "wrappers/postgresql.h"
 #include "tools/security.h"
 #include "models/product_model.h"
+#include "models/privilege_model.h"
+
 
 namespace angru{
 namespace mvc{

@@ -11,6 +11,8 @@
 #include "wrappers/postgresql.h"
 #include "tools/security.h"
 #include "models/security_role_model.h"
+#include "models/privilege_model.h"
+
 
 namespace angru{
 namespace mvc{
@@ -24,6 +26,11 @@ void SecurityRolesController::doGetSecurityRoless(const Pistache::Rest::Request&
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "security_roles", GET_ITEMS);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
     int page = 1;
     std::string filter;
     auto query = request.query();
@@ -52,6 +59,11 @@ void SecurityRolesController::doGetSecurityRoles(const Pistache::Rest::Request& 
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "security_roles", GET_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
     std::string id = "";
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
@@ -75,6 +87,11 @@ void SecurityRolesController::doDeleteSecurityRoles(const Pistache::Rest::Reques
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "security_roles", DELETE_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
     std::string deleted_by = user_id;
     std::string id = "";
     if (request.hasParam(":id")) {
@@ -90,6 +107,11 @@ void SecurityRolesController::doAddSecurityRoles(const Pistache::Rest::Request& 
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "security_roles", ADD_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
     auto body = request.body();
     std::string created_by = user_id;
     std::string	name;
@@ -110,11 +132,11 @@ void SecurityRolesController::doAddSecurityRoles(const Pistache::Rest::Request& 
       description = pt.get<std::string>("description");
 
       angru::mvc::model::SecurityRolesModel::AddSecurityRoles(
-                                                  name, 
-                                                  title, 
-                                                  created_by, 
-                                                  status, 
-                                                  situation, 
+                                                  name,
+                                                  title,
+                                                  created_by,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "SecurityRoles added.");
     }
@@ -128,6 +150,11 @@ void SecurityRolesController::doUpdateSecurityRoles(const Pistache::Rest::Reques
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "security_roles", UPDATE_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
     std::string updated_by = user_id;
     std::string id = "";
     if (request.hasParam(":id")) {
@@ -152,12 +179,12 @@ void SecurityRolesController::doUpdateSecurityRoles(const Pistache::Rest::Reques
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
       angru::mvc::model::SecurityRolesModel::UpdateSecurityRoles(
-                                                  id, 
-                                                  name, 
-                                                  title, 
-                                                  updated_by, 
-                                                  status, 
-                                                  situation, 
+                                                  id,
+                                                  name,
+                                                  title,
+                                                  updated_by,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "SecurityRoless updated.");
     }

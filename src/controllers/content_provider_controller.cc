@@ -11,6 +11,8 @@
 #include "wrappers/postgresql.h"
 #include "tools/security.h"
 #include "models/content_provider_model.h"
+#include "models/privilege_model.h"
+
 
 namespace angru{
 namespace mvc{
@@ -23,14 +25,24 @@ void ContentProviderController::doGetContentProviders(const Pistache::Rest::Requ
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    angru::security::authorization::AuthenticationCheck(request,response);
+    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "content_providers", GET_ITEMS);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
     int page = 1;
+    std::string filter;
     auto query = request.query();
     if(query.has("page")) {
       auto value = query.get("page").get();
       page = std::stoi(value);
     }
-    boost::property_tree::ptree content_providers = angru::mvc::model::ContentProviderModel::GetContentProvidersJson(page);
+    if(query.has("filter")) {
+      auto value = query.get("filter").get();
+      filter = angru::security::cryptography::decode_base64(value);
+    }
+    boost::property_tree::ptree content_providers = angru::mvc::model::ContentProviderModel::GetContentProvidersJson(page, filter);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, content_providers);
 
@@ -46,11 +58,16 @@ void ContentProviderController::doGetContentProvider(const Pistache::Rest::Reque
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    angru::security::authorization::AuthenticationCheck(request,response);
-    int id = -1;
+    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "content_providers", GET_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
+    std::string id = "";
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
-        id = value.as<int>();
+        id = value.as<std::string>();
     }
     boost::property_tree::ptree content_provider = angru::mvc::model::ContentProviderModel::GetContentProviderJson(id);
     std::ostringstream oss;
@@ -69,11 +86,17 @@ void ContentProviderController::doDeleteContentProvider(const Pistache::Rest::Re
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    angru::security::authorization::AuthenticationCheck(request,response);
-    int id = -1;
+    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "content_providers", DELETE_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
+    std::string deleted_by = user_id;
+    std::string id = "";
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
-        id = value.as<int>();
+        id = value.as<std::string>();
     }
     angru::mvc::model::ContentProviderModel::DeleteContentProvider(id);
     response.send(Pistache::Http::Code::Ok, "ContentProvider deleted.");
@@ -83,8 +106,14 @@ void ContentProviderController::doAddContentProvider(const Pistache::Rest::Reque
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    angru::security::authorization::AuthenticationCheck(request,response);
+    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "content_providers", ADD_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
     auto body = request.body();
+    std::string created_by = user_id;
     std::string	name;
     std::string	title;
     std::string	code;
@@ -92,6 +121,7 @@ void ContentProviderController::doAddContentProvider(const Pistache::Rest::Reque
     std::string	email;
     std::string	details;
     int	status;
+    int	situation;
     std::string	description;
     try
     {
@@ -106,16 +136,19 @@ void ContentProviderController::doAddContentProvider(const Pistache::Rest::Reque
       email = pt.get<std::string>("email");
       details = pt.get<std::string>("details");
       status = pt.get<int>("status");
+      situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
       angru::mvc::model::ContentProviderModel::AddContentProvider(
-                                                  name, 
-                                                  title, 
-                                                  code, 
-                                                  phone, 
-                                                  email, 
-                                                  details, 
-                                                  status, 
+                                                  name,
+                                                  title,
+                                                  code,
+                                                  phone,
+                                                  email,
+                                                  created_by,
+                                                  details,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "ContentProvider added.");
     }
@@ -128,14 +161,17 @@ void ContentProviderController::doUpdateContentProvider(const Pistache::Rest::Re
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
-    angru::security::authorization::AuthenticationCheck(request,response);
-    int id = -1;
+    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "content_providers", UPDATE_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
+    std::string updated_by = user_id;
+    std::string id = "";
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
-      id = value.as<int>();
-    }
-    if(id == -1){
-      response.send(Pistache::Http::Code::Not_Found, "ContentProviders not found.");
+      id = value.as<std::string>();
     }
     auto body = request.body();
     std::string	name;
@@ -145,6 +181,7 @@ void ContentProviderController::doUpdateContentProvider(const Pistache::Rest::Re
     std::string	email;
     std::string	details;
     int	status;
+    int	situation;
     std::string	description;
    try
     {
@@ -159,16 +196,19 @@ void ContentProviderController::doUpdateContentProvider(const Pistache::Rest::Re
       email = pt.get<std::string>("email");
       details = pt.get<std::string>("details");
       status = pt.get<int>("status");
+      situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
       angru::mvc::model::ContentProviderModel::UpdateContentProvider(
-                                                  id, 
-                                                  name, 
-                                                  title, 
-                                                  code, 
-                                                  phone, 
-                                                  email, 
-                                                  details, 
-                                                  status, 
+                                                  id,
+                                                  name,
+                                                  title,
+                                                  code,
+                                                  phone,
+                                                  email,
+                                                  updated_by,
+                                                  details,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "ContentProviders updated.");
     }

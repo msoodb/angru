@@ -11,6 +11,8 @@
 #include "wrappers/postgresql.h"
 #include "tools/security.h"
 #include "models/product_document_model.h"
+#include "models/privilege_model.h"
+
 
 namespace angru{
 namespace mvc{
@@ -111,14 +113,14 @@ void ProductDocumentController::doAddProductDocument(const Pistache::Rest::Reque
       description = pt.get<std::string>("description");
 
       angru::mvc::model::ProductDocumentModel::AddProductDocument(
-                                                  product_id, 
-                                                  name, 
-                                                  title, 
-                                                  path, 
-                                                  size, 
-                                                  tags, 
-                                                  details, 
-                                                  status, 
+                                                  product_id,
+                                                  name,
+                                                  title,
+                                                  path,
+                                                  size,
+                                                  tags,
+                                                  details,
+                                                  status,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "ProductDocument added.");
     }
@@ -166,15 +168,15 @@ void ProductDocumentController::doUpdateProductDocument(const Pistache::Rest::Re
       status = pt.get<int>("status");
       description = pt.get<std::string>("description");
       angru::mvc::model::ProductDocumentModel::UpdateProductDocument(
-                                                  id, 
-                                                  product_id, 
-                                                  name, 
-                                                  title, 
-                                                  path, 
-                                                  size, 
-                                                  tags, 
-                                                  details, 
-                                                  status, 
+                                                  id,
+                                                  product_id,
+                                                  name,
+                                                  title,
+                                                  path,
+                                                  size,
+                                                  tags,
+                                                  details,
+                                                  status,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "ProductDocuments updated.");
     }

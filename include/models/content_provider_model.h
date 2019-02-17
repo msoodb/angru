@@ -20,28 +20,32 @@ public:
 	static pqxx::result GetContentProviders(int page=1, std::string query="");
 	static int GetContentProvidersCount(std::string query="");
 	static boost::property_tree::ptree GetContentProvidersJson(int page=1, std::string query="");
-  static pqxx::result GetContentProvider(int);
-	static boost::property_tree::ptree GetContentProviderJson(int);
+  static pqxx::result GetContentProvider(std::string id);
+	static boost::property_tree::ptree GetContentProviderJson(std::string id);
 	static std::string AddContentProvider(
 													std::string	name,
 													std::string	title,
 													std::string	code,
 													std::string	phone,
 													std::string	email,
+													std::string	created_by,
 													std::string	details,
 													int	status,
+													int	situation,
 													std::string	description);
 	static void UpdateContentProvider(
-													int	id,
+													std::string	id,
 													std::string	name,
 													std::string	title,
 													std::string	code,
 													std::string	phone,
 													std::string	email,
+													std::string	updated_by,
 													std::string	details,
 													int	status,
+													int	situation,
 													std::string	description);
-	static void DeleteContentProvider(int);
+	static void DeleteContentProvider(std::string id);
 };
 
 } // model

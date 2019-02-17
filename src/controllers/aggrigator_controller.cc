@@ -29,6 +29,7 @@ void AggrigatorController::doGetAggrigators(const Pistache::Rest::Request& reque
     bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "aggrigators", GET_ITEMS);
     if(!authorized){
       response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
     }
     int page = 1;
     std::string filter;
@@ -61,6 +62,7 @@ void AggrigatorController::doGetAggrigator(const Pistache::Rest::Request& reques
     bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "aggrigators", GET_ITEM);
     if(!authorized){
       response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
     }
     std::string id = "";
     if (request.hasParam(":id")) {
@@ -88,6 +90,7 @@ void AggrigatorController::doDeleteAggrigator(const Pistache::Rest::Request& req
     bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "aggrigators", DELETE_ITEM);
     if(!authorized){
       response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
     }
     std::string deleted_by = user_id;
     std::string id = "";
@@ -107,6 +110,7 @@ void AggrigatorController::doAddAggrigator(const Pistache::Rest::Request& reques
     bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "aggrigators", ADD_ITEM);
     if(!authorized){
       response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
     }
     auto body = request.body();
     std::string created_by = user_id;
@@ -161,6 +165,7 @@ void AggrigatorController::doUpdateAggrigator(const Pistache::Rest::Request& req
     bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "aggrigators", UPDATE_ITEM);
     if(!authorized){
       response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
     }
     std::string updated_by = user_id;
     std::string id = "";

@@ -29,14 +29,11 @@ bool PrivilegeModel::AuthorizationCheck(std::string user_id, std::string entity_
     char ch = '0';
     for (size_t i = 0; i < PrivilegeStrings.size(); i++) {
       std::string privilege = PrivilegeStrings[i][0].as<std::string>();
-			std::cout << "privilege : " << privilege << '\n';
       ch = ch | privilege[action];
-			std::cout << "ch : " << ch << '\n';
     }
     if(ch=='1'){
       result = true;
     }
-		std::cout << "result : " << result <<'\n';
     return result;
   }
   catch (std::exception const& e){

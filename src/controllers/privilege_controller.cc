@@ -24,6 +24,11 @@ void PrivilegeController::doGetPrivileges(const Pistache::Rest::Request& request
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "privileges", GET_ITEMS);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
     int page = 1;
     std::string filter;
     auto query = request.query();
@@ -52,6 +57,11 @@ void PrivilegeController::doGetPrivilege(const Pistache::Rest::Request& request,
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "privileges", GET_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
     std::string id = "";
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
@@ -75,6 +85,11 @@ void PrivilegeController::doDeletePrivilege(const Pistache::Rest::Request& reque
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "privileges", DELETE_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
     std::string deleted_by = user_id;
     std::string id = "";
     if (request.hasParam(":id")) {
@@ -90,6 +105,11 @@ void PrivilegeController::doAddPrivilege(const Pistache::Rest::Request& request,
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "privileges", ADD_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
     auto body = request.body();
     std::string created_by = user_id;
     std::string	security_role;
@@ -112,12 +132,12 @@ void PrivilegeController::doAddPrivilege(const Pistache::Rest::Request& request,
       description = pt.get<std::string>("description");
 
       angru::mvc::model::PrivilegeModel::AddPrivilege(
-                                                  security_role, 
-                                                  entity, 
-                                                  privilege_string, 
-                                                  created_by, 
-                                                  status, 
-                                                  situation, 
+                                                  security_role,
+                                                  entity,
+                                                  privilege_string,
+                                                  created_by,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Privilege added.");
     }
@@ -131,6 +151,11 @@ void PrivilegeController::doUpdatePrivilege(const Pistache::Rest::Request& reque
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "privileges", UPDATE_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
     std::string updated_by = user_id;
     std::string id = "";
     if (request.hasParam(":id")) {
@@ -157,13 +182,13 @@ void PrivilegeController::doUpdatePrivilege(const Pistache::Rest::Request& reque
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
       angru::mvc::model::PrivilegeModel::UpdatePrivilege(
-                                                  id, 
-                                                  security_role, 
-                                                  entity, 
-                                                  privilege_string, 
-                                                  updated_by, 
-                                                  status, 
-                                                  situation, 
+                                                  id,
+                                                  security_role,
+                                                  entity,
+                                                  privilege_string,
+                                                  updated_by,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Privileges updated.");
     }

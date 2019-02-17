@@ -11,6 +11,8 @@
 #include "wrappers/postgresql.h"
 #include "tools/security.h"
 #include "models/user_model.h"
+#include "models/privilege_model.h"
+
 
 namespace angru{
 namespace mvc{
@@ -74,6 +76,11 @@ void UserController::doGetUsers(const Pistache::Rest::Request& request,
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "users", GET_ITEMS);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
     int page = 1;
     std::string filter;
     auto query = request.query();
@@ -102,6 +109,11 @@ void UserController::doGetUser(const Pistache::Rest::Request& request,
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "users", GET_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
     std::string id = "";
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
@@ -125,6 +137,11 @@ void UserController::doDeleteUser(const Pistache::Rest::Request& request,
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "users", DELETE_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
     std::string deleted_by = user_id;
     std::string id = "";
     if (request.hasParam(":id")) {
@@ -140,6 +157,11 @@ void UserController::doAddUser(const Pistache::Rest::Request& request,
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "users", ADD_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
     auto body = request.body();
     std::string created_by = user_id;
     std::string	first_name;
@@ -203,6 +225,11 @@ void UserController::doUpdateUser(const Pistache::Rest::Request& request,
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "users", UPDATE_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
     std::string updated_by = user_id;
     std::string id = "";
     if (request.hasParam(":id")) {

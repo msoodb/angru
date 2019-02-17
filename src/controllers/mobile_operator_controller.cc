@@ -11,6 +11,8 @@
 #include "wrappers/postgresql.h"
 #include "tools/security.h"
 #include "models/mobile_operator_model.h"
+#include "models/privilege_model.h"
+
 
 namespace angru{
 namespace mvc{
@@ -24,6 +26,11 @@ void MobileOperatorController::doGetMobileOperators(const Pistache::Rest::Reques
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "mobile_operators", GET_ITEMS);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
     int page = 1;
     std::string filter;
     auto query = request.query();
@@ -52,6 +59,11 @@ void MobileOperatorController::doGetMobileOperator(const Pistache::Rest::Request
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "mobile_operators", GET_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
     std::string id = "";
     if (request.hasParam(":id")) {
         auto value = request.param(":id");
@@ -75,6 +87,11 @@ void MobileOperatorController::doDeleteMobileOperator(const Pistache::Rest::Requ
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "mobile_operators", DELETE_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
     std::string deleted_by = user_id;
     std::string id = "";
     if (request.hasParam(":id")) {
@@ -90,6 +107,11 @@ void MobileOperatorController::doAddMobileOperator(const Pistache::Rest::Request
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "mobile_operators", ADD_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
     auto body = request.body();
     std::string created_by = user_id;
     std::string	name;
@@ -118,15 +140,15 @@ void MobileOperatorController::doAddMobileOperator(const Pistache::Rest::Request
       description = pt.get<std::string>("description");
 
       angru::mvc::model::MobileOperatorModel::AddMobileOperator(
-                                                  name, 
-                                                  title, 
-                                                  code, 
-                                                  phone, 
-                                                  email, 
-                                                  created_by, 
-                                                  details, 
-                                                  status, 
-                                                  situation, 
+                                                  name,
+                                                  title,
+                                                  code,
+                                                  phone,
+                                                  email,
+                                                  created_by,
+                                                  details,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "MobileOperator added.");
     }
@@ -140,6 +162,11 @@ void MobileOperatorController::doUpdateMobileOperator(const Pistache::Rest::Requ
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "mobile_operators", UPDATE_ITEM);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
     std::string updated_by = user_id;
     std::string id = "";
     if (request.hasParam(":id")) {
@@ -172,16 +199,16 @@ void MobileOperatorController::doUpdateMobileOperator(const Pistache::Rest::Requ
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
       angru::mvc::model::MobileOperatorModel::UpdateMobileOperator(
-                                                  id, 
-                                                  name, 
-                                                  title, 
-                                                  code, 
-                                                  phone, 
-                                                  email, 
-                                                  updated_by, 
-                                                  details, 
-                                                  status, 
-                                                  situation, 
+                                                  id,
+                                                  name,
+                                                  title,
+                                                  code,
+                                                  phone,
+                                                  email,
+                                                  updated_by,
+                                                  details,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "MobileOperators updated.");
     }

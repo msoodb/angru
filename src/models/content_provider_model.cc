@@ -39,11 +39,14 @@ pqxx::result ContentProviderModel::GetContentProviders(int page, std::string que
 									      				code , \
 									      				phone , \
 									      				email , \
+(select username from users where id = main.created_by) as  created_by , \
+(select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
 									      				details , \
 									      				status , \
-									      				description  FROM content_providers where deleted_at is NULL ";
+									      				situation , \
+									      				description  FROM content_providers AS main where deleted_at is NULL ";
 	if(!query.empty())
 	{
 		complete_query += " AND ";
@@ -101,11 +104,14 @@ boost::property_tree::ptree ContentProviderModel::GetContentProvidersJson(int pa
 		content_provider_node.put("code", R[i][3]);
 		content_provider_node.put("phone", R[i][4]);
 		content_provider_node.put("email", R[i][5]);
-		content_provider_node.put("created_at", R[i][6]);
-		content_provider_node.put("updated_at", R[i][7]);
-		content_provider_node.put("details", R[i][8]);
-		content_provider_node.put("status", R[i][9]);
-		content_provider_node.put("description", R[i][10]);
+		content_provider_node.put("created_by", R[i][6]);
+		content_provider_node.put("updated_by", R[i][7]);
+		content_provider_node.put("created_at", R[i][8]);
+		content_provider_node.put("updated_at", R[i][9]);
+		content_provider_node.put("details", R[i][10]);
+		content_provider_node.put("status", R[i][11]);
+		content_provider_node.put("situation", R[i][12]);
+		content_provider_node.put("description", R[i][13]);
 		content_providers_node.push_back(std::make_pair("", content_provider_node));
 	}
 	info_node.put<int>("page", page);
@@ -118,7 +124,7 @@ boost::property_tree::ptree ContentProviderModel::GetContentProvidersJson(int pa
 	return result_node;
 }
 
-pqxx::result ContentProviderModel::GetContentProvider(int id){
+pqxx::result ContentProviderModel::GetContentProvider(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -139,17 +145,20 @@ pqxx::result ContentProviderModel::GetContentProvider(int id){
 									      				code , \
 									      				phone , \
 									      				email , \
+(select username from users where id = main.created_by) as  created_by , \
+(select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
 									      				details , \
 									      				status , \
-									      				description  FROM content_providers where id = $1 and deleted_at is NULL ");
+									      				situation , \
+									      				description  FROM content_providers AS main where id = $1 and deleted_at is NULL ");
   pqxx::result R = W.prepared("find")(id).exec();
 	W.commit();
 	return R;
 }
 
-boost::property_tree::ptree ContentProviderModel::GetContentProviderJson(int id){
+boost::property_tree::ptree ContentProviderModel::GetContentProviderJson(std::string id){
 	pqxx::result R = GetContentProvider(id);
 	boost::property_tree::ptree content_provider_node;
 
@@ -160,23 +169,28 @@ boost::property_tree::ptree ContentProviderModel::GetContentProviderJson(int id)
 		content_provider_node.put("code", R[0][3]);
 		content_provider_node.put("phone", R[0][4]);
 		content_provider_node.put("email", R[0][5]);
-		content_provider_node.put("created_at", R[0][6]);
-		content_provider_node.put("updated_at", R[0][7]);
-		content_provider_node.put("details", R[0][8]);
-		content_provider_node.put("status", R[0][9]);
-		content_provider_node.put("description", R[0][10]);
+		content_provider_node.put("created_by", R[0][6]);
+		content_provider_node.put("updated_by", R[0][7]);
+		content_provider_node.put("created_at", R[0][8]);
+		content_provider_node.put("updated_at", R[0][9]);
+		content_provider_node.put("details", R[0][10]);
+		content_provider_node.put("status", R[0][11]);
+		content_provider_node.put("situation", R[0][12]);
+		content_provider_node.put("description", R[0][13]);
 	}
 	return content_provider_node;
 }
 
 std::string ContentProviderModel::AddContentProvider(
-													std::string	name,
-													std::string	title,
-													std::string	code,
-													std::string	phone,
-													std::string	email,
-													std::string	details,
-													int	status,
+													std::string	name, 
+													std::string	title, 
+													std::string	code, 
+													std::string	phone, 
+													std::string	email, 
+													std::string	created_by, 
+													std::string	details, 
+													int	status, 
+													int	situation, 
 													std::string	description){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -198,11 +212,15 @@ std::string ContentProviderModel::AddContentProvider(
 													code, \
 													phone, \
 													email, \
+													created_by, \
+													deleted_by, \
+													updated_by, \
 													created_at, \
 													deleted_at, \
 													updated_at, \
 													details, \
 													status, \
+													situation, \
 													description	) VALUES (\
 												   DEFAULT, \
 												   $1, \
@@ -210,12 +228,16 @@ std::string ContentProviderModel::AddContentProvider(
 												   $3, \
 												   $4, \
 												   $5, \
+												   $6, \
+												   NULL, \
+												   NULL, \
 												   now(), \
 												   NULL, \
 												   NULL, \
-												   $6, \
 												   $7, \
-												   $8 ) RETURNING id");
+												   $8, \
+												   $9, \
+												   $10 ) RETURNING id");
 
   pqxx::result R = W.prepared("insert")
                  (name)
@@ -223,8 +245,10 @@ std::string ContentProviderModel::AddContentProvider(
                  (code)
                  (phone)
                  (email)
+                 (created_by)
                  (details)
                  (status)
+                 (situation)
                  (description)
          .exec();
   W.commit();
@@ -235,15 +259,17 @@ std::string ContentProviderModel::AddContentProvider(
 	return id;
 }
 
-void ContentProviderModel::UpdateContentProvider(
-													int	id,
+void ContentProviderModel::UpdateContentProvider( 
+													std::string	id,
 													std::string	name,
 													std::string	title,
 													std::string	code,
 													std::string	phone,
 													std::string	email,
+													std::string	updated_by,
 													std::string	details,
 													int	status,
+													int	situation,
 													std::string	description ){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -264,10 +290,12 @@ void ContentProviderModel::UpdateContentProvider(
 													code = $4, \
 													phone = $5, \
 													email = $6, \
+													updated_by = $7, \
 													updated_at = now(), \
-													details = $7, \
-													status = $8, \
-													description = $9	WHERE id = $1");
+													details = $8, \
+													status = $9, \
+													situation = $10, \
+													description = $11	WHERE id = $1");
 	W.prepared("update")
                  (id)
                  (name)
@@ -275,14 +303,16 @@ void ContentProviderModel::UpdateContentProvider(
                  (code)
                  (phone)
                  (email)
+                 (updated_by)
                  (details)
                  (status)
+                 (situation)
                  (description)
          .exec();
 	W.commit();
 }
 
-void ContentProviderModel::DeleteContentProvider(int id){
+void ContentProviderModel::DeleteContentProvider(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
