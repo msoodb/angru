@@ -23,6 +23,7 @@ public:
   static pqxx::result GetContentProvider(std::string id);
 	static boost::property_tree::ptree GetContentProviderJson(std::string id);
 	static std::string AddContentProvider(
+													std::string	admin,
 													std::string	name,
 													std::string	title,
 													std::string	code,
@@ -35,6 +36,7 @@ public:
 													std::string	description);
 	static void UpdateContentProvider(
 													std::string	id,
+													std::string	admin,
 													std::string	name,
 													std::string	title,
 													std::string	code,

@@ -114,6 +114,7 @@ void ContentProviderController::doAddContentProvider(const Pistache::Rest::Reque
     }
     auto body = request.body();
     std::string created_by = user_id;
+    std::string	admin;
     std::string	name;
     std::string	title;
     std::string	code;
@@ -129,6 +130,7 @@ void ContentProviderController::doAddContentProvider(const Pistache::Rest::Reque
       ss << body;
       boost::property_tree::ptree pt;
       boost::property_tree::read_json(ss, pt);
+      admin = pt.get<std::string>("admin");
       name = pt.get<std::string>("name");
       title = pt.get<std::string>("title");
       code = pt.get<std::string>("code");
@@ -140,6 +142,7 @@ void ContentProviderController::doAddContentProvider(const Pistache::Rest::Reque
       description = pt.get<std::string>("description");
 
       angru::mvc::model::ContentProviderModel::AddContentProvider(
+                                                  admin,
                                                   name,
                                                   title,
                                                   code,
@@ -174,6 +177,7 @@ void ContentProviderController::doUpdateContentProvider(const Pistache::Rest::Re
       id = value.as<std::string>();
     }
     auto body = request.body();
+    std::string	admin;
     std::string	name;
     std::string	title;
     std::string	code;
@@ -189,6 +193,7 @@ void ContentProviderController::doUpdateContentProvider(const Pistache::Rest::Re
       ss << body;
       boost::property_tree::ptree pt;
       boost::property_tree::read_json(ss, pt);
+      admin = pt.get<std::string>("admin");
       name = pt.get<std::string>("name");
       title = pt.get<std::string>("title");
       code = pt.get<std::string>("code");
@@ -200,6 +205,7 @@ void ContentProviderController::doUpdateContentProvider(const Pistache::Rest::Re
       description = pt.get<std::string>("description");
       angru::mvc::model::ContentProviderModel::UpdateContentProvider(
                                                   id,
+                                                  admin,
                                                   name,
                                                   title,
                                                   code,

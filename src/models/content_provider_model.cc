@@ -34,6 +34,7 @@ pqxx::result ContentProviderModel::GetContentProviders(int page, std::string que
 	pqxx::work W(C);
 	std::string complete_query = "SELECT \
 									      				id , \
+									      				admin , \
 									      				name , \
 									      				title , \
 									      				code , \
@@ -99,19 +100,20 @@ boost::property_tree::ptree ContentProviderModel::GetContentProvidersJson(int pa
 
 	for (size_t i = 0; i < R.size(); i++) {
 		content_provider_node.put("id", R[i][0]);
-		content_provider_node.put("name", R[i][1]);
-		content_provider_node.put("title", R[i][2]);
-		content_provider_node.put("code", R[i][3]);
-		content_provider_node.put("phone", R[i][4]);
-		content_provider_node.put("email", R[i][5]);
-		content_provider_node.put("created_by", R[i][6]);
-		content_provider_node.put("updated_by", R[i][7]);
-		content_provider_node.put("created_at", R[i][8]);
-		content_provider_node.put("updated_at", R[i][9]);
-		content_provider_node.put("details", R[i][10]);
-		content_provider_node.put("status", R[i][11]);
-		content_provider_node.put("situation", R[i][12]);
-		content_provider_node.put("description", R[i][13]);
+		content_provider_node.put("admin", R[i][1]);
+		content_provider_node.put("name", R[i][2]);
+		content_provider_node.put("title", R[i][3]);
+		content_provider_node.put("code", R[i][4]);
+		content_provider_node.put("phone", R[i][5]);
+		content_provider_node.put("email", R[i][6]);
+		content_provider_node.put("created_by", R[i][7]);
+		content_provider_node.put("updated_by", R[i][8]);
+		content_provider_node.put("created_at", R[i][9]);
+		content_provider_node.put("updated_at", R[i][10]);
+		content_provider_node.put("details", R[i][11]);
+		content_provider_node.put("status", R[i][12]);
+		content_provider_node.put("situation", R[i][13]);
+		content_provider_node.put("description", R[i][14]);
 		content_providers_node.push_back(std::make_pair("", content_provider_node));
 	}
 	info_node.put<int>("page", page);
@@ -140,6 +142,7 @@ pqxx::result ContentProviderModel::GetContentProvider(std::string id){
 	pqxx::work W(C);
   C.prepare("find", "SELECT \
 									      				id , \
+									      				admin , \
 									      				name , \
 									      				title , \
 									      				code , \
@@ -164,33 +167,35 @@ boost::property_tree::ptree ContentProviderModel::GetContentProviderJson(std::st
 
 	if(R.size() == 1){
 		content_provider_node.put("id", R[0][0]);
-		content_provider_node.put("name", R[0][1]);
-		content_provider_node.put("title", R[0][2]);
-		content_provider_node.put("code", R[0][3]);
-		content_provider_node.put("phone", R[0][4]);
-		content_provider_node.put("email", R[0][5]);
-		content_provider_node.put("created_by", R[0][6]);
-		content_provider_node.put("updated_by", R[0][7]);
-		content_provider_node.put("created_at", R[0][8]);
-		content_provider_node.put("updated_at", R[0][9]);
-		content_provider_node.put("details", R[0][10]);
-		content_provider_node.put("status", R[0][11]);
-		content_provider_node.put("situation", R[0][12]);
-		content_provider_node.put("description", R[0][13]);
+		content_provider_node.put("admin", R[0][1]);
+		content_provider_node.put("name", R[0][2]);
+		content_provider_node.put("title", R[0][3]);
+		content_provider_node.put("code", R[0][4]);
+		content_provider_node.put("phone", R[0][5]);
+		content_provider_node.put("email", R[0][6]);
+		content_provider_node.put("created_by", R[0][7]);
+		content_provider_node.put("updated_by", R[0][8]);
+		content_provider_node.put("created_at", R[0][9]);
+		content_provider_node.put("updated_at", R[0][10]);
+		content_provider_node.put("details", R[0][11]);
+		content_provider_node.put("status", R[0][12]);
+		content_provider_node.put("situation", R[0][13]);
+		content_provider_node.put("description", R[0][14]);
 	}
 	return content_provider_node;
 }
 
 std::string ContentProviderModel::AddContentProvider(
-													std::string	name, 
-													std::string	title, 
-													std::string	code, 
-													std::string	phone, 
-													std::string	email, 
-													std::string	created_by, 
-													std::string	details, 
-													int	status, 
-													int	situation, 
+													std::string	admin,
+													std::string	name,
+													std::string	title,
+													std::string	code,
+													std::string	phone,
+													std::string	email,
+													std::string	created_by,
+													std::string	details,
+													int	status,
+													int	situation,
 													std::string	description){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -207,6 +212,7 @@ std::string ContentProviderModel::AddContentProvider(
 	pqxx::work W(C);
 	C.prepare("insert", "INSERT INTO content_providers( \
 													id, \
+													admin, \
 													name, \
 													title, \
 													code, \
@@ -229,17 +235,19 @@ std::string ContentProviderModel::AddContentProvider(
 												   $4, \
 												   $5, \
 												   $6, \
+												   $7, \
 												   NULL, \
 												   NULL, \
 												   now(), \
 												   NULL, \
 												   NULL, \
-												   $7, \
 												   $8, \
 												   $9, \
-												   $10 ) RETURNING id");
+												   $10, \
+												   $11 ) RETURNING id");
 
   pqxx::result R = W.prepared("insert")
+                 (admin)
                  (name)
                  (title)
                  (code)
@@ -259,8 +267,9 @@ std::string ContentProviderModel::AddContentProvider(
 	return id;
 }
 
-void ContentProviderModel::UpdateContentProvider( 
+void ContentProviderModel::UpdateContentProvider(
 													std::string	id,
+													std::string	admin,
 													std::string	name,
 													std::string	title,
 													std::string	code,
@@ -285,19 +294,21 @@ void ContentProviderModel::UpdateContentProvider(
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	C.prepare("update", "UPDATE content_providers SET \
-													name = $2, \
-													title = $3, \
-													code = $4, \
-													phone = $5, \
-													email = $6, \
-													updated_by = $7, \
+													admin = $2, \
+													name = $3, \
+													title = $4, \
+													code = $5, \
+													phone = $6, \
+													email = $7, \
+													updated_by = $8, \
 													updated_at = now(), \
-													details = $8, \
-													status = $9, \
-													situation = $10, \
-													description = $11	WHERE id = $1");
+													details = $9, \
+													status = $10, \
+													situation = $11, \
+													description = $12	WHERE id = $1");
 	W.prepared("update")
                  (id)
+                 (admin)
                  (name)
                  (title)
                  (code)

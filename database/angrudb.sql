@@ -229,6 +229,12 @@ INSERT INTO public.entities(
     VALUES (DEFAULT, 'users_security_roles', 'users_security_roles', (select id from users where username='zeus'), NULL, NULL, NOW(), 
             NULL, NULL, 0, 1, 0, '');
 
+INSERT INTO public.entities(
+            id, name, title, created_by, deleted_by, updated_by, created_at, 
+            deleted_at, updated_at, type, status, situation, description)
+    VALUES (DEFAULT, 'content_providers', 'content_providers', (select id from users where username='zeus'), NULL, NULL, NOW(), 
+            NULL, NULL, 0, 1, 0, '');
+
 
 -- Table: public.privileges
 
@@ -351,6 +357,50 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE public.aggrigators
+  OWNER TO masoud;
+
+
+-- Table: public.content_providers
+
+-- DROP TABLE public.content_providers;
+
+CREATE TABLE public.content_providers
+(
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  admin uuid,
+  name character varying(255) NOT NULL,
+  title character varying(255),
+  code character varying(255),
+  phone character varying(255),
+  email character varying(255),
+  created_by uuid,
+  deleted_by uuid,
+  updated_by uuid,
+  created_at timestamp with time zone,
+  deleted_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  details json,
+  status integer NOT NULL,
+  situation integer NOT NULL,
+  description character varying,
+  CONSTRAINT content_providers_pkey PRIMARY KEY (id),
+  CONSTRAINT content_providers_admin_fkey FOREIGN KEY (admin)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT content_providers_created_by_fkey FOREIGN KEY (created_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT content_providers_deleted_by_fkey FOREIGN KEY (deleted_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT content_providers_updated_by_fkey FOREIGN KEY (updated_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.content_providers
   OWNER TO masoud;
 
 

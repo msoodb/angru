@@ -538,6 +538,7 @@ void controllerGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "#include \"wrappers/postgresql.h\"" << '\n';
   out_cc << "#include \"tools/security.h\"" << '\n';
   out_cc << "#include \"models/" << file_model_name << ".h\"" << '\n';
+  out_cc << "#include \"models/privilege_model.h\"" << '\n';
   out_cc << '\n';
   out_cc << "namespace angru{" << '\n';
   out_cc << "namespace mvc{" << '\n';
@@ -586,7 +587,7 @@ void controllerGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);" << '\n';
   out_cc << "    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, \"" << table_name_single << "s\", GET_ITEM);" << '\n';
   out_cc << "    if(!authorized){" << '\n';
-  out_cc << "      response.send(Pistache::Http::Code::Forbidden, \"{\"message\":\"Forbidden request.\"}\");" << '\n';
+  out_cc << "      response.send(Pistache::Http::Code::Forbidden, \"{\\\"message\\\":\\\"Forbidden request.\\\"}\");" << '\n';
   out_cc << "      return;" << '\n';
   out_cc << "    }" << '\n';
   out_cc << "    std::string id = \"\";" << '\n';
@@ -614,7 +615,7 @@ void controllerGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);" << '\n';
   out_cc << "    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, \"" << table_name_single << "s\", DELETE_ITEM);" << '\n';
   out_cc << "    if(!authorized){" << '\n';
-  out_cc << "      response.send(Pistache::Http::Code::Forbidden, \"{\"message\":\"Forbidden request.\"}\");" << '\n';
+  out_cc << "      response.send(Pistache::Http::Code::Forbidden, \"{\\\"message\\\":\\\"Forbidden request.\\\"}\");" << '\n';
   out_cc << "      return;" << '\n';
   out_cc << "    }" << '\n';
   out_cc << "    std::string deleted_by = user_id;" << '\n';
@@ -634,7 +635,7 @@ void controllerGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);" << '\n';
   out_cc << "    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, \"" << table_name_single << "s\", ADD_ITEM);" << '\n';
   out_cc << "    if(!authorized){" << '\n';
-  out_cc << "      response.send(Pistache::Http::Code::Forbidden, \"{\"message\":\"Forbidden request.\"}\");" << '\n';
+  out_cc << "      response.send(Pistache::Http::Code::Forbidden, \"{\\\"message\\\":\\\"Forbidden request.\\\"}\");" << '\n';
   out_cc << "      return;" << '\n';
   out_cc << "    }" << '\n';
   out_cc << "    auto body = request.body();" << '\n';
@@ -703,7 +704,7 @@ void controllerGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);" << '\n';
   out_cc << "    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, \"" << table_name_single << "s\", UPDATE_ITEM);" << '\n';
   out_cc << "    if(!authorized){" << '\n';
-  out_cc << "      response.send(Pistache::Http::Code::Forbidden, \"{\"message\":\"Forbidden request.\"}\");" << '\n';
+  out_cc << "      response.send(Pistache::Http::Code::Forbidden, \"{\\\"message\\\":\\\"Forbidden request.\\\"}\");" << '\n';
   out_cc << "      return;" << '\n';
   out_cc << "    }" << '\n';
   out_cc << "    std::string updated_by = user_id;" << '\n';
