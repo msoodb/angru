@@ -537,6 +537,90 @@ ALTER TABLE public.subscriptions
   OWNER TO masoud;
 
 
+-- Table: public.channels
+
+-- DROP TABLE public.channels;
+
+CREATE TABLE public.channels
+(
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),  
+  name character varying(255) NOT NULL,
+  title character varying(255),
+  service uuid NOT NULL,
+  parent uuid,
+  created_by uuid,
+  deleted_by uuid,
+  updated_by uuid,
+  created_at timestamp with time zone,
+  deleted_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  details json,
+  status integer NOT NULL,
+  situation integer NOT NULL,
+  description character varying,
+  CONSTRAINT channels_pkey PRIMARY KEY (id),
+  CONSTRAINT channels_service_fkey FOREIGN KEY (service)
+      REFERENCES public.services (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT channels_parent_fkey FOREIGN KEY (parent)
+      REFERENCES public.channels (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT channels_created_by_fkey FOREIGN KEY (created_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT channels_deleted_by_fkey FOREIGN KEY (deleted_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT channels_updated_by_fkey FOREIGN KEY (updated_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.channels
+  OWNER TO masoud;
+
+
+-- Table: public.playlists
+
+-- DROP TABLE public.playlists;
+
+CREATE TABLE public.playlists
+(
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),  
+  name character varying(255) NOT NULL,
+  title character varying(255),
+  channel uuid NOT NULL,
+  created_by uuid,
+  deleted_by uuid,
+  updated_by uuid,
+  created_at timestamp with time zone,
+  deleted_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  details json,
+  status integer NOT NULL,
+  situation integer NOT NULL,
+  description character varying,
+  CONSTRAINT playlists_pkey PRIMARY KEY (id),
+  CONSTRAINT playlists_channel_fkey FOREIGN KEY (channel)
+      REFERENCES public.channels (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,  
+  CONSTRAINT playlists_created_by_fkey FOREIGN KEY (created_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT playlists_deleted_by_fkey FOREIGN KEY (deleted_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT playlists_updated_by_fkey FOREIGN KEY (updated_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.playlists
+  OWNER TO masoud;
 
 
 
