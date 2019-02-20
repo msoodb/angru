@@ -12,24 +12,24 @@ namespace angru{
 namespace mvc{
 namespace model{
 
-class SecurityRolesModel
+class SecurityRoleModel
 {
 public:
-	SecurityRolesModel();
-	~SecurityRolesModel();
-	static pqxx::result GetSecurityRoless(int page=1, std::string query="");
-	static int GetSecurityRolessCount(std::string query="");
-	static boost::property_tree::ptree GetSecurityRolessJson(int page=1, std::string query="");
-  static pqxx::result GetSecurityRoles(std::string id);
-	static boost::property_tree::ptree GetSecurityRolesJson(std::string id);
-	static std::string AddSecurityRoles(
+	SecurityRoleModel();
+	~SecurityRoleModel();
+	static pqxx::result GetSecurityRoles(int page=1, std::string query="");
+	static int GetSecurityRolesCount(std::string query="");
+	static boost::property_tree::ptree GetSecurityRolesJson(int page=1, std::string query="");
+  static pqxx::result GetSecurityRole(std::string id);
+	static boost::property_tree::ptree GetSecurityRoleJson(std::string id);
+	static std::string AddSecurityRole(
 													std::string	name,
 													std::string	title,
 													std::string	created_by,
 													int	status,
 													int	situation,
 													std::string	description);
-	static void UpdateSecurityRoles(
+	static void UpdateSecurityRole(
 													std::string	id,
 													std::string	name,
 													std::string	title,
@@ -37,7 +37,7 @@ public:
 													int	status,
 													int	situation,
 													std::string	description);
-	static void DeleteSecurityRoles(std::string id);
+	static void DeleteSecurityRole(std::string id);
 };
 
 } // model

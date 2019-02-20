@@ -15,16 +15,16 @@ namespace angru{
 namespace mvc{
 namespace controller{
 
-class SecurityRolesController
+class SecurityRoleController
 {
 public:
-	SecurityRolesController();
-	~SecurityRolesController();
-	static void	doGetSecurityRoless(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+	SecurityRoleController();
+	~SecurityRoleController();
 	static void	doGetSecurityRoles(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
-  static void	doDeleteSecurityRoles(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
-	static void	doAddSecurityRoles(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
-	static void	doUpdateSecurityRoles(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+	static void	doGetSecurityRole(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+  static void	doDeleteSecurityRole(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+	static void	doAddSecurityRole(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+	static void	doUpdateSecurityRole(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 };
 
 } // model

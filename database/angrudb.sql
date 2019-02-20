@@ -457,6 +457,86 @@ ALTER TABLE public.services
   OWNER TO masoud;
 
 
+-- Table: public.members
+
+-- DROP TABLE public.members;
+
+CREATE TABLE public.members
+(
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),  
+  phone character varying(255),
+  created_by uuid,
+  deleted_by uuid,
+  updated_by uuid,
+  created_at timestamp with time zone,
+  deleted_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  details json,
+  status integer NOT NULL,
+  situation integer NOT NULL,
+  description character varying,
+  CONSTRAINT members_pkey PRIMARY KEY (id),
+  CONSTRAINT members_created_by_fkey FOREIGN KEY (created_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT members_deleted_by_fkey FOREIGN KEY (deleted_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT members_updated_by_fkey FOREIGN KEY (updated_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.members
+  OWNER TO masoud;
+
+
+-- Table: public.subscriptions
+
+-- DROP TABLE public.subscriptions;
+
+CREATE TABLE public.subscriptions
+(
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),  
+  member uuid NOT NULL,
+  service uuid NOT NULL,
+  last_login timestamp with time zone,
+  created_by uuid,
+  deleted_by uuid,
+  updated_by uuid,
+  created_at timestamp with time zone,
+  deleted_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  details json,
+  status integer NOT NULL,
+  situation integer NOT NULL,
+  description character varying,
+  CONSTRAINT subscriptions_pkey PRIMARY KEY (id),
+  CONSTRAINT subscriptions_member_fkey FOREIGN KEY (member)
+      REFERENCES public.members (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT subscriptions_service_fkey FOREIGN KEY (service)
+      REFERENCES public.services (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT subscriptions_created_by_fkey FOREIGN KEY (created_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT subscriptions_deleted_by_fkey FOREIGN KEY (deleted_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT subscriptions_updated_by_fkey FOREIGN KEY (updated_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.subscriptions
+  OWNER TO masoud;
+
+
 
 
 

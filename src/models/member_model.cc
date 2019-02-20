@@ -1,4 +1,4 @@
-#include "models/security_role_model.h"
+#include "models/member_model.h"
 
 #include <iostream>
 #include <string>
@@ -15,10 +15,10 @@ namespace angru{
 namespace mvc{
 namespace model{
 
-SecurityRoleModel::SecurityRoleModel(){}
-SecurityRoleModel::~SecurityRoleModel(){}
+MemberModel::MemberModel(){}
+MemberModel::~MemberModel(){}
 
-pqxx::result SecurityRoleModel::GetSecurityRoles(int page, std::string query){
+pqxx::result MemberModel::GetMembers(int page, std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -34,15 +34,15 @@ pqxx::result SecurityRoleModel::GetSecurityRoles(int page, std::string query){
 	pqxx::work W(C);
 	std::string complete_query = "SELECT \
 									      				id , \
-									      				name , \
-									      				title , \
+									      				phone , \
 (select username from users where id = main.created_by) as  created_by , \
 (select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
+									      				details , \
 									      				status , \
 									      				situation , \
-									      				description  FROM security_roles AS main where deleted_at is NULL ";
+									      				description  FROM members AS main where deleted_at is NULL ";
 	if(!query.empty())
 	{
 		complete_query += " AND ";
@@ -57,7 +57,7 @@ pqxx::result SecurityRoleModel::GetSecurityRoles(int page, std::string query){
 	return R;
 }
 
-int SecurityRoleModel::GetSecurityRolesCount(std::string query){
+int MemberModel::GetMembersCount(std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -71,7 +71,7 @@ int SecurityRoleModel::GetSecurityRolesCount(std::string query){
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	std::string complete_query = "SELECT count(id) FROM security_roles where deleted_at is NULL ";
+	std::string complete_query = "SELECT count(id) FROM members where deleted_at is NULL ";
 	if(!query.empty())
 	{
 		complete_query += " AND ";
@@ -83,28 +83,28 @@ int SecurityRoleModel::GetSecurityRolesCount(std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree SecurityRoleModel::GetSecurityRolesJson(int page, std::string query){
-	pqxx::result R = GetSecurityRoles(page, query);
-	int result_count = GetSecurityRolesCount(query);
+boost::property_tree::ptree MemberModel::GetMembersJson(int page, std::string query){
+	pqxx::result R = GetMembers(page, query);
+	int result_count = GetMembersCount(query);
 	int pageCount = (result_count / OFFSET_COUNT) + 1;
 
 	boost::property_tree::ptree result_node;
 	boost::property_tree::ptree info_node;
-	boost::property_tree::ptree security_role_node;
-	boost::property_tree::ptree security_roles_node;
+	boost::property_tree::ptree member_node;
+	boost::property_tree::ptree members_node;
 
 	for (size_t i = 0; i < R.size(); i++) {
-		security_role_node.put("id", R[i][0]);
-		security_role_node.put("name", R[i][1]);
-		security_role_node.put("title", R[i][2]);
-		security_role_node.put("created_by", R[i][3]);
-		security_role_node.put("updated_by", R[i][4]);
-		security_role_node.put("created_at", R[i][5]);
-		security_role_node.put("updated_at", R[i][6]);
-		security_role_node.put("status", R[i][7]);
-		security_role_node.put("situation", R[i][8]);
-		security_role_node.put("description", R[i][9]);
-		security_roles_node.push_back(std::make_pair("", security_role_node));
+		member_node.put("id", R[i][0]);
+		member_node.put("phone", R[i][1]);
+		member_node.put("created_by", R[i][2]);
+		member_node.put("updated_by", R[i][3]);
+		member_node.put("created_at", R[i][4]);
+		member_node.put("updated_at", R[i][5]);
+		member_node.put("details", R[i][6]);
+		member_node.put("status", R[i][7]);
+		member_node.put("situation", R[i][8]);
+		member_node.put("description", R[i][9]);
+		members_node.push_back(std::make_pair("", member_node));
 	}
 	info_node.put<int>("page", page);
 	info_node.put<int>("offset", OFFSET_COUNT);
@@ -112,11 +112,11 @@ boost::property_tree::ptree SecurityRoleModel::GetSecurityRolesJson(int page, st
 	info_node.put<int>("result_count", result_count);
 
 	result_node.add_child("info", info_node);
-	result_node.add_child("items", security_roles_node);
+	result_node.add_child("items", members_node);
 	return result_node;
 }
 
-pqxx::result SecurityRoleModel::GetSecurityRole(std::string id){
+pqxx::result MemberModel::GetMember(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -132,43 +132,43 @@ pqxx::result SecurityRoleModel::GetSecurityRole(std::string id){
 	pqxx::work W(C);
   C.prepare("find", "SELECT \
 									      				id , \
-									      				name , \
-									      				title , \
+									      				phone , \
 (select username from users where id = main.created_by) as  created_by , \
 (select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
+									      				details , \
 									      				status , \
 									      				situation , \
-									      				description  FROM security_roles AS main where id = $1 and deleted_at is NULL ");
+									      				description  FROM members AS main where id = $1 and deleted_at is NULL ");
   pqxx::result R = W.prepared("find")(id).exec();
 	W.commit();
 	return R;
 }
 
-boost::property_tree::ptree SecurityRoleModel::GetSecurityRoleJson(std::string id){
-	pqxx::result R = GetSecurityRole(id);
-	boost::property_tree::ptree security_role_node;
+boost::property_tree::ptree MemberModel::GetMemberJson(std::string id){
+	pqxx::result R = GetMember(id);
+	boost::property_tree::ptree member_node;
 
 	if(R.size() == 1){
-		security_role_node.put("id", R[0][0]);
-		security_role_node.put("name", R[0][1]);
-		security_role_node.put("title", R[0][2]);
-		security_role_node.put("created_by", R[0][3]);
-		security_role_node.put("updated_by", R[0][4]);
-		security_role_node.put("created_at", R[0][5]);
-		security_role_node.put("updated_at", R[0][6]);
-		security_role_node.put("status", R[0][7]);
-		security_role_node.put("situation", R[0][8]);
-		security_role_node.put("description", R[0][9]);
+		member_node.put("id", R[0][0]);
+		member_node.put("phone", R[0][1]);
+		member_node.put("created_by", R[0][2]);
+		member_node.put("updated_by", R[0][3]);
+		member_node.put("created_at", R[0][4]);
+		member_node.put("updated_at", R[0][5]);
+		member_node.put("details", R[0][6]);
+		member_node.put("status", R[0][7]);
+		member_node.put("situation", R[0][8]);
+		member_node.put("description", R[0][9]);
 	}
-	return security_role_node;
+	return member_node;
 }
 
-std::string SecurityRoleModel::AddSecurityRole(
-													std::string	name, 
-													std::string	title, 
+std::string MemberModel::AddMember(
+													std::string	phone, 
 													std::string	created_by, 
+													std::string	details, 
 													int	status, 
 													int	situation, 
 													std::string	description){
@@ -185,36 +185,36 @@ std::string SecurityRoleModel::AddSecurityRole(
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	C.prepare("insert", "INSERT INTO security_roles( \
+	C.prepare("insert", "INSERT INTO members( \
 													id, \
-													name, \
-													title, \
+													phone, \
 													created_by, \
 													deleted_by, \
 													updated_by, \
 													created_at, \
 													deleted_at, \
 													updated_at, \
+													details, \
 													status, \
 													situation, \
 													description	) VALUES (\
 												   DEFAULT, \
 												   $1, \
 												   $2, \
-												   $3, \
 												   NULL, \
 												   NULL, \
 												   now(), \
 												   NULL, \
 												   NULL, \
+												   $3, \
 												   $4, \
 												   $5, \
 												   $6 ) RETURNING id");
 
   pqxx::result R = W.prepared("insert")
-                 (name)
-                 (title)
+                 (phone)
                  (created_by)
+                 (details)
                  (status)
                  (situation)
                  (description)
@@ -227,11 +227,11 @@ std::string SecurityRoleModel::AddSecurityRole(
 	return id;
 }
 
-void SecurityRoleModel::UpdateSecurityRole( 
+void MemberModel::UpdateMember( 
 													std::string	id,
-													std::string	name,
-													std::string	title,
+													std::string	phone,
 													std::string	updated_by,
+													std::string	details,
 													int	status,
 													int	situation,
 													std::string	description ){
@@ -248,19 +248,19 @@ void SecurityRoleModel::UpdateSecurityRole(
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	C.prepare("update", "UPDATE security_roles SET \
-													name = $2, \
-													title = $3, \
-													updated_by = $4, \
+	C.prepare("update", "UPDATE members SET \
+													phone = $2, \
+													updated_by = $3, \
 													updated_at = now(), \
+													details = $4, \
 													status = $5, \
 													situation = $6, \
 													description = $7	WHERE id = $1");
 	W.prepared("update")
                  (id)
-                 (name)
-                 (title)
+                 (phone)
                  (updated_by)
+                 (details)
                  (status)
                  (situation)
                  (description)
@@ -268,7 +268,7 @@ void SecurityRoleModel::UpdateSecurityRole(
 	W.commit();
 }
 
-void SecurityRoleModel::DeleteSecurityRole(std::string id){
+void MemberModel::DeleteMember(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -282,7 +282,7 @@ void SecurityRoleModel::DeleteSecurityRole(std::string id){
 	 }
 	 LOG_INFO << "Connected to database: " << C.dbname();
 	 pqxx::work W(C);
-	 C.prepare("update", "UPDATE security_roles SET \
+	 C.prepare("update", "UPDATE members SET \
 												deleted_at = now()  \
 												WHERE id = $1");
    W.prepared("update")(id).exec();

@@ -1,4 +1,4 @@
-#include "models/security_role_model.h"
+#include "models/subscription_model.h"
 
 #include <iostream>
 #include <string>
@@ -15,10 +15,10 @@ namespace angru{
 namespace mvc{
 namespace model{
 
-SecurityRoleModel::SecurityRoleModel(){}
-SecurityRoleModel::~SecurityRoleModel(){}
+SubscriptionModel::SubscriptionModel(){}
+SubscriptionModel::~SubscriptionModel(){}
 
-pqxx::result SecurityRoleModel::GetSecurityRoles(int page, std::string query){
+pqxx::result SubscriptionModel::GetSubscriptions(int page, std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -34,15 +34,17 @@ pqxx::result SecurityRoleModel::GetSecurityRoles(int page, std::string query){
 	pqxx::work W(C);
 	std::string complete_query = "SELECT \
 									      				id , \
-									      				name , \
-									      				title , \
-(select username from users where id = main.created_by) as  created_by , \
-(select username from users where id = main.updated_by) as  updated_by , \
+									      				(select phone from members where id = main.member) as member , \
+									      				(select name from services where id = main.service) as service , \
+									      				last_login , \
+																(select username from users where id = main.created_by) as  created_by , \
+																(select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
+									      				details , \
 									      				status , \
 									      				situation , \
-									      				description  FROM security_roles AS main where deleted_at is NULL ";
+									      				description  FROM subscriptions AS main where deleted_at is NULL ";
 	if(!query.empty())
 	{
 		complete_query += " AND ";
@@ -57,7 +59,7 @@ pqxx::result SecurityRoleModel::GetSecurityRoles(int page, std::string query){
 	return R;
 }
 
-int SecurityRoleModel::GetSecurityRolesCount(std::string query){
+int SubscriptionModel::GetSubscriptionsCount(std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -71,7 +73,7 @@ int SecurityRoleModel::GetSecurityRolesCount(std::string query){
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	std::string complete_query = "SELECT count(id) FROM security_roles where deleted_at is NULL ";
+	std::string complete_query = "SELECT count(id) FROM subscriptions where deleted_at is NULL ";
 	if(!query.empty())
 	{
 		complete_query += " AND ";
@@ -83,28 +85,30 @@ int SecurityRoleModel::GetSecurityRolesCount(std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree SecurityRoleModel::GetSecurityRolesJson(int page, std::string query){
-	pqxx::result R = GetSecurityRoles(page, query);
-	int result_count = GetSecurityRolesCount(query);
+boost::property_tree::ptree SubscriptionModel::GetSubscriptionsJson(int page, std::string query){
+	pqxx::result R = GetSubscriptions(page, query);
+	int result_count = GetSubscriptionsCount(query);
 	int pageCount = (result_count / OFFSET_COUNT) + 1;
 
 	boost::property_tree::ptree result_node;
 	boost::property_tree::ptree info_node;
-	boost::property_tree::ptree security_role_node;
-	boost::property_tree::ptree security_roles_node;
+	boost::property_tree::ptree subscription_node;
+	boost::property_tree::ptree subscriptions_node;
 
 	for (size_t i = 0; i < R.size(); i++) {
-		security_role_node.put("id", R[i][0]);
-		security_role_node.put("name", R[i][1]);
-		security_role_node.put("title", R[i][2]);
-		security_role_node.put("created_by", R[i][3]);
-		security_role_node.put("updated_by", R[i][4]);
-		security_role_node.put("created_at", R[i][5]);
-		security_role_node.put("updated_at", R[i][6]);
-		security_role_node.put("status", R[i][7]);
-		security_role_node.put("situation", R[i][8]);
-		security_role_node.put("description", R[i][9]);
-		security_roles_node.push_back(std::make_pair("", security_role_node));
+		subscription_node.put("id", R[i][0]);
+		subscription_node.put("member", R[i][1]);
+		subscription_node.put("service", R[i][2]);
+		subscription_node.put("last_login", R[i][3]);
+		subscription_node.put("created_by", R[i][4]);
+		subscription_node.put("updated_by", R[i][5]);
+		subscription_node.put("created_at", R[i][6]);
+		subscription_node.put("updated_at", R[i][7]);
+		subscription_node.put("details", R[i][8]);
+		subscription_node.put("status", R[i][9]);
+		subscription_node.put("situation", R[i][10]);
+		subscription_node.put("description", R[i][11]);
+		subscriptions_node.push_back(std::make_pair("", subscription_node));
 	}
 	info_node.put<int>("page", page);
 	info_node.put<int>("offset", OFFSET_COUNT);
@@ -112,11 +116,11 @@ boost::property_tree::ptree SecurityRoleModel::GetSecurityRolesJson(int page, st
 	info_node.put<int>("result_count", result_count);
 
 	result_node.add_child("info", info_node);
-	result_node.add_child("items", security_roles_node);
+	result_node.add_child("items", subscriptions_node);
 	return result_node;
 }
 
-pqxx::result SecurityRoleModel::GetSecurityRole(std::string id){
+pqxx::result SubscriptionModel::GetSubscription(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -132,45 +136,51 @@ pqxx::result SecurityRoleModel::GetSecurityRole(std::string id){
 	pqxx::work W(C);
   C.prepare("find", "SELECT \
 									      				id , \
-									      				name , \
-									      				title , \
+									      				member , \
+									      				service , \
+									      				last_login , \
 (select username from users where id = main.created_by) as  created_by , \
 (select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
+									      				details , \
 									      				status , \
 									      				situation , \
-									      				description  FROM security_roles AS main where id = $1 and deleted_at is NULL ");
+									      				description  FROM subscriptions AS main where id = $1 and deleted_at is NULL ");
   pqxx::result R = W.prepared("find")(id).exec();
 	W.commit();
 	return R;
 }
 
-boost::property_tree::ptree SecurityRoleModel::GetSecurityRoleJson(std::string id){
-	pqxx::result R = GetSecurityRole(id);
-	boost::property_tree::ptree security_role_node;
+boost::property_tree::ptree SubscriptionModel::GetSubscriptionJson(std::string id){
+	pqxx::result R = GetSubscription(id);
+	boost::property_tree::ptree subscription_node;
 
 	if(R.size() == 1){
-		security_role_node.put("id", R[0][0]);
-		security_role_node.put("name", R[0][1]);
-		security_role_node.put("title", R[0][2]);
-		security_role_node.put("created_by", R[0][3]);
-		security_role_node.put("updated_by", R[0][4]);
-		security_role_node.put("created_at", R[0][5]);
-		security_role_node.put("updated_at", R[0][6]);
-		security_role_node.put("status", R[0][7]);
-		security_role_node.put("situation", R[0][8]);
-		security_role_node.put("description", R[0][9]);
+		subscription_node.put("id", R[0][0]);
+		subscription_node.put("member", R[0][1]);
+		subscription_node.put("service", R[0][2]);
+		subscription_node.put("last_login", R[0][3]);
+		subscription_node.put("created_by", R[0][4]);
+		subscription_node.put("updated_by", R[0][5]);
+		subscription_node.put("created_at", R[0][6]);
+		subscription_node.put("updated_at", R[0][7]);
+		subscription_node.put("details", R[0][8]);
+		subscription_node.put("status", R[0][9]);
+		subscription_node.put("situation", R[0][10]);
+		subscription_node.put("description", R[0][11]);
 	}
-	return security_role_node;
+	return subscription_node;
 }
 
-std::string SecurityRoleModel::AddSecurityRole(
-													std::string	name, 
-													std::string	title, 
-													std::string	created_by, 
-													int	status, 
-													int	situation, 
+std::string SubscriptionModel::AddSubscription(
+													std::string	member,
+													std::string	service,
+													std::string	last_login,
+													std::string	created_by,
+													std::string	details,
+													int	status,
+													int	situation,
 													std::string	description){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -185,16 +195,18 @@ std::string SecurityRoleModel::AddSecurityRole(
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	C.prepare("insert", "INSERT INTO security_roles( \
+	C.prepare("insert", "INSERT INTO subscriptions( \
 													id, \
-													name, \
-													title, \
+													member, \
+													service, \
+													last_login, \
 													created_by, \
 													deleted_by, \
 													updated_by, \
 													created_at, \
 													deleted_at, \
 													updated_at, \
+													details, \
 													status, \
 													situation, \
 													description	) VALUES (\
@@ -202,19 +214,23 @@ std::string SecurityRoleModel::AddSecurityRole(
 												   $1, \
 												   $2, \
 												   $3, \
+												   $4, \
 												   NULL, \
 												   NULL, \
 												   now(), \
 												   NULL, \
 												   NULL, \
-												   $4, \
 												   $5, \
-												   $6 ) RETURNING id");
+												   $6, \
+												   $7, \
+												   $8 ) RETURNING id");
 
   pqxx::result R = W.prepared("insert")
-                 (name)
-                 (title)
+                 (member)
+                 (service)
+                 (last_login)
                  (created_by)
+                 (details)
                  (status)
                  (situation)
                  (description)
@@ -227,11 +243,13 @@ std::string SecurityRoleModel::AddSecurityRole(
 	return id;
 }
 
-void SecurityRoleModel::UpdateSecurityRole( 
+void SubscriptionModel::UpdateSubscription(
 													std::string	id,
-													std::string	name,
-													std::string	title,
+													std::string	member,
+													std::string	service,
+													std::string	last_login,
 													std::string	updated_by,
+													std::string	details,
 													int	status,
 													int	situation,
 													std::string	description ){
@@ -248,19 +266,23 @@ void SecurityRoleModel::UpdateSecurityRole(
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	C.prepare("update", "UPDATE security_roles SET \
-													name = $2, \
-													title = $3, \
-													updated_by = $4, \
+	C.prepare("update", "UPDATE subscriptions SET \
+													member = $2, \
+													service = $3, \
+													last_login = $4, \
+													updated_by = $5, \
 													updated_at = now(), \
-													status = $5, \
-													situation = $6, \
-													description = $7	WHERE id = $1");
+													details = $6, \
+													status = $7, \
+													situation = $8, \
+													description = $9	WHERE id = $1");
 	W.prepared("update")
                  (id)
-                 (name)
-                 (title)
+                 (member)
+                 (service)
+                 (last_login)
                  (updated_by)
+                 (details)
                  (status)
                  (situation)
                  (description)
@@ -268,7 +290,7 @@ void SecurityRoleModel::UpdateSecurityRole(
 	W.commit();
 }
 
-void SecurityRoleModel::DeleteSecurityRole(std::string id){
+void SubscriptionModel::DeleteSubscription(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -282,7 +304,7 @@ void SecurityRoleModel::DeleteSecurityRole(std::string id){
 	 }
 	 LOG_INFO << "Connected to database: " << C.dbname();
 	 pqxx::work W(C);
-	 C.prepare("update", "UPDATE security_roles SET \
+	 C.prepare("update", "UPDATE subscriptions SET \
 												deleted_at = now()  \
 												WHERE id = $1");
    W.prepared("update")(id).exec();

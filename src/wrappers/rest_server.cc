@@ -21,6 +21,8 @@
 #include "controllers/product_document_controller.h"
 #include "controllers/user_controller.h"
 #include "controllers/service_controller.h"
+#include "controllers/member_controller.h"
+#include "controllers/subscription_controller.h"
 
 namespace angru{
 namespace wrapper{
@@ -116,17 +118,30 @@ void RestServer::SetupRoutes() {
   Post(router, "/privileges", bind(&PrivilegeController::doAddPrivilege));
 	Put(router, "/privileges/:id", bind(&PrivilegeController::doUpdatePrivilege));
 
-  Get(router, "/security_roles", bind(&SecurityRolesController::doGetSecurityRoless));
-	Get(router, "/security_roles/:id", bind(&SecurityRolesController::doGetSecurityRoles));
-	Delete(router, "/security_roles/:id", bind(&SecurityRolesController::doDeleteSecurityRoles));
-  Post(router, "/security_roles", bind(&SecurityRolesController::doAddSecurityRoles));
-	Put(router, "/security_roles/:id", bind(&SecurityRolesController::doUpdateSecurityRoles));
+  Get(router, "/security_roles", bind(&SecurityRoleController::doGetSecurityRoles));
+	Get(router, "/security_roles/:id", bind(&SecurityRoleController::doGetSecurityRole));
+	Delete(router, "/security_roles/:id", bind(&SecurityRoleController::doDeleteSecurityRole));
+  Post(router, "/security_roles", bind(&SecurityRoleController::doAddSecurityRole));
+	Put(router, "/security_roles/:id", bind(&SecurityRoleController::doUpdateSecurityRole));
 
   Get(router, "/users_security_roles", bind(&UsersSecurityRoleController::doGetUsersSecurityRoles));
 	Get(router, "/users_security_roles/:id", bind(&UsersSecurityRoleController::doGetUsersSecurityRole));
 	Delete(router, "/users_security_roles/:id", bind(&UsersSecurityRoleController::doDeleteUsersSecurityRole));
   Post(router, "/users_security_roles", bind(&UsersSecurityRoleController::doAddUsersSecurityRole));
 	Put(router, "/users_security_roles/:id", bind(&UsersSecurityRoleController::doUpdateUsersSecurityRole));
+
+  Get(router, "/subscriptions", bind(&SubscriptionController::doGetSubscriptions));
+  Get(router, "/subscriptions/:id", bind(&SubscriptionController::doGetSubscription));
+  Delete(router, "/subscriptions/:id", bind(&SubscriptionController::doDeleteSubscription));
+  Post(router, "/subscriptions", bind(&SubscriptionController::doAddSubscription));
+  Put(router, "/subscriptions/:id", bind(&SubscriptionController::doUpdateSubscription));
+
+  Get(router, "/members", bind(&MemberController::doGetMembers));
+  Get(router, "/members/:id", bind(&MemberController::doGetMember));
+  Delete(router, "/members/:id", bind(&MemberController::doDeleteMember));
+  Post(router, "/members", bind(&MemberController::doAddMember));
+  Put(router, "/members/:id", bind(&MemberController::doUpdateMember));  
+
 }
 
 void RestServer::PrintCookies(const Pistache::Http::Request& req) {
