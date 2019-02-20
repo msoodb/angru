@@ -20,6 +20,7 @@
 #include "controllers/product_controller.h"
 #include "controllers/product_document_controller.h"
 #include "controllers/user_controller.h"
+#include "controllers/service_controller.h"
 
 namespace angru{
 namespace wrapper{
@@ -75,6 +76,12 @@ void RestServer::SetupRoutes() {
 	Delete(router, "/content_providers/:id", bind(&ContentProviderController::doDeleteContentProvider));
   Post(router, "/content_providers", bind(&ContentProviderController::doAddContentProvider));
 	Put(router, "/content_providers/:id", bind(&ContentProviderController::doUpdateContentProvider));
+
+  Get(router, "/services", bind(&ServiceController::doGetServices));
+  Get(router, "/services/:id", bind(&ServiceController::doGetService));
+  Delete(router, "/services/:id", bind(&ServiceController::doDeleteService));
+  Post(router, "/services", bind(&ServiceController::doAddService));
+  Put(router, "/services/:id", bind(&ServiceController::doUpdateService));
 
   Get(router, "/products", bind(&ProductController::doGetProducts));
   Get(router, "/products/:id", bind(&ProductController::doGetProduct));

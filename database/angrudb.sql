@@ -405,6 +405,59 @@ ALTER TABLE public.content_providers
 
 
 
+-- Table: public.services
+
+-- DROP TABLE public.services;
+
+CREATE TABLE public.services
+(
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  pendar uuid,
+  mobile_operator uuid,
+  aggrigator uuid,
+  content_provider uuid,
+  name character varying(255) NOT NULL,
+  title character varying(255),
+  code character varying(255),
+  created_by uuid,
+  deleted_by uuid,
+  updated_by uuid,
+  created_at timestamp with time zone,
+  deleted_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  details json,
+  status integer NOT NULL,
+  situation integer NOT NULL,
+  description character varying,
+  CONSTRAINT services_pkey PRIMARY KEY (id),
+  CONSTRAINT services_mobile_operator_fkey FOREIGN KEY (mobile_operator)
+      REFERENCES public.mobile_operators (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT services_aggrigator_fkey FOREIGN KEY (aggrigator)
+      REFERENCES public.aggrigators (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT services_content_provider_fkey FOREIGN KEY (content_provider)
+      REFERENCES public.content_providers (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT services_created_by_fkey FOREIGN KEY (created_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT services_deleted_by_fkey FOREIGN KEY (deleted_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT services_updated_by_fkey FOREIGN KEY (updated_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT services_ukey_pendar UNIQUE (pendar)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.services
+  OWNER TO masoud;
+
+
+
 
 
 
