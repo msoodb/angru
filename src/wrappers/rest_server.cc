@@ -23,6 +23,8 @@
 #include "controllers/service_controller.h"
 #include "controllers/member_controller.h"
 #include "controllers/subscription_controller.h"
+#include "controllers/playlist_controller.h"
+#include "controllers/channel_controller.h"
 
 namespace angru{
 namespace wrapper{
@@ -140,8 +142,19 @@ void RestServer::SetupRoutes() {
   Get(router, "/members/:id", bind(&MemberController::doGetMember));
   Delete(router, "/members/:id", bind(&MemberController::doDeleteMember));
   Post(router, "/members", bind(&MemberController::doAddMember));
-  Put(router, "/members/:id", bind(&MemberController::doUpdateMember));  
+  Put(router, "/members/:id", bind(&MemberController::doUpdateMember));
 
+  Get(router, "/channels", bind(&ChannelController::doGetChannels));
+	Get(router, "/channels/:id", bind(&ChannelController::doGetChannel));
+	Delete(router, "/channels/:id", bind(&ChannelController::doDeleteChannel));
+  Post(router, "/channels", bind(&ChannelController::doAddChannel));
+	Put(router, "/channels/:id", bind(&ChannelController::doUpdateChannel));
+
+  Get(router, "/playlists", bind(&PlaylistController::doGetPlaylists));
+	Get(router, "/playlists/:id", bind(&PlaylistController::doGetPlaylist));
+	Delete(router, "/playlists/:id", bind(&PlaylistController::doDeletePlaylist));
+  Post(router, "/playlists", bind(&PlaylistController::doAddPlaylist));
+	Put(router, "/playlists/:id", bind(&PlaylistController::doUpdatePlaylist));
 }
 
 void RestServer::PrintCookies(const Pistache::Http::Request& req) {
