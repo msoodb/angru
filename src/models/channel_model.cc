@@ -142,8 +142,8 @@ pqxx::result ChannelModel::GetChannel(std::string id){
 									      				title , \
 									      				service , \
 									      				parent , \
-(select username from users where id = main.created_by) as  created_by , \
-(select username from users where id = main.updated_by) as  updated_by , \
+																(select username from users where id = main.created_by) as  created_by , \
+																(select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
 									      				details , \
@@ -220,7 +220,7 @@ std::string ChannelModel::AddChannel(
 												   $1, \
 												   $2, \
 												   $3, \
-												   $4, \
+												   (CASE WHEN $4 = '' THEN NULL ELSE $4 END)::uuid, \
 												   $5, \
 												   NULL, \
 												   NULL, \
@@ -279,7 +279,7 @@ void ChannelModel::UpdateChannel(
 													name = $2, \
 													title = $3, \
 													service = $4, \
-													parent = $5, \
+													parent = (CASE WHEN $5 = '' THEN  NULL ELSE $5 END)::uuid, \
 													updated_by = $6, \
 													updated_at = now(), \
 													details = $7, \

@@ -1,4 +1,4 @@
-#include "models/content_provider_model.h"
+#include "models/publisher_model.h"
 
 #include <iostream>
 #include <string>
@@ -15,10 +15,10 @@ namespace angru{
 namespace mvc{
 namespace model{
 
-ContentProviderModel::ContentProviderModel(){}
-ContentProviderModel::~ContentProviderModel(){}
+PublisherModel::PublisherModel(){}
+PublisherModel::~PublisherModel(){}
 
-pqxx::result ContentProviderModel::GetContentProviders(int page, std::string query){
+pqxx::result PublisherModel::GetPublishers(int page, std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -47,7 +47,7 @@ pqxx::result ContentProviderModel::GetContentProviders(int page, std::string que
 									      				details , \
 									      				status , \
 									      				situation , \
-									      				description  FROM content_providers AS main where deleted_at is NULL ";
+									      				description  FROM publishers AS main where deleted_at is NULL ";
 	if(!query.empty())
 	{
 		complete_query += " AND ";
@@ -62,7 +62,7 @@ pqxx::result ContentProviderModel::GetContentProviders(int page, std::string que
 	return R;
 }
 
-int ContentProviderModel::GetContentProvidersCount(std::string query){
+int PublisherModel::GetPublishersCount(std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -76,7 +76,7 @@ int ContentProviderModel::GetContentProvidersCount(std::string query){
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	std::string complete_query = "SELECT count(id) FROM content_providers where deleted_at is NULL ";
+	std::string complete_query = "SELECT count(id) FROM publishers where deleted_at is NULL ";
 	if(!query.empty())
 	{
 		complete_query += " AND ";
@@ -88,33 +88,33 @@ int ContentProviderModel::GetContentProvidersCount(std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree ContentProviderModel::GetContentProvidersJson(int page, std::string query){
-	pqxx::result R = GetContentProviders(page, query);
-	int result_count = GetContentProvidersCount(query);
+boost::property_tree::ptree PublisherModel::GetPublishersJson(int page, std::string query){
+	pqxx::result R = GetPublishers(page, query);
+	int result_count = GetPublishersCount(query);
 	int pageCount = (result_count / OFFSET_COUNT) + 1;
 
 	boost::property_tree::ptree result_node;
 	boost::property_tree::ptree info_node;
-	boost::property_tree::ptree content_provider_node;
-	boost::property_tree::ptree content_providers_node;
+	boost::property_tree::ptree publisher_node;
+	boost::property_tree::ptree publishers_node;
 
 	for (size_t i = 0; i < R.size(); i++) {
-		content_provider_node.put("id", R[i][0]);
-		content_provider_node.put("admin", R[i][1]);
-		content_provider_node.put("name", R[i][2]);
-		content_provider_node.put("title", R[i][3]);
-		content_provider_node.put("code", R[i][4]);
-		content_provider_node.put("phone", R[i][5]);
-		content_provider_node.put("email", R[i][6]);
-		content_provider_node.put("created_by", R[i][7]);
-		content_provider_node.put("updated_by", R[i][8]);
-		content_provider_node.put("created_at", R[i][9]);
-		content_provider_node.put("updated_at", R[i][10]);
-		content_provider_node.put("details", R[i][11]);
-		content_provider_node.put("status", R[i][12]);
-		content_provider_node.put("situation", R[i][13]);
-		content_provider_node.put("description", R[i][14]);
-		content_providers_node.push_back(std::make_pair("", content_provider_node));
+		publisher_node.put("id", R[i][0]);
+		publisher_node.put("admin", R[i][1]);
+		publisher_node.put("name", R[i][2]);
+		publisher_node.put("title", R[i][3]);
+		publisher_node.put("code", R[i][4]);
+		publisher_node.put("phone", R[i][5]);
+		publisher_node.put("email", R[i][6]);
+		publisher_node.put("created_by", R[i][7]);
+		publisher_node.put("updated_by", R[i][8]);
+		publisher_node.put("created_at", R[i][9]);
+		publisher_node.put("updated_at", R[i][10]);
+		publisher_node.put("details", R[i][11]);
+		publisher_node.put("status", R[i][12]);
+		publisher_node.put("situation", R[i][13]);
+		publisher_node.put("description", R[i][14]);
+		publishers_node.push_back(std::make_pair("", publisher_node));
 	}
 	info_node.put<int>("page", page);
 	info_node.put<int>("offset", OFFSET_COUNT);
@@ -122,11 +122,11 @@ boost::property_tree::ptree ContentProviderModel::GetContentProvidersJson(int pa
 	info_node.put<int>("result_count", result_count);
 
 	result_node.add_child("info", info_node);
-	result_node.add_child("items", content_providers_node);
+	result_node.add_child("items", publishers_node);
 	return result_node;
 }
 
-pqxx::result ContentProviderModel::GetContentProvider(std::string id){
+pqxx::result PublisherModel::GetPublisher(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -155,37 +155,37 @@ pqxx::result ContentProviderModel::GetContentProvider(std::string id){
 									      				details , \
 									      				status , \
 									      				situation , \
-									      				description  FROM content_providers AS main where id = $1 and deleted_at is NULL ");
+									      				description  FROM publishers AS main where id = $1 and deleted_at is NULL ");
   pqxx::result R = W.prepared("find")(id).exec();
 	W.commit();
 	return R;
 }
 
-boost::property_tree::ptree ContentProviderModel::GetContentProviderJson(std::string id){
-	pqxx::result R = GetContentProvider(id);
-	boost::property_tree::ptree content_provider_node;
+boost::property_tree::ptree PublisherModel::GetPublisherJson(std::string id){
+	pqxx::result R = GetPublisher(id);
+	boost::property_tree::ptree publisher_node;
 
 	if(R.size() == 1){
-		content_provider_node.put("id", R[0][0]);
-		content_provider_node.put("admin", R[0][1]);
-		content_provider_node.put("name", R[0][2]);
-		content_provider_node.put("title", R[0][3]);
-		content_provider_node.put("code", R[0][4]);
-		content_provider_node.put("phone", R[0][5]);
-		content_provider_node.put("email", R[0][6]);
-		content_provider_node.put("created_by", R[0][7]);
-		content_provider_node.put("updated_by", R[0][8]);
-		content_provider_node.put("created_at", R[0][9]);
-		content_provider_node.put("updated_at", R[0][10]);
-		content_provider_node.put("details", R[0][11]);
-		content_provider_node.put("status", R[0][12]);
-		content_provider_node.put("situation", R[0][13]);
-		content_provider_node.put("description", R[0][14]);
+		publisher_node.put("id", R[0][0]);
+		publisher_node.put("admin", R[0][1]);
+		publisher_node.put("name", R[0][2]);
+		publisher_node.put("title", R[0][3]);
+		publisher_node.put("code", R[0][4]);
+		publisher_node.put("phone", R[0][5]);
+		publisher_node.put("email", R[0][6]);
+		publisher_node.put("created_by", R[0][7]);
+		publisher_node.put("updated_by", R[0][8]);
+		publisher_node.put("created_at", R[0][9]);
+		publisher_node.put("updated_at", R[0][10]);
+		publisher_node.put("details", R[0][11]);
+		publisher_node.put("status", R[0][12]);
+		publisher_node.put("situation", R[0][13]);
+		publisher_node.put("description", R[0][14]);
 	}
-	return content_provider_node;
+	return publisher_node;
 }
 
-std::string ContentProviderModel::AddContentProvider(
+std::string PublisherModel::AddPublisher(
 													std::string	admin,
 													std::string	name,
 													std::string	title,
@@ -210,7 +210,7 @@ std::string ContentProviderModel::AddContentProvider(
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	C.prepare("insert", "INSERT INTO content_providers( \
+	C.prepare("insert", "INSERT INTO publishers( \
 													id, \
 													admin, \
 													name, \
@@ -267,7 +267,7 @@ std::string ContentProviderModel::AddContentProvider(
 	return id;
 }
 
-void ContentProviderModel::UpdateContentProvider(
+void PublisherModel::UpdatePublisher(
 													std::string	id,
 													std::string	admin,
 													std::string	name,
@@ -293,7 +293,7 @@ void ContentProviderModel::UpdateContentProvider(
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	C.prepare("update", "UPDATE content_providers SET \
+	C.prepare("update", "UPDATE publishers SET \
 													admin = $2, \
 													name = $3, \
 													title = $4, \
@@ -323,7 +323,7 @@ void ContentProviderModel::UpdateContentProvider(
 	W.commit();
 }
 
-void ContentProviderModel::DeleteContentProvider(std::string id){
+void PublisherModel::DeletePublisher(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -337,7 +337,7 @@ void ContentProviderModel::DeleteContentProvider(std::string id){
 	 }
 	 LOG_INFO << "Connected to database: " << C.dbname();
 	 pqxx::work W(C);
-	 C.prepare("update", "UPDATE content_providers SET \
+	 C.prepare("update", "UPDATE publishers SET \
 												deleted_at = now()  \
 												WHERE id = $1");
    W.prepared("update")(id).exec();

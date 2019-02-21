@@ -1,4 +1,4 @@
-#include "controllers/channel_controller.h"
+#include "controllers/publisher_controller.h"
 
 #include <iostream>
 #include <string>
@@ -10,22 +10,22 @@
 #include "tools/log.h"
 #include "wrappers/postgresql.h"
 #include "tools/security.h"
-#include "models/channel_model.h"
+#include "models/publisher_model.h"
 #include "models/privilege_model.h"
 
 namespace angru{
 namespace mvc{
 namespace controller{
 
-ChannelController::ChannelController(){}
-ChannelController::~ChannelController(){}
+PublisherController::PublisherController(){}
+PublisherController::~PublisherController(){}
 
-void ChannelController::doGetChannels(const Pistache::Rest::Request& request,
+void PublisherController::doGetPublishers(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
-    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "channels", GET_ITEMS);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "publishers", GET_ITEMS);
     if(!authorized){
       response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
       return;
@@ -41,24 +41,24 @@ void ChannelController::doGetChannels(const Pistache::Rest::Request& request,
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
     }
-    boost::property_tree::ptree channels = angru::mvc::model::ChannelModel::GetChannelsJson(page, filter);
+    boost::property_tree::ptree publishers = angru::mvc::model::PublisherModel::GetPublishersJson(page, filter);
     std::ostringstream oss;
-    boost::property_tree::write_json(oss, channels);
+    boost::property_tree::write_json(oss, publishers);
 
     std::string inifile_text = oss.str();
     if (inifile_text.empty()) {
-      response.send(Pistache::Http::Code::Not_Found, "Channels not found.");
+      response.send(Pistache::Http::Code::Not_Found, "Publishers not found.");
     } else {
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
 }
 
-void ChannelController::doGetChannel(const Pistache::Rest::Request& request,
+void PublisherController::doGetPublisher(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
-    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "channels", GET_ITEM);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "publishers", GET_ITEM);
     if(!authorized){
       response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
       return;
@@ -68,25 +68,25 @@ void ChannelController::doGetChannel(const Pistache::Rest::Request& request,
         auto value = request.param(":id");
         id = value.as<std::string>();
     }
-    boost::property_tree::ptree channel = angru::mvc::model::ChannelModel::GetChannelJson(id);
+    boost::property_tree::ptree publisher = angru::mvc::model::PublisherModel::GetPublisherJson(id);
     std::ostringstream oss;
-    boost::property_tree::write_json(oss, channel);
+    boost::property_tree::write_json(oss, publisher);
 
     std::string inifile_text = oss.str();
 
     if (inifile_text.empty()) {
-      response.send(Pistache::Http::Code::Not_Found, "Channels not found.");
+      response.send(Pistache::Http::Code::Not_Found, "Publishers not found.");
     } else {
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
 }
 
-void ChannelController::doDeleteChannel(const Pistache::Rest::Request& request,
+void PublisherController::doDeletePublisher(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
-    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "channels", DELETE_ITEM);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "publishers", DELETE_ITEM);
     if(!authorized){
       response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
       return;
@@ -97,26 +97,28 @@ void ChannelController::doDeleteChannel(const Pistache::Rest::Request& request,
         auto value = request.param(":id");
         id = value.as<std::string>();
     }
-    angru::mvc::model::ChannelModel::DeleteChannel(id);
-    response.send(Pistache::Http::Code::Ok, "Channel deleted.");
+    angru::mvc::model::PublisherModel::DeletePublisher(id);
+    response.send(Pistache::Http::Code::Ok, "Publisher deleted.");
 }
 
-void ChannelController::doAddChannel(const Pistache::Rest::Request& request,
+void PublisherController::doAddPublisher(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
-    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "channels", ADD_ITEM);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "publishers", ADD_ITEM);
     if(!authorized){
       response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
       return;
     }
     auto body = request.body();
     std::string created_by = user_id;
+    std::string	admin;
     std::string	name;
     std::string	title;
-    std::string	service;
-    std::string	parent;
+    std::string	code;
+    std::string	phone;
+    std::string	email;
     std::string	details;
     int	status;
     int	situation;
@@ -127,39 +129,42 @@ void ChannelController::doAddChannel(const Pistache::Rest::Request& request,
       ss << body;
       boost::property_tree::ptree pt;
       boost::property_tree::read_json(ss, pt);
+      admin = pt.get<std::string>("admin");
       name = pt.get<std::string>("name");
       title = pt.get<std::string>("title");
-      service = pt.get<std::string>("service");
-      parent = pt.get<std::string>("parent");
+      code = pt.get<std::string>("code");
+      phone = pt.get<std::string>("phone");
+      email = pt.get<std::string>("email");
       details = pt.get<std::string>("details");
       status = pt.get<int>("status");
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::ChannelModel::AddChannel(
-                                                  name,
-                                                  title,
-                                                  service,
-                                                  parent,
-                                                  created_by,
-                                                  details,
-                                                  status,
-                                                  situation,
+      angru::mvc::model::PublisherModel::AddPublisher(
+                                                  admin, 
+                                                  name, 
+                                                  title, 
+                                                  code, 
+                                                  phone, 
+                                                  email, 
+                                                  created_by, 
+                                                  details, 
+                                                  status, 
+                                                  situation, 
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "Channel added.");
+      response.send(Pistache::Http::Code::Ok, "Publisher added.");
     }
     catch (std::exception const& e){
-      std::cout << e.what() << '\n';
-      response.send(Pistache::Http::Code::Not_Found, "Channels not found.");
+      response.send(Pistache::Http::Code::Not_Found, "Publishers not found.");
     }
 }
 
-void ChannelController::doUpdateChannel(const Pistache::Rest::Request& request,
+void PublisherController::doUpdatePublisher(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
-    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "channels", UPDATE_ITEM);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "publishers", UPDATE_ITEM);
     if(!authorized){
       response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
       return;
@@ -171,10 +176,12 @@ void ChannelController::doUpdateChannel(const Pistache::Rest::Request& request,
       id = value.as<std::string>();
     }
     auto body = request.body();
+    std::string	admin;
     std::string	name;
     std::string	title;
-    std::string	service;
-    std::string	parent;
+    std::string	code;
+    std::string	phone;
+    std::string	email;
     std::string	details;
     int	status;
     int	situation;
@@ -185,29 +192,33 @@ void ChannelController::doUpdateChannel(const Pistache::Rest::Request& request,
       ss << body;
       boost::property_tree::ptree pt;
       boost::property_tree::read_json(ss, pt);
+      admin = pt.get<std::string>("admin");
       name = pt.get<std::string>("name");
       title = pt.get<std::string>("title");
-      service = pt.get<std::string>("service");
-      parent = pt.get<std::string>("parent");
+      code = pt.get<std::string>("code");
+      phone = pt.get<std::string>("phone");
+      email = pt.get<std::string>("email");
       details = pt.get<std::string>("details");
       status = pt.get<int>("status");
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
-      angru::mvc::model::ChannelModel::UpdateChannel(
-                                                  id,
-                                                  name,
-                                                  title,
-                                                  service,
-                                                  parent,
-                                                  updated_by,
-                                                  details,
-                                                  status,
-                                                  situation,
+      angru::mvc::model::PublisherModel::UpdatePublisher(
+                                                  id, 
+                                                  admin, 
+                                                  name, 
+                                                  title, 
+                                                  code, 
+                                                  phone, 
+                                                  email, 
+                                                  updated_by, 
+                                                  details, 
+                                                  status, 
+                                                  situation, 
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "Channels updated.");
+      response.send(Pistache::Http::Code::Ok, "Publishers updated.");
     }
     catch (std::exception const& e){
-      response.send(Pistache::Http::Code::Not_Found, "Channels not found.");
+      response.send(Pistache::Http::Code::Not_Found, "Publishers not found.");
     }
  }
 

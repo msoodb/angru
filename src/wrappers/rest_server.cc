@@ -25,6 +25,7 @@
 #include "controllers/subscription_controller.h"
 #include "controllers/playlist_controller.h"
 #include "controllers/channel_controller.h"
+#include "controllers/publisher_controller.h"
 
 namespace angru{
 namespace wrapper{
@@ -155,6 +156,12 @@ void RestServer::SetupRoutes() {
 	Delete(router, "/playlists/:id", bind(&PlaylistController::doDeletePlaylist));
   Post(router, "/playlists", bind(&PlaylistController::doAddPlaylist));
 	Put(router, "/playlists/:id", bind(&PlaylistController::doUpdatePlaylist));
+
+  Get(router, "/publishers", bind(&PublisherController::doGetPublishers));
+  Get(router, "/publishers/:id", bind(&PublisherController::doGetPublisher));
+  Delete(router, "/publishers/:id", bind(&PublisherController::doDeletePublisher));
+  Post(router, "/publishers", bind(&PublisherController::doAddPublisher));
+  Put(router, "/publishers/:id", bind(&PublisherController::doUpdatePublisher));
 }
 
 void RestServer::PrintCookies(const Pistache::Http::Request& req) {
