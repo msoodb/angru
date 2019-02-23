@@ -48,8 +48,8 @@ ALTER TABLE public.users
 
 
 INSERT INTO public.users(
-            id, first_name, middle_name, last_name, username, email, password, 
-            type, created_by, deleted_by, updated_by, created_at, deleted_at, 
+            id, first_name, middle_name, last_name, username, email, password,
+            type, created_by, deleted_by, updated_by, created_at, deleted_at,
             updated_at, details, status, situation, description)
     VALUES (Default, 'zeus', 'G', 'god', 'zeus', 'zeus@olympus.god', '7c4a8d09ca3762af61e59520943dc26494f8941b',
             0, NULL, NULL, NULL, now(), NULL,
@@ -94,15 +94,21 @@ ALTER TABLE public.security_roles
 
 
 INSERT INTO public.security_roles(
-            id, name, title, created_by, deleted_by, updated_by, created_at, 
+            id, name, title, created_by, deleted_by, updated_by, created_at,
             deleted_at, updated_at, status, situation, description)
-    VALUES (DEFAULT, 'uploader', 'uploader', (select id from users where username='zeus'), NULL, NULL, NOW(), 
+    VALUES (DEFAULT, 'security manager', 'manage security permissions privilege', (select id from users where username='zeus'), NULL, NULL, NOW(),
             NULL, NULL, 1, 0, '');
 
 INSERT INTO public.security_roles(
-            id, name, title, created_by, deleted_by, updated_by, created_at, 
+            id, name, title, created_by, deleted_by, updated_by, created_at,
             deleted_at, updated_at, status, situation, description)
-    VALUES (DEFAULT, 'reporter', 'reporter', (select id from users where username='zeus'), NULL, NULL, NOW(), 
+    VALUES (DEFAULT, 'service manager', 'manage service and related', (select id from users where username='zeus'), NULL, NULL, NOW(),
+            NULL, NULL, 1, 0, '');
+
+INSERT INTO public.security_roles(
+            id, name, title, created_by, deleted_by, updated_by, created_at,
+            deleted_at, updated_at, status, situation, description)
+    VALUES (DEFAULT, 'content manager', 'upload and manage content', (select id from users where username='zeus'), NULL, NULL, NOW(),
             NULL, NULL, 1, 0, '');
 
 
@@ -114,7 +120,7 @@ CREATE TABLE public.users_security_roles
 (
   id uuid NOT NULL DEFAULT uuid_generate_v4(),
   _user_ uuid NOT NULL,
-  security_role uuid NOT NULL,  
+  security_role uuid NOT NULL,
   created_by uuid,
   deleted_by uuid,
   updated_by uuid,
@@ -186,89 +192,88 @@ WITH (
 ALTER TABLE public.entities
   OWNER TO masoud;
 
+  INSERT INTO public.entities(
+              id, name, title, created_by, deleted_by, updated_by, created_at,
+              deleted_at, updated_at, type, status, situation, description)
+      VALUES (DEFAULT, 'mobile_operators', 'mobile_operators', (select id from users where username='zeus'), NULL, NULL, NOW(),
+              NULL, NULL, 0, 1, 0, '');
 
 INSERT INTO public.entities(
-            id, name, title, created_by, deleted_by, updated_by, created_at, 
+            id, name, title, created_by, deleted_by, updated_by, created_at,
             deleted_at, updated_at, type, status, situation, description)
-    VALUES (DEFAULT, 'aggrigators', 'aggrigators', (select id from users where username='zeus'), NULL, NULL, NOW(), 
+    VALUES (DEFAULT, 'aggrigators', 'aggrigators', (select id from users where username='zeus'), NULL, NULL, NOW(),
             NULL, NULL, 0, 1, 0, '');
 
 INSERT INTO public.entities(
-            id, name, title, created_by, deleted_by, updated_by, created_at, 
+            id, name, title, created_by, deleted_by, updated_by, created_at,
             deleted_at, updated_at, type, status, situation, description)
-    VALUES (DEFAULT, 'entities', 'entities', (select id from users where username='zeus'), NULL, NULL, NOW(), 
+    VALUES (DEFAULT, 'content_providers', 'content_providers', (select id from users where username='zeus'), NULL, NULL, NOW(),
             NULL, NULL, 0, 1, 0, '');
 
 INSERT INTO public.entities(
-            id, name, title, created_by, deleted_by, updated_by, created_at, 
+            id, name, title, created_by, deleted_by, updated_by, created_at,
             deleted_at, updated_at, type, status, situation, description)
-    VALUES (DEFAULT, 'mobile_operators', 'mobile_operators', (select id from users where username='zeus'), NULL, NULL, NOW(), 
+    VALUES (DEFAULT, 'services', 'services', (select id from users where username='zeus'), NULL, NULL, NOW(),
             NULL, NULL, 0, 1, 0, '');
 
 INSERT INTO public.entities(
-            id, name, title, created_by, deleted_by, updated_by, created_at, 
+            id, name, title, created_by, deleted_by, updated_by, created_at,
             deleted_at, updated_at, type, status, situation, description)
-    VALUES (DEFAULT, 'privileges', 'privileges', (select id from users where username='zeus'), NULL, NULL, NOW(), 
+    VALUES (DEFAULT, 'members', 'members', (select id from users where username='zeus'), NULL, NULL, NOW(),
             NULL, NULL, 0, 1, 0, '');
 
 INSERT INTO public.entities(
-            id, name, title, created_by, deleted_by, updated_by, created_at, 
+            id, name, title, created_by, deleted_by, updated_by, created_at,
             deleted_at, updated_at, type, status, situation, description)
-    VALUES (DEFAULT, 'security_roles', 'security_roles', (select id from users where username='zeus'), NULL, NULL, NOW(), 
+    VALUES (DEFAULT, 'subscriptions', 'subscriptions', (select id from users where username='zeus'), NULL, NULL, NOW(),
             NULL, NULL, 0, 1, 0, '');
 
 INSERT INTO public.entities(
-            id, name, title, created_by, deleted_by, updated_by, created_at, 
+            id, name, title, created_by, deleted_by, updated_by, created_at,
             deleted_at, updated_at, type, status, situation, description)
-    VALUES (DEFAULT, 'users', 'users', (select id from users where username='zeus'), NULL, NULL, NOW(), 
+    VALUES (DEFAULT, 'channels', 'channels', (select id from users where username='zeus'), NULL, NULL, NOW(),
             NULL, NULL, 0, 1, 0, '');
 
 INSERT INTO public.entities(
-            id, name, title, created_by, deleted_by, updated_by, created_at, 
+            id, name, title, created_by, deleted_by, updated_by, created_at,
             deleted_at, updated_at, type, status, situation, description)
-    VALUES (DEFAULT, 'users_security_roles', 'users_security_roles', (select id from users where username='zeus'), NULL, NULL, NOW(), 
+    VALUES (DEFAULT, 'playlists', 'playlists', (select id from users where username='zeus'), NULL, NULL, NOW(),
             NULL, NULL, 0, 1, 0, '');
 
 INSERT INTO public.entities(
-            id, name, title, created_by, deleted_by, updated_by, created_at, 
+            id, name, title, created_by, deleted_by, updated_by, created_at,
             deleted_at, updated_at, type, status, situation, description)
-    VALUES (DEFAULT, 'content_providers', 'content_providers', (select id from users where username='zeus'), NULL, NULL, NOW(), 
+    VALUES (DEFAULT, 'publishers', 'publishers', (select id from users where username='zeus'), NULL, NULL, NOW(),
             NULL, NULL, 0, 1, 0, '');
 
 INSERT INTO public.entities(
-            id, name, title, created_by, deleted_by, updated_by, created_at, 
+            id, name, title, created_by, deleted_by, updated_by, created_at,
             deleted_at, updated_at, type, status, situation, description)
-    VALUES (DEFAULT, 'services', 'services', (select id from users where username='zeus'), NULL, NULL, NOW(), 
+    VALUES (DEFAULT, 'users', 'users', (select id from users where username='zeus'), NULL, NULL, NOW(),
             NULL, NULL, 0, 1, 0, '');
 
 INSERT INTO public.entities(
-            id, name, title, created_by, deleted_by, updated_by, created_at, 
+            id, name, title, created_by, deleted_by, updated_by, created_at,
             deleted_at, updated_at, type, status, situation, description)
-    VALUES (DEFAULT, 'members', 'members', (select id from users where username='zeus'), NULL, NULL, NOW(), 
+    VALUES (DEFAULT, 'security_roles', 'security_roles', (select id from users where username='zeus'), NULL, NULL, NOW(),
             NULL, NULL, 0, 1, 0, '');
 
 INSERT INTO public.entities(
-            id, name, title, created_by, deleted_by, updated_by, created_at, 
+            id, name, title, created_by, deleted_by, updated_by, created_at,
             deleted_at, updated_at, type, status, situation, description)
-    VALUES (DEFAULT, 'subscriptions', 'subscriptions', (select id from users where username='zeus'), NULL, NULL, NOW(), 
+    VALUES (DEFAULT, 'users_security_roles', 'users_security_roles', (select id from users where username='zeus'), NULL, NULL, NOW(),
             NULL, NULL, 0, 1, 0, '');
 
 INSERT INTO public.entities(
-            id, name, title, created_by, deleted_by, updated_by, created_at, 
+            id, name, title, created_by, deleted_by, updated_by, created_at,
             deleted_at, updated_at, type, status, situation, description)
-    VALUES (DEFAULT, 'channels', 'channels', (select id from users where username='zeus'), NULL, NULL, NOW(), 
-            NULL, NULL, 0, 1, 0, '');
-            
-INSERT INTO public.entities(
-            id, name, title, created_by, deleted_by, updated_by, created_at, 
-            deleted_at, updated_at, type, status, situation, description)
-    VALUES (DEFAULT, 'playlists', 'playlists', (select id from users where username='zeus'), NULL, NULL, NOW(), 
+    VALUES (DEFAULT, 'entities', 'entities', (select id from users where username='zeus'), NULL, NULL, NOW(),
             NULL, NULL, 0, 1, 0, '');
 
 INSERT INTO public.entities(
-            id, name, title, created_by, deleted_by, updated_by, created_at, 
+            id, name, title, created_by, deleted_by, updated_by, created_at,
             deleted_at, updated_at, type, status, situation, description)
-    VALUES (DEFAULT, 'publishers', 'publishers', (select id from users where username='zeus'), NULL, NULL, NOW(), 
+    VALUES (DEFAULT, 'privileges', 'privileges', (select id from users where username='zeus'), NULL, NULL, NOW(),
             NULL, NULL, 0, 1, 0, '');
 
 
@@ -281,7 +286,7 @@ CREATE TABLE public.privileges
   id uuid NOT NULL DEFAULT uuid_generate_v4(),
   security_role uuid NOT NULL,
   entity uuid NOT NULL,
-  privilege_string character varying(255),  
+  privilege_string character varying(255),
   created_by uuid,
   deleted_by uuid,
   updated_by uuid,
@@ -297,7 +302,7 @@ CREATE TABLE public.privileges
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT privileges_entity_fkey FOREIGN KEY (entity)
       REFERENCES public.entities (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,    
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT privileges_created_by_fkey FOREIGN KEY (created_by)
       REFERENCES public.users (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
@@ -313,8 +318,6 @@ WITH (
 );
 ALTER TABLE public.privileges
   OWNER TO masoud;
-
----------------------------------------------------------------------------------------------------------------------
 
 -- Table: public.mobile_operators
 
@@ -379,13 +382,13 @@ CREATE TABLE public.aggrigators
   situation integer NOT NULL,
   description character varying,
   CONSTRAINT aggrigators_pkey PRIMARY KEY (id),
-  CONSTRAINT users_created_by_fkey FOREIGN KEY (created_by)
+  CONSTRAINT aggrigators_created_by_fkey FOREIGN KEY (created_by)
       REFERENCES public.users (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT users_deleted_by_fkey FOREIGN KEY (deleted_by)
+  CONSTRAINT aggrigators_deleted_by_fkey FOREIGN KEY (deleted_by)
       REFERENCES public.users (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT users_updated_by_fkey FOREIGN KEY (updated_by)
+  CONSTRAINT aggrigators_updated_by_fkey FOREIGN KEY (updated_by)
       REFERENCES public.users (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
@@ -499,7 +502,7 @@ ALTER TABLE public.services
 
 CREATE TABLE public.members
 (
-  id uuid NOT NULL DEFAULT uuid_generate_v4(),  
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
   phone character varying(255),
   created_by uuid,
   deleted_by uuid,
@@ -535,7 +538,7 @@ ALTER TABLE public.members
 
 CREATE TABLE public.subscriptions
 (
-  id uuid NOT NULL DEFAULT uuid_generate_v4(),  
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
   member uuid NOT NULL,
   service uuid NOT NULL,
   last_login timestamp with time zone,
@@ -579,7 +582,7 @@ ALTER TABLE public.subscriptions
 
 CREATE TABLE public.channels
 (
-  id uuid NOT NULL DEFAULT uuid_generate_v4(),  
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
   name character varying(255) NOT NULL,
   title character varying(255),
   service uuid NOT NULL,
@@ -624,7 +627,7 @@ ALTER TABLE public.channels
 
 CREATE TABLE public.playlists
 (
-  id uuid NOT NULL DEFAULT uuid_generate_v4(),  
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
   name character varying(255) NOT NULL,
   title character varying(255),
   channel uuid NOT NULL,
@@ -641,7 +644,7 @@ CREATE TABLE public.playlists
   CONSTRAINT playlists_pkey PRIMARY KEY (id),
   CONSTRAINT playlists_channel_fkey FOREIGN KEY (channel)
       REFERENCES public.channels (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,  
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT playlists_created_by_fkey FOREIGN KEY (created_by)
       REFERENCES public.users (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
@@ -703,5 +706,85 @@ ALTER TABLE public.publishers
   OWNER TO masoud;
 
 
+-- Table: public.users_content_providers
+
+-- DROP TABLE public.users_content_providers;
+
+CREATE TABLE public.users_content_providers
+(
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  _user_ uuid NOT NULL,
+  content_provider uuid NOT NULL,
+  created_by uuid,
+  deleted_by uuid,
+  updated_by uuid,
+  created_at timestamp with time zone,
+  deleted_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  status integer NOT NULL,
+  situation integer NOT NULL,
+  description character varying,
+  CONSTRAINT users_content_providers_pkey PRIMARY KEY (id),
+  CONSTRAINT users_content_providers__user__fkey FOREIGN KEY (_user_)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT users_content_providers_created_by_fkey FOREIGN KEY (created_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT users_content_providers_deleted_by_fkey FOREIGN KEY (deleted_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT users_content_providers_content_provider_fkey FOREIGN KEY (content_provider)
+      REFERENCES public.content_providers (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT users_content_providers_updated_by_fkey FOREIGN KEY (updated_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.users_content_providers
+  OWNER TO masoud;
 
 
+  -- Table: public.users_publishers
+
+  -- DROP TABLE public.users_publishers;
+
+  CREATE TABLE public.users_publishers
+  (
+    id uuid NOT NULL DEFAULT uuid_generate_v4(),
+    _user_ uuid NOT NULL,
+    publisher uuid NOT NULL,
+    created_by uuid,
+    deleted_by uuid,
+    updated_by uuid,
+    created_at timestamp with time zone,
+    deleted_at timestamp with time zone,
+    updated_at timestamp with time zone,
+    status integer NOT NULL,
+    situation integer NOT NULL,
+    description character varying,
+    CONSTRAINT users_publishers_pkey PRIMARY KEY (id),
+    CONSTRAINT users_publishers__user__fkey FOREIGN KEY (_user_)
+        REFERENCES public.users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION ON DELETE NO ACTION,
+    CONSTRAINT users_publishers_created_by_fkey FOREIGN KEY (created_by)
+        REFERENCES public.users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION ON DELETE NO ACTION,
+    CONSTRAINT users_publishers_deleted_by_fkey FOREIGN KEY (deleted_by)
+        REFERENCES public.users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION ON DELETE NO ACTION,
+    CONSTRAINT users_publishers_publisher_fkey FOREIGN KEY (publisher)
+        REFERENCES public.publishers (id) MATCH SIMPLE
+        ON UPDATE NO ACTION ON DELETE NO ACTION,
+    CONSTRAINT users_publishers_updated_by_fkey FOREIGN KEY (updated_by)
+        REFERENCES public.users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION ON DELETE NO ACTION
+  )
+  WITH (
+    OIDS=FALSE
+  );
+  ALTER TABLE public.users_publishers
+    OWNER TO masoud;

@@ -26,6 +26,8 @@
 #include "controllers/playlist_controller.h"
 #include "controllers/channel_controller.h"
 #include "controllers/publisher_controller.h"
+#include "controllers/users_content_provider_controller.h"
+#include "controllers/users_publisher_controller.h"
 
 namespace angru{
 namespace wrapper{
@@ -162,6 +164,18 @@ void RestServer::SetupRoutes() {
   Delete(router, "/publishers/:id", bind(&PublisherController::doDeletePublisher));
   Post(router, "/publishers", bind(&PublisherController::doAddPublisher));
   Put(router, "/publishers/:id", bind(&PublisherController::doUpdatePublisher));
+
+  Get(router, "/users_content_providers", bind(&UsersContentProviderController::doGetUsersContentProviders));
+  Get(router, "/users_content_providers/:id", bind(&UsersContentProviderController::doGetUsersContentProvider));
+  Delete(router, "/users_content_providers/:id", bind(&UsersContentProviderController::doDeleteUsersContentProvider));
+  Post(router, "/users_content_providers", bind(&UsersContentProviderController::doAddUsersContentProvider));
+  Put(router, "/users_content_providers/:id", bind(&UsersContentProviderController::doUpdateUsersContentProvider));
+
+  Get(router, "/users_publishers", bind(&UsersPublisherController::doGetUsersPublishers));
+  Get(router, "/users_publishers/:id", bind(&UsersPublisherController::doGetUsersPublisher));
+  Delete(router, "/users_publishers/:id", bind(&UsersPublisherController::doDeleteUsersPublisher));
+  Post(router, "/users_publishers", bind(&UsersPublisherController::doAddUsersPublisher));
+  Put(router, "/users_publishers/:id", bind(&UsersPublisherController::doUpdateUsersPublisher));
 }
 
 void RestServer::PrintCookies(const Pistache::Http::Request& req) {
