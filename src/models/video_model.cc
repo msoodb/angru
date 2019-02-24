@@ -1,0 +1,338 @@
+#include "models/video_model.h"
+
+#include <iostream>
+#include <string>
+
+#include <pqxx/pqxx>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+#include "tools/system.h"
+#include "tools/log.h"
+#include "wrappers/postgresql.h"
+#include "wrappers/csv_writer.h"
+
+namespace angru{
+namespace mvc{
+namespace model{
+
+VideoModel::VideoModel(){}
+VideoModel::~VideoModel(){}
+
+pqxx::result VideoModel::GetVideos(int page, std::string query){
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
+	try {
+		if (C.is_open()) {
+			 LOG_INFO << "Opened database successfully: " << C.dbname();
+		} else {
+			 LOG_ERROR << "Can't open database: " << C.dbname();
+		}
+		C.disconnect ();
+	} catch (const angru::system::exception::error &e) {
+			LOG_ERROR << e.what();
+	}
+	LOG_INFO << "Connected to database: " << C.dbname();
+	pqxx::work W(C);
+	std::string complete_query = "SELECT \
+									      				id , \
+									      				content , \
+									      				name , \
+									      				title , \
+									      				path , \
+									      				size , \
+(select username from users where id = main.created_by) as  created_by , \
+(select username from users where id = main.updated_by) as  updated_by , \
+									      				created_at , \
+									      				updated_at , \
+									      				details , \
+									      				status , \
+									      				situation , \
+									      				description  FROM videos AS main where deleted_at is NULL ";
+	if(!query.empty())
+	{
+		complete_query += " AND ";
+		complete_query +=  query;
+	}
+	complete_query += " limit 20 offset ";
+	int offset = (page-1)* OFFSET_COUNT ;
+	complete_query += std::to_string(offset);
+  C.prepare("find", complete_query);
+  pqxx::result R = W.prepared("find").exec();
+  W.commit();
+	return R;
+}
+
+int VideoModel::GetVideosCount(std::string query){
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
+	try {
+		if (C.is_open()) {
+			 LOG_INFO << "Opened database successfully: " << C.dbname();
+		} else {
+			 LOG_ERROR << "Can't open database: " << C.dbname();
+		}
+		C.disconnect ();
+	} catch (const angru::system::exception::error &e) {
+			LOG_ERROR << e.what();
+	}
+	LOG_INFO << "Connected to database: " << C.dbname();
+	pqxx::work W(C);
+	std::string complete_query = "SELECT count(id) FROM videos where deleted_at is NULL ";
+	if(!query.empty())
+	{
+		complete_query += " AND ";
+		complete_query +=  query;
+	}
+  C.prepare("find", complete_query);
+  pqxx::result R = W.prepared("find").exec();
+  W.commit();
+	return (R[0][0]).as<int>();
+}
+
+boost::property_tree::ptree VideoModel::GetVideosJson(int page, std::string query){
+	pqxx::result R = GetVideos(page, query);
+	int result_count = GetVideosCount(query);
+	int pageCount = (result_count / OFFSET_COUNT) + 1;
+
+	boost::property_tree::ptree result_node;
+	boost::property_tree::ptree info_node;
+	boost::property_tree::ptree video_node;
+	boost::property_tree::ptree videos_node;
+
+	for (size_t i = 0; i < R.size(); i++) {
+		video_node.put("id", R[i][0]);
+		video_node.put("content", R[i][1]);
+		video_node.put("name", R[i][2]);
+		video_node.put("title", R[i][3]);
+		video_node.put("path", R[i][4]);
+		video_node.put("size", R[i][5]);
+		video_node.put("created_by", R[i][6]);
+		video_node.put("updated_by", R[i][7]);
+		video_node.put("created_at", R[i][8]);
+		video_node.put("updated_at", R[i][9]);
+		video_node.put("details", R[i][10]);
+		video_node.put("status", R[i][11]);
+		video_node.put("situation", R[i][12]);
+		video_node.put("description", R[i][13]);
+		videos_node.push_back(std::make_pair("", video_node));
+	}
+	info_node.put<int>("page", page);
+	info_node.put<int>("offset", OFFSET_COUNT);
+	info_node.put<int>("page_count", pageCount);
+	info_node.put<int>("result_count", result_count);
+
+	result_node.add_child("info", info_node);
+	result_node.add_child("items", videos_node);
+	return result_node;
+}
+
+pqxx::result VideoModel::GetVideo(std::string id){
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
+	try {
+		if (C.is_open()) {
+			 LOG_INFO << "Opened database successfully: " << C.dbname();
+		} else {
+			 LOG_ERROR << "Can't open database: " << C.dbname();
+		}
+		C.disconnect ();
+	} catch (const angru::system::exception::error &e) {
+			LOG_ERROR << e.what();
+	}
+	LOG_INFO << "Connected to database: " << C.dbname();
+	pqxx::work W(C);
+  C.prepare("find", "SELECT \
+									      				id , \
+									      				content , \
+									      				name , \
+									      				title , \
+									      				path , \
+									      				size , \
+(select username from users where id = main.created_by) as  created_by , \
+(select username from users where id = main.updated_by) as  updated_by , \
+									      				created_at , \
+									      				updated_at , \
+									      				details , \
+									      				status , \
+									      				situation , \
+									      				description  FROM videos AS main where id = $1 and deleted_at is NULL ");
+  pqxx::result R = W.prepared("find")(id).exec();
+	W.commit();
+	return R;
+}
+
+boost::property_tree::ptree VideoModel::GetVideoJson(std::string id){
+	pqxx::result R = GetVideo(id);
+	boost::property_tree::ptree video_node;
+
+	if(R.size() == 1){
+		video_node.put("id", R[0][0]);
+		video_node.put("content", R[0][1]);
+		video_node.put("name", R[0][2]);
+		video_node.put("title", R[0][3]);
+		video_node.put("path", R[0][4]);
+		video_node.put("size", R[0][5]);
+		video_node.put("created_by", R[0][6]);
+		video_node.put("updated_by", R[0][7]);
+		video_node.put("created_at", R[0][8]);
+		video_node.put("updated_at", R[0][9]);
+		video_node.put("details", R[0][10]);
+		video_node.put("status", R[0][11]);
+		video_node.put("situation", R[0][12]);
+		video_node.put("description", R[0][13]);
+	}
+	return video_node;
+}
+
+std::string VideoModel::AddVideo(
+													std::string	content, 
+													std::string	name, 
+													std::string	title, 
+													std::string	path, 
+													float	size, 
+													std::string	created_by, 
+													std::string	details, 
+													int	status, 
+													int	situation, 
+													std::string	description){
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
+	try {
+		if (C.is_open()) {
+			 LOG_INFO << "Opened database successfully: " << C.dbname();
+		} else {
+			 LOG_ERROR << "Can't open database: " << C.dbname();
+		}
+		C.disconnect ();
+	} catch (const angru::system::exception::error &e) {
+			LOG_ERROR << e.what();
+	}
+	LOG_INFO << "Connected to database: " << C.dbname();
+	pqxx::work W(C);
+	C.prepare("insert", "INSERT INTO videos( \
+													id, \
+													content, \
+													name, \
+													title, \
+													path, \
+													size, \
+													created_by, \
+													deleted_by, \
+													updated_by, \
+													created_at, \
+													deleted_at, \
+													updated_at, \
+													details, \
+													status, \
+													situation, \
+													description	) VALUES (\
+												   DEFAULT, \
+												   $1, \
+												   $2, \
+												   $3, \
+												   $4, \
+												   $5, \
+												   $6, \
+												   NULL, \
+												   NULL, \
+												   now(), \
+												   NULL, \
+												   NULL, \
+												   $7, \
+												   $8, \
+												   $9, \
+												   $10 ) RETURNING id");
+
+  pqxx::result R = W.prepared("insert")
+                 (content)
+                 (name)
+                 (title)
+                 (path)
+                 (size)
+                 (created_by)
+                 (details)
+                 (status)
+                 (situation)
+                 (description)
+         .exec();
+  W.commit();
+	std::string id="";
+	if(R.size() == 1){
+		id = R[0][0].as<std::string>();
+	}
+	return id;
+}
+
+void VideoModel::UpdateVideo( 
+													std::string	id,
+													std::string	content,
+													std::string	name,
+													std::string	title,
+													std::string	path,
+													float	size,
+													std::string	updated_by,
+													std::string	details,
+													int	status,
+													int	situation,
+													std::string	description ){
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
+	try {
+		if (C.is_open()) {
+			 LOG_INFO << "Opened database successfully: " << C.dbname();
+		} else {
+			 LOG_ERROR << "Can't open database: " << C.dbname();
+		}
+		C.disconnect ();
+	} catch (const angru::system::exception::error &e) {
+			LOG_ERROR << e.what();
+	}
+	LOG_INFO << "Connected to database: " << C.dbname();
+	pqxx::work W(C);
+	C.prepare("update", "UPDATE videos SET \
+													content = $2, \
+													name = $3, \
+													title = $4, \
+													path = $5, \
+													size = $6, \
+													updated_by = $7, \
+													updated_at = now(), \
+													details = $8, \
+													status = $9, \
+													situation = $10, \
+													description = $11	WHERE id = $1");
+	W.prepared("update")
+                 (id)
+                 (content)
+                 (name)
+                 (title)
+                 (path)
+                 (size)
+                 (updated_by)
+                 (details)
+                 (status)
+                 (situation)
+                 (description)
+         .exec();
+	W.commit();
+}
+
+void VideoModel::DeleteVideo(std::string id){
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
+	try {
+		if (C.is_open()) {
+			 LOG_INFO << "Opened database successfully: " << C.dbname();
+		} else {
+			 LOG_ERROR << "Can't open database: " << C.dbname();
+		}
+		C.disconnect ();
+	 } catch (const angru::system::exception::error &e) {
+			LOG_ERROR << e.what();
+	 }
+	 LOG_INFO << "Connected to database: " << C.dbname();
+	 pqxx::work W(C);
+	 C.prepare("update", "UPDATE videos SET \
+												deleted_at = now()  \
+												WHERE id = $1");
+   W.prepared("update")(id).exec();
+   W.commit();
+  }
+
+} // model
+} // mvc
+} // angru

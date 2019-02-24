@@ -28,6 +28,16 @@
 #include "controllers/publisher_controller.h"
 #include "controllers/users_content_provider_controller.h"
 #include "controllers/users_publisher_controller.h"
+#include "controllers/attraction_controller.h"
+#include "controllers/comment_controller.h"
+#include "controllers/content_controller.h"
+#include "controllers/playlists_content_controller.h"
+#include "controllers/rate_controller.h"
+#include "controllers/tags_channel_controller.h"
+#include "controllers/tag_controller.h"
+#include "controllers/video_controller.h"
+#include "controllers/tags_playlist_controller.h"
+#include "controllers/tags_content_controller.h"
 
 namespace angru{
 namespace wrapper{
@@ -176,6 +186,69 @@ void RestServer::SetupRoutes() {
   Delete(router, "/users_publishers/:id", bind(&UsersPublisherController::doDeleteUsersPublisher));
   Post(router, "/users_publishers", bind(&UsersPublisherController::doAddUsersPublisher));
   Put(router, "/users_publishers/:id", bind(&UsersPublisherController::doUpdateUsersPublisher));
+
+  Get(router, "/attractions", bind(&AttractionController::doGetAttractions));
+	Get(router, "/attractions/:id", bind(&AttractionController::doGetAttraction));
+	Delete(router, "/attractions/:id", bind(&AttractionController::doDeleteAttraction));
+  Post(router, "/attractions", bind(&AttractionController::doAddAttraction));
+	Put(router, "/attractions/:id", bind(&AttractionController::doUpdateAttraction));
+
+  Get(router, "/comments", bind(&CommentController::doGetComments));
+	Get(router, "/comments/:id", bind(&CommentController::doGetComment));
+	Delete(router, "/comments/:id", bind(&CommentController::doDeleteComment));
+  Post(router, "/comments", bind(&CommentController::doAddComment));
+	Put(router, "/comments/:id", bind(&CommentController::doUpdateComment));
+
+  Get(router, "/contents", bind(&ContentController::doGetContents));
+	Get(router, "/contents/:id", bind(&ContentController::doGetContent));
+	Delete(router, "/contents/:id", bind(&ContentController::doDeleteContent));
+  Post(router, "/contents", bind(&ContentController::doAddContent));
+	Put(router, "/contents/:id", bind(&ContentController::doUpdateContent));
+
+  Get(router, "/playlists_contents", bind(&PlaylistsContentController::doGetPlaylistsContents));
+  Get(router, "/playlists_contents/:id", bind(&PlaylistsContentController::doGetPlaylistsContent));
+  Delete(router, "/playlists_contents/:id", bind(&PlaylistsContentController::doDeletePlaylistsContent));
+  Post(router, "/playlists_contents", bind(&PlaylistsContentController::doAddPlaylistsContent));
+  Put(router, "/playlists_contents/:id", bind(&PlaylistsContentController::doUpdatePlaylistsContent));
+
+  Get(router, "/rates", bind(&RateController::doGetRates));
+	Get(router, "/rates/:id", bind(&RateController::doGetRate));
+	Delete(router, "/rates/:id", bind(&RateController::doDeleteRate));
+  Post(router, "/rates", bind(&RateController::doAddRate));
+	Put(router, "/rates/:id", bind(&RateController::doUpdateRate));
+
+  Get(router, "/tags", bind(&TagController::doGetTags));
+	Get(router, "/tags/:id", bind(&TagController::doGetTag));
+	Delete(router, "/tags/:id", bind(&TagController::doDeleteTag));
+  Post(router, "/tags", bind(&TagController::doAddTag));
+	Put(router, "/tags/:id", bind(&TagController::doUpdateTag));
+
+  Get(router, "/tags_channels", bind(&TagChannelController::doGetTagChannels));
+	Get(router, "/tags_channels/:id", bind(&TagChannelController::doGetTagChannel));
+	Delete(router, "/tags_channels/:id", bind(&TagChannelController::doDeleteTagChannel));
+  Post(router, "/tags_channels", bind(&TagChannelController::doAddTagChannel));
+	Put(router, "/tags_channels/:id", bind(&TagChannelController::doUpdateTagChannel));
+
+  Get(router, "/tags_contents", bind(&TagsContentController::doGetTagsContents));
+	Get(router, "/tags_contents/:id", bind(&TagsContentController::doGetTagsContent));
+	Delete(router, "/tags_contents/:id", bind(&TagsContentController::doDeleteTagsContent));
+  Post(router, "/tags_contents", bind(&TagsContentController::doAddTagsContent));
+	Put(router, "/tags_contents/:id", bind(&TagsContentController::doUpdateTagsContent));
+
+
+	Get(router, "/videos", bind(&VideoController::doGetVideos));
+	Get(router, "/videos/:id", bind(&VideoController::doGetVideo));
+	Delete(router, "/videos/:id", bind(&VideoController::doDeleteVideo));
+  Post(router, "/videos", bind(&VideoController::doAddVideo));
+	Put(router, "/videos/:id", bind(&VideoController::doUpdateVideo));
+
+  Get(router, "/tags_playlists", bind(&TagsPlaylistController::doGetTagsPlaylists));
+	Get(router, "/tags_playlists/:id", bind(&TagsPlaylistController::doGetTagsPlaylist));
+	Delete(router, "/tags_playlists/:id", bind(&TagsPlaylistController::doDeleteTagsPlaylist));
+  Post(router, "/tags_playlists", bind(&TagsPlaylistController::doAddTagsPlaylist));
+	Put(router, "/tags_playlists/:id", bind(&TagsPlaylistController::doUpdateTagsPlaylist));
+
+
 }
 
 void RestServer::PrintCookies(const Pistache::Http::Request& req) {

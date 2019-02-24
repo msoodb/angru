@@ -17,7 +17,7 @@ void generate()
   std::string entity_name="";
   std::vector<std::pair<std::string, std::string>> fields;
 
-  //--------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
   // table_name_single = "user";
   // entity_name="User";
   // fields.clear();
@@ -119,9 +119,10 @@ void generate()
   // angru::tools::generator::modelGenerator(table_name_single, entity_name, fields);
   // angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);
   // angru::tools::generator::routerGenerator(table_name_single, entity_name);
-  //--------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
 
 
+//--------------------------------------------------------------------------------------------
   // table_name_single = "product";
   // entity_name="Product";
   // fields.clear();
@@ -162,8 +163,9 @@ void generate()
   // angru::tools::generator::modelGenerator(table_name_single,entity_name, fields);
   // angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);
   // angru::tools::generator::routerGenerator(table_name_single, entity_name);
+//--------------------------------------------------------------------------------------------
 
-  //
+//--------------------------------------------------------------------------------------------
   // table_name_single = "mobile_operator";
   // entity_name="MobileOperator";
   // fields.clear();
@@ -233,18 +235,36 @@ void generate()
   // angru::tools::generator::modelGenerator(table_name_single,entity_name, fields);
   // angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);
   // angru::tools::generator::routerGenerator(table_name_single, entity_name);
-
-  // table_name_single = "service";
-  // entity_name="Service";
+  //
+  // table_name_single = "users_content_provider";
+  // entity_name="UsersContentProvider";
   // fields.clear();
   // fields.push_back(std::pair<std::string, std::string>("std::string", "id"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "pendar"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "mobile_operator"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "aggrigator"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "_user_"));
   // fields.push_back(std::pair<std::string, std::string>("std::string", "content_provider"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "created_by"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_by"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "updated_by"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "created_at"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_at"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "updated_at"));
+  // fields.push_back(std::pair<std::string, std::string>("int", "status"));
+  // fields.push_back(std::pair<std::string, std::string>("int", "situation"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "description"));
+  // angru::tools::generator::modelGenerator(table_name_single, entity_name, fields);
+  // angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);
+  // angru::tools::generator::routerGenerator(table_name_single, entity_name);
+  //
+  // table_name_single = "publisher";
+  // entity_name="Publisher";
+  // fields.clear();
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "id"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "admin"));
   // fields.push_back(std::pair<std::string, std::string>("std::string", "name"));
   // fields.push_back(std::pair<std::string, std::string>("std::string", "title"));
   // fields.push_back(std::pair<std::string, std::string>("std::string", "code"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "phone"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "email"));
   // fields.push_back(std::pair<std::string, std::string>("std::string", "created_by"));
   // fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_by"));
   // fields.push_back(std::pair<std::string, std::string>("std::string", "updated_by"));
@@ -258,7 +278,28 @@ void generate()
   // angru::tools::generator::modelGenerator(table_name_single,entity_name, fields);
   // angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);
   // angru::tools::generator::routerGenerator(table_name_single, entity_name);
+  //
+  // table_name_single = "users_publisher";
+  // entity_name="UsersPublisher";
+  // fields.clear();
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "id"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "_user_"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "publisher"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "created_by"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_by"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "updated_by"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "created_at"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_at"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "updated_at"));
+  // fields.push_back(std::pair<std::string, std::string>("int", "status"));
+  // fields.push_back(std::pair<std::string, std::string>("int", "situation"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "description"));
+  // angru::tools::generator::modelGenerator(table_name_single, entity_name, fields);
+  // angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);
+  // angru::tools::generator::routerGenerator(table_name_single, entity_name);
+  //--------------------------------------------------------------------------------------------
 
+  //--------------------------------------------------------------------------------------------
   // table_name_single = "member";
   // entity_name="Member";
   // fields.clear();
@@ -299,6 +340,31 @@ void generate()
   // angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);
   // angru::tools::generator::routerGenerator(table_name_single, entity_name);
 
+  // table_name_single = "service";
+  // entity_name="Service";
+  // fields.clear();
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "id"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "pendar"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "mobile_operator"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "aggrigator"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "content_provider"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "name"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "title"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "code"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "created_by"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_by"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "updated_by"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "created_at"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_at"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "updated_at"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "details"));
+  // fields.push_back(std::pair<std::string, std::string>("int", "status"));
+  // fields.push_back(std::pair<std::string, std::string>("int", "situation"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "description"));
+  // angru::tools::generator::modelGenerator(table_name_single,entity_name, fields);
+  // angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);
+  // angru::tools::generator::routerGenerator(table_name_single, entity_name);
+  //
   // table_name_single = "channel";
   // entity_name="Channel";
   // fields.clear();
@@ -321,7 +387,6 @@ void generate()
   // angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);
   // angru::tools::generator::routerGenerator(table_name_single, entity_name);
   //
-
   // table_name_single = "playlist";
   // entity_name="Playlist";
   // fields.clear();
@@ -342,66 +407,213 @@ void generate()
   // angru::tools::generator::modelGenerator(table_name_single,entity_name, fields);
   // angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);
   // angru::tools::generator::routerGenerator(table_name_single, entity_name);
-
-  // table_name_single = "publisher";
-  // entity_name="Publisher";
-  // fields.clear();
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "id"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "admin"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "name"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "title"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "code"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "phone"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "email"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "created_by"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_by"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "updated_by"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "created_at"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_at"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "updated_at"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "details"));
-  // fields.push_back(std::pair<std::string, std::string>("int", "status"));
-  // fields.push_back(std::pair<std::string, std::string>("int", "situation"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "description"));
-  // angru::tools::generator::modelGenerator(table_name_single,entity_name, fields);
-  // angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);
-  // angru::tools::generator::routerGenerator(table_name_single, entity_name);
-
-  // table_name_single = "users_content_provider";
-  // entity_name="UsersContentProvider";
-  // fields.clear();
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "id"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "_user_"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "content_provider"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "created_by"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_by"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "updated_by"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "created_at"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_at"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "updated_at"));
-  // fields.push_back(std::pair<std::string, std::string>("int", "status"));
-  // fields.push_back(std::pair<std::string, std::string>("int", "situation"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "description"));
-  // angru::tools::generator::modelGenerator(table_name_single, entity_name, fields);
-  // angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);
-  // angru::tools::generator::routerGenerator(table_name_single, entity_name);
-
-  table_name_single = "users_publisher";
-  entity_name="UsersPublisher";
+//--------------------------------------------------------------------------------------------
+  table_name_single = "content";
+  entity_name="Content";
   fields.clear();
   fields.push_back(std::pair<std::string, std::string>("std::string", "id"));
-  fields.push_back(std::pair<std::string, std::string>("std::string", "_user_"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "service"));
   fields.push_back(std::pair<std::string, std::string>("std::string", "publisher"));
+  fields.push_back(std::pair<std::string, std::string>("int", "type"));
   fields.push_back(std::pair<std::string, std::string>("std::string", "created_by"));
   fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_by"));
   fields.push_back(std::pair<std::string, std::string>("std::string", "updated_by"));
   fields.push_back(std::pair<std::string, std::string>("std::string", "created_at"));
   fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_at"));
   fields.push_back(std::pair<std::string, std::string>("std::string", "updated_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "details"));
   fields.push_back(std::pair<std::string, std::string>("int", "status"));
   fields.push_back(std::pair<std::string, std::string>("int", "situation"));
   fields.push_back(std::pair<std::string, std::string>("std::string", "description"));
-  angru::tools::generator::modelGenerator(table_name_single, entity_name, fields);
+  angru::tools::generator::modelGenerator(table_name_single,entity_name, fields);
+  angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);
+  angru::tools::generator::routerGenerator(table_name_single, entity_name);
+
+  table_name_single = "video";
+  entity_name="Video";
+  fields.clear();
+  fields.push_back(std::pair<std::string, std::string>("std::string", "id"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "content"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "name"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "title"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "path"));
+  fields.push_back(std::pair<std::string, std::string>("float", "size"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "created_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "updated_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "created_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "updated_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "details"));
+  fields.push_back(std::pair<std::string, std::string>("int", "status"));
+  fields.push_back(std::pair<std::string, std::string>("int", "situation"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "description"));
+  angru::tools::generator::modelGenerator(table_name_single,entity_name, fields);
+  angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);
+  angru::tools::generator::routerGenerator(table_name_single, entity_name);
+
+  table_name_single = "playlists_content";
+  entity_name="PlaylistsContent";
+  fields.clear();
+  fields.push_back(std::pair<std::string, std::string>("std::string", "id"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "playlist"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "content"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "created_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "updated_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "created_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "updated_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "details"));
+  fields.push_back(std::pair<std::string, std::string>("int", "status"));
+  fields.push_back(std::pair<std::string, std::string>("int", "situation"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "description"));
+  angru::tools::generator::modelGenerator(table_name_single,entity_name, fields);
+  angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);
+  angru::tools::generator::routerGenerator(table_name_single, entity_name);
+
+  table_name_single = "comment";
+  entity_name="Comment";
+  fields.clear();
+  fields.push_back(std::pair<std::string, std::string>("std::string", "id"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "member"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "content"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "comment"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "reply_to"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "created_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "updated_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "created_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "updated_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "details"));
+  fields.push_back(std::pair<std::string, std::string>("int", "status"));
+  fields.push_back(std::pair<std::string, std::string>("int", "situation"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "description"));
+  angru::tools::generator::modelGenerator(table_name_single,entity_name, fields);
+  angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);
+  angru::tools::generator::routerGenerator(table_name_single, entity_name);
+
+  table_name_single = "rate";
+  entity_name="Rate";
+  fields.clear();
+  fields.push_back(std::pair<std::string, std::string>("std::string", "id"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "member"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "content"));
+  fields.push_back(std::pair<std::string, std::string>("int", "rate"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "created_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "updated_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "created_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "updated_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "details"));
+  fields.push_back(std::pair<std::string, std::string>("int", "status"));
+  fields.push_back(std::pair<std::string, std::string>("int", "situation"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "description"));
+  angru::tools::generator::modelGenerator(table_name_single,entity_name, fields);
+  angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);
+  angru::tools::generator::routerGenerator(table_name_single, entity_name);
+
+  table_name_single = "attraction";
+  entity_name="Attraction";
+  fields.clear();
+  fields.push_back(std::pair<std::string, std::string>("std::string", "id"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "member"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "content"));
+  fields.push_back(std::pair<std::string, std::string>("int", "attraction"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "created_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "updated_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "created_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "updated_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "details"));
+  fields.push_back(std::pair<std::string, std::string>("int", "status"));
+  fields.push_back(std::pair<std::string, std::string>("int", "situation"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "description"));
+  angru::tools::generator::modelGenerator(table_name_single,entity_name, fields);
+  angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);
+  angru::tools::generator::routerGenerator(table_name_single, entity_name);
+
+  table_name_single = "tag";
+  entity_name="Tag";
+  fields.clear();
+  fields.push_back(std::pair<std::string, std::string>("std::string", "id"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "name"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "title"));
+  fields.push_back(std::pair<std::string, std::string>("int", "type"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "created_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "updated_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "created_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "updated_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "details"));
+  fields.push_back(std::pair<std::string, std::string>("int", "status"));
+  fields.push_back(std::pair<std::string, std::string>("int", "situation"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "description"));
+  angru::tools::generator::modelGenerator(table_name_single,entity_name, fields);
+  angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);
+  angru::tools::generator::routerGenerator(table_name_single, entity_name);
+
+  table_name_single = "tags_channel";
+  entity_name="TagChannel";
+  fields.clear();
+  fields.push_back(std::pair<std::string, std::string>("std::string", "id"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "tag"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "channel"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "created_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "updated_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "created_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "updated_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "details"));
+  fields.push_back(std::pair<std::string, std::string>("int", "status"));
+  fields.push_back(std::pair<std::string, std::string>("int", "situation"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "description"));
+  angru::tools::generator::modelGenerator(table_name_single,entity_name, fields);
+  angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);
+  angru::tools::generator::routerGenerator(table_name_single, entity_name);
+
+  table_name_single = "tags_content";
+  entity_name="TagsContent";
+  fields.clear();
+  fields.push_back(std::pair<std::string, std::string>("std::string", "id"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "tag"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "content"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "created_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "updated_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "created_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "updated_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "details"));
+  fields.push_back(std::pair<std::string, std::string>("int", "status"));
+  fields.push_back(std::pair<std::string, std::string>("int", "situation"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "description"));
+  angru::tools::generator::modelGenerator(table_name_single,entity_name, fields);
+  angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);
+  angru::tools::generator::routerGenerator(table_name_single, entity_name);
+
+  table_name_single = "tags_playlist";
+  entity_name="TagsPlaylist";
+  fields.clear();
+  fields.push_back(std::pair<std::string, std::string>("std::string", "id"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "tag"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "playlist"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "created_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "updated_by"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "created_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "updated_at"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "details"));
+  fields.push_back(std::pair<std::string, std::string>("int", "status"));
+  fields.push_back(std::pair<std::string, std::string>("int", "situation"));
+  fields.push_back(std::pair<std::string, std::string>("std::string", "description"));
+  angru::tools::generator::modelGenerator(table_name_single,entity_name, fields);
   angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);
   angru::tools::generator::routerGenerator(table_name_single, entity_name);
 
