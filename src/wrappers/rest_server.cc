@@ -113,9 +113,9 @@ void RestServer::SetupRoutes() {
 
 	Get(router, "/entities", bind(&EntitieController::doGetEntities));
 	Get(router, "/entities/:id", bind(&EntitieController::doGetEntitie));
-	Delete(router, "/entities/:id", bind(&EntitieController::doDeleteEntitie));
-  Post(router, "/entities", bind(&EntitieController::doAddEntitie));
-	Put(router, "/entities/:id", bind(&EntitieController::doUpdateEntitie));
+	// Delete(router, "/entities/:id", bind(&EntitieController::doDeleteEntitie));
+  // Post(router, "/entities", bind(&EntitieController::doAddEntitie));
+	// Put(router, "/entities/:id", bind(&EntitieController::doUpdateEntitie));
 
   Get(router, "/privileges", bind(&PrivilegeController::doGetPrivileges));
 	Get(router, "/privileges/:id", bind(&PrivilegeController::doGetPrivilege));

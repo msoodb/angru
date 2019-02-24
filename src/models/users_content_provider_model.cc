@@ -34,7 +34,7 @@ pqxx::result UsersContentProviderModel::GetUsersContentProviders(int page, std::
 	pqxx::work W(C);
 	std::string complete_query = "SELECT \
 									      				id , \
-									      				(select username from users where id = main.created_by) as _user_ , \
+									      				(select username from users where id = main._user_) as _user_ , \
 									      				(select name from content_providers where id = main.content_provider) as  content_provider , \
 																(select username from users where id = main.created_by) as  created_by , \
 																(select username from users where id = main.updated_by) as  updated_by , \

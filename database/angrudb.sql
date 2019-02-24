@@ -43,9 +43,6 @@ CREATE TABLE public.users
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public.users
-  OWNER TO masoud;
-
 
 INSERT INTO public.users(
             id, first_name, middle_name, last_name, username, email, password,
@@ -89,9 +86,6 @@ CREATE TABLE public.security_roles
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public.security_roles
-  OWNER TO masoud;
-
 
 INSERT INTO public.security_roles(
             id, name, title, created_by, deleted_by, updated_by, created_at,
@@ -150,9 +144,6 @@ CREATE TABLE public.users_security_roles
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public.users_security_roles
-  OWNER TO masoud;
-
 
 
 -- Table: public.entities
@@ -189,14 +180,13 @@ CREATE TABLE public.entities
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public.entities
-  OWNER TO masoud;
 
-  INSERT INTO public.entities(
-              id, name, title, created_by, deleted_by, updated_by, created_at,
-              deleted_at, updated_at, type, status, situation, description)
-      VALUES (DEFAULT, 'mobile_operators', 'mobile_operators', (select id from users where username='zeus'), NULL, NULL, NOW(),
-              NULL, NULL, 0, 1, 0, '');
+
+INSERT INTO public.entities(
+            id, name, title, created_by, deleted_by, updated_by, created_at,
+            deleted_at, updated_at, type, status, situation, description)
+    VALUES (DEFAULT, 'mobile_operators', 'mobile_operators', (select id from users where username='zeus'), NULL, NULL, NOW(),
+            NULL, NULL, 0, 1, 0, '');
 
 INSERT INTO public.entities(
             id, name, title, created_by, deleted_by, updated_by, created_at,
@@ -244,6 +234,72 @@ INSERT INTO public.entities(
             id, name, title, created_by, deleted_by, updated_by, created_at,
             deleted_at, updated_at, type, status, situation, description)
     VALUES (DEFAULT, 'publishers', 'publishers', (select id from users where username='zeus'), NULL, NULL, NOW(),
+            NULL, NULL, 0, 1, 0, '');
+
+INSERT INTO public.entities(
+            id, name, title, created_by, deleted_by, updated_by, created_at,
+            deleted_at, updated_at, type, status, situation, description)
+    VALUES (DEFAULT, 'contents', 'contents', (select id from users where username='zeus'), NULL, NULL, NOW(),
+            NULL, NULL, 0, 1, 0, '');
+
+INSERT INTO public.entities(
+            id, name, title, created_by, deleted_by, updated_by, created_at,
+            deleted_at, updated_at, type, status, situation, description)
+    VALUES (DEFAULT, 'videos', 'videos', (select id from users where username='zeus'), NULL, NULL, NOW(),
+            NULL, NULL, 0, 1, 0, '');
+
+INSERT INTO public.entities(
+            id, name, title, created_by, deleted_by, updated_by, created_at,
+            deleted_at, updated_at, type, status, situation, description)
+    VALUES (DEFAULT, 'comments', 'comments', (select id from users where username='zeus'), NULL, NULL, NOW(),
+            NULL, NULL, 0, 1, 0, '');
+
+INSERT INTO public.entities(
+            id, name, title, created_by, deleted_by, updated_by, created_at,
+            deleted_at, updated_at, type, status, situation, description)
+    VALUES (DEFAULT, 'playlists_contents', 'playlists_contents', (select id from users where username='zeus'), NULL, NULL, NOW(),
+            NULL, NULL, 0, 1, 0, '');
+
+INSERT INTO public.entities(
+            id, name, title, created_by, deleted_by, updated_by, created_at,
+            deleted_at, updated_at, type, status, situation, description)
+    VALUES (DEFAULT, 'rates', 'rates', (select id from users where username='zeus'), NULL, NULL, NOW(),
+            NULL, NULL, 0, 1, 0, '');
+
+INSERT INTO public.entities(
+            id, name, title, created_by, deleted_by, updated_by, created_at,
+            deleted_at, updated_at, type, status, situation, description)
+    VALUES (DEFAULT, 'tags', 'tags', (select id from users where username='zeus'), NULL, NULL, NOW(),
+            NULL, NULL, 0, 1, 0, '');
+
+INSERT INTO public.entities(
+            id, name, title, created_by, deleted_by, updated_by, created_at,
+            deleted_at, updated_at, type, status, situation, description)
+    VALUES (DEFAULT, 'tags_channels', 'tags_channels', (select id from users where username='zeus'), NULL, NULL, NOW(),
+            NULL, NULL, 0, 1, 0, '');
+
+INSERT INTO public.entities(
+            id, name, title, created_by, deleted_by, updated_by, created_at,
+            deleted_at, updated_at, type, status, situation, description)
+    VALUES (DEFAULT, 'tags_contents', 'tags_contents', (select id from users where username='zeus'), NULL, NULL, NOW(),
+            NULL, NULL, 0, 1, 0, '');
+
+INSERT INTO public.entities(
+            id, name, title, created_by, deleted_by, updated_by, created_at,
+            deleted_at, updated_at, type, status, situation, description)
+    VALUES (DEFAULT, 'tags_playlists', 'tags_playlists', (select id from users where username='zeus'), NULL, NULL, NOW(),
+            NULL, NULL, 0, 1, 0, '');
+
+INSERT INTO public.entities(
+            id, name, title, created_by, deleted_by, updated_by, created_at,
+            deleted_at, updated_at, type, status, situation, description)
+    VALUES (DEFAULT, 'users_content_providers', 'users_content_providers', (select id from users where username='zeus'), NULL, NULL, NOW(),
+            NULL, NULL, 0, 1, 0, '');
+
+INSERT INTO public.entities(
+            id, name, title, created_by, deleted_by, updated_by, created_at,
+            deleted_at, updated_at, type, status, situation, description)
+    VALUES (DEFAULT, 'users_publishers', 'users_publishers', (select id from users where username='zeus'), NULL, NULL, NOW(),
             NULL, NULL, 0, 1, 0, '');
 
 INSERT INTO public.entities(
@@ -316,8 +372,6 @@ CREATE TABLE public.privileges
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public.privileges
-  OWNER TO masoud;
 
 -- Table: public.mobile_operators
 
@@ -355,8 +409,6 @@ CREATE TABLE public.mobile_operators
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public.mobile_operators
-  OWNER TO masoud;
 
 
 -- Table: public.aggrigators
@@ -395,9 +447,6 @@ CREATE TABLE public.aggrigators
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public.aggrigators
-  OWNER TO masoud;
-
 
 -- Table: public.content_providers
 
@@ -439,10 +488,6 @@ CREATE TABLE public.content_providers
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public.content_providers
-  OWNER TO masoud;
-
-
 
 -- Table: public.services
 
@@ -492,9 +537,6 @@ CREATE TABLE public.services
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public.services
-  OWNER TO masoud;
-
 
 -- Table: public.members
 
@@ -528,9 +570,6 @@ CREATE TABLE public.members
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public.members
-  OWNER TO masoud;
-
 
 -- Table: public.subscriptions
 
@@ -572,9 +611,6 @@ CREATE TABLE public.subscriptions
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public.subscriptions
-  OWNER TO masoud;
-
 
 -- Table: public.channels
 
@@ -617,9 +653,6 @@ CREATE TABLE public.channels
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public.channels
-  OWNER TO masoud;
-
 
 -- Table: public.playlists
 
@@ -658,9 +691,6 @@ CREATE TABLE public.playlists
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public.playlists
-  OWNER TO masoud;
-
 
 -- Table: public.publishers
 
@@ -702,9 +732,6 @@ CREATE TABLE public.publishers
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public.publishers
-  OWNER TO masoud;
-
 
 -- Table: public.users_content_providers
 
@@ -744,47 +771,444 @@ CREATE TABLE public.users_content_providers
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public.users_content_providers
-  OWNER TO masoud;
+
+-- Table: public.users_publishers
+
+-- DROP TABLE public.users_publishers;
+
+CREATE TABLE public.users_publishers
+(
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  _user_ uuid NOT NULL,
+  publisher uuid NOT NULL,
+  created_by uuid,
+  deleted_by uuid,
+  updated_by uuid,
+  created_at timestamp with time zone,
+  deleted_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  status integer NOT NULL,
+  situation integer NOT NULL,
+  description character varying,
+  CONSTRAINT users_publishers_pkey PRIMARY KEY (id),
+  CONSTRAINT users_publishers__user__fkey FOREIGN KEY (_user_)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT users_publishers_created_by_fkey FOREIGN KEY (created_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT users_publishers_deleted_by_fkey FOREIGN KEY (deleted_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT users_publishers_publisher_fkey FOREIGN KEY (publisher)
+      REFERENCES public.publishers (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT users_publishers_updated_by_fkey FOREIGN KEY (updated_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+
+-- Table: public.contents
+
+-- DROP TABLE public.contents;
+
+CREATE TABLE public.contents
+(
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  service uuid NOT NULL,
+  publisher uuid,
+  type integer NOT NULL,
+  created_by uuid,
+  deleted_by uuid,
+  updated_by uuid,
+  created_at timestamp with time zone,
+  deleted_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  details json,
+  status integer NOT NULL,
+  situation integer NOT NULL,
+  description character varying,
+  CONSTRAINT contents_pkey PRIMARY KEY (id),
+  CONSTRAINT contents_service_fkey FOREIGN KEY (service)
+      REFERENCES public.services (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT contents_publisher_fkey FOREIGN KEY (publisher)
+      REFERENCES public.publishers (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT contents_created_by_fkey FOREIGN KEY (created_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT contents_deleted_by_fkey FOREIGN KEY (deleted_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT contents_updated_by_fkey FOREIGN KEY (updated_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+
+-- Table: public.playlists_contents
+
+-- DROP TABLE public.playlists_contents;
+
+CREATE TABLE public.playlists_contents
+(
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  playlist uuid NOT NULL,
+  content uuid NOT NULL,
+  created_by uuid,
+  deleted_by uuid,
+  updated_by uuid,
+  created_at timestamp with time zone,
+  deleted_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  status integer NOT NULL,
+  situation integer NOT NULL,
+  description character varying,
+  CONSTRAINT playlists_contents_pkey PRIMARY KEY (id),
+  CONSTRAINT playlists_contents_playlist_fkey FOREIGN KEY (playlist)
+      REFERENCES public.playlists (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT playlists_contents_created_by_fkey FOREIGN KEY (created_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT playlists_contents_deleted_by_fkey FOREIGN KEY (deleted_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT playlists_contents_content_fkey FOREIGN KEY (content)
+      REFERENCES public.contents (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT playlists_contents_updated_by_fkey FOREIGN KEY (updated_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
 
 
-  -- Table: public.users_publishers
+-- Table: public.contents
 
-  -- DROP TABLE public.users_publishers;
+-- DROP TABLE public.contents;
 
-  CREATE TABLE public.users_publishers
-  (
-    id uuid NOT NULL DEFAULT uuid_generate_v4(),
-    _user_ uuid NOT NULL,
-    publisher uuid NOT NULL,
-    created_by uuid,
-    deleted_by uuid,
-    updated_by uuid,
-    created_at timestamp with time zone,
-    deleted_at timestamp with time zone,
-    updated_at timestamp with time zone,
-    status integer NOT NULL,
-    situation integer NOT NULL,
-    description character varying,
-    CONSTRAINT users_publishers_pkey PRIMARY KEY (id),
-    CONSTRAINT users_publishers__user__fkey FOREIGN KEY (_user_)
-        REFERENCES public.users (id) MATCH SIMPLE
-        ON UPDATE NO ACTION ON DELETE NO ACTION,
-    CONSTRAINT users_publishers_created_by_fkey FOREIGN KEY (created_by)
-        REFERENCES public.users (id) MATCH SIMPLE
-        ON UPDATE NO ACTION ON DELETE NO ACTION,
-    CONSTRAINT users_publishers_deleted_by_fkey FOREIGN KEY (deleted_by)
-        REFERENCES public.users (id) MATCH SIMPLE
-        ON UPDATE NO ACTION ON DELETE NO ACTION,
-    CONSTRAINT users_publishers_publisher_fkey FOREIGN KEY (publisher)
-        REFERENCES public.publishers (id) MATCH SIMPLE
-        ON UPDATE NO ACTION ON DELETE NO ACTION,
-    CONSTRAINT users_publishers_updated_by_fkey FOREIGN KEY (updated_by)
-        REFERENCES public.users (id) MATCH SIMPLE
-        ON UPDATE NO ACTION ON DELETE NO ACTION
-  )
-  WITH (
-    OIDS=FALSE
-  );
-  ALTER TABLE public.users_publishers
-    OWNER TO masoud;
+CREATE TABLE public.tags
+(
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  name character varying(255) NOT NULL,
+  title character varying(255),
+  type integer NOT NULL,
+  created_by uuid,
+  deleted_by uuid,
+  updated_by uuid,
+  created_at timestamp with time zone,
+  deleted_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  details json,
+  status integer NOT NULL,
+  situation integer NOT NULL,
+  description character varying,
+  CONSTRAINT tags_pkey PRIMARY KEY (id),
+  CONSTRAINT tags_created_by_fkey FOREIGN KEY (created_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT tags_deleted_by_fkey FOREIGN KEY (deleted_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT tags_updated_by_fkey FOREIGN KEY (updated_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT tags_ukey_name UNIQUE (name)
+)
+WITH (
+  OIDS=FALSE
+);
+
+-- Table: public.videos
+
+-- DROP TABLE public.videos;
+
+CREATE TABLE public.videos
+(
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  content uuid NOT NULL,
+  name character varying(255),
+  title character varying(255),
+  path character varying(255),
+  size numeric,
+  created_by uuid,
+  deleted_by uuid,
+  updated_by uuid,
+  created_at timestamp with time zone,
+  deleted_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  details json,
+  status integer NOT NULL,
+  situation integer NOT NULL,
+  description character varying,
+  CONSTRAINT videos_pkey PRIMARY KEY (id),
+  CONSTRAINT videos_created_by_fkey FOREIGN KEY (created_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT videos_deleted_by_fkey FOREIGN KEY (deleted_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT videos_content_fkey FOREIGN KEY (content)
+      REFERENCES public.contents (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT videos_updated_by_fkey FOREIGN KEY (updated_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+
+
+-- Table: public.tags_contents
+
+-- DROP TABLE public.tags_contents;
+
+CREATE TABLE public.tags_contents
+(
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  tag uuid NOT NULL,
+  content uuid NOT NULL,
+  created_by uuid,
+  deleted_by uuid,
+  updated_by uuid,
+  created_at timestamp with time zone,
+  deleted_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  status integer NOT NULL,
+  situation integer NOT NULL,
+  description character varying,
+  CONSTRAINT tags_contents_pkey PRIMARY KEY (id),
+  CONSTRAINT tags_contents_tag_fkey FOREIGN KEY (tag)
+      REFERENCES public.tags (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT tags_contents_created_by_fkey FOREIGN KEY (created_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT tags_contents_deleted_by_fkey FOREIGN KEY (deleted_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT tags_contents_content_fkey FOREIGN KEY (content)
+      REFERENCES public.contents (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT tags_contents_updated_by_fkey FOREIGN KEY (updated_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+
+-- Table: public.tags_playlists
+
+-- DROP TABLE public.tags_playlists;
+
+CREATE TABLE public.tags_playlists
+(
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  tag uuid NOT NULL,
+  playlist uuid NOT NULL,
+  created_by uuid,
+  deleted_by uuid,
+  updated_by uuid,
+  created_at timestamp with time zone,
+  deleted_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  status integer NOT NULL,
+  situation integer NOT NULL,
+  description character varying,
+  CONSTRAINT tags_playlists_pkey PRIMARY KEY (id),
+  CONSTRAINT tags_playlists_tag_fkey FOREIGN KEY (tag)
+      REFERENCES public.tags (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT tags_playlists_created_by_fkey FOREIGN KEY (created_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT tags_playlists_deleted_by_fkey FOREIGN KEY (deleted_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT tags_playlists_playlist_fkey FOREIGN KEY (playlist)
+      REFERENCES public.playlists (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT tags_playlists_updated_by_fkey FOREIGN KEY (updated_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+
+-- Table: public.tags_channels
+
+-- DROP TABLE public.tags_channels;
+
+CREATE TABLE public.tags_channels
+(
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  tag uuid NOT NULL,
+  channel uuid NOT NULL,
+  created_by uuid,
+  deleted_by uuid,
+  updated_by uuid,
+  created_at timestamp with time zone,
+  deleted_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  status integer NOT NULL,
+  situation integer NOT NULL,
+  description character varying,
+  CONSTRAINT tags_channels_pkey PRIMARY KEY (id),
+  CONSTRAINT tags_channels_tag_fkey FOREIGN KEY (tag)
+      REFERENCES public.tags (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT tags_channels_created_by_fkey FOREIGN KEY (created_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT tags_channels_deleted_by_fkey FOREIGN KEY (deleted_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT tags_channels_channel_fkey FOREIGN KEY (channel)
+      REFERENCES public.channels (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT tags_channels_updated_by_fkey FOREIGN KEY (updated_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+
+
+-- Table: public.comments
+
+-- DROP TABLE public.comments;
+
+CREATE TABLE public.comments
+(
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  member uuid NOT NULL,
+  content uuid NOT NULL,
+  comment character varying(255),
+  reply_to uuid,
+  created_by uuid,
+  deleted_by uuid,
+  updated_by uuid,
+  created_at timestamp with time zone,
+  deleted_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  status integer NOT NULL,
+  situation integer NOT NULL,
+  description character varying,
+  CONSTRAINT comments_pkey PRIMARY KEY (id),
+  CONSTRAINT comments_member_fkey FOREIGN KEY (member)
+      REFERENCES public.members (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT comments_created_by_fkey FOREIGN KEY (created_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT comments_deleted_by_fkey FOREIGN KEY (deleted_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT comments_content_fkey FOREIGN KEY (content)
+      REFERENCES public.contents (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT comments_updated_by_fkey FOREIGN KEY (updated_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT comments_reply_to_fkey FOREIGN KEY (reply_to)
+      REFERENCES public.comments (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+
+
+-- Table: public.rates
+
+-- DROP TABLE public.rates;
+
+CREATE TABLE public.rates
+(
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  member uuid NOT NULL,
+  content uuid NOT NULL,
+  rate integer NOT NULL,
+  created_by uuid,
+  deleted_by uuid,
+  updated_by uuid,
+  created_at timestamp with time zone,
+  deleted_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  status integer NOT NULL,
+  situation integer NOT NULL,
+  description character varying,
+  CONSTRAINT rates_pkey PRIMARY KEY (id),
+  CONSTRAINT rates_content_fkey FOREIGN KEY (content)
+      REFERENCES public.contents (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT rates_created_by_fkey FOREIGN KEY (created_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT rates_deleted_by_fkey FOREIGN KEY (deleted_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT rates_member_fkey FOREIGN KEY (member)
+      REFERENCES public.members (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT rates_updated_by_fkey FOREIGN KEY (updated_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+
+
+-- Table: public.attractions
+
+-- DROP TABLE public.attractions;
+
+CREATE TABLE public.attractions
+(
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  member uuid NOT NULL,
+  content uuid NOT NULL,
+  attraction integer NOT NULL,
+  created_by uuid,
+  deleted_by uuid,
+  updated_by uuid,
+  created_at timestamp with time zone,
+  deleted_at timestamp with time zone,
+  updated_at timestamp with time zone,
+  status integer NOT NULL,
+  situation integer NOT NULL,
+  description character varying,
+  CONSTRAINT attractions_pkey PRIMARY KEY (id),
+  CONSTRAINT attractions_content_fkey FOREIGN KEY (content)
+      REFERENCES public.contents (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT attractions_created_by_fkey FOREIGN KEY (created_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT attractions_deleted_by_fkey FOREIGN KEY (deleted_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT attractions_member_fkey FOREIGN KEY (member)
+      REFERENCES public.members (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT attractions_updated_by_fkey FOREIGN KEY (updated_by)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
