@@ -12,34 +12,32 @@ namespace angru{
 namespace mvc{
 namespace model{
 
-class TagChannelModel
+class TagsChannelModel
 {
 public:
-	TagChannelModel();
-	~TagChannelModel();
-	static pqxx::result GetTagChannels(int page=1, std::string query="");
-	static int GetTagChannelsCount(std::string query="");
-	static boost::property_tree::ptree GetTagChannelsJson(int page=1, std::string query="");
-  static pqxx::result GetTagChannel(std::string id);
-	static boost::property_tree::ptree GetTagChannelJson(std::string id);
-	static std::string AddTagChannel(
+	TagsChannelModel();
+	~TagsChannelModel();
+	static pqxx::result GetTagsChannels(int page=1, std::string query="");
+	static int GetTagsChannelsCount(std::string query="");
+	static boost::property_tree::ptree GetTagsChannelsJson(int page=1, std::string query="");
+  static pqxx::result GetTagsChannel(std::string id);
+	static boost::property_tree::ptree GetTagsChannelJson(std::string id);
+	static std::string AddTagsChannel(
 													std::string	tag,
 													std::string	channel,
 													std::string	created_by,
-													std::string	details,
 													int	status,
 													int	situation,
 													std::string	description);
-	static void UpdateTagChannel(
+	static void UpdateTagsChannel(
 													std::string	id,
 													std::string	tag,
 													std::string	channel,
 													std::string	updated_by,
-													std::string	details,
 													int	status,
 													int	situation,
 													std::string	description);
-	static void DeleteTagChannel(std::string id);
+	static void DeleteTagsChannel(std::string id);
 };
 
 } // model

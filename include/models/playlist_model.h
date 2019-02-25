@@ -25,7 +25,7 @@ public:
 	static std::string AddPlaylist(
 													std::string	name,
 													std::string	title,
-													std::string	channel,
+													std::string	service,
 													std::string	created_by,
 													std::string	details,
 													int	status,
@@ -35,7 +35,7 @@ public:
 													std::string	id,
 													std::string	name,
 													std::string	title,
-													std::string	channel,
+													std::string	service,
 													std::string	updated_by,
 													std::string	details,
 													int	status,

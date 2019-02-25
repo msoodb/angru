@@ -115,7 +115,7 @@ void PlaylistController::doAddPlaylist(const Pistache::Rest::Request& request,
     std::string created_by = user_id;
     std::string	name;
     std::string	title;
-    std::string	channel;
+    std::string	service;
     std::string	details;
     int	status;
     int	situation;
@@ -128,20 +128,20 @@ void PlaylistController::doAddPlaylist(const Pistache::Rest::Request& request,
       boost::property_tree::read_json(ss, pt);
       name = pt.get<std::string>("name");
       title = pt.get<std::string>("title");
-      channel = pt.get<std::string>("channel");
+      service = pt.get<std::string>("service");
       details = pt.get<std::string>("details");
       status = pt.get<int>("status");
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
       angru::mvc::model::PlaylistModel::AddPlaylist(
-                                                  name, 
-                                                  title, 
-                                                  channel, 
-                                                  created_by, 
-                                                  details, 
-                                                  status, 
-                                                  situation, 
+                                                  name,
+                                                  title,
+                                                  service,
+                                                  created_by,
+                                                  details,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Playlist added.");
     }
@@ -169,7 +169,7 @@ void PlaylistController::doUpdatePlaylist(const Pistache::Rest::Request& request
     auto body = request.body();
     std::string	name;
     std::string	title;
-    std::string	channel;
+    std::string	service;
     std::string	details;
     int	status;
     int	situation;
@@ -182,20 +182,20 @@ void PlaylistController::doUpdatePlaylist(const Pistache::Rest::Request& request
       boost::property_tree::read_json(ss, pt);
       name = pt.get<std::string>("name");
       title = pt.get<std::string>("title");
-      channel = pt.get<std::string>("channel");
+      service = pt.get<std::string>("service");
       details = pt.get<std::string>("details");
       status = pt.get<int>("status");
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
       angru::mvc::model::PlaylistModel::UpdatePlaylist(
-                                                  id, 
+                                                  id,
                                                   name, 
-                                                  title, 
-                                                  channel, 
-                                                  updated_by, 
-                                                  details, 
-                                                  status, 
-                                                  situation, 
+                                                  title,
+                                                  service,
+                                                  updated_by,
+                                                  details,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Playlists updated.");
     }

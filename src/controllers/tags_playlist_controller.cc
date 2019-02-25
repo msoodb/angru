@@ -115,7 +115,6 @@ void TagsPlaylistController::doAddTagsPlaylist(const Pistache::Rest::Request& re
     std::string created_by = user_id;
     std::string	tag;
     std::string	playlist;
-    std::string	details;
     int	status;
     int	situation;
     std::string	description;
@@ -127,18 +126,16 @@ void TagsPlaylistController::doAddTagsPlaylist(const Pistache::Rest::Request& re
       boost::property_tree::read_json(ss, pt);
       tag = pt.get<std::string>("tag");
       playlist = pt.get<std::string>("playlist");
-      details = pt.get<std::string>("details");
       status = pt.get<int>("status");
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
       angru::mvc::model::TagsPlaylistModel::AddTagsPlaylist(
-                                                  tag, 
-                                                  playlist, 
-                                                  created_by, 
-                                                  details, 
-                                                  status, 
-                                                  situation, 
+                                                  tag,
+                                                  playlist,
+                                                  created_by,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "TagsPlaylist added.");
     }
@@ -166,7 +163,6 @@ void TagsPlaylistController::doUpdateTagsPlaylist(const Pistache::Rest::Request&
     auto body = request.body();
     std::string	tag;
     std::string	playlist;
-    std::string	details;
     int	status;
     int	situation;
     std::string	description;
@@ -178,18 +174,16 @@ void TagsPlaylistController::doUpdateTagsPlaylist(const Pistache::Rest::Request&
       boost::property_tree::read_json(ss, pt);
       tag = pt.get<std::string>("tag");
       playlist = pt.get<std::string>("playlist");
-      details = pt.get<std::string>("details");
       status = pt.get<int>("status");
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
       angru::mvc::model::TagsPlaylistModel::UpdateTagsPlaylist(
-                                                  id, 
-                                                  tag, 
-                                                  playlist, 
-                                                  updated_by, 
-                                                  details, 
+                                                  id,
+                                                  tag,
+                                                  playlist,
+                                                  updated_by,
                                                   status, 
-                                                  situation, 
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "TagsPlaylists updated.");
     }

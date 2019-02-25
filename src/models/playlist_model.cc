@@ -36,7 +36,7 @@ pqxx::result PlaylistModel::GetPlaylists(int page, std::string query){
 									      				id , \
 									      				name , \
 									      				title , \
-									      				(select name from channels where id = main.channel) as channel , \
+									      				(select name from services where id = main.service) as service , \
 																(select username from users where id = main.created_by) as  created_by , \
 																(select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
@@ -99,7 +99,7 @@ boost::property_tree::ptree PlaylistModel::GetPlaylistsJson(int page, std::strin
 		playlist_node.put("id", R[i][0]);
 		playlist_node.put("name", R[i][1]);
 		playlist_node.put("title", R[i][2]);
-		playlist_node.put("channel", R[i][3]);
+		playlist_node.put("service", R[i][3]);
 		playlist_node.put("created_by", R[i][4]);
 		playlist_node.put("updated_by", R[i][5]);
 		playlist_node.put("created_at", R[i][6]);
@@ -138,7 +138,7 @@ pqxx::result PlaylistModel::GetPlaylist(std::string id){
 									      				id , \
 									      				name , \
 									      				title , \
-									      				channel , \
+									      				service , \
 (select username from users where id = main.created_by) as  created_by , \
 (select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
@@ -160,7 +160,7 @@ boost::property_tree::ptree PlaylistModel::GetPlaylistJson(std::string id){
 		playlist_node.put("id", R[0][0]);
 		playlist_node.put("name", R[0][1]);
 		playlist_node.put("title", R[0][2]);
-		playlist_node.put("channel", R[0][3]);
+		playlist_node.put("service", R[0][3]);
 		playlist_node.put("created_by", R[0][4]);
 		playlist_node.put("updated_by", R[0][5]);
 		playlist_node.put("created_at", R[0][6]);
@@ -176,7 +176,7 @@ boost::property_tree::ptree PlaylistModel::GetPlaylistJson(std::string id){
 std::string PlaylistModel::AddPlaylist(
 													std::string	name,
 													std::string	title,
-													std::string	channel,
+													std::string	service,
 													std::string	created_by,
 													std::string	details,
 													int	status,
@@ -199,7 +199,7 @@ std::string PlaylistModel::AddPlaylist(
 													id, \
 													name, \
 													title, \
-													channel, \
+													service, \
 													created_by, \
 													deleted_by, \
 													updated_by, \
@@ -228,7 +228,7 @@ std::string PlaylistModel::AddPlaylist(
   pqxx::result R = W.prepared("insert")
                  (name)
                  (title)
-                 (channel)
+                 (service)
                  (created_by)
                  (details)
                  (status)
@@ -247,7 +247,7 @@ void PlaylistModel::UpdatePlaylist(
 													std::string	id,
 													std::string	name,
 													std::string	title,
-													std::string	channel,
+													std::string	service,
 													std::string	updated_by,
 													std::string	details,
 													int	status,
@@ -269,7 +269,7 @@ void PlaylistModel::UpdatePlaylist(
 	C.prepare("update", "UPDATE playlists SET \
 													name = $2, \
 													title = $3, \
-													channel = $4, \
+													service = $4, \
 													updated_by = $5, \
 													updated_at = now(), \
 													details = $6, \
@@ -280,7 +280,7 @@ void PlaylistModel::UpdatePlaylist(
                  (id)
                  (name)
                  (title)
-                 (channel)
+                 (service)
                  (updated_by)
                  (details)
                  (status)

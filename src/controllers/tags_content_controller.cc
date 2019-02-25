@@ -115,7 +115,6 @@ void TagsContentController::doAddTagsContent(const Pistache::Rest::Request& requ
     std::string created_by = user_id;
     std::string	tag;
     std::string	content;
-    std::string	details;
     int	status;
     int	situation;
     std::string	description;
@@ -127,18 +126,16 @@ void TagsContentController::doAddTagsContent(const Pistache::Rest::Request& requ
       boost::property_tree::read_json(ss, pt);
       tag = pt.get<std::string>("tag");
       content = pt.get<std::string>("content");
-      details = pt.get<std::string>("details");
       status = pt.get<int>("status");
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
       angru::mvc::model::TagsContentModel::AddTagsContent(
-                                                  tag, 
-                                                  content, 
-                                                  created_by, 
-                                                  details, 
-                                                  status, 
-                                                  situation, 
+                                                  tag,
+                                                  content,
+                                                  created_by,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "TagsContent added.");
     }
@@ -166,7 +163,6 @@ void TagsContentController::doUpdateTagsContent(const Pistache::Rest::Request& r
     auto body = request.body();
     std::string	tag;
     std::string	content;
-    std::string	details;
     int	status;
     int	situation;
     std::string	description;
@@ -178,18 +174,16 @@ void TagsContentController::doUpdateTagsContent(const Pistache::Rest::Request& r
       boost::property_tree::read_json(ss, pt);
       tag = pt.get<std::string>("tag");
       content = pt.get<std::string>("content");
-      details = pt.get<std::string>("details");
       status = pt.get<int>("status");
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
       angru::mvc::model::TagsContentModel::UpdateTagsContent(
-                                                  id, 
-                                                  tag, 
-                                                  content, 
-                                                  updated_by, 
-                                                  details, 
+                                                  id,
+                                                  tag,
+                                                  content,
+                                                  updated_by,
                                                   status, 
-                                                  situation, 
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "TagsContents updated.");
     }

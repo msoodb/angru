@@ -15,16 +15,16 @@ namespace angru{
 namespace mvc{
 namespace controller{
 
-class TagChannelController
+class TagsChannelController
 {
 public:
-	TagChannelController();
-	~TagChannelController();
-	static void	doGetTagChannels(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
-	static void	doGetTagChannel(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
-  static void	doDeleteTagChannel(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
-	static void	doAddTagChannel(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
-	static void	doUpdateTagChannel(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+	TagsChannelController();
+	~TagsChannelController();
+	static void	doGetTagsChannels(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+	static void	doGetTagsChannel(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+  static void	doDeleteTagsChannel(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+	static void	doAddTagsChannel(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+	static void	doUpdateTagsChannel(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 };
 
 } // model

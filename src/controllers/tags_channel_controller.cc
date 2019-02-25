@@ -17,10 +17,10 @@ namespace angru{
 namespace mvc{
 namespace controller{
 
-TagChannelController::TagChannelController(){}
-TagChannelController::~TagChannelController(){}
+TagsChannelController::TagsChannelController(){}
+TagsChannelController::~TagsChannelController(){}
 
-void TagChannelController::doGetTagChannels(const Pistache::Rest::Request& request,
+void TagsChannelController::doGetTagsChannels(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
@@ -41,19 +41,19 @@ void TagChannelController::doGetTagChannels(const Pistache::Rest::Request& reque
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
     }
-    boost::property_tree::ptree tags_channels = angru::mvc::model::TagChannelModel::GetTagChannelsJson(page, filter);
+    boost::property_tree::ptree tags_channels = angru::mvc::model::TagsChannelModel::GetTagsChannelsJson(page, filter);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, tags_channels);
 
     std::string inifile_text = oss.str();
     if (inifile_text.empty()) {
-      response.send(Pistache::Http::Code::Not_Found, "TagChannels not found.");
+      response.send(Pistache::Http::Code::Not_Found, "TagsChannels not found.");
     } else {
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
 }
 
-void TagChannelController::doGetTagChannel(const Pistache::Rest::Request& request,
+void TagsChannelController::doGetTagsChannel(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
@@ -68,20 +68,20 @@ void TagChannelController::doGetTagChannel(const Pistache::Rest::Request& reques
         auto value = request.param(":id");
         id = value.as<std::string>();
     }
-    boost::property_tree::ptree tags_channel = angru::mvc::model::TagChannelModel::GetTagChannelJson(id);
+    boost::property_tree::ptree tags_channel = angru::mvc::model::TagsChannelModel::GetTagsChannelJson(id);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, tags_channel);
 
     std::string inifile_text = oss.str();
 
     if (inifile_text.empty()) {
-      response.send(Pistache::Http::Code::Not_Found, "TagChannels not found.");
+      response.send(Pistache::Http::Code::Not_Found, "TagsChannels not found.");
     } else {
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
 }
 
-void TagChannelController::doDeleteTagChannel(const Pistache::Rest::Request& request,
+void TagsChannelController::doDeleteTagsChannel(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
@@ -97,11 +97,11 @@ void TagChannelController::doDeleteTagChannel(const Pistache::Rest::Request& req
         auto value = request.param(":id");
         id = value.as<std::string>();
     }
-    angru::mvc::model::TagChannelModel::DeleteTagChannel(id);
-    response.send(Pistache::Http::Code::Ok, "TagChannel deleted.");
+    angru::mvc::model::TagsChannelModel::DeleteTagsChannel(id);
+    response.send(Pistache::Http::Code::Ok, "TagsChannel deleted.");
 }
 
-void TagChannelController::doAddTagChannel(const Pistache::Rest::Request& request,
+void TagsChannelController::doAddTagsChannel(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
@@ -115,7 +115,6 @@ void TagChannelController::doAddTagChannel(const Pistache::Rest::Request& reques
     std::string created_by = user_id;
     std::string	tag;
     std::string	channel;
-    std::string	details;
     int	status;
     int	situation;
     std::string	description;
@@ -127,27 +126,25 @@ void TagChannelController::doAddTagChannel(const Pistache::Rest::Request& reques
       boost::property_tree::read_json(ss, pt);
       tag = pt.get<std::string>("tag");
       channel = pt.get<std::string>("channel");
-      details = pt.get<std::string>("details");
       status = pt.get<int>("status");
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::TagChannelModel::AddTagChannel(
-                                                  tag, 
-                                                  channel, 
-                                                  created_by, 
-                                                  details, 
-                                                  status, 
-                                                  situation, 
+      angru::mvc::model::TagsChannelModel::AddTagsChannel(
+                                                  tag,
+                                                  channel,
+                                                  created_by,
+                                                  status,
+                                                  situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "TagChannel added.");
+      response.send(Pistache::Http::Code::Ok, "TagsChannel added.");
     }
     catch (std::exception const& e){
-      response.send(Pistache::Http::Code::Not_Found, "TagChannels not found.");
+      response.send(Pistache::Http::Code::Not_Found, "TagsChannels not found.");
     }
 }
 
-void TagChannelController::doUpdateTagChannel(const Pistache::Rest::Request& request,
+void TagsChannelController::doUpdateTagsChannel(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
@@ -166,7 +163,6 @@ void TagChannelController::doUpdateTagChannel(const Pistache::Rest::Request& req
     auto body = request.body();
     std::string	tag;
     std::string	channel;
-    std::string	details;
     int	status;
     int	situation;
     std::string	description;
@@ -178,23 +174,21 @@ void TagChannelController::doUpdateTagChannel(const Pistache::Rest::Request& req
       boost::property_tree::read_json(ss, pt);
       tag = pt.get<std::string>("tag");
       channel = pt.get<std::string>("channel");
-      details = pt.get<std::string>("details");
       status = pt.get<int>("status");
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
-      angru::mvc::model::TagChannelModel::UpdateTagChannel(
-                                                  id, 
-                                                  tag, 
-                                                  channel, 
-                                                  updated_by, 
-                                                  details, 
-                                                  status, 
-                                                  situation, 
+      angru::mvc::model::TagsChannelModel::UpdateTagsChannel(
+                                                  id,
+                                                  tag,
+                                                  channel,
+                                                  updated_by,
+                                                  status,
+                                                  situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "TagChannels updated.");
+      response.send(Pistache::Http::Code::Ok, "TagsChannels updated.");
     }
     catch (std::exception const& e){
-      response.send(Pistache::Http::Code::Not_Found, "TagChannels not found.");
+      response.send(Pistache::Http::Code::Not_Found, "TagsChannels not found.");
     }
  }
 

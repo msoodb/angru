@@ -15,10 +15,10 @@ namespace angru{
 namespace mvc{
 namespace model{
 
-TagChannelModel::TagChannelModel(){}
-TagChannelModel::~TagChannelModel(){}
+TagsChannelModel::TagsChannelModel(){}
+TagsChannelModel::~TagsChannelModel(){}
 
-pqxx::result TagChannelModel::GetTagChannels(int page, std::string query){
+pqxx::result TagsChannelModel::GetTagsChannels(int page, std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -40,7 +40,6 @@ pqxx::result TagChannelModel::GetTagChannels(int page, std::string query){
 (select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
-									      				details , \
 									      				status , \
 									      				situation , \
 									      				description  FROM tags_channels AS main where deleted_at is NULL ";
@@ -58,7 +57,7 @@ pqxx::result TagChannelModel::GetTagChannels(int page, std::string query){
 	return R;
 }
 
-int TagChannelModel::GetTagChannelsCount(std::string query){
+int TagsChannelModel::GetTagsChannelsCount(std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -84,9 +83,9 @@ int TagChannelModel::GetTagChannelsCount(std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree TagChannelModel::GetTagChannelsJson(int page, std::string query){
-	pqxx::result R = GetTagChannels(page, query);
-	int result_count = GetTagChannelsCount(query);
+boost::property_tree::ptree TagsChannelModel::GetTagsChannelsJson(int page, std::string query){
+	pqxx::result R = GetTagsChannels(page, query);
+	int result_count = GetTagsChannelsCount(query);
 	int pageCount = (result_count / OFFSET_COUNT) + 1;
 
 	boost::property_tree::ptree result_node;
@@ -102,10 +101,9 @@ boost::property_tree::ptree TagChannelModel::GetTagChannelsJson(int page, std::s
 		tags_channel_node.put("updated_by", R[i][4]);
 		tags_channel_node.put("created_at", R[i][5]);
 		tags_channel_node.put("updated_at", R[i][6]);
-		tags_channel_node.put("details", R[i][7]);
-		tags_channel_node.put("status", R[i][8]);
-		tags_channel_node.put("situation", R[i][9]);
-		tags_channel_node.put("description", R[i][10]);
+		tags_channel_node.put("status", R[i][7]);
+		tags_channel_node.put("situation", R[i][8]);
+		tags_channel_node.put("description", R[i][9]);
 		tags_channels_node.push_back(std::make_pair("", tags_channel_node));
 	}
 	info_node.put<int>("page", page);
@@ -118,7 +116,7 @@ boost::property_tree::ptree TagChannelModel::GetTagChannelsJson(int page, std::s
 	return result_node;
 }
 
-pqxx::result TagChannelModel::GetTagChannel(std::string id){
+pqxx::result TagsChannelModel::GetTagsChannel(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -140,7 +138,6 @@ pqxx::result TagChannelModel::GetTagChannel(std::string id){
 (select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
-									      				details , \
 									      				status , \
 									      				situation , \
 									      				description  FROM tags_channels AS main where id = $1 and deleted_at is NULL ");
@@ -149,8 +146,8 @@ pqxx::result TagChannelModel::GetTagChannel(std::string id){
 	return R;
 }
 
-boost::property_tree::ptree TagChannelModel::GetTagChannelJson(std::string id){
-	pqxx::result R = GetTagChannel(id);
+boost::property_tree::ptree TagsChannelModel::GetTagsChannelJson(std::string id){
+	pqxx::result R = GetTagsChannel(id);
 	boost::property_tree::ptree tags_channel_node;
 
 	if(R.size() == 1){
@@ -161,21 +158,19 @@ boost::property_tree::ptree TagChannelModel::GetTagChannelJson(std::string id){
 		tags_channel_node.put("updated_by", R[0][4]);
 		tags_channel_node.put("created_at", R[0][5]);
 		tags_channel_node.put("updated_at", R[0][6]);
-		tags_channel_node.put("details", R[0][7]);
-		tags_channel_node.put("status", R[0][8]);
-		tags_channel_node.put("situation", R[0][9]);
-		tags_channel_node.put("description", R[0][10]);
+		tags_channel_node.put("status", R[0][7]);
+		tags_channel_node.put("situation", R[0][8]);
+		tags_channel_node.put("description", R[0][9]);
 	}
 	return tags_channel_node;
 }
 
-std::string TagChannelModel::AddTagChannel(
-													std::string	tag, 
-													std::string	channel, 
-													std::string	created_by, 
-													std::string	details, 
-													int	status, 
-													int	situation, 
+std::string TagsChannelModel::AddTagsChannel(
+													std::string	tag,
+													std::string	channel,
+													std::string	created_by,
+													int	status,
+													int	situation,
 													std::string	description){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -200,7 +195,6 @@ std::string TagChannelModel::AddTagChannel(
 													created_at, \
 													deleted_at, \
 													updated_at, \
-													details, \
 													status, \
 													situation, \
 													description	) VALUES (\
@@ -215,14 +209,12 @@ std::string TagChannelModel::AddTagChannel(
 												   NULL, \
 												   $4, \
 												   $5, \
-												   $6, \
-												   $7 ) RETURNING id");
+												   $6 ) RETURNING id");
 
   pqxx::result R = W.prepared("insert")
                  (tag)
                  (channel)
                  (created_by)
-                 (details)
                  (status)
                  (situation)
                  (description)
@@ -235,12 +227,11 @@ std::string TagChannelModel::AddTagChannel(
 	return id;
 }
 
-void TagChannelModel::UpdateTagChannel( 
+void TagsChannelModel::UpdateTagsChannel(
 													std::string	id,
 													std::string	tag,
 													std::string	channel,
 													std::string	updated_by,
-													std::string	details,
 													int	status,
 													int	situation,
 													std::string	description ){
@@ -262,16 +253,14 @@ void TagChannelModel::UpdateTagChannel(
 													channel = $3, \
 													updated_by = $4, \
 													updated_at = now(), \
-													details = $5, \
-													status = $6, \
-													situation = $7, \
-													description = $8	WHERE id = $1");
+													status = $5, \
+													situation = $6, \
+													description = $7	WHERE id = $1");
 	W.prepared("update")
                  (id)
                  (tag)
                  (channel)
                  (updated_by)
-                 (details)
                  (status)
                  (situation)
                  (description)
@@ -279,7 +268,7 @@ void TagChannelModel::UpdateTagChannel(
 	W.commit();
 }
 
-void TagChannelModel::DeleteTagChannel(std::string id){
+void TagsChannelModel::DeleteTagsChannel(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {

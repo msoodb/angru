@@ -558,7 +558,7 @@ void generate()
   angru::tools::generator::routerGenerator(table_name_single, entity_name);
 
   table_name_single = "tags_channel";
-  entity_name="TagChannel";
+  entity_name="TagsChannel";
   fields.clear();
   fields.push_back(std::pair<std::string, std::string>("std::string", "id"));
   fields.push_back(std::pair<std::string, std::string>("std::string", "tag"));
@@ -569,7 +569,6 @@ void generate()
   fields.push_back(std::pair<std::string, std::string>("std::string", "created_at"));
   fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_at"));
   fields.push_back(std::pair<std::string, std::string>("std::string", "updated_at"));
-  fields.push_back(std::pair<std::string, std::string>("std::string", "details"));
   fields.push_back(std::pair<std::string, std::string>("int", "status"));
   fields.push_back(std::pair<std::string, std::string>("int", "situation"));
   fields.push_back(std::pair<std::string, std::string>("std::string", "description"));
@@ -589,7 +588,6 @@ void generate()
   fields.push_back(std::pair<std::string, std::string>("std::string", "created_at"));
   fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_at"));
   fields.push_back(std::pair<std::string, std::string>("std::string", "updated_at"));
-  fields.push_back(std::pair<std::string, std::string>("std::string", "details"));
   fields.push_back(std::pair<std::string, std::string>("int", "status"));
   fields.push_back(std::pair<std::string, std::string>("int", "situation"));
   fields.push_back(std::pair<std::string, std::string>("std::string", "description"));
@@ -609,7 +607,6 @@ void generate()
   fields.push_back(std::pair<std::string, std::string>("std::string", "created_at"));
   fields.push_back(std::pair<std::string, std::string>("std::string", "deleted_at"));
   fields.push_back(std::pair<std::string, std::string>("std::string", "updated_at"));
-  fields.push_back(std::pair<std::string, std::string>("std::string", "details"));
   fields.push_back(std::pair<std::string, std::string>("int", "status"));
   fields.push_back(std::pair<std::string, std::string>("int", "situation"));
   fields.push_back(std::pair<std::string, std::string>("std::string", "description"));

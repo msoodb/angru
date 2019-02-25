@@ -40,7 +40,6 @@ pqxx::result TagsContentModel::GetTagsContents(int page, std::string query){
 (select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
-									      				details , \
 									      				status , \
 									      				situation , \
 									      				description  FROM tags_contents AS main where deleted_at is NULL ";
@@ -102,10 +101,9 @@ boost::property_tree::ptree TagsContentModel::GetTagsContentsJson(int page, std:
 		tags_content_node.put("updated_by", R[i][4]);
 		tags_content_node.put("created_at", R[i][5]);
 		tags_content_node.put("updated_at", R[i][6]);
-		tags_content_node.put("details", R[i][7]);
-		tags_content_node.put("status", R[i][8]);
-		tags_content_node.put("situation", R[i][9]);
-		tags_content_node.put("description", R[i][10]);
+		tags_content_node.put("status", R[i][7]);
+		tags_content_node.put("situation", R[i][8]);
+		tags_content_node.put("description", R[i][9]);
 		tags_contents_node.push_back(std::make_pair("", tags_content_node));
 	}
 	info_node.put<int>("page", page);
@@ -140,7 +138,6 @@ pqxx::result TagsContentModel::GetTagsContent(std::string id){
 (select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
-									      				details , \
 									      				status , \
 									      				situation , \
 									      				description  FROM tags_contents AS main where id = $1 and deleted_at is NULL ");
@@ -161,21 +158,19 @@ boost::property_tree::ptree TagsContentModel::GetTagsContentJson(std::string id)
 		tags_content_node.put("updated_by", R[0][4]);
 		tags_content_node.put("created_at", R[0][5]);
 		tags_content_node.put("updated_at", R[0][6]);
-		tags_content_node.put("details", R[0][7]);
-		tags_content_node.put("status", R[0][8]);
-		tags_content_node.put("situation", R[0][9]);
-		tags_content_node.put("description", R[0][10]);
+		tags_content_node.put("status", R[0][7]);
+		tags_content_node.put("situation", R[0][8]);
+		tags_content_node.put("description", R[0][9]);
 	}
 	return tags_content_node;
 }
 
 std::string TagsContentModel::AddTagsContent(
-													std::string	tag, 
-													std::string	content, 
-													std::string	created_by, 
-													std::string	details, 
-													int	status, 
-													int	situation, 
+													std::string	tag,
+													std::string	content,
+													std::string	created_by,
+													int	status,
+													int	situation,
 													std::string	description){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -200,7 +195,6 @@ std::string TagsContentModel::AddTagsContent(
 													created_at, \
 													deleted_at, \
 													updated_at, \
-													details, \
 													status, \
 													situation, \
 													description	) VALUES (\
@@ -215,14 +209,12 @@ std::string TagsContentModel::AddTagsContent(
 												   NULL, \
 												   $4, \
 												   $5, \
-												   $6, \
-												   $7 ) RETURNING id");
+												   $6 ) RETURNING id");
 
   pqxx::result R = W.prepared("insert")
                  (tag)
                  (content)
                  (created_by)
-                 (details)
                  (status)
                  (situation)
                  (description)
@@ -235,12 +227,11 @@ std::string TagsContentModel::AddTagsContent(
 	return id;
 }
 
-void TagsContentModel::UpdateTagsContent( 
+void TagsContentModel::UpdateTagsContent(
 													std::string	id,
 													std::string	tag,
 													std::string	content,
 													std::string	updated_by,
-													std::string	details,
 													int	status,
 													int	situation,
 													std::string	description ){
@@ -262,16 +253,14 @@ void TagsContentModel::UpdateTagsContent(
 													content = $3, \
 													updated_by = $4, \
 													updated_at = now(), \
-													details = $5, \
-													status = $6, \
-													situation = $7, \
-													description = $8	WHERE id = $1");
+													status = $5, \
+													situation = $6, \
+													description = $7	WHERE id = $1");
 	W.prepared("update")
                  (id)
                  (tag)
                  (content)
                  (updated_by)
-                 (details)
                  (status)
                  (situation)
                  (description)
