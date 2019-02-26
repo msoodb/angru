@@ -1,5 +1,5 @@
-#ifndef ANGRU_AGGRIGATOR_MODEL_H_
-#define ANGRU_AGGRIGATOR_MODEL_H_
+#ifndef ANGRU_AGGREGATOR_MODEL_H_
+#define ANGRU_AGGREGATOR_MODEL_H_
 
 #include <iostream>
 #include <vector>
@@ -12,17 +12,17 @@ namespace angru{
 namespace mvc{
 namespace model{
 
-class AggrigatorModel
+class AggregatorModel
 {
 public:
-	AggrigatorModel();
-	~AggrigatorModel();
-	static pqxx::result GetAggrigators(int page=1, std::string query="");
-	static int GetAggrigatorsCount(std::string query="");
-	static boost::property_tree::ptree GetAggrigatorsJson(int page=1, std::string query="");
-  static pqxx::result GetAggrigator(std::string id);
-	static boost::property_tree::ptree GetAggrigatorJson(std::string id);
-	static std::string AddAggrigator(
+	AggregatorModel();
+	~AggregatorModel();
+	static pqxx::result GetAggregators(int page=1, std::string query="");
+	static int GetAggregatorsCount(std::string query="");
+	static boost::property_tree::ptree GetAggregatorsJson(int page=1, std::string query="");
+  static pqxx::result GetAggregator(std::string id);
+	static boost::property_tree::ptree GetAggregatorJson(std::string id);
+	static std::string AddAggregator(
 													std::string	name,
 													std::string	title,
 													std::string	code,
@@ -33,7 +33,7 @@ public:
 													int	status,
 													int	situation,
 													std::string	description);
-	static void UpdateAggrigator(
+	static void UpdateAggregator(
 													std::string	id,
 													std::string	name,
 													std::string	title,
@@ -45,11 +45,11 @@ public:
 													int	status,
 													int	situation,
 													std::string	description);
-	static void DeleteAggrigator(std::string id);
+	static void DeleteAggregator(std::string id);
 };
 
 } // model
 } // mvc
 } // angru
 
-#endif // ANGRU_AGGRIGATOR_MODEL_H_
+#endif // ANGRU_AGGREGATOR_MODEL_H_

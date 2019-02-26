@@ -1,7 +1,7 @@
 {
   "connection_string":
 	{
-		"dbname": "angrudb",
+		"dbname": "sar",
 		"user": " angru",
 		"password": "1235",
 		"hostaddr": "127.0.0.1",

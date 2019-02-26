@@ -21,6 +21,7 @@ public:
 	static int GetUsersCount(std::string query="");
 	static boost::property_tree::ptree GetUsersJson(int page=1, std::string query="");
   static pqxx::result GetUser(std::string id);
+	static bool IsZeus(std::string id);
 	static boost::property_tree::ptree GetUserJson(std::string id);
 	static std::string AddUser(
 													std::string	first_name,

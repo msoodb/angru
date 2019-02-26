@@ -21,6 +21,49 @@ namespace controller{
 UsersSecurityRoleController::UsersSecurityRoleController(){}
 UsersSecurityRoleController::~UsersSecurityRoleController(){}
 
+void UsersSecurityRoleController::doGetUsersSecurityRolesByUserId(const Pistache::Rest::Request& request,
+  Pistache::Http::ResponseWriter response) {
+    angru::security::authorization::CORS(request,response);
+    angru::security::authorization::ContentTypeJSONCheck(request,response);
+    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "users_security_roles", GET_ITEMS);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
+    std::string id = "";
+    if (request.hasParam(":id")) {
+        auto value = request.param(":id");
+      id = value.as<std::string>();
+    }
+    int page = 1;
+    std::string filter;
+    auto query = request.query();
+    if(query.has("page")) {
+      auto value = query.get("page").get();
+      page = std::stoi(value);
+    }
+    if(query.has("filter")) {
+      auto value = query.get("filter").get();
+      filter = angru::security::cryptography::decode_base64(value);
+      filter = filter + " AND _user_ = '" + id + "'";
+    }
+    else{
+      filter = " _user_ = '" + id + "'";
+    }
+
+    boost::property_tree::ptree users_security_roles = angru::mvc::model::UsersSecurityRoleModel::GetUsersSecurityRolesJson(page, filter);
+    std::ostringstream oss;
+    boost::property_tree::write_json(oss, users_security_roles);
+
+    std::string inifile_text = oss.str();
+    if (inifile_text.empty()) {
+      response.send(Pistache::Http::Code::Not_Found, "UsersSecurityRoles not found.");
+    } else {
+      response.send(Pistache::Http::Code::Ok, inifile_text);
+    }
+}
+
 void UsersSecurityRoleController::doGetUsersSecurityRoles(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);

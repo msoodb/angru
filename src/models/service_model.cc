@@ -36,7 +36,7 @@ pqxx::result ServiceModel::GetServices(int page, std::string query){
 									      				id , \
 									      				pendar , \
 									      				(select name from mobile_operators where id = main.mobile_operator) as mobile_operator , \
-									      				(select name from aggrigators where id = main.aggrigator) as aggrigator , \
+									      				(select name from aggregators where id = main.aggregator) as aggregator , \
 									      				(select name from content_providers where id = main.content_provider) as content_provider , \
 									      				name , \
 									      				title , \
@@ -103,7 +103,7 @@ boost::property_tree::ptree ServiceModel::GetServicesJson(int page, std::string 
 		service_node.put("id", R[i][0]);
 		service_node.put("pendar", R[i][1]);
 		service_node.put("mobile_operator", R[i][2]);
-		service_node.put("aggrigator", R[i][3]);
+		service_node.put("aggregator", R[i][3]);
 		service_node.put("content_provider", R[i][4]);
 		service_node.put("name", R[i][5]);
 		service_node.put("title", R[i][6]);
@@ -146,7 +146,7 @@ pqxx::result ServiceModel::GetService(std::string id){
 									      				id , \
 									      				pendar , \
 									      				mobile_operator , \
-									      				aggrigator , \
+									      				aggregator , \
 									      				content_provider , \
 									      				name , \
 									      				title , \
@@ -172,7 +172,7 @@ boost::property_tree::ptree ServiceModel::GetServiceJson(std::string id){
 		service_node.put("id", R[0][0]);
 		service_node.put("pendar", R[0][1]);
 		service_node.put("mobile_operator", R[0][2]);
-		service_node.put("aggrigator", R[0][3]);
+		service_node.put("aggregator", R[0][3]);
 		service_node.put("content_provider", R[0][4]);
 		service_node.put("name", R[0][5]);
 		service_node.put("title", R[0][6]);
@@ -192,7 +192,7 @@ boost::property_tree::ptree ServiceModel::GetServiceJson(std::string id){
 std::string ServiceModel::AddService(
 													std::string	pendar,
 													std::string	mobile_operator,
-													std::string	aggrigator,
+													std::string	aggregator,
 													std::string	content_provider,
 													std::string	name,
 													std::string	title,
@@ -219,7 +219,7 @@ std::string ServiceModel::AddService(
 													id, \
 													pendar, \
 													mobile_operator, \
-													aggrigator, \
+													aggregator, \
 													content_provider, \
 													name, \
 													title, \
@@ -256,7 +256,7 @@ std::string ServiceModel::AddService(
   pqxx::result R = W.prepared("insert")
                  (pendar)
                  (mobile_operator)
-                 (aggrigator)
+                 (aggregator)
                  (content_provider)
                  (name)
                  (title)
@@ -279,7 +279,7 @@ void ServiceModel::UpdateService(
 													std::string	id,
 													std::string	pendar,
 													std::string	mobile_operator,
-													std::string	aggrigator,
+													std::string	aggregator,
 													std::string	content_provider,
 													std::string	name,
 													std::string	title,
@@ -305,7 +305,7 @@ void ServiceModel::UpdateService(
 	C.prepare("update", "UPDATE services SET \
 													pendar = $2, \
 													mobile_operator = $3, \
-													aggrigator = $4, \
+													aggregator = $4, \
 													content_provider = $5, \
 													name = $6, \
 													title = $7, \
@@ -320,7 +320,7 @@ void ServiceModel::UpdateService(
                  (id)
                  (pendar)
                  (mobile_operator)
-                 (aggrigator)
+                 (aggregator)
                  (content_provider)
                  (name)
                  (title)

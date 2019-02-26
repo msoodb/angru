@@ -25,7 +25,7 @@ public:
 	static std::string AddService(
 													std::string	pendar,
 													std::string	mobile_operator,
-													std::string	aggrigator,
+													std::string	aggregator,
 													std::string	content_provider,
 													std::string	name,
 													std::string	title,
@@ -39,7 +39,7 @@ public:
 													std::string	id,
 													std::string	pendar,
 													std::string	mobile_operator,
-													std::string	aggrigator,
+													std::string	aggregator,
 													std::string	content_provider,
 													std::string	name,
 													std::string	title,

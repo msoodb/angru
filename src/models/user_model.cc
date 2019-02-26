@@ -164,6 +164,15 @@ pqxx::result UserModel::GetUser(std::string id){
 	return R;
 }
 
+bool UserModel::IsZeus(std::string id){
+	pqxx::result R = GetUser(id);
+	std::string username = R[0][4].as<std::string>();
+	if(username == "zeus"){
+		return true;
+	}
+	return false;
+}
+
 boost::property_tree::ptree UserModel::GetUserJson(std::string id){
 	pqxx::result R = GetUser(id);
 	boost::property_tree::ptree user_node;

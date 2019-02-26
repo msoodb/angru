@@ -5,14 +5,14 @@
 #include <chrono>
 #include <experimental/filesystem>
 
-#include "models/aggrigator_model.h"
+#include "models/aggregator_model.h"
 
 namespace angru{
 namespace tools{
 namespace factory{
 
 void GenerateFakeData(){
-  GenerateAggrigator();
+  GenerateAggregator();
   return;
 }
 
@@ -55,7 +55,7 @@ std::string GenerateRandomNum(const int minlen, const int maxlen) {
     return random_string;
 }
 
-void GenerateAggrigator(){
+void GenerateAggregator(){
   int count = 300;
   std::string	name;
   std::string	title;
@@ -68,7 +68,7 @@ void GenerateAggrigator(){
   int	situation;
   std::string	description;
 
-  std::cout << "aggrigator ";
+  std::cout << "aggregator ";
   for (int i = 0; i < count; i++) {
     name = GenerateRandomAlpha(10, 15);
     title = GenerateRandomAlpha(5, 10);
@@ -80,7 +80,7 @@ void GenerateAggrigator(){
     situation = 0;
     description = GenerateRandomAlpha(10, 30);
 
-    angru::mvc::model::AggrigatorModel::AddAggrigator(
+    angru::mvc::model::AggregatorModel::AddAggregator(
                                                       name,
                                                       title,
                                                       code,

@@ -91,10 +91,10 @@ SET default_with_oids = false;
 
 --
 -- TOC entry 194 (class 1259 OID 26005)
--- Name: aggrigators; Type: TABLE; Schema: public; Owner: masoud
+-- Name: aggregators; Type: TABLE; Schema: public; Owner: masoud
 --
 
-CREATE TABLE public.aggrigators (
+CREATE TABLE public.aggregators (
     id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     name character varying(255) NOT NULL,
     title character varying(255),
@@ -114,7 +114,7 @@ CREATE TABLE public.aggrigators (
 );
 
 
-ALTER TABLE public.aggrigators OWNER TO masoud;
+ALTER TABLE public.aggregators OWNER TO masoud;
 
 --
 -- TOC entry 218 (class 1259 OID 35093)
@@ -568,7 +568,7 @@ CREATE TABLE public.services (
     id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     pendar uuid,
     mobile_operator uuid,
-    aggrigator uuid,
+    aggregator uuid,
     content_provider uuid,
     name character varying(255) NOT NULL,
     title character varying(255),
@@ -835,10 +835,10 @@ ALTER TABLE public.videos OWNER TO masoud;
 --
 -- TOC entry 2588 (class 0 OID 26005)
 -- Dependencies: 194
--- Data for Name: aggrigators; Type: TABLE DATA; Schema: public; Owner: masoud
+-- Data for Name: aggregators; Type: TABLE DATA; Schema: public; Owner: masoud
 --
 
-COPY public.aggrigators (id, name, title, code, phone, email, created_by, deleted_by, updated_by, created_at, deleted_at, updated_at, details, status, situation, description) FROM stdin;
+COPY public.aggregators (id, name, title, code, phone, email, created_by, deleted_by, updated_by, created_at, deleted_at, updated_at, details, status, situation, description) FROM stdin;
 92b51153-60e4-4d53-ac29-48e90af4e96f	Hub	Hooshmand Aval Beheshti			info@hub.com	9979027d-1672-4108-95a4-eb5d346545a0	\N	\N	2019-02-20 15:12:21.886611+03:30	\N	\N	{"manager":"sohanian","CTO":"abbasi"}	1	0	
 4754f750-6004-4723-823c-a8d607c6b3a4	Tele Promo	Telepromo	0001	+9821883522485	info@telepromo.lb	a2e60f5a-1df2-480d-a034-8d096a9aa83c	\N	9979027d-1672-4108-95a4-eb5d346545a0	2019-02-13 21:32:23.551584+03:30	\N	2019-02-20 15:12:43.833562+03:30	{}	1	0	Tele Promo Kish
 d10237fd-f43a-4c83-999f-66e13bf6b716	mobin one	m-one	0002	096628816579	info@m-one.com	9979027d-1672-4108-95a4-eb5d346545a0	\N	a2e60f5a-1df2-480d-a034-8d096a9aa83c	2019-02-14 20:43:17.660472+03:30	\N	2019-02-15 22:09:08.816455+03:30	{}	1	0	ENhvIVThfIVKhfXbQaquYEtwiftHNsxRGGoqbHXi
@@ -924,7 +924,7 @@ e534692f-870e-4325-819d-09e3ccb1f116	users	users	9979027d-1672-4108-95a4-eb5d346
 98b0fac1-e3bc-4220-9447-22fba5a12b58	users_security_roles	users_security_roles	9979027d-1672-4108-95a4-eb5d346545a0	\N	\N	2019-02-16 00:09:58.116889+03:30	\N	\N	0	1	0	
 350a81ec-4da3-4568-a15b-b8e581f8f6ff	privileges	privileges table	9979027d-1672-4108-95a4-eb5d346545a0	\N	9979027d-1672-4108-95a4-eb5d346545a0	2019-02-16 00:09:58.116889+03:30	\N	2019-02-17 02:34:33.072965+03:30	0	1	0	
 29c835d5-3049-46de-8aaf-e9f3730aa820	content_providers	content_providers	9979027d-1672-4108-95a4-eb5d346545a0	\N	\N	2019-02-18 00:31:06.348469+03:30	\N	\N	0	1	0	
-cb3d5588-c187-4f14-a6da-0214f7ad0540	aggrigators	aggrigators	9979027d-1672-4108-95a4-eb5d346545a0	\N	9979027d-1672-4108-95a4-eb5d346545a0	2019-02-16 00:09:58.116889+03:30	\N	2019-02-20 01:17:53.922678+03:30	0	1	0	
+cb3d5588-c187-4f14-a6da-0214f7ad0540	aggregators	aggregators	9979027d-1672-4108-95a4-eb5d346545a0	\N	9979027d-1672-4108-95a4-eb5d346545a0	2019-02-16 00:09:58.116889+03:30	\N	2019-02-20 01:17:53.922678+03:30	0	1	0	
 deb07aa8-a2b6-41d2-967a-5aa7960ae4e2	services	services	9979027d-1672-4108-95a4-eb5d346545a0	\N	\N	2019-02-21 18:36:47.280616+03:30	\N	\N	0	1	0	
 87b6f47e-5830-4d66-b65a-a80c7fdc7e85	members	members	9979027d-1672-4108-95a4-eb5d346545a0	\N	\N	2019-02-21 18:37:16.616796+03:30	\N	\N	0	1	0	
 c46e345b-0810-47be-9c57-1b798829351e	subscriptions	subscriptions	9979027d-1672-4108-95a4-eb5d346545a0	\N	\N	2019-02-21 18:37:38.653679+03:30	\N	\N	0	1	0	
@@ -1084,7 +1084,7 @@ b5a2e7ab-d9fa-4db9-9f45-6a53b0094d7d	content manager	content manager	9979027d-16
 -- Data for Name: services; Type: TABLE DATA; Schema: public; Owner: masoud
 --
 
-COPY public.services (id, pendar, mobile_operator, aggrigator, content_provider, name, title, code, created_by, deleted_by, updated_by, created_at, deleted_at, updated_at, details, status, situation, description) FROM stdin;
+COPY public.services (id, pendar, mobile_operator, aggregator, content_provider, name, title, code, created_by, deleted_by, updated_by, created_at, deleted_at, updated_at, details, status, situation, description) FROM stdin;
 1d345890-5cd7-4026-ab19-53caf5f639a8	fd2255b0-9ce3-4372-89dc-e3945ce2c16d	0a66159c-6a54-45db-a657-b0fa4945afc3	4754f750-6004-4723-823c-a8d607c6b3a4	befc4bde-12ed-4db9-b0f9-c0e14eb14585	cartoon3	cartoon3		9979027d-1672-4108-95a4-eb5d346545a0	\N	9979027d-1672-4108-95a4-eb5d346545a0	2019-02-20 15:10:28.87766+03:30	\N	2019-02-20 15:37:52.268429+03:30	{}	1	0	
 \.
 
@@ -1200,11 +1200,11 @@ COPY public.videos (id, content, name, title, path, size, created_by, deleted_by
 
 --
 -- TOC entry 2293 (class 2606 OID 26013)
--- Name: aggrigators aggrigators_pkey; Type: CONSTRAINT; Schema: public; Owner: masoud
+-- Name: aggregators aggregators_pkey; Type: CONSTRAINT; Schema: public; Owner: masoud
 --
 
-ALTER TABLE ONLY public.aggrigators
-    ADD CONSTRAINT aggrigators_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.aggregators
+    ADD CONSTRAINT aggregators_pkey PRIMARY KEY (id);
 
 
 --
@@ -2055,11 +2055,11 @@ ALTER TABLE ONLY public.security_roles
 
 --
 -- TOC entry 2381 (class 2606 OID 26390)
--- Name: services services_aggrigator_fkey; Type: FK CONSTRAINT; Schema: public; Owner: masoud
+-- Name: services services_aggregator_fkey; Type: FK CONSTRAINT; Schema: public; Owner: masoud
 --
 
 ALTER TABLE ONLY public.services
-    ADD CONSTRAINT services_aggrigator_fkey FOREIGN KEY (aggrigator) REFERENCES public.aggrigators(id);
+    ADD CONSTRAINT services_aggregator_fkey FOREIGN KEY (aggregator) REFERENCES public.aggregators(id);
 
 
 --
@@ -2370,10 +2370,10 @@ ALTER TABLE ONLY public.users
 
 --
 -- TOC entry 2354 (class 2606 OID 26014)
--- Name: aggrigators users_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: masoud
+-- Name: aggregators users_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: masoud
 --
 
-ALTER TABLE ONLY public.aggrigators
+ALTER TABLE ONLY public.aggregators
     ADD CONSTRAINT users_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.users(id);
 
 
@@ -2388,10 +2388,10 @@ ALTER TABLE ONLY public.users
 
 --
 -- TOC entry 2355 (class 2606 OID 26019)
--- Name: aggrigators users_deleted_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: masoud
+-- Name: aggregators users_deleted_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: masoud
 --
 
-ALTER TABLE ONLY public.aggrigators
+ALTER TABLE ONLY public.aggregators
     ADD CONSTRAINT users_deleted_by_fkey FOREIGN KEY (deleted_by) REFERENCES public.users(id);
 
 
@@ -2496,10 +2496,10 @@ ALTER TABLE ONLY public.users
 
 --
 -- TOC entry 2356 (class 2606 OID 26024)
--- Name: aggrigators users_updated_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: masoud
+-- Name: aggregators users_updated_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: masoud
 --
 
-ALTER TABLE ONLY public.aggrigators
+ALTER TABLE ONLY public.aggregators
     ADD CONSTRAINT users_updated_by_fkey FOREIGN KEY (updated_by) REFERENCES public.users(id);
 
 

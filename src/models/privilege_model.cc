@@ -10,6 +10,7 @@
 #include "tools/log.h"
 #include "wrappers/postgresql.h"
 #include "wrappers/csv_writer.h"
+#include "models/user_model.h"
 
 namespace angru{
 namespace mvc{
@@ -19,10 +20,11 @@ PrivilegeModel::PrivilegeModel(){}
 PrivilegeModel::~PrivilegeModel(){}
 
 bool PrivilegeModel::AuthorizationCheck(std::string user_id, std::string entity_name, int action){
-	if(user_id == "9979027d-1672-4108-95a4-eb5d346545a0"){       //zeus
+	bool result = false;
+	result = angru::mvc::model::UserModel::IsZeus(user_id);
+	if(result){       //zeus
 		return true;
 	}
-  bool result = false;
   try
   {
     pqxx::result PrivilegeStrings = GetPrivilegeStrings(user_id, entity_name);

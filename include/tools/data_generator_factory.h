@@ -9,7 +9,7 @@ void GenerateFakeData();
 std::string GenerateRandomAlphaNum(const int minlen, const int maxlen);
 std::string GenerateRandomAlpha(const int minlen, const int maxlen);
 std::string GenerateRandomNum(const int minlen, const int maxlen);
-void GenerateAggrigator();
+void GenerateAggregator();
 
 } // namespace factory
 } // namespace tools

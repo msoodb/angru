@@ -1,4 +1,4 @@
-#include "controllers/aggrigator_controller.h"
+#include "controllers/aggregator_controller.h"
 
 #include <iostream>
 #include <string>
@@ -10,7 +10,7 @@
 #include "tools/log.h"
 #include "wrappers/postgresql.h"
 #include "tools/security.h"
-#include "models/aggrigator_model.h"
+#include "models/aggregator_model.h"
 #include "models/privilege_model.h"
 
 
@@ -18,15 +18,15 @@ namespace angru{
 namespace mvc{
 namespace controller{
 
-AggrigatorController::AggrigatorController(){}
-AggrigatorController::~AggrigatorController(){}
+AggregatorController::AggregatorController(){}
+AggregatorController::~AggregatorController(){}
 
-void AggrigatorController::doGetAggrigators(const Pistache::Rest::Request& request,
+void AggregatorController::doGetAggregators(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
-    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "aggrigators", GET_ITEMS);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "aggregators", GET_ITEMS);
     if(!authorized){
       response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
       return;
@@ -42,24 +42,24 @@ void AggrigatorController::doGetAggrigators(const Pistache::Rest::Request& reque
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
     }
-    boost::property_tree::ptree aggrigators = angru::mvc::model::AggrigatorModel::GetAggrigatorsJson(page, filter);
+    boost::property_tree::ptree aggregators = angru::mvc::model::AggregatorModel::GetAggregatorsJson(page, filter);
     std::ostringstream oss;
-    boost::property_tree::write_json(oss, aggrigators);
+    boost::property_tree::write_json(oss, aggregators);
 
     std::string inifile_text = oss.str();
     if (inifile_text.empty()) {
-      response.send(Pistache::Http::Code::Not_Found, "Aggrigators not found.");
+      response.send(Pistache::Http::Code::Not_Found, "Aggregators not found.");
     } else {
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
 }
 
-void AggrigatorController::doGetAggrigator(const Pistache::Rest::Request& request,
+void AggregatorController::doGetAggregator(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
-    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "aggrigators", GET_ITEM);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "aggregators", GET_ITEM);
     if(!authorized){
       response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
       return;
@@ -69,25 +69,25 @@ void AggrigatorController::doGetAggrigator(const Pistache::Rest::Request& reques
         auto value = request.param(":id");
         id = value.as<std::string>();
     }
-    boost::property_tree::ptree aggrigator = angru::mvc::model::AggrigatorModel::GetAggrigatorJson(id);
+    boost::property_tree::ptree aggregator = angru::mvc::model::AggregatorModel::GetAggregatorJson(id);
     std::ostringstream oss;
-    boost::property_tree::write_json(oss, aggrigator);
+    boost::property_tree::write_json(oss, aggregator);
 
     std::string inifile_text = oss.str();
 
     if (inifile_text.empty()) {
-      response.send(Pistache::Http::Code::Not_Found, "Aggrigators not found.");
+      response.send(Pistache::Http::Code::Not_Found, "Aggregators not found.");
     } else {
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
 }
 
-void AggrigatorController::doDeleteAggrigator(const Pistache::Rest::Request& request,
+void AggregatorController::doDeleteAggregator(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
-    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "aggrigators", DELETE_ITEM);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "aggregators", DELETE_ITEM);
     if(!authorized){
       response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
       return;
@@ -98,16 +98,16 @@ void AggrigatorController::doDeleteAggrigator(const Pistache::Rest::Request& req
         auto value = request.param(":id");
         id = value.as<std::string>();
     }
-    angru::mvc::model::AggrigatorModel::DeleteAggrigator(id);
-    response.send(Pistache::Http::Code::Ok, "Aggrigator deleted.");
+    angru::mvc::model::AggregatorModel::DeleteAggregator(id);
+    response.send(Pistache::Http::Code::Ok, "Aggregator deleted.");
 }
 
-void AggrigatorController::doAddAggrigator(const Pistache::Rest::Request& request,
+void AggregatorController::doAddAggregator(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
-    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "aggrigators", ADD_ITEM);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "aggregators", ADD_ITEM);
     if(!authorized){
       response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
       return;
@@ -139,7 +139,7 @@ void AggrigatorController::doAddAggrigator(const Pistache::Rest::Request& reques
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::AggrigatorModel::AddAggrigator(
+      angru::mvc::model::AggregatorModel::AddAggregator(
                                                   name,
                                                   title,
                                                   code,
@@ -150,19 +150,19 @@ void AggrigatorController::doAddAggrigator(const Pistache::Rest::Request& reques
                                                   status,
                                                   situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "Aggrigator added.");
+      response.send(Pistache::Http::Code::Ok, "Aggregator added.");
     }
     catch (std::exception const& e){
-      response.send(Pistache::Http::Code::Not_Found, "Aggrigators not found.");
+      response.send(Pistache::Http::Code::Not_Found, "Aggregators not found.");
     }
 }
 
-void AggrigatorController::doUpdateAggrigator(const Pistache::Rest::Request& request,
+void AggregatorController::doUpdateAggregator(const Pistache::Rest::Request& request,
   Pistache::Http::ResponseWriter response) {
     angru::security::authorization::CORS(request,response);
     angru::security::authorization::ContentTypeJSONCheck(request,response);
     std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
-    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "aggrigators", UPDATE_ITEM);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "aggregators", UPDATE_ITEM);
     if(!authorized){
       response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
       return;
@@ -198,7 +198,7 @@ void AggrigatorController::doUpdateAggrigator(const Pistache::Rest::Request& req
       status = pt.get<int>("status");
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
-      angru::mvc::model::AggrigatorModel::UpdateAggrigator(
+      angru::mvc::model::AggregatorModel::UpdateAggregator(
                                                   id,
                                                   name,
                                                   title,
@@ -210,10 +210,10 @@ void AggrigatorController::doUpdateAggrigator(const Pistache::Rest::Request& req
                                                   status,
                                                   situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "Aggrigators updated.");
+      response.send(Pistache::Http::Code::Ok, "Aggregators updated.");
     }
     catch (std::exception const& e){
-      response.send(Pistache::Http::Code::Not_Found, "Aggrigators not found.");
+      response.send(Pistache::Http::Code::Not_Found, "Aggregators not found.");
     }
  }
 

@@ -23,10 +23,10 @@ SET default_with_oids = false;
 
 --
 -- TOC entry 194 (class 1259 OID 26005)
--- Name: aggrigators; Type: TABLE; Schema: public; Owner: -
+-- Name: aggregators; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.aggrigators (
+CREATE TABLE public.aggregators (
     id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     name character varying(255) NOT NULL,
     title character varying(255),
@@ -212,10 +212,10 @@ CREATE TABLE public.users_security_roles (
 --
 -- TOC entry 2330 (class 0 OID 26005)
 -- Dependencies: 194
--- Data for Name: aggrigators; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: aggregators; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.aggrigators (id, name, title, code, phone, email, created_by, deleted_by, updated_by, created_at, deleted_at, updated_at, details, status, situation, description) FROM stdin;
+COPY public.aggregators (id, name, title, code, phone, email, created_by, deleted_by, updated_by, created_at, deleted_at, updated_at, details, status, situation, description) FROM stdin;
 2246585c-2df9-44c8-9f67-501b2faba165	WlrBbmQBhCDarzOw	kYHIDdqSCD	59228973612	319478450361	info@WlrBbmQBhCDarzOw.com	9979027d-1672-4108-95a4-eb5d346545a0	\N	\N	2019-02-14 20:43:17.018067+03:30	2019-02-14 20:55:26.505689+03:30	\N	{}	0	0	dyGgxxpkLoRellNMPapqfWkHOPkMCoQHnWnkUE
 dd35a468-eccb-4fed-864e-af07020c6818	HsqmGbbuqCLJJiV	wMdkqtBxIX	91771159776736	639481293908	info@HsqmGbbuqCLJJiV.com	9979027d-1672-4108-95a4-eb5d346545a0	\N	\N	2019-02-14 20:43:17.036436+03:30	2019-02-14 20:56:11.178213+03:30	\N	{}	0	0	sBcnuVqHFfbsAQxWpQCAceHcHzvFrkMLNozjKpqPxRjxKIT
 1019b342-bd14-4102-9bb0-8ee0550df8f2	RUbeTokYXhoaCHWd	MxXrDRYXLMn	870480429610422	055290283804	info@RUbeTokYXhoaCHWd.com	9979027d-1672-4108-95a4-eb5d346545a0	\N	\N	2019-02-14 20:43:17.068478+03:30	2019-02-14 20:56:11.197047+03:30	\N	{}	0	0	drMYDiAjxloGHIqfMZhlvIhJOuvsuyOYpaYUlYEimUotEHZ
@@ -538,7 +538,7 @@ COPY public.content_providers (id, name, title, code, phone, email, created_by, 
 --
 
 COPY public.entities (id, name, title, created_by, deleted_by, updated_by, created_at, deleted_at, updated_at, type, status, situation, description) FROM stdin;
-cb3d5588-c187-4f14-a6da-0214f7ad0540	aggrigators	aggrigators	9979027d-1672-4108-95a4-eb5d346545a0	\N	\N	2019-02-16 00:09:58.116889+03:30	\N	\N	0	1	0	
+cb3d5588-c187-4f14-a6da-0214f7ad0540	aggregators	aggregators	9979027d-1672-4108-95a4-eb5d346545a0	\N	\N	2019-02-16 00:09:58.116889+03:30	\N	\N	0	1	0	
 cdf07567-f987-437b-9087-98bdf89fed1a	entities	entities	9979027d-1672-4108-95a4-eb5d346545a0	\N	\N	2019-02-16 00:09:58.116889+03:30	\N	\N	0	1	0	
 8ab2079c-5af9-4d12-9d84-a664e59dc2d5	mobile_operators	mobile_operators	9979027d-1672-4108-95a4-eb5d346545a0	\N	\N	2019-02-16 00:09:58.116889+03:30	\N	\N	0	1	0	
 cbf4122c-baf4-4e44-9d85-7e55a3f7d91c	security_roles	security_roles	9979027d-1672-4108-95a4-eb5d346545a0	\N	\N	2019-02-16 00:09:58.116889+03:30	\N	\N	0	1	0	
@@ -623,11 +623,11 @@ e17ef899-7a44-4164-b8b9-d74f1afc1463	a2e60f5a-1df2-480d-a034-8d096a9aa83c	3c230a
 
 --
 -- TOC entry 2167 (class 2606 OID 26013)
--- Name: aggrigators aggrigators_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: aggregators aggregators_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.aggrigators
-    ADD CONSTRAINT aggrigators_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.aggregators
+    ADD CONSTRAINT aggregators_pkey PRIMARY KEY (id);
 
 
 --
@@ -893,10 +893,10 @@ ALTER TABLE ONLY public.users
 
 --
 -- TOC entry 2187 (class 2606 OID 26014)
--- Name: aggrigators users_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: aggregators users_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.aggrigators
+ALTER TABLE ONLY public.aggregators
     ADD CONSTRAINT users_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.users(id);
 
 
@@ -911,10 +911,10 @@ ALTER TABLE ONLY public.users
 
 --
 -- TOC entry 2188 (class 2606 OID 26019)
--- Name: aggrigators users_deleted_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: aggregators users_deleted_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.aggrigators
+ALTER TABLE ONLY public.aggregators
     ADD CONSTRAINT users_deleted_by_fkey FOREIGN KEY (deleted_by) REFERENCES public.users(id);
 
 
@@ -974,10 +974,10 @@ ALTER TABLE ONLY public.users
 
 --
 -- TOC entry 2189 (class 2606 OID 26024)
--- Name: aggrigators users_updated_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: aggregators users_updated_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.aggrigators
+ALTER TABLE ONLY public.aggregators
     ADD CONSTRAINT users_updated_by_fkey FOREIGN KEY (updated_by) REFERENCES public.users(id);
 
 

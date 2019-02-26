@@ -13,7 +13,7 @@
 #include "controllers/security_role_controller.h"
 #include "controllers/users_security_role_controller.h"
 #include "controllers/mobile_operator_controller.h"
-#include "controllers/aggrigator_controller.h"
+#include "controllers/aggregator_controller.h"
 #include "controllers/content_provider_controller.h"
 #include "controllers/file_controller.h"
 #include "controllers/avatar_controller.h"
@@ -82,11 +82,11 @@ void RestServer::SetupRoutes() {
   Post(router, "/mobile_operators", bind(&MobileOperatorController::doAddMobileOperator));
 	Put(router, "/mobile_operators/:id", bind(&MobileOperatorController::doUpdateMobileOperator));
 
-  Get(router, "/aggrigators", bind(&AggrigatorController::doGetAggrigators));
-  Get(router, "/aggrigators/:id", bind(&AggrigatorController::doGetAggrigator));
-  Delete(router, "/aggrigators/:id", bind(&AggrigatorController::doDeleteAggrigator));
-  Post(router, "/aggrigators", bind(&AggrigatorController::doAddAggrigator));
-  Put(router, "/aggrigators/:id", bind(&AggrigatorController::doUpdateAggrigator));
+  Get(router, "/aggregators", bind(&AggregatorController::doGetAggregators));
+  Get(router, "/aggregators/:id", bind(&AggregatorController::doGetAggregator));
+  Delete(router, "/aggregators/:id", bind(&AggregatorController::doDeleteAggregator));
+  Post(router, "/aggregators", bind(&AggregatorController::doAddAggregator));
+  Put(router, "/aggregators/:id", bind(&AggregatorController::doUpdateAggregator));
 
   Get(router, "/content_providers", bind(&ContentProviderController::doGetContentProviders));
 	Get(router, "/content_providers/:id", bind(&ContentProviderController::doGetContentProvider));
@@ -120,6 +120,7 @@ void RestServer::SetupRoutes() {
   Put(router, "/users/:id/password", bind(&UserController::doChangePassword));
   Post(router, "/users/:id/avatars", bind(&AvatarController::doAddAvatar));
   Get(router, "/users/:id/avatars", bind(&AvatarController::doGetAvatar));
+  Get(router, "/users/:id/users_security_roles", bind(&UsersSecurityRoleController::doGetUsersSecurityRolesByUserId));
 
 	Get(router, "/entities", bind(&EntitieController::doGetEntities));
 	Get(router, "/entities/:id", bind(&EntitieController::doGetEntitie));

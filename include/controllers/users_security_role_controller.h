@@ -20,6 +20,7 @@ class UsersSecurityRoleController
 public:
 	UsersSecurityRoleController();
 	~UsersSecurityRoleController();
+	static void doGetUsersSecurityRolesByUserId(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 	static void	doGetUsersSecurityRoles(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 	static void	doGetUsersSecurityRole(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
   static void	doDeleteUsersSecurityRole(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);

@@ -191,7 +191,7 @@ INSERT INTO public.entities(
 INSERT INTO public.entities(
             id, name, title, created_by, deleted_by, updated_by, created_at,
             deleted_at, updated_at, type, status, situation, description)
-    VALUES (DEFAULT, 'aggrigators', 'aggrigators', (select id from users where username='zeus'), NULL, NULL, NOW(),
+    VALUES (DEFAULT, 'aggregators', 'aggregators', (select id from users where username='zeus'), NULL, NULL, NOW(),
             NULL, NULL, 0, 1, 0, '');
 
 INSERT INTO public.entities(
@@ -411,11 +411,11 @@ WITH (
 );
 
 
--- Table: public.aggrigators
+-- Table: public.aggregators
 
--- DROP TABLE public.aggrigators;
+-- DROP TABLE public.aggregators;
 
-CREATE TABLE public.aggrigators
+CREATE TABLE public.aggregators
 (
   id uuid NOT NULL DEFAULT uuid_generate_v4(),
   name character varying(255) NOT NULL,
@@ -433,14 +433,14 @@ CREATE TABLE public.aggrigators
   status integer NOT NULL,
   situation integer NOT NULL,
   description character varying,
-  CONSTRAINT aggrigators_pkey PRIMARY KEY (id),
-  CONSTRAINT aggrigators_created_by_fkey FOREIGN KEY (created_by)
+  CONSTRAINT aggregators_pkey PRIMARY KEY (id),
+  CONSTRAINT aggregators_created_by_fkey FOREIGN KEY (created_by)
       REFERENCES public.users (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT aggrigators_deleted_by_fkey FOREIGN KEY (deleted_by)
+  CONSTRAINT aggregators_deleted_by_fkey FOREIGN KEY (deleted_by)
       REFERENCES public.users (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT aggrigators_updated_by_fkey FOREIGN KEY (updated_by)
+  CONSTRAINT aggregators_updated_by_fkey FOREIGN KEY (updated_by)
       REFERENCES public.users (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
@@ -498,7 +498,7 @@ CREATE TABLE public.services
   id uuid NOT NULL DEFAULT uuid_generate_v4(),
   pendar uuid,
   mobile_operator uuid,
-  aggrigator uuid,
+  aggregator uuid,
   content_provider uuid,
   name character varying(255) NOT NULL,
   title character varying(255),
@@ -517,8 +517,8 @@ CREATE TABLE public.services
   CONSTRAINT services_mobile_operator_fkey FOREIGN KEY (mobile_operator)
       REFERENCES public.mobile_operators (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT services_aggrigator_fkey FOREIGN KEY (aggrigator)
-      REFERENCES public.aggrigators (id) MATCH SIMPLE
+  CONSTRAINT services_aggregator_fkey FOREIGN KEY (aggregator)
+      REFERENCES public.aggregators (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT services_content_provider_fkey FOREIGN KEY (content_provider)
       REFERENCES public.content_providers (id) MATCH SIMPLE

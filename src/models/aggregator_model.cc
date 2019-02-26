@@ -1,4 +1,4 @@
-#include "models/aggrigator_model.h"
+#include "models/aggregator_model.h"
 
 #include <iostream>
 #include <string>
@@ -15,10 +15,10 @@ namespace angru{
 namespace mvc{
 namespace model{
 
-AggrigatorModel::AggrigatorModel(){}
-AggrigatorModel::~AggrigatorModel(){}
+AggregatorModel::AggregatorModel(){}
+AggregatorModel::~AggregatorModel(){}
 
-pqxx::result AggrigatorModel::GetAggrigators(int page, std::string query){
+pqxx::result AggregatorModel::GetAggregators(int page, std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -46,7 +46,7 @@ pqxx::result AggrigatorModel::GetAggrigators(int page, std::string query){
 									      				details , \
 									      				status , \
 									      				situation , \
-									      				description  FROM aggrigators AS main where deleted_at is NULL ";
+									      				description  FROM aggregators AS main where deleted_at is NULL ";
 	if(!query.empty())
 	{
 		complete_query += " AND ";
@@ -61,7 +61,7 @@ pqxx::result AggrigatorModel::GetAggrigators(int page, std::string query){
 	return R;
 }
 
-int AggrigatorModel::GetAggrigatorsCount(std::string query){
+int AggregatorModel::GetAggregatorsCount(std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -75,7 +75,7 @@ int AggrigatorModel::GetAggrigatorsCount(std::string query){
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	std::string complete_query = "SELECT count(id) FROM aggrigators where deleted_at is NULL ";
+	std::string complete_query = "SELECT count(id) FROM aggregators where deleted_at is NULL ";
 	if(!query.empty())
 	{
 		complete_query += " AND ";
@@ -87,32 +87,32 @@ int AggrigatorModel::GetAggrigatorsCount(std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree AggrigatorModel::GetAggrigatorsJson(int page, std::string query){
-	pqxx::result R = GetAggrigators(page, query);
-	int result_count = GetAggrigatorsCount(query);
+boost::property_tree::ptree AggregatorModel::GetAggregatorsJson(int page, std::string query){
+	pqxx::result R = GetAggregators(page, query);
+	int result_count = GetAggregatorsCount(query);
 	int pageCount = (result_count / OFFSET_COUNT) + 1;
 
 	boost::property_tree::ptree result_node;
 	boost::property_tree::ptree info_node;
-	boost::property_tree::ptree aggrigator_node;
-	boost::property_tree::ptree aggrigators_node;
+	boost::property_tree::ptree aggregator_node;
+	boost::property_tree::ptree aggregators_node;
 
 	for (size_t i = 0; i < R.size(); i++) {
-		aggrigator_node.put("id", R[i][0]);
-		aggrigator_node.put("name", R[i][1]);
-		aggrigator_node.put("title", R[i][2]);
-		aggrigator_node.put("code", R[i][3]);
-		aggrigator_node.put("phone", R[i][4]);
-		aggrigator_node.put("email", R[i][5]);
-		aggrigator_node.put("created_by", R[i][6]);
-		aggrigator_node.put("updated_by", R[i][7]);
-		aggrigator_node.put("created_at", R[i][8]);
-		aggrigator_node.put("updated_at", R[i][9]);
-		aggrigator_node.put("details", R[i][10]);
-		aggrigator_node.put("status", R[i][11]);
-		aggrigator_node.put("situation", R[i][12]);
-		aggrigator_node.put("description", R[i][13]);
-		aggrigators_node.push_back(std::make_pair("", aggrigator_node));
+		aggregator_node.put("id", R[i][0]);
+		aggregator_node.put("name", R[i][1]);
+		aggregator_node.put("title", R[i][2]);
+		aggregator_node.put("code", R[i][3]);
+		aggregator_node.put("phone", R[i][4]);
+		aggregator_node.put("email", R[i][5]);
+		aggregator_node.put("created_by", R[i][6]);
+		aggregator_node.put("updated_by", R[i][7]);
+		aggregator_node.put("created_at", R[i][8]);
+		aggregator_node.put("updated_at", R[i][9]);
+		aggregator_node.put("details", R[i][10]);
+		aggregator_node.put("status", R[i][11]);
+		aggregator_node.put("situation", R[i][12]);
+		aggregator_node.put("description", R[i][13]);
+		aggregators_node.push_back(std::make_pair("", aggregator_node));
 	}
 	info_node.put<int>("page", page);
 	info_node.put<int>("offset", OFFSET_COUNT);
@@ -120,11 +120,11 @@ boost::property_tree::ptree AggrigatorModel::GetAggrigatorsJson(int page, std::s
 	info_node.put<int>("result_count", result_count);
 
 	result_node.add_child("info", info_node);
-	result_node.add_child("items", aggrigators_node);
+	result_node.add_child("items", aggregators_node);
 	return result_node;
 }
 
-pqxx::result AggrigatorModel::GetAggrigator(std::string id){
+pqxx::result AggregatorModel::GetAggregator(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -152,36 +152,36 @@ pqxx::result AggrigatorModel::GetAggrigator(std::string id){
 									      				details , \
 									      				status , \
 									      				situation , \
-									      				description  FROM aggrigators AS main where id = $1 and deleted_at is NULL ");
+									      				description  FROM aggregators AS main where id = $1 and deleted_at is NULL ");
   pqxx::result R = W.prepared("find")(id).exec();
 	W.commit();
 	return R;
 }
 
-boost::property_tree::ptree AggrigatorModel::GetAggrigatorJson(std::string id){
-	pqxx::result R = GetAggrigator(id);
-	boost::property_tree::ptree aggrigator_node;
+boost::property_tree::ptree AggregatorModel::GetAggregatorJson(std::string id){
+	pqxx::result R = GetAggregator(id);
+	boost::property_tree::ptree aggregator_node;
 
 	if(R.size() == 1){
-		aggrigator_node.put("id", R[0][0]);
-		aggrigator_node.put("name", R[0][1]);
-		aggrigator_node.put("title", R[0][2]);
-		aggrigator_node.put("code", R[0][3]);
-		aggrigator_node.put("phone", R[0][4]);
-		aggrigator_node.put("email", R[0][5]);
-		aggrigator_node.put("created_by", R[0][6]);
-		aggrigator_node.put("updated_by", R[0][7]);
-		aggrigator_node.put("created_at", R[0][8]);
-		aggrigator_node.put("updated_at", R[0][9]);
-		aggrigator_node.put("details", R[0][10]);
-		aggrigator_node.put("status", R[0][11]);
-		aggrigator_node.put("situation", R[0][12]);
-		aggrigator_node.put("description", R[0][13]);
+		aggregator_node.put("id", R[0][0]);
+		aggregator_node.put("name", R[0][1]);
+		aggregator_node.put("title", R[0][2]);
+		aggregator_node.put("code", R[0][3]);
+		aggregator_node.put("phone", R[0][4]);
+		aggregator_node.put("email", R[0][5]);
+		aggregator_node.put("created_by", R[0][6]);
+		aggregator_node.put("updated_by", R[0][7]);
+		aggregator_node.put("created_at", R[0][8]);
+		aggregator_node.put("updated_at", R[0][9]);
+		aggregator_node.put("details", R[0][10]);
+		aggregator_node.put("status", R[0][11]);
+		aggregator_node.put("situation", R[0][12]);
+		aggregator_node.put("description", R[0][13]);
 	}
-	return aggrigator_node;
+	return aggregator_node;
 }
 
-std::string AggrigatorModel::AddAggrigator(
+std::string AggregatorModel::AddAggregator(
 													std::string	name,
 													std::string	title,
 													std::string	code,
@@ -205,7 +205,7 @@ std::string AggrigatorModel::AddAggrigator(
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	C.prepare("insert", "INSERT INTO aggrigators( \
+	C.prepare("insert", "INSERT INTO aggregators( \
 													id, \
 													name, \
 													title, \
@@ -259,7 +259,7 @@ std::string AggrigatorModel::AddAggrigator(
 	return id;
 }
 
-void AggrigatorModel::UpdateAggrigator(
+void AggregatorModel::UpdateAggregator(
 													std::string	id,
 													std::string	name,
 													std::string	title,
@@ -284,7 +284,7 @@ void AggrigatorModel::UpdateAggrigator(
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	C.prepare("update", "UPDATE aggrigators SET \
+	C.prepare("update", "UPDATE aggregators SET \
 													name = $2, \
 													title = $3, \
 													code = $4, \
@@ -312,7 +312,7 @@ void AggrigatorModel::UpdateAggrigator(
 	W.commit();
 }
 
-void AggrigatorModel::DeleteAggrigator(std::string id){
+void AggregatorModel::DeleteAggregator(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -326,7 +326,7 @@ void AggrigatorModel::DeleteAggrigator(std::string id){
 	 }
 	 LOG_INFO << "Connected to database: " << C.dbname();
 	 pqxx::work W(C);
-	 C.prepare("update", "UPDATE aggrigators SET \
+	 C.prepare("update", "UPDATE aggregators SET \
 												deleted_at = now()  \
 												WHERE id = $1");
    W.prepared("update")(id).exec();

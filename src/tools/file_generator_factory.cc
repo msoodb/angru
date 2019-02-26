@@ -189,8 +189,8 @@ void generate()
   // angru::tools::generator::controllerGenerator(table_name_single, entity_name, fields);
   // angru::tools::generator::routerGenerator(table_name_single, entity_name);
   //
-  // table_name_single = "aggrigator";
-  // entity_name="Aggrigator";
+  // table_name_single = "aggregator";
+  // entity_name="Aggregator";
   // fields.clear();
   // fields.push_back(std::pair<std::string, std::string>("std::string", "id"));
   // fields.push_back(std::pair<std::string, std::string>("std::string", "name"));
@@ -346,7 +346,7 @@ void generate()
   // fields.push_back(std::pair<std::string, std::string>("std::string", "id"));
   // fields.push_back(std::pair<std::string, std::string>("std::string", "pendar"));
   // fields.push_back(std::pair<std::string, std::string>("std::string", "mobile_operator"));
-  // fields.push_back(std::pair<std::string, std::string>("std::string", "aggrigator"));
+  // fields.push_back(std::pair<std::string, std::string>("std::string", "aggregator"));
   // fields.push_back(std::pair<std::string, std::string>("std::string", "content_provider"));
   // fields.push_back(std::pair<std::string, std::string>("std::string", "name"));
   // fields.push_back(std::pair<std::string, std::string>("std::string", "title"));

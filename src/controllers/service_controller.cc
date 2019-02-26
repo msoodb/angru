@@ -115,7 +115,7 @@ void ServiceController::doAddService(const Pistache::Rest::Request& request,
     std::string created_by = user_id;
     std::string	pendar;
     std::string	mobile_operator;
-    std::string	aggrigator;
+    std::string	aggregator;
     std::string	content_provider;
     std::string	name;
     std::string	title;
@@ -132,7 +132,7 @@ void ServiceController::doAddService(const Pistache::Rest::Request& request,
       boost::property_tree::read_json(ss, pt);
       pendar = pt.get<std::string>("pendar");
       mobile_operator = pt.get<std::string>("mobile_operator");
-      aggrigator = pt.get<std::string>("aggrigator");
+      aggregator = pt.get<std::string>("aggregator");
       content_provider = pt.get<std::string>("content_provider");
       name = pt.get<std::string>("name");
       title = pt.get<std::string>("title");
@@ -145,7 +145,7 @@ void ServiceController::doAddService(const Pistache::Rest::Request& request,
       angru::mvc::model::ServiceModel::AddService(
                                                   pendar, 
                                                   mobile_operator, 
-                                                  aggrigator, 
+                                                  aggregator, 
                                                   content_provider, 
                                                   name, 
                                                   title, 
@@ -181,7 +181,7 @@ void ServiceController::doUpdateService(const Pistache::Rest::Request& request,
     auto body = request.body();
     std::string	pendar;
     std::string	mobile_operator;
-    std::string	aggrigator;
+    std::string	aggregator;
     std::string	content_provider;
     std::string	name;
     std::string	title;
@@ -198,7 +198,7 @@ void ServiceController::doUpdateService(const Pistache::Rest::Request& request,
       boost::property_tree::read_json(ss, pt);
       pendar = pt.get<std::string>("pendar");
       mobile_operator = pt.get<std::string>("mobile_operator");
-      aggrigator = pt.get<std::string>("aggrigator");
+      aggregator = pt.get<std::string>("aggregator");
       content_provider = pt.get<std::string>("content_provider");
       name = pt.get<std::string>("name");
       title = pt.get<std::string>("title");
@@ -211,7 +211,7 @@ void ServiceController::doUpdateService(const Pistache::Rest::Request& request,
                                                   id, 
                                                   pendar, 
                                                   mobile_operator, 
-                                                  aggrigator, 
+                                                  aggregator, 
                                                   content_provider, 
                                                   name, 
                                                   title, 
