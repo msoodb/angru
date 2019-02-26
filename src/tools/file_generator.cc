@@ -153,7 +153,9 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "		complete_query += \" AND \";" << '\n';
   out_cc << "		complete_query +=  query;" << '\n';
   out_cc << "	}" << '\n';
-  out_cc << "	complete_query += \" limit 20 offset \";" << '\n';
+  out_cc << "	complete_query += \" limit \";" << '\n';
+  out_cc << "	complete_query += std::to_string(OFFSET_COUNT);" << '\n';
+  out_cc << "	complete_query += \" offset \";" << '\n';
   out_cc << "	int offset = (page-1)* OFFSET_COUNT ;" << '\n';
   out_cc << "	complete_query += std::to_string(offset);" << '\n';
   out_cc << "  C.prepare(\"find\", complete_query);" << '\n';

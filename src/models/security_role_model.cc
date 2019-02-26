@@ -48,7 +48,9 @@ pqxx::result SecurityRoleModel::GetSecurityRoles(int page, std::string query){
 		complete_query += " AND ";
 		complete_query +=  query;
 	}
-	complete_query += " limit 20 offset ";
+	complete_query += " limit ";
+	complete_query += std::to_string(OFFSET_COUNT);
+	complete_query += " offset ";
 	int offset = (page-1)* OFFSET_COUNT ;
 	complete_query += std::to_string(offset);
   C.prepare("find", complete_query);
@@ -166,11 +168,11 @@ boost::property_tree::ptree SecurityRoleModel::GetSecurityRoleJson(std::string i
 }
 
 std::string SecurityRoleModel::AddSecurityRole(
-													std::string	name, 
-													std::string	title, 
-													std::string	created_by, 
-													int	status, 
-													int	situation, 
+													std::string	name,
+													std::string	title,
+													std::string	created_by,
+													int	status,
+													int	situation,
 													std::string	description){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -227,7 +229,7 @@ std::string SecurityRoleModel::AddSecurityRole(
 	return id;
 }
 
-void SecurityRoleModel::UpdateSecurityRole( 
+void SecurityRoleModel::UpdateSecurityRole(
 													std::string	id,
 													std::string	name,
 													std::string	title,

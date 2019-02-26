@@ -51,7 +51,9 @@ pqxx::result CommentModel::GetComments(int page, std::string query){
 		complete_query += " AND ";
 		complete_query +=  query;
 	}
-	complete_query += " limit 20 offset ";
+	complete_query += " limit ";
+	complete_query += std::to_string(OFFSET_COUNT);
+	complete_query += " offset ";
 	int offset = (page-1)* OFFSET_COUNT ;
 	complete_query += std::to_string(offset);
   C.prepare("find", complete_query);
@@ -178,14 +180,14 @@ boost::property_tree::ptree CommentModel::GetCommentJson(std::string id){
 }
 
 std::string CommentModel::AddComment(
-													std::string	member, 
-													std::string	content, 
-													std::string	comment, 
-													std::string	reply_to, 
-													std::string	created_by, 
-													std::string	details, 
-													int	status, 
-													int	situation, 
+													std::string	member,
+													std::string	content,
+													std::string	comment,
+													std::string	reply_to,
+													std::string	created_by,
+													std::string	details,
+													int	status,
+													int	situation,
 													std::string	description){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -251,7 +253,7 @@ std::string CommentModel::AddComment(
 	return id;
 }
 
-void CommentModel::UpdateComment( 
+void CommentModel::UpdateComment(
 													std::string	id,
 													std::string	member,
 													std::string	content,

@@ -109,7 +109,9 @@ pqxx::result PrivilegeModel::GetPrivileges(int page, std::string query){
 		complete_query += " AND ";
 		complete_query +=  query;
 	}
-	complete_query += " limit 20 offset ";
+	complete_query += " limit ";
+	complete_query += std::to_string(OFFSET_COUNT);
+	complete_query += " offset ";
 	int offset = (page-1)* OFFSET_COUNT ;
 	complete_query += std::to_string(offset);
   C.prepare("find", complete_query);

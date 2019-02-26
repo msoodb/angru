@@ -50,7 +50,9 @@ pqxx::result TagModel::GetTags(int page, std::string query){
 		complete_query += " AND ";
 		complete_query +=  query;
 	}
-	complete_query += " limit 20 offset ";
+	complete_query += " limit ";
+	complete_query += std::to_string(OFFSET_COUNT);
+	complete_query += " offset ";
 	int offset = (page-1)* OFFSET_COUNT ;
 	complete_query += std::to_string(offset);
   C.prepare("find", complete_query);
@@ -174,13 +176,13 @@ boost::property_tree::ptree TagModel::GetTagJson(std::string id){
 }
 
 std::string TagModel::AddTag(
-													std::string	name, 
-													std::string	title, 
-													int	type, 
-													std::string	created_by, 
-													std::string	details, 
-													int	status, 
-													int	situation, 
+													std::string	name,
+													std::string	title,
+													int	type,
+													std::string	created_by,
+													std::string	details,
+													int	status,
+													int	situation,
 													std::string	description){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -243,7 +245,7 @@ std::string TagModel::AddTag(
 	return id;
 }
 
-void TagModel::UpdateTag( 
+void TagModel::UpdateTag(
 													std::string	id,
 													std::string	name,
 													std::string	title,

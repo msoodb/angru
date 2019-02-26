@@ -49,7 +49,9 @@ pqxx::result PlaylistsContentModel::GetPlaylistsContents(int page, std::string q
 		complete_query += " AND ";
 		complete_query +=  query;
 	}
-	complete_query += " limit 20 offset ";
+	complete_query += " limit ";
+	complete_query += std::to_string(OFFSET_COUNT);
+	complete_query += " offset ";
 	int offset = (page-1)* OFFSET_COUNT ;
 	complete_query += std::to_string(offset);
   C.prepare("find", complete_query);
@@ -170,12 +172,12 @@ boost::property_tree::ptree PlaylistsContentModel::GetPlaylistsContentJson(std::
 }
 
 std::string PlaylistsContentModel::AddPlaylistsContent(
-													std::string	playlist, 
-													std::string	content, 
-													std::string	created_by, 
-													std::string	details, 
-													int	status, 
-													int	situation, 
+													std::string	playlist,
+													std::string	content,
+													std::string	created_by,
+													std::string	details,
+													int	status,
+													int	situation,
 													std::string	description){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -235,7 +237,7 @@ std::string PlaylistsContentModel::AddPlaylistsContent(
 	return id;
 }
 
-void PlaylistsContentModel::UpdatePlaylistsContent( 
+void PlaylistsContentModel::UpdatePlaylistsContent(
 													std::string	id,
 													std::string	playlist,
 													std::string	content,
