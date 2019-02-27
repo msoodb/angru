@@ -88,7 +88,7 @@ int TagsChannelModel::GetTagsChannelsCount(std::string query){
 boost::property_tree::ptree TagsChannelModel::GetTagsChannelsJson(int page, int limit, std::string query){
 	pqxx::result R = GetTagsChannels(page, limit, query);
 	int result_count = GetTagsChannelsCount(query);
-	int pageCount = (result_count / limit) + 1;
+	int pageCount = ((result_count - 1) / limit) + 1;
 
 	boost::property_tree::ptree result_node;
 	boost::property_tree::ptree info_node;

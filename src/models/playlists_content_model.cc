@@ -89,7 +89,7 @@ int PlaylistsContentModel::GetPlaylistsContentsCount(std::string query){
 boost::property_tree::ptree PlaylistsContentModel::GetPlaylistsContentsJson(int page, int limit, std::string query){
 	pqxx::result R = GetPlaylistsContents(page, limit, query);
 	int result_count = GetPlaylistsContentsCount(query);
-	int pageCount = (result_count / limit) + 1;
+	int pageCount = ((result_count - 1) / limit) + 1;
 
 	boost::property_tree::ptree result_node;
 	boost::property_tree::ptree info_node;

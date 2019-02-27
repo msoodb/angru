@@ -91,7 +91,7 @@ int CommentModel::GetCommentsCount(std::string query){
 boost::property_tree::ptree CommentModel::GetCommentsJson(int page, int limit, std::string query){
 	pqxx::result R = GetComments(page, limit, query);
 	int result_count = GetCommentsCount(query);
-	int pageCount = (result_count / limit) + 1;
+	int pageCount = ((result_count - 1) / limit) + 1;
 
 	boost::property_tree::ptree result_node;
 	boost::property_tree::ptree info_node;

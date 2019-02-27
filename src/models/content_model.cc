@@ -90,7 +90,7 @@ int ContentModel::GetContentsCount(std::string query){
 boost::property_tree::ptree ContentModel::GetContentsJson(int page, int limit, std::string query){
 	pqxx::result R = GetContents(page, limit, query);
 	int result_count = GetContentsCount(query);
-	int pageCount = (result_count / limit) + 1;
+	int pageCount = ((result_count - 1) / limit) + 1;
 
 	boost::property_tree::ptree result_node;
 	boost::property_tree::ptree info_node;

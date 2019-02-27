@@ -193,7 +193,7 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "boost::property_tree::ptree " << class_name << "::Get" << entity_name << "sJson(int page, int limit, std::string query){" << '\n';
   out_cc << "	pqxx::result R = Get" << entity_name << "s(page, limit, query);" << '\n';
   out_cc << "	int result_count = Get" << entity_name << "sCount(query);" << '\n';
-  out_cc << "	int pageCount = (result_count / limit) + 1;" << '\n';
+  out_cc << "	int pageCount = ((result_count - 1) / limit) + 1;" << '\n';
   out_cc << '\n';
   out_cc << "	boost::property_tree::ptree result_node;" << '\n';
   out_cc << "	boost::property_tree::ptree info_node;" << '\n';

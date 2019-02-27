@@ -92,7 +92,7 @@ int AggregatorModel::GetAggregatorsCount(std::string query){
 boost::property_tree::ptree AggregatorModel::GetAggregatorsJson(int page, int limit, std::string query){
 	pqxx::result R = GetAggregators(page, limit, query);
 	int result_count = GetAggregatorsCount(query);
-	int pageCount = (result_count / limit) + 1;
+	int pageCount = ((result_count - 1) / limit) + 1;
 
 	boost::property_tree::ptree result_node;
 	boost::property_tree::ptree info_node;

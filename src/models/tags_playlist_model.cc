@@ -88,7 +88,7 @@ int TagsPlaylistModel::GetTagsPlaylistsCount(std::string query){
 boost::property_tree::ptree TagsPlaylistModel::GetTagsPlaylistsJson(int page, int limit, std::string query){
 	pqxx::result R = GetTagsPlaylists(page, limit, query);
 	int result_count = GetTagsPlaylistsCount(query);
-	int pageCount = (result_count / limit) + 1;
+	int pageCount = ((result_count - 1) / limit) + 1;
 
 	boost::property_tree::ptree result_node;
 	boost::property_tree::ptree info_node;
