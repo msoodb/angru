@@ -37,11 +37,16 @@ void PublisherController::doGetPublishers(const Pistache::Rest::Request& request
       auto value = query.get("page").get();
       page = std::stoi(value);
     }
+    int limit = LIMIT_COUNT;
+    if(query.has("limit")) {
+      auto value = query.get("limit").get();
+      limit = std::stoi(value);
+    }
     if(query.has("filter")) {
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
     }
-    boost::property_tree::ptree publishers = angru::mvc::model::PublisherModel::GetPublishersJson(page, filter);
+    boost::property_tree::ptree publishers = angru::mvc::model::PublisherModel::GetPublishersJson(page, limit, filter);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, publishers);
 
@@ -141,16 +146,16 @@ void PublisherController::doAddPublisher(const Pistache::Rest::Request& request,
       description = pt.get<std::string>("description");
 
       angru::mvc::model::PublisherModel::AddPublisher(
-                                                  admin, 
-                                                  name, 
-                                                  title, 
-                                                  code, 
-                                                  phone, 
-                                                  email, 
-                                                  created_by, 
-                                                  details, 
-                                                  status, 
-                                                  situation, 
+                                                  admin,
+                                                  name,
+                                                  title,
+                                                  code,
+                                                  phone,
+                                                  email,
+                                                  created_by,
+                                                  details,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Publisher added.");
     }
@@ -203,17 +208,17 @@ void PublisherController::doUpdatePublisher(const Pistache::Rest::Request& reque
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
       angru::mvc::model::PublisherModel::UpdatePublisher(
-                                                  id, 
-                                                  admin, 
-                                                  name, 
-                                                  title, 
-                                                  code, 
-                                                  phone, 
-                                                  email, 
-                                                  updated_by, 
-                                                  details, 
-                                                  status, 
-                                                  situation, 
+                                                  id,
+                                                  admin,
+                                                  name,
+                                                  title,
+                                                  code,
+                                                  phone,
+                                                  email,
+                                                  updated_by,
+                                                  details,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Publishers updated.");
     }

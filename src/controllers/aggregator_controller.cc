@@ -38,11 +38,16 @@ void AggregatorController::doGetAggregators(const Pistache::Rest::Request& reque
       auto value = query.get("page").get();
       page = std::stoi(value);
     }
+    int limit = LIMIT_COUNT;
+    if(query.has("limit")) {
+      auto value = query.get("limit").get();
+      limit = std::stoi(value);
+    }
     if(query.has("filter")) {
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
     }
-    boost::property_tree::ptree aggregators = angru::mvc::model::AggregatorModel::GetAggregatorsJson(page, filter);
+    boost::property_tree::ptree aggregators = angru::mvc::model::AggregatorModel::GetAggregatorsJson(page, limit, filter);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, aggregators);
 

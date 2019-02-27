@@ -37,11 +37,16 @@ void UsersContentProviderController::doGetUsersContentProviders(const Pistache::
       auto value = query.get("page").get();
       page = std::stoi(value);
     }
+    int limit = LIMIT_COUNT;
+    if(query.has("limit")) {
+      auto value = query.get("limit").get();
+      limit = std::stoi(value);
+    }
     if(query.has("filter")) {
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
     }
-    boost::property_tree::ptree users_content_providers = angru::mvc::model::UsersContentProviderModel::GetUsersContentProvidersJson(page, filter);
+    boost::property_tree::ptree users_content_providers = angru::mvc::model::UsersContentProviderModel::GetUsersContentProvidersJson(page, limit, filter);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, users_content_providers);
 
@@ -131,11 +136,11 @@ void UsersContentProviderController::doAddUsersContentProvider(const Pistache::R
       description = pt.get<std::string>("description");
 
       angru::mvc::model::UsersContentProviderModel::AddUsersContentProvider(
-                                                  _user_, 
-                                                  content_provider, 
-                                                  created_by, 
-                                                  status, 
-                                                  situation, 
+                                                  _user_,
+                                                  content_provider,
+                                                  created_by,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "UsersContentProvider added.");
     }
@@ -178,12 +183,12 @@ void UsersContentProviderController::doUpdateUsersContentProvider(const Pistache
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
       angru::mvc::model::UsersContentProviderModel::UpdateUsersContentProvider(
-                                                  id, 
-                                                  _user_, 
-                                                  content_provider, 
-                                                  updated_by, 
-                                                  status, 
-                                                  situation, 
+                                                  id,
+                                                  _user_,
+                                                  content_provider,
+                                                  updated_by,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "UsersContentProviders updated.");
     }

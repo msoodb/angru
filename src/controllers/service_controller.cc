@@ -37,11 +37,16 @@ void ServiceController::doGetServices(const Pistache::Rest::Request& request,
       auto value = query.get("page").get();
       page = std::stoi(value);
     }
+    int limit = LIMIT_COUNT;
+    if(query.has("limit")) {
+      auto value = query.get("limit").get();
+      limit = std::stoi(value);
+    }
     if(query.has("filter")) {
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
     }
-    boost::property_tree::ptree services = angru::mvc::model::ServiceModel::GetServicesJson(page, filter);
+    boost::property_tree::ptree services = angru::mvc::model::ServiceModel::GetServicesJson(page, limit, filter);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, services);
 
@@ -143,17 +148,17 @@ void ServiceController::doAddService(const Pistache::Rest::Request& request,
       description = pt.get<std::string>("description");
 
       angru::mvc::model::ServiceModel::AddService(
-                                                  pendar, 
-                                                  mobile_operator, 
-                                                  aggregator, 
-                                                  content_provider, 
-                                                  name, 
-                                                  title, 
-                                                  code, 
-                                                  created_by, 
-                                                  details, 
-                                                  status, 
-                                                  situation, 
+                                                  pendar,
+                                                  mobile_operator,
+                                                  aggregator,
+                                                  content_provider,
+                                                  name,
+                                                  title,
+                                                  code,
+                                                  created_by,
+                                                  details,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Service added.");
     }
@@ -208,18 +213,18 @@ void ServiceController::doUpdateService(const Pistache::Rest::Request& request,
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
       angru::mvc::model::ServiceModel::UpdateService(
-                                                  id, 
-                                                  pendar, 
-                                                  mobile_operator, 
-                                                  aggregator, 
-                                                  content_provider, 
-                                                  name, 
-                                                  title, 
-                                                  code, 
-                                                  updated_by, 
-                                                  details, 
-                                                  status, 
-                                                  situation, 
+                                                  id,
+                                                  pendar,
+                                                  mobile_operator,
+                                                  aggregator,
+                                                  content_provider,
+                                                  name,
+                                                  title,
+                                                  code,
+                                                  updated_by,
+                                                  details,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Services updated.");
     }

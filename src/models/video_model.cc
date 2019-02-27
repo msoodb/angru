@@ -18,7 +18,7 @@ namespace model{
 VideoModel::VideoModel(){}
 VideoModel::~VideoModel(){}
 
-pqxx::result VideoModel::GetVideos(int page, std::string query){
+pqxx::result VideoModel::GetVideos(int page, int limit, std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -53,9 +53,9 @@ pqxx::result VideoModel::GetVideos(int page, std::string query){
 		complete_query +=  query;
 	}
 	complete_query += " limit ";
-	complete_query += std::to_string(OFFSET_COUNT);
+	complete_query += std::to_string(limit);
 	complete_query += " offset ";
-	int offset = (page-1)* OFFSET_COUNT ;
+	int offset = (page-1)* limit;
 	complete_query += std::to_string(offset);
   C.prepare("find", complete_query);
   pqxx::result R = W.prepared("find").exec();
@@ -89,10 +89,10 @@ int VideoModel::GetVideosCount(std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree VideoModel::GetVideosJson(int page, std::string query){
-	pqxx::result R = GetVideos(page, query);
+boost::property_tree::ptree VideoModel::GetVideosJson(int page, int limit, std::string query){
+	pqxx::result R = GetVideos(page, limit, query);
 	int result_count = GetVideosCount(query);
-	int pageCount = (result_count / OFFSET_COUNT) + 1;
+	int pageCount = (result_count / limit) + 1;
 
 	boost::property_tree::ptree result_node;
 	boost::property_tree::ptree info_node;
@@ -117,7 +117,7 @@ boost::property_tree::ptree VideoModel::GetVideosJson(int page, std::string quer
 		videos_node.push_back(std::make_pair("", video_node));
 	}
 	info_node.put<int>("page", page);
-	info_node.put<int>("offset", OFFSET_COUNT);
+	info_node.put<int>("limit", limit);
 	info_node.put<int>("page_count", pageCount);
 	info_node.put<int>("result_count", result_count);
 

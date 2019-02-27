@@ -37,11 +37,16 @@ void UsersPublisherController::doGetUsersPublishers(const Pistache::Rest::Reques
       auto value = query.get("page").get();
       page = std::stoi(value);
     }
+    int limit = LIMIT_COUNT;
+    if(query.has("limit")) {
+      auto value = query.get("limit").get();
+      limit = std::stoi(value);
+    }
     if(query.has("filter")) {
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
     }
-    boost::property_tree::ptree users_publishers = angru::mvc::model::UsersPublisherModel::GetUsersPublishersJson(page, filter);
+    boost::property_tree::ptree users_publishers = angru::mvc::model::UsersPublisherModel::GetUsersPublishersJson(page, limit, filter);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, users_publishers);
 
@@ -131,11 +136,11 @@ void UsersPublisherController::doAddUsersPublisher(const Pistache::Rest::Request
       description = pt.get<std::string>("description");
 
       angru::mvc::model::UsersPublisherModel::AddUsersPublisher(
-                                                  _user_, 
-                                                  publisher, 
-                                                  created_by, 
-                                                  status, 
-                                                  situation, 
+                                                  _user_,
+                                                  publisher,
+                                                  created_by,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "UsersPublisher added.");
     }
@@ -178,12 +183,12 @@ void UsersPublisherController::doUpdateUsersPublisher(const Pistache::Rest::Requ
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
       angru::mvc::model::UsersPublisherModel::UpdateUsersPublisher(
-                                                  id, 
-                                                  _user_, 
-                                                  publisher, 
-                                                  updated_by, 
-                                                  status, 
-                                                  situation, 
+                                                  id,
+                                                  _user_,
+                                                  publisher,
+                                                  updated_by,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "UsersPublishers updated.");
     }

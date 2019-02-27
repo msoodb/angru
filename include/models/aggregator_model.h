@@ -7,6 +7,8 @@
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#include "wrappers/postgresql.h"
+
 
 namespace angru{
 namespace mvc{
@@ -17,9 +19,9 @@ class AggregatorModel
 public:
 	AggregatorModel();
 	~AggregatorModel();
-	static pqxx::result GetAggregators(int page=1, std::string query="");
+	static pqxx::result GetAggregators(int page=1, int limit=LIMIT_COUNT, std::string query="");
 	static int GetAggregatorsCount(std::string query="");
-	static boost::property_tree::ptree GetAggregatorsJson(int page=1, std::string query="");
+	static boost::property_tree::ptree GetAggregatorsJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
   static pqxx::result GetAggregator(std::string id);
 	static boost::property_tree::ptree GetAggregatorJson(std::string id);
 	static std::string AddAggregator(

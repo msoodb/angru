@@ -7,6 +7,7 @@
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#include "wrappers/postgresql.h"
 
 namespace angru{
 namespace mvc{
@@ -17,9 +18,9 @@ class ProductModel
 public:
 	ProductModel();
 	~ProductModel();
-	static pqxx::result GetProducts(int page=1, std::string query="");
+	static pqxx::result GetProducts(int page=1, int limit=LIMIT_COUNT, std::string query="");
 	static int GetProductsCount(std::string query="");
-	static boost::property_tree::ptree GetProductsJson(int page=1, std::string query="");
+	static boost::property_tree::ptree GetProductsJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
   static pqxx::result GetProduct(int);
 	static boost::property_tree::ptree GetProductJson(int);
 	static std::string AddProduct(

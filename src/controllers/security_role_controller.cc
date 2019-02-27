@@ -37,11 +37,16 @@ void SecurityRoleController::doGetSecurityRoles(const Pistache::Rest::Request& r
       auto value = query.get("page").get();
       page = std::stoi(value);
     }
+    int limit = LIMIT_COUNT;
+    if(query.has("limit")) {
+      auto value = query.get("limit").get();
+      limit = std::stoi(value);
+    }
     if(query.has("filter")) {
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
     }
-    boost::property_tree::ptree security_roles = angru::mvc::model::SecurityRoleModel::GetSecurityRolesJson(page, filter);
+    boost::property_tree::ptree security_roles = angru::mvc::model::SecurityRoleModel::GetSecurityRolesJson(page, limit, filter);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, security_roles);
 
@@ -131,11 +136,11 @@ void SecurityRoleController::doAddSecurityRole(const Pistache::Rest::Request& re
       description = pt.get<std::string>("description");
 
       angru::mvc::model::SecurityRoleModel::AddSecurityRole(
-                                                  name, 
-                                                  title, 
-                                                  created_by, 
-                                                  status, 
-                                                  situation, 
+                                                  name,
+                                                  title,
+                                                  created_by,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "SecurityRole added.");
     }
@@ -178,12 +183,12 @@ void SecurityRoleController::doUpdateSecurityRole(const Pistache::Rest::Request&
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
       angru::mvc::model::SecurityRoleModel::UpdateSecurityRole(
-                                                  id, 
-                                                  name, 
-                                                  title, 
-                                                  updated_by, 
-                                                  status, 
-                                                  situation, 
+                                                  id,
+                                                  name,
+                                                  title,
+                                                  updated_by,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "SecurityRoles updated.");
     }

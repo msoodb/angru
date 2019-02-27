@@ -7,6 +7,7 @@
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#include "wrappers/postgresql.h"
 
 namespace angru{
 namespace mvc{
@@ -17,9 +18,9 @@ class RateModel
 public:
 	RateModel();
 	~RateModel();
-	static pqxx::result GetRates(int page=1, std::string query="");
+	static pqxx::result GetRates(int page=1, int limit=LIMIT_COUNT, std::string query="");
 	static int GetRatesCount(std::string query="");
-	static boost::property_tree::ptree GetRatesJson(int page=1, std::string query="");
+	static boost::property_tree::ptree GetRatesJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
   static pqxx::result GetRate(std::string id);
 	static boost::property_tree::ptree GetRateJson(std::string id);
 	static std::string AddRate(

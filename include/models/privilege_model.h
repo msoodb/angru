@@ -7,6 +7,7 @@
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#include "wrappers/postgresql.h"
 
 namespace angru{
 namespace mvc{
@@ -28,9 +29,9 @@ public:
 	~PrivilegeModel();
 	static bool AuthorizationCheck(std::string user_id, std::string entity_name, int action);
 	static pqxx::result GetPrivilegeStrings(std::string user_id, std::string entity_name);
-	static pqxx::result GetPrivileges(int page=1, std::string query="");
+	static pqxx::result GetPrivileges(int page=1, int limit=LIMIT_COUNT, std::string query="");
 	static int GetPrivilegesCount(std::string query="");
-	static boost::property_tree::ptree GetPrivilegesJson(int page=1, std::string query="");
+	static boost::property_tree::ptree GetPrivilegesJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
   static pqxx::result GetPrivilege(std::string id);
 	static boost::property_tree::ptree GetPrivilegeJson(std::string id);
 	static std::string AddPrivilege(

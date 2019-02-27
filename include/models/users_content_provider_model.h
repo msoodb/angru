@@ -7,6 +7,7 @@
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#include "wrappers/postgresql.h"
 
 namespace angru{
 namespace mvc{
@@ -17,9 +18,9 @@ class UsersContentProviderModel
 public:
 	UsersContentProviderModel();
 	~UsersContentProviderModel();
-	static pqxx::result GetUsersContentProviders(int page=1, std::string query="");
+	static pqxx::result GetUsersContentProviders(int page=1, int limit=LIMIT_COUNT, std::string query="");
 	static int GetUsersContentProvidersCount(std::string query="");
-	static boost::property_tree::ptree GetUsersContentProvidersJson(int page=1, std::string query="");
+	static boost::property_tree::ptree GetUsersContentProvidersJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
   static pqxx::result GetUsersContentProvider(std::string id);
 	static boost::property_tree::ptree GetUsersContentProviderJson(std::string id);
 	static std::string AddUsersContentProvider(

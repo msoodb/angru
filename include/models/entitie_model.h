@@ -7,6 +7,7 @@
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#include "wrappers/postgresql.h"
 
 namespace angru{
 namespace mvc{
@@ -17,9 +18,9 @@ class EntitieModel
 public:
 	EntitieModel();
 	~EntitieModel();
-	static pqxx::result GetEntities(int page=1, std::string query="");
+	static pqxx::result GetEntities(int page=1, int limit=LIMIT_COUNT, std::string query="");
 	static int GetEntitiesCount(std::string query="");
-	static boost::property_tree::ptree GetEntitiesJson(int page=1, std::string query="");
+	static boost::property_tree::ptree GetEntitiesJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
   static pqxx::result GetEntitie(std::string id);
 	static boost::property_tree::ptree GetEntitieJson(std::string id);
 	static std::string AddEntitie(

@@ -37,11 +37,16 @@ void RateController::doGetRates(const Pistache::Rest::Request& request,
       auto value = query.get("page").get();
       page = std::stoi(value);
     }
+    int limit = LIMIT_COUNT;
+    if(query.has("limit")) {
+      auto value = query.get("limit").get();
+      limit = std::stoi(value);
+    }
     if(query.has("filter")) {
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
     }
-    boost::property_tree::ptree rates = angru::mvc::model::RateModel::GetRatesJson(page, filter);
+    boost::property_tree::ptree rates = angru::mvc::model::RateModel::GetRatesJson(page, limit, filter);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, rates);
 
@@ -135,13 +140,13 @@ void RateController::doAddRate(const Pistache::Rest::Request& request,
       description = pt.get<std::string>("description");
 
       angru::mvc::model::RateModel::AddRate(
-                                                  member, 
-                                                  content, 
-                                                  rate, 
-                                                  created_by, 
-                                                  details, 
-                                                  status, 
-                                                  situation, 
+                                                  member,
+                                                  content,
+                                                  rate,
+                                                  created_by,
+                                                  details,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Rate added.");
     }
@@ -188,14 +193,14 @@ void RateController::doUpdateRate(const Pistache::Rest::Request& request,
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
       angru::mvc::model::RateModel::UpdateRate(
-                                                  id, 
-                                                  member, 
-                                                  content, 
-                                                  rate, 
-                                                  updated_by, 
-                                                  details, 
-                                                  status, 
-                                                  situation, 
+                                                  id,
+                                                  member,
+                                                  content,
+                                                  rate,
+                                                  updated_by,
+                                                  details,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Rates updated.");
     }

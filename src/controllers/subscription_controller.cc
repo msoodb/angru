@@ -37,11 +37,16 @@ void SubscriptionController::doGetSubscriptions(const Pistache::Rest::Request& r
       auto value = query.get("page").get();
       page = std::stoi(value);
     }
+    int limit = LIMIT_COUNT;
+    if(query.has("limit")) {
+      auto value = query.get("limit").get();
+      limit = std::stoi(value);
+    }
     if(query.has("filter")) {
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
     }
-    boost::property_tree::ptree subscriptions = angru::mvc::model::SubscriptionModel::GetSubscriptionsJson(page, filter);
+    boost::property_tree::ptree subscriptions = angru::mvc::model::SubscriptionModel::GetSubscriptionsJson(page, limit, filter);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, subscriptions);
 
@@ -135,13 +140,13 @@ void SubscriptionController::doAddSubscription(const Pistache::Rest::Request& re
       description = pt.get<std::string>("description");
 
       angru::mvc::model::SubscriptionModel::AddSubscription(
-                                                  member, 
-                                                  service, 
-                                                  last_login, 
-                                                  created_by, 
-                                                  details, 
-                                                  status, 
-                                                  situation, 
+                                                  member,
+                                                  service,
+                                                  last_login,
+                                                  created_by,
+                                                  details,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Subscription added.");
     }
@@ -188,14 +193,14 @@ void SubscriptionController::doUpdateSubscription(const Pistache::Rest::Request&
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
       angru::mvc::model::SubscriptionModel::UpdateSubscription(
-                                                  id, 
-                                                  member, 
-                                                  service, 
-                                                  last_login, 
-                                                  updated_by, 
-                                                  details, 
-                                                  status, 
-                                                  situation, 
+                                                  id,
+                                                  member,
+                                                  service,
+                                                  last_login,
+                                                  updated_by,
+                                                  details,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Subscriptions updated.");
     }

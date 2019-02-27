@@ -50,7 +50,7 @@ void UserController::doLogin(const Pistache::Rest::Request& request,
                           + " AND password = '" + password_sha1 + "' "
                           + " AND status = 1 "
                           + " AND situation = 1";
-        pqxx::result R = angru::mvc::model::UserModel::GetUsers(1, query);
+        pqxx::result R = angru::mvc::model::UserModel::GetUsers(1, LIMIT_COUNT, query);
       	if (R.size() == 1){
           std::string user_id = R[0][0].as<std::string>();
           std::string password_jwt = angru::security::cryptography::get_jwt(user_id, input);
@@ -88,11 +88,16 @@ void UserController::doGetUsers(const Pistache::Rest::Request& request,
       auto value = query.get("page").get();
       page = std::stoi(value);
     }
+    int limit = LIMIT_COUNT;
+    if(query.has("limit")) {
+      auto value = query.get("limit").get();
+      limit = std::stoi(value);
+    }
     if(query.has("filter")) {
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
     }
-    boost::property_tree::ptree users = angru::mvc::model::UserModel::GetUsersJson(page, filter);
+    boost::property_tree::ptree users = angru::mvc::model::UserModel::GetUsersJson(page, limit, filter);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, users);
 

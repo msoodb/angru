@@ -37,11 +37,16 @@ void PlaylistsContentController::doGetPlaylistsContents(const Pistache::Rest::Re
       auto value = query.get("page").get();
       page = std::stoi(value);
     }
+    int limit = LIMIT_COUNT;
+    if(query.has("limit")) {
+      auto value = query.get("limit").get();
+      limit = std::stoi(value);
+    }
     if(query.has("filter")) {
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
     }
-    boost::property_tree::ptree playlists_contents = angru::mvc::model::PlaylistsContentModel::GetPlaylistsContentsJson(page, filter);
+    boost::property_tree::ptree playlists_contents = angru::mvc::model::PlaylistsContentModel::GetPlaylistsContentsJson(page, limit, filter);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, playlists_contents);
 
@@ -133,12 +138,12 @@ void PlaylistsContentController::doAddPlaylistsContent(const Pistache::Rest::Req
       description = pt.get<std::string>("description");
 
       angru::mvc::model::PlaylistsContentModel::AddPlaylistsContent(
-                                                  playlist, 
-                                                  content, 
-                                                  created_by, 
-                                                  details, 
-                                                  status, 
-                                                  situation, 
+                                                  playlist,
+                                                  content,
+                                                  created_by,
+                                                  details,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "PlaylistsContent added.");
     }
@@ -183,13 +188,13 @@ void PlaylistsContentController::doUpdatePlaylistsContent(const Pistache::Rest::
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
       angru::mvc::model::PlaylistsContentModel::UpdatePlaylistsContent(
-                                                  id, 
-                                                  playlist, 
-                                                  content, 
-                                                  updated_by, 
-                                                  details, 
-                                                  status, 
-                                                  situation, 
+                                                  id,
+                                                  playlist,
+                                                  content,
+                                                  updated_by,
+                                                  details,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "PlaylistsContents updated.");
     }

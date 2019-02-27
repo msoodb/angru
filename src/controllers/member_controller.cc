@@ -37,11 +37,16 @@ void MemberController::doGetMembers(const Pistache::Rest::Request& request,
       auto value = query.get("page").get();
       page = std::stoi(value);
     }
+    int limit = LIMIT_COUNT;
+    if(query.has("limit")) {
+      auto value = query.get("limit").get();
+      limit = std::stoi(value);
+    }
     if(query.has("filter")) {
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
     }
-    boost::property_tree::ptree members = angru::mvc::model::MemberModel::GetMembersJson(page, filter);
+    boost::property_tree::ptree members = angru::mvc::model::MemberModel::GetMembersJson(page, limit, filter);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, members);
 
@@ -131,11 +136,11 @@ void MemberController::doAddMember(const Pistache::Rest::Request& request,
       description = pt.get<std::string>("description");
 
       angru::mvc::model::MemberModel::AddMember(
-                                                  phone, 
-                                                  created_by, 
-                                                  details, 
-                                                  status, 
-                                                  situation, 
+                                                  phone,
+                                                  created_by,
+                                                  details,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Member added.");
     }
@@ -178,12 +183,12 @@ void MemberController::doUpdateMember(const Pistache::Rest::Request& request,
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
       angru::mvc::model::MemberModel::UpdateMember(
-                                                  id, 
-                                                  phone, 
-                                                  updated_by, 
-                                                  details, 
-                                                  status, 
-                                                  situation, 
+                                                  id,
+                                                  phone,
+                                                  updated_by,
+                                                  details,
+                                                  status,
+                                                  situation,
                                                   description );
       response.send(Pistache::Http::Code::Ok, "Members updated.");
     }

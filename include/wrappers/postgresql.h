@@ -8,7 +8,7 @@
 #define PASSWORD std::string
 #define HOSTADDR std::string
 #define PORT std::string
-#define OFFSET_COUNT 40
+#define LIMIT_COUNT 40
 
 namespace angru{
 namespace wrapper{

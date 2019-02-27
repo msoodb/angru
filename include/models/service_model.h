@@ -7,6 +7,7 @@
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#include "wrappers/postgresql.h"
 
 namespace angru{
 namespace mvc{
@@ -17,9 +18,9 @@ class ServiceModel
 public:
 	ServiceModel();
 	~ServiceModel();
-	static pqxx::result GetServices(int page=1, std::string query="");
+	static pqxx::result GetServices(int page=1, int limit=LIMIT_COUNT, std::string query="");
 	static int GetServicesCount(std::string query="");
-	static boost::property_tree::ptree GetServicesJson(int page=1, std::string query="");
+	static boost::property_tree::ptree GetServicesJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
   static pqxx::result GetService(std::string id);
 	static boost::property_tree::ptree GetServiceJson(std::string id);
 	static std::string AddService(
