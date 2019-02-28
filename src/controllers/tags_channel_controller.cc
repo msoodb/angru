@@ -117,7 +117,7 @@ void TagsChannelController::doDeleteTagsChannel(const Pistache::Rest::Request& r
         id = value.as<std::string>();
     }
     angru::mvc::model::TagsChannelModel::DeleteTagsChannel(id);
-    response.send(Pistache::Http::Code::Ok, "TagsChannel deleted.");
+    response.send(Pistache::Http::Code::Ok, "{\"message\":\"TagsChannel deleted.\"}");
 }
 
 void TagsChannelController::doAddTagsChannel(const Pistache::Rest::Request& request,
@@ -153,7 +153,7 @@ void TagsChannelController::doAddTagsChannel(const Pistache::Rest::Request& requ
       boost::property_tree::ptree pt;
       boost::property_tree::read_json(ss, pt);
       tag_name = pt.get<std::string>("tag");
-      std::string	tag = angru::mvc::model::TagModel::GetTagIdByName(user_id, tag_name);
+      std::string	tag = angru::mvc::model::TagModel::ReturnTagId(user_id, tag_name);
       channel = pt.get<std::string>("channel");
       status = pt.get<int>("status");
       situation = pt.get<int>("situation");

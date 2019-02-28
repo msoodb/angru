@@ -21,7 +21,8 @@ public:
 	static pqxx::result GetTags(int page=1, int limit=LIMIT_COUNT, std::string query="");
 	static int GetTagsCount(std::string query="");
 	static boost::property_tree::ptree GetTagsJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
-	static std::string GetTagIdByName(std::string user_id, std::string name);
+	static std::string ReturnTagId(std::string user_id, std::string name);
+	static std::string GetTagIdByName(std::string name);
   static pqxx::result GetTag(std::string id);
 	static boost::property_tree::ptree GetTagJson(std::string id);
 	static std::string AddTag(

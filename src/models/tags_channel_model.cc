@@ -290,7 +290,6 @@ void TagsChannelModel::DeleteTagsChannel(std::string id){
    W.prepared("update")(id).exec();
    W.commit();
   }
-
 } // model
 } // mvc
 } // angru

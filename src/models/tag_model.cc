@@ -122,15 +122,10 @@ boost::property_tree::ptree TagModel::GetTagsJson(int page, int limit, std::stri
 	return result_node;
 }
 
- // get tag id, add tag if not exist and return id
-std::string TagModel::GetTagIdByName(std::string user_id, std::string name){
-	std::string query = " name = '" + name + "' ";
-	pqxx::result R = GetTags(1, LIMIT_COUNT, query);
-	std::string id="";
-	if(R.size() >= 1){
-		id = R[0][0].as<std::string>();
-	}
-	else{
+// get tag id, add tag if not exist and return id
+std::string TagModel::ReturnTagId(std::string user_id, std::string name){
+	std::string id = GetTagIdByName(name);
+	if(id == ""){
 		id = AddTag(name,
 								name,
 								0,
@@ -139,6 +134,15 @@ std::string TagModel::GetTagIdByName(std::string user_id, std::string name){
 								1,
 								0,
 								"");
+	}
+	return id;
+}
+std::string TagModel::GetTagIdByName(std::string name){
+	std::string query = " name = '" + name + "' ";
+	pqxx::result R = GetTags(1, LIMIT_COUNT, query);
+	std::string id="";
+	if(R.size() >= 1){
+		id = R[0][0].as<std::string>();
 	}
 	return id;
 }
