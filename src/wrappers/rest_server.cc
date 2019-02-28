@@ -172,9 +172,9 @@ void RestServer::SetupRoutes() {
 	Delete(router, "/playlists/:id", bind(&PlaylistController::doDeletePlaylist));
   Post(router, "/playlists", bind(&PlaylistController::doAddPlaylist));
 	Put(router, "/playlists/:id", bind(&PlaylistController::doUpdatePlaylist));
-  Get(router, "/playlists/:playlists_id/tags_playlists", bind(&TagsPlaylistController::doGetTagsPlaylists));
-	Delete(router, "/playlists/:playlists_id/tags_playlists/:id", bind(&TagsPlaylistController::doDeleteTagsPlaylist));
-  Post(router, "/playlists/:playlists_id/tags_playlists", bind(&TagsPlaylistController::doAddTagsPlaylist));
+  Get(router, "/playlists/:playlist_id/tags_playlists", bind(&TagsPlaylistController::doGetTagsPlaylists));
+	Delete(router, "/playlists/:playlist_id/tags_playlists/:id", bind(&TagsPlaylistController::doDeleteTagsPlaylist));
+  Post(router, "/playlists/:playlist_id/tags_playlists", bind(&TagsPlaylistController::doAddTagsPlaylist));
 
   Get(router, "/publishers", bind(&PublisherController::doGetPublishers));
   Get(router, "/publishers/:id", bind(&PublisherController::doGetPublisher));
@@ -211,9 +211,9 @@ void RestServer::SetupRoutes() {
 	Delete(router, "/contents/:id", bind(&ContentController::doDeleteContent));
   Post(router, "/contents", bind(&ContentController::doAddContent));
 	Put(router, "/contents/:id", bind(&ContentController::doUpdateContent));
-  Get(router, "/contents/:contents_id/tags_contents", bind(&TagsContentController::doGetTagsContents));
-	Delete(router, "/contents/:contents_id/tags_contents/:id", bind(&TagsContentController::doDeleteTagsContent));
-  Post(router, "/contents/:contents_id/tags_contents", bind(&TagsContentController::doAddTagsContent));
+  Get(router, "/contents/:content_id/tags_contents", bind(&TagsContentController::doGetTagsContents));
+	Delete(router, "/contents/:content_id/tags_contents/:id", bind(&TagsContentController::doDeleteTagsContent));
+  Post(router, "/contents/:content_id/tags_contents", bind(&TagsContentController::doAddTagsContent));
 
   Get(router, "/playlists_contents", bind(&PlaylistsContentController::doGetPlaylistsContents));
   Get(router, "/playlists_contents/:id", bind(&PlaylistsContentController::doGetPlaylistsContent));

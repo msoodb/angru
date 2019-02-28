@@ -34,10 +34,10 @@ pqxx::result TagsPlaylistModel::GetTagsPlaylists(int page, int limit, std::strin
 	pqxx::work W(C);
 	std::string complete_query = "SELECT \
 									      				id , \
-									      				tag , \
-									      				playlist , \
-(select username from users where id = main.created_by) as  created_by , \
-(select username from users where id = main.updated_by) as  updated_by , \
+									      				(select name from tags where id = main.tag) as  tag , \
+									      				(select name from playlists where id = main.playlist) as  playlist , \
+																(select username from users where id = main.created_by) as  created_by , \
+																(select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
 									      				status , \
