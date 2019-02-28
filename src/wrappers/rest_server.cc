@@ -163,6 +163,9 @@ void RestServer::SetupRoutes() {
 	Delete(router, "/channels/:id", bind(&ChannelController::doDeleteChannel));
   Post(router, "/channels", bind(&ChannelController::doAddChannel));
 	Put(router, "/channels/:id", bind(&ChannelController::doUpdateChannel));
+  Get(router, "/channels/:channel_id/tags_channels", bind(&TagsChannelController::doGetTagsChannels));
+	Delete(router, "/channels/:channel_id/tags_channels/:id", bind(&TagsChannelController::doDeleteTagsChannel));
+  Post(router, "/channels/:channel_id/tags_channels", bind(&TagsChannelController::doAddTagsChannel));
 
   Get(router, "/playlists", bind(&PlaylistController::doGetPlaylists));
 	Get(router, "/playlists/:id", bind(&PlaylistController::doGetPlaylist));
@@ -224,11 +227,11 @@ void RestServer::SetupRoutes() {
   Post(router, "/tags", bind(&TagController::doAddTag));
 	Put(router, "/tags/:id", bind(&TagController::doUpdateTag));
 
-  Get(router, "/tags_channels", bind(&TagsChannelController::doGetTagsChannels));
-	Get(router, "/tags_channels/:id", bind(&TagsChannelController::doGetTagsChannel));
-	Delete(router, "/tags_channels/:id", bind(&TagsChannelController::doDeleteTagsChannel));
-  Post(router, "/tags_channels", bind(&TagsChannelController::doAddTagsChannel));
-	Put(router, "/tags_channels/:id", bind(&TagsChannelController::doUpdateTagsChannel));
+  // Get(router, "/tags_channels", bind(&TagsChannelController::doGetTagsChannels));
+	// Get(router, "/tags_channels/:id", bind(&TagsChannelController::doGetTagsChannel));
+	// Delete(router, "/tags_channels/:id", bind(&TagsChannelController::doDeleteTagsChannel));
+  // Post(router, "/tags_channels", bind(&TagsChannelController::doAddTagsChannel));
+	// Put(router, "/tags_channels/:id", bind(&TagsChannelController::doUpdateTagsChannel));
 
   Get(router, "/tags_contents", bind(&TagsContentController::doGetTagsContents));
 	Get(router, "/tags_contents/:id", bind(&TagsContentController::doGetTagsContent));

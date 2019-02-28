@@ -37,8 +37,8 @@ pqxx::result TagModel::GetTags(int page, int limit, std::string query){
 									      				name , \
 									      				title , \
 									      				type , \
-(select username from users where id = main.created_by) as  created_by , \
-(select username from users where id = main.updated_by) as  updated_by , \
+																(select username from users where id = main.created_by) as  created_by , \
+																(select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
 									      				details , \
@@ -122,6 +122,27 @@ boost::property_tree::ptree TagModel::GetTagsJson(int page, int limit, std::stri
 	return result_node;
 }
 
+ // get tag id, add tag if not exist and return id
+std::string TagModel::GetTagIdByName(std::string user_id, std::string name){
+	std::string query = " name = '" + name + "' ";
+	pqxx::result R = GetTags(1, LIMIT_COUNT, query);
+	std::string id="";
+	if(R.size() >= 1){
+		id = R[0][0].as<std::string>();
+	}
+	else{
+		id = AddTag(name,
+								name,
+								0,
+								user_id,
+								"{}",
+								1,
+								0,
+								"");
+	}
+	return id;
+}
+
 pqxx::result TagModel::GetTag(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -141,8 +162,8 @@ pqxx::result TagModel::GetTag(std::string id){
 									      				name , \
 									      				title , \
 									      				type , \
-(select username from users where id = main.created_by) as  created_by , \
-(select username from users where id = main.updated_by) as  updated_by , \
+																(select username from users where id = main.created_by) as  created_by , \
+																(select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
 									      				details , \

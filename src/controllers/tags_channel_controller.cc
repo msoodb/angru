@@ -11,6 +11,7 @@
 #include "wrappers/postgresql.h"
 #include "tools/security.h"
 #include "models/tags_channel_model.h"
+#include "models/tag_model.h"
 #include "models/privilege_model.h"
 
 namespace angru{
@@ -30,6 +31,15 @@ void TagsChannelController::doGetTagsChannels(const Pistache::Rest::Request& req
       response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
       return;
     }
+    std::string channel_id = "";
+    if (request.hasParam(":channel_id")) {
+        auto value = request.param(":channel_id");
+        channel_id = value.as<std::string>();
+    }
+    else{
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"TagsChannels not found.\"}");
+      return;
+    }
     int page = 1;
     std::string filter;
     auto query = request.query();
@@ -45,6 +55,10 @@ void TagsChannelController::doGetTagsChannels(const Pistache::Rest::Request& req
     if(query.has("filter")) {
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
+      filter = filter + " AND channel = '" + channel_id + "'";
+    }
+    else{
+      filter = " channel = '" + channel_id + "'";
     }
     boost::property_tree::ptree tags_channels = angru::mvc::model::TagsChannelModel::GetTagsChannelsJson(page, limit, filter);
     std::ostringstream oss;
@@ -52,7 +66,7 @@ void TagsChannelController::doGetTagsChannels(const Pistache::Rest::Request& req
 
     std::string inifile_text = oss.str();
     if (inifile_text.empty()) {
-      response.send(Pistache::Http::Code::Not_Found, "TagsChannels not found.");
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"TagsChannels not found.\"}");
     } else {
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
@@ -116,9 +130,18 @@ void TagsChannelController::doAddTagsChannel(const Pistache::Rest::Request& requ
       response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
       return;
     }
+    std::string channel_id = "";
+    if (request.hasParam(":channel_id")) {
+        auto value = request.param(":channel_id");
+        channel_id = value.as<std::string>();
+    }
+    else{
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"TagsChannels not found.\"}");
+      return;
+    }
     auto body = request.body();
     std::string created_by = user_id;
-    std::string	tag;
+    std::string	tag_name;
     std::string	channel;
     int	status;
     int	situation;
@@ -129,7 +152,8 @@ void TagsChannelController::doAddTagsChannel(const Pistache::Rest::Request& requ
       ss << body;
       boost::property_tree::ptree pt;
       boost::property_tree::read_json(ss, pt);
-      tag = pt.get<std::string>("tag");
+      tag_name = pt.get<std::string>("tag");
+      std::string	tag = angru::mvc::model::TagModel::GetTagIdByName(user_id, tag_name);
       channel = pt.get<std::string>("channel");
       status = pt.get<int>("status");
       situation = pt.get<int>("situation");
@@ -145,7 +169,7 @@ void TagsChannelController::doAddTagsChannel(const Pistache::Rest::Request& requ
       response.send(Pistache::Http::Code::Ok, "TagsChannel added.");
     }
     catch (std::exception const& e){
-      response.send(Pistache::Http::Code::Not_Found, "TagsChannels not found.");
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"TagsChannels not found.\"}");
     }
 }
 
