@@ -11,6 +11,7 @@
 #include "wrappers/postgresql.h"
 #include "tools/security.h"
 #include "models/tags_content_model.h"
+#include "models/tag_model.h"
 #include "models/privilege_model.h"
 
 namespace angru{
@@ -116,9 +117,18 @@ void TagsContentController::doAddTagsContent(const Pistache::Rest::Request& requ
       response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
       return;
     }
+    std::string content_id = "";
+    if (request.hasParam(":content_id")) {
+        auto value = request.param(":content_id");
+        content_id = value.as<std::string>();
+    }
+    else{
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"TagsContents not found.\"}");
+      return;
+    }
     auto body = request.body();
     std::string created_by = user_id;
-    std::string	tag;
+    std::string	tag_name;
     std::string	content;
     int	status;
     int	situation;
@@ -129,7 +139,8 @@ void TagsContentController::doAddTagsContent(const Pistache::Rest::Request& requ
       ss << body;
       boost::property_tree::ptree pt;
       boost::property_tree::read_json(ss, pt);
-      tag = pt.get<std::string>("tag");
+      tag_name = pt.get<std::string>("tag");
+      std::string	tag = angru::mvc::model::TagModel::ReturnTagId(user_id, tag_name);
       content = pt.get<std::string>("content");
       status = pt.get<int>("status");
       situation = pt.get<int>("situation");
