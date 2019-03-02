@@ -18,7 +18,7 @@ namespace model{
 ChannelModel::ChannelModel(){}
 ChannelModel::~ChannelModel(){}
 
-pqxx::result ChannelModel::GetChannels(int page, int limit, std::string query){
+pqxx::result ChannelModel::GetChannels(int page, int limit, std::string service, std::string parent, std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -45,7 +45,9 @@ pqxx::result ChannelModel::GetChannels(int page, int limit, std::string query){
 									      				details , \
 									      				status , \
 									      				situation , \
-									      				description  FROM channels AS main where deleted_at is NULL ";
+									      				description  FROM channels AS main where deleted_at is NULL \
+																AND (CASE WHEN $1 = '' THEN service is NULL ELSE service=$1::uuid END) \
+																AND (CASE WHEN $2 = '' THEN parent is NULL ELSE parent=$2::uuid END) ";
 	if(!query.empty())
 	{
 		complete_query += " AND ";
@@ -57,12 +59,12 @@ pqxx::result ChannelModel::GetChannels(int page, int limit, std::string query){
 	int offset = (page-1)* limit;
 	complete_query += std::to_string(offset);
   C.prepare("find", complete_query);
-  pqxx::result R = W.prepared("find").exec();
+  pqxx::result R = W.prepared("find")(service)(parent).exec();
   W.commit();
 	return R;
 }
 
-int ChannelModel::GetChannelsCount(std::string query){
+int ChannelModel::GetChannelsCount(std::string service, std::string parent, std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -76,21 +78,23 @@ int ChannelModel::GetChannelsCount(std::string query){
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	std::string complete_query = "SELECT count(id) FROM channels where deleted_at is NULL ";
+	std::string complete_query = "SELECT count(id) FROM channels where deleted_at is NULL \
+																AND (CASE WHEN $1 = '' THEN service is NULL ELSE service=$1::uuid END) \
+																AND (CASE WHEN $2 = '' THEN parent is NULL ELSE parent=$2::uuid END) ";
 	if(!query.empty())
 	{
 		complete_query += " AND ";
 		complete_query +=  query;
 	}
   C.prepare("find", complete_query);
-  pqxx::result R = W.prepared("find").exec();
+  pqxx::result R = W.prepared("find")(service)(parent).exec();
   W.commit();
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree ChannelModel::GetChannelsJson(int page, int limit, std::string query){
-	pqxx::result R = GetChannels(page, limit, query);
-	int result_count = GetChannelsCount(query);
+boost::property_tree::ptree ChannelModel::GetChannelsJson(int page, int limit, std::string service, std::string parent, std::string query){
+	pqxx::result R = GetChannels(page, limit, service, parent, query);
+	int result_count = GetChannelsCount(service, parent, query);
 	int pageCount = ((result_count - 1) / limit) + 1;
 
 	boost::property_tree::ptree result_node;

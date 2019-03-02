@@ -74,7 +74,7 @@ std::string get_jwt(const std::string& user_id, const std::string&email){
        .add_claim("sub", "test")
        .add_claim("id", user_id)
        .add_claim("iat", 1513862371)
-       .add_claim("exp", std::chrono::system_clock::now() + std::chrono::seconds{259200});
+       .add_claim("exp", std::chrono::system_clock::now() + std::chrono::seconds{14400});
   auto enc_str = obj.signature();
   return enc_str;
   }
@@ -100,10 +100,12 @@ std::string AuthenticationCheck(const Pistache::Rest::Request& request,
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Unauthorized, "{\"message\":\"Authorization denied.\"}");
+      return std::string();
     }
     catch(...)
     {
       response.send(Pistache::Http::Code::Unauthorized, "{\"message\":\"Authorization denied.\"}");
+      return std::string();
     }
 }
 

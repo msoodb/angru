@@ -30,6 +30,15 @@ void ChannelController::doGetChannels(const Pistache::Rest::Request& request,
       response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
       return;
     }
+    std::string service_id = "";
+    if (request.hasParam(":service_id")) {
+        auto value = request.param(":service_id");
+        service_id = value.as<std::string>();
+    }
+    else{
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Channels not found.\"}");
+      return;
+    }
     int page = 1;
     std::string filter;
     auto query = request.query();
@@ -42,17 +51,22 @@ void ChannelController::doGetChannels(const Pistache::Rest::Request& request,
       auto value = query.get("limit").get();
       limit = std::stoi(value);
     }
+    std::string parent="";
+    if(query.has("parent")) {
+      auto value = query.get("parent").get();
+      parent = value;
+    }
     if(query.has("filter")) {
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
     }
-    boost::property_tree::ptree channels = angru::mvc::model::ChannelModel::GetChannelsJson(page, limit, filter);
+    boost::property_tree::ptree channels = angru::mvc::model::ChannelModel::GetChannelsJson(page, limit, service_id, parent, filter);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, channels);
 
     std::string inifile_text = oss.str();
     if (inifile_text.empty()) {
-      response.send(Pistache::Http::Code::Not_Found, "Channels not found.");
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Channels not found.\"}");
     } else {
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }

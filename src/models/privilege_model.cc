@@ -21,6 +21,9 @@ PrivilegeModel::~PrivilegeModel(){}
 
 bool PrivilegeModel::AuthorizationCheck(std::string user_id, std::string entity_name, int action){
 	bool result = false;
+	if(user_id == ""){
+		return false;
+	}
 	result = angru::mvc::model::UserModel::IsZeus(user_id);
 	if(result){       //zeus
 		return true;
