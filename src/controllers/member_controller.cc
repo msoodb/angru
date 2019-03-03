@@ -135,14 +135,15 @@ void MemberController::doAddMember(const Pistache::Rest::Request& request,
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::MemberModel::AddMember(
+      std::string id = angru::mvc::model::MemberModel::AddMember(
                                                   phone,
                                                   created_by,
                                                   details,
                                                   status,
                                                   situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "Member added.");
+      std::string message = "{\"message\":\"Member Added.\", \"id\":\"" + id + "\"}";
+      response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Members not found.");

@@ -145,7 +145,7 @@ void PublisherController::doAddPublisher(const Pistache::Rest::Request& request,
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::PublisherModel::AddPublisher(
+      std::string id = angru::mvc::model::PublisherModel::AddPublisher(
                                                   admin,
                                                   name,
                                                   title,
@@ -157,7 +157,8 @@ void PublisherController::doAddPublisher(const Pistache::Rest::Request& request,
                                                   status,
                                                   situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "Publisher added.");
+      std::string message = "{\"message\":\"Publisher Added.\", \"id\":\"" + id + "\"}";
+      response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Publishers not found.");

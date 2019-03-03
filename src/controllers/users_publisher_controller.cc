@@ -135,14 +135,15 @@ void UsersPublisherController::doAddUsersPublisher(const Pistache::Rest::Request
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::UsersPublisherModel::AddUsersPublisher(
+      std::string id = angru::mvc::model::UsersPublisherModel::AddUsersPublisher(
                                                   _user_,
                                                   publisher,
                                                   created_by,
                                                   status,
                                                   situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "UsersPublisher added.");
+      std::string message = "{\"message\":\"UsersPublisher Added.\", \"id\":\"" + id + "\"}";
+      response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "UsersPublishers not found.");

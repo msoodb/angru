@@ -21,6 +21,7 @@ public:
 	ChannelController();
 	~ChannelController();
 	static void	doGetChannels(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+	static void	doGetAllChannels(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 	static void	doGetChannel(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
   static void	doDeleteChannel(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 	static void	doAddChannel(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);

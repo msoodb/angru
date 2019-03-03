@@ -112,7 +112,7 @@ void ProductDocumentController::doAddProductDocument(const Pistache::Rest::Reque
       status = pt.get<int>("status");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::ProductDocumentModel::AddProductDocument(
+      std::string id = angru::mvc::model::ProductDocumentModel::AddProductDocument(
                                                   product_id,
                                                   name,
                                                   title,
@@ -122,7 +122,8 @@ void ProductDocumentController::doAddProductDocument(const Pistache::Rest::Reque
                                                   details,
                                                   status,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "ProductDocument added.");
+      std::string message = "{\"message\":\"ProductDocument Added.\", \"id\":\"" + id + "\"}";
+      response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "ProductDocuments not found.");

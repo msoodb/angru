@@ -64,6 +64,50 @@ pqxx::result ChannelModel::GetChannels(int page, int limit, std::string service,
 	return R;
 }
 
+pqxx::result ChannelModel::GetAllChannels(int page, int limit, std::string query){
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
+	try {
+		if (C.is_open()) {
+			 LOG_INFO << "Opened database successfully: " << C.dbname();
+		} else {
+			 LOG_ERROR << "Can't open database: " << C.dbname();
+		}
+		C.disconnect ();
+	} catch (const angru::system::exception::error &e) {
+			LOG_ERROR << e.what();
+	}
+	LOG_INFO << "Connected to database: " << C.dbname();
+	pqxx::work W(C);
+	std::string complete_query = "SELECT \
+									      				id , \
+									      				name , \
+									      				title , \
+									      				(select name from services where id = main.service) as  service , \
+									      				(select name from channels where id = main.parent) as  parent , \
+																(select username from users where id = main.created_by) as  created_by , \
+																(select username from users where id = main.updated_by) as  updated_by , \
+									      				created_at , \
+									      				updated_at , \
+									      				details , \
+									      				status , \
+									      				situation , \
+									      				description  FROM channels AS main where deleted_at is NULL ";
+	if(!query.empty())
+	{
+		complete_query += " AND ";
+		complete_query +=  query;
+	}
+	complete_query += " limit ";
+	complete_query += std::to_string(limit);
+	complete_query += " offset ";
+	int offset = (page-1)* limit;
+	complete_query += std::to_string(offset);
+  C.prepare("find", complete_query);
+  pqxx::result R = W.prepared("find").exec();
+  W.commit();
+	return R;
+}
+
 int ChannelModel::GetChannelsCount(std::string service, std::string parent, std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -92,9 +136,71 @@ int ChannelModel::GetChannelsCount(std::string service, std::string parent, std:
 	return (R[0][0]).as<int>();
 }
 
+int ChannelModel::GetAllChannelsCount(std::string query){
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
+	try {
+		if (C.is_open()) {
+			 LOG_INFO << "Opened database successfully: " << C.dbname();
+		} else {
+			 LOG_ERROR << "Can't open database: " << C.dbname();
+		}
+		C.disconnect ();
+	} catch (const angru::system::exception::error &e) {
+			LOG_ERROR << e.what();
+	}
+	LOG_INFO << "Connected to database: " << C.dbname();
+	pqxx::work W(C);
+	std::string complete_query = "SELECT count(id) FROM channels where deleted_at is NULL ";
+	if(!query.empty())
+	{
+		complete_query += " AND ";
+		complete_query +=  query;
+	}
+  C.prepare("find", complete_query);
+  pqxx::result R = W.prepared("find").exec();
+  W.commit();
+	return (R[0][0]).as<int>();
+}
+
 boost::property_tree::ptree ChannelModel::GetChannelsJson(int page, int limit, std::string service, std::string parent, std::string query){
 	pqxx::result R = GetChannels(page, limit, service, parent, query);
 	int result_count = GetChannelsCount(service, parent, query);
+	int pageCount = ((result_count - 1) / limit) + 1;
+
+	boost::property_tree::ptree result_node;
+	boost::property_tree::ptree info_node;
+	boost::property_tree::ptree channel_node;
+	boost::property_tree::ptree channels_node;
+
+	for (size_t i = 0; i < R.size(); i++) {
+		channel_node.put("id", R[i][0]);
+		channel_node.put("name", R[i][1]);
+		channel_node.put("title", R[i][2]);
+		channel_node.put("service", R[i][3]);
+		channel_node.put("parent", R[i][4]);
+		channel_node.put("created_by", R[i][5]);
+		channel_node.put("updated_by", R[i][6]);
+		channel_node.put("created_at", R[i][7]);
+		channel_node.put("updated_at", R[i][8]);
+		channel_node.put("details", R[i][9]);
+		channel_node.put("status", R[i][10]);
+		channel_node.put("situation", R[i][11]);
+		channel_node.put("description", R[i][12]);
+		channels_node.push_back(std::make_pair("", channel_node));
+	}
+	info_node.put<int>("page", page);
+	info_node.put<int>("limit", limit);
+	info_node.put<int>("page_count", pageCount);
+	info_node.put<int>("result_count", result_count);
+
+	result_node.add_child("info", info_node);
+	result_node.add_child("items", channels_node);
+	return result_node;
+}
+
+boost::property_tree::ptree ChannelModel::GetAllChannelsJson(int page, int limit, std::string query){
+	pqxx::result R = GetAllChannels(page, limit, query);
+	int result_count = GetAllChannelsCount(query);
 	int pageCount = ((result_count - 1) / limit) + 1;
 
 	boost::property_tree::ptree result_node;

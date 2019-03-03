@@ -144,7 +144,7 @@ void AggregatorController::doAddAggregator(const Pistache::Rest::Request& reques
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::AggregatorModel::AddAggregator(
+      std::string id = angru::mvc::model::AggregatorModel::AddAggregator(
                                                   name,
                                                   title,
                                                   code,
@@ -155,7 +155,8 @@ void AggregatorController::doAddAggregator(const Pistache::Rest::Request& reques
                                                   status,
                                                   situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "Aggregator added.");
+      std::string message = "{\"message\":\"Aggregator Added.\", \"id\":\"" + id + "\"}";
+      response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Aggregators not found.");

@@ -139,7 +139,7 @@ void RateController::doAddRate(const Pistache::Rest::Request& request,
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::RateModel::AddRate(
+      std::string id = angru::mvc::model::RateModel::AddRate(
                                                   member,
                                                   content,
                                                   rate,
@@ -148,7 +148,8 @@ void RateController::doAddRate(const Pistache::Rest::Request& request,
                                                   status,
                                                   situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "Rate added.");
+      std::string message = "{\"message\":\"Rate Added.\", \"id\":\"" + id + "\"}";
+      response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Rates not found.");

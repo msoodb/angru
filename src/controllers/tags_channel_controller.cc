@@ -159,14 +159,15 @@ void TagsChannelController::doAddTagsChannel(const Pistache::Rest::Request& requ
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::TagsChannelModel::AddTagsChannel(
+      std::string id = angru::mvc::model::TagsChannelModel::AddTagsChannel(
                                                   tag,
                                                   channel,
                                                   created_by,
                                                   status,
                                                   situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "TagsChannel added.");
+      std::string message = "{\"message\":\"TagsChannel Added.\", \"id\":\"" + id + "\"}";
+      response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"TagsChannels not found.\"}");

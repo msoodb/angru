@@ -114,7 +114,7 @@ void ProductController::doAddProduct(const Pistache::Rest::Request& request,
       status = pt.get<int>("status");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::ProductModel::AddProduct(
+      std::string id = angru::mvc::model::ProductModel::AddProduct(
                                                   name,
                                                   title,
                                                   code,
@@ -125,7 +125,8 @@ void ProductController::doAddProduct(const Pistache::Rest::Request& request,
                                                   details,
                                                   status,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "Product added.");
+      std::string message = "{\"message\":\"Product Added.\", \"id\":\"" + id + "\"}";
+      response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Products not found.");

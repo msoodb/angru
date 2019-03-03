@@ -144,7 +144,7 @@ void MobileOperatorController::doAddMobileOperator(const Pistache::Rest::Request
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::MobileOperatorModel::AddMobileOperator(
+      std::string id = angru::mvc::model::MobileOperatorModel::AddMobileOperator(
                                                   name,
                                                   title,
                                                   code,
@@ -155,7 +155,8 @@ void MobileOperatorController::doAddMobileOperator(const Pistache::Rest::Request
                                                   status,
                                                   situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "MobileOperator added.");
+      std::string message = "{\"message\":\"MobileOperator Added.\", \"id\":\"" + id + "\"}";
+      response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "MobileOperators not found.");

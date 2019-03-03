@@ -146,7 +146,7 @@ void ContentProviderController::doAddContentProvider(const Pistache::Rest::Reque
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::ContentProviderModel::AddContentProvider(
+      std::string id = angru::mvc::model::ContentProviderModel::AddContentProvider(
                                                   admin,
                                                   name,
                                                   title,
@@ -158,7 +158,8 @@ void ContentProviderController::doAddContentProvider(const Pistache::Rest::Reque
                                                   status,
                                                   situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "ContentProvider added.");
+      std::string message = "{\"message\":\"ContentProvider Added.\", \"id\":\"" + id + "\"}";
+      response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "ContentProviders not found.");

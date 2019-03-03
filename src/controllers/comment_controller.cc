@@ -141,7 +141,7 @@ void CommentController::doAddComment(const Pistache::Rest::Request& request,
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::CommentModel::AddComment(
+      std::string id = angru::mvc::model::CommentModel::AddComment(
                                                   member,
                                                   content,
                                                   comment,
@@ -151,7 +151,8 @@ void CommentController::doAddComment(const Pistache::Rest::Request& request,
                                                   status,
                                                   situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "Comment added.");
+      std::string message = "{\"message\":\"Comment Added.\", \"id\":\"" + id + "\"}";
+      response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Comments not found.");

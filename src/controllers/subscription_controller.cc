@@ -139,7 +139,7 @@ void SubscriptionController::doAddSubscription(const Pistache::Rest::Request& re
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::SubscriptionModel::AddSubscription(
+      std::string id = angru::mvc::model::SubscriptionModel::AddSubscription(
                                                   member,
                                                   service,
                                                   last_login,
@@ -148,7 +148,8 @@ void SubscriptionController::doAddSubscription(const Pistache::Rest::Request& re
                                                   status,
                                                   situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "Subscription added.");
+      std::string message = "{\"message\":\"Subscription Added.\", \"id\":\"" + id + "\"}";
+      response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Subscriptions not found.");

@@ -135,14 +135,15 @@ void SecurityRoleController::doAddSecurityRole(const Pistache::Rest::Request& re
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::SecurityRoleModel::AddSecurityRole(
+      std::string id = angru::mvc::model::SecurityRoleModel::AddSecurityRole(
                                                   name,
                                                   title,
                                                   created_by,
                                                   status,
                                                   situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "SecurityRole added.");
+      std::string message = "{\"message\":\"SecurityRole Added.\", \"id\":\"" + id + "\"}";
+      response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "SecurityRoles not found.");

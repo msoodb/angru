@@ -139,7 +139,7 @@ void TagController::doAddTag(const Pistache::Rest::Request& request,
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::TagModel::AddTag(
+      std::string id = angru::mvc::model::TagModel::AddTag(
                                                   name,
                                                   title,
                                                   type,
@@ -148,7 +148,8 @@ void TagController::doAddTag(const Pistache::Rest::Request& request,
                                                   status,
                                                   situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "Tag added.");
+      std::string message = "{\"message\":\"Tag Added.\", \"id\":\"" + id + "\"}";
+      response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Tags not found.");

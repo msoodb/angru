@@ -139,7 +139,7 @@ void AttractionController::doAddAttraction(const Pistache::Rest::Request& reques
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::AttractionModel::AddAttraction(
+      std::string id = angru::mvc::model::AttractionModel::AddAttraction(
                                                   member,
                                                   content,
                                                   attraction,
@@ -148,7 +148,8 @@ void AttractionController::doAddAttraction(const Pistache::Rest::Request& reques
                                                   status,
                                                   situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "Attraction added.");
+      std::string message = "{\"message\":\"Attraction Added.\", \"id\":\"" + id + "\"}";
+      response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Attractions not found.");

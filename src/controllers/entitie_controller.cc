@@ -136,14 +136,15 @@ void EntitieController::doAddEntitie(const Pistache::Rest::Request& request,
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::EntitieModel::AddEntitie(
+      std::string id = angru::mvc::model::EntitieModel::AddEntitie(
                                                   name,
                                                   title,
                                                   created_by,
                                                   status,
                                                   situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "Entitie added.");
+      std::string message = "{\"message\":\"Entitie Added.\", \"id\":\"" + id + "\"}";
+      response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Entities not found.");

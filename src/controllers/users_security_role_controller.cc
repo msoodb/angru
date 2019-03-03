@@ -184,14 +184,15 @@ void UsersSecurityRoleController::doAddUsersSecurityRole(const Pistache::Rest::R
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::UsersSecurityRoleModel::AddUsersSecurityRole(
+      std::string id = angru::mvc::model::UsersSecurityRoleModel::AddUsersSecurityRole(
                                                   _user_,
                                                   security_role,
                                                   created_by,
                                                   status,
                                                   situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "UsersSecurityRole added.");
+      std::string message = "{\"message\":\"UsersSecurityRole Added.\", \"id\":\"" + id + "\"}";
+      response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "UsersSecurityRoles not found.");

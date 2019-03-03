@@ -135,14 +135,15 @@ void UsersContentProviderController::doAddUsersContentProvider(const Pistache::R
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::UsersContentProviderModel::AddUsersContentProvider(
+      std::string id = angru::mvc::model::UsersContentProviderModel::AddUsersContentProvider(
                                                   _user_,
                                                   content_provider,
                                                   created_by,
                                                   status,
                                                   situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "UsersContentProvider added.");
+      std::string message = "{\"message\":\"UsersContentProvider Added.\", \"id\":\"" + id + "\"}";
+      response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "UsersContentProviders not found.");

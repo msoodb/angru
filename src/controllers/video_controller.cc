@@ -143,7 +143,7 @@ void VideoController::doAddVideo(const Pistache::Rest::Request& request,
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::VideoModel::AddVideo(
+      std::string id = angru::mvc::model::VideoModel::AddVideo(
                                                   content,
                                                   name,
                                                   title,
@@ -154,7 +154,8 @@ void VideoController::doAddVideo(const Pistache::Rest::Request& request,
                                                   status,
                                                   situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "Video added.");
+      std::string message = "{\"message\":\"Video Added.\", \"id\":\"" + id + "\"}";
+      response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Videos not found.");

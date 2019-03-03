@@ -139,7 +139,7 @@ void PlaylistController::doAddPlaylist(const Pistache::Rest::Request& request,
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::PlaylistModel::AddPlaylist(
+      std::string id = angru::mvc::model::PlaylistModel::AddPlaylist(
                                                   name,
                                                   title,
                                                   service,
@@ -148,7 +148,8 @@ void PlaylistController::doAddPlaylist(const Pistache::Rest::Request& request,
                                                   status,
                                                   situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "Playlist added.");
+      std::string message = "{\"message\":\"Playlist Added.\", \"id\":\"" + id + "\"}";
+      response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "Playlists not found.");

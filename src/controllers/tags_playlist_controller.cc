@@ -146,14 +146,15 @@ void TagsPlaylistController::doAddTagsPlaylist(const Pistache::Rest::Request& re
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::TagsPlaylistModel::AddTagsPlaylist(
+      std::string id = angru::mvc::model::TagsPlaylistModel::AddTagsPlaylist(
                                                   tag,
                                                   playlist,
                                                   created_by,
                                                   status,
                                                   situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "TagsPlaylist added.");
+      std::string message = "{\"message\":\"TagsPlaylist Added.\", \"id\":\"" + id + "\"}";
+      response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "TagsPlaylists not found.");

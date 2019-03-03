@@ -146,14 +146,15 @@ void TagsContentController::doAddTagsContent(const Pistache::Rest::Request& requ
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
-      angru::mvc::model::TagsContentModel::AddTagsContent(
+      std::string id = angru::mvc::model::TagsContentModel::AddTagsContent(
                                                   tag,
                                                   content,
                                                   created_by,
                                                   status,
                                                   situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "TagsContent added.");
+      std::string message = "{\"message\":\"TagsContent Added.\", \"id\":\"" + id + "\"}";
+      response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
       response.send(Pistache::Http::Code::Not_Found, "TagsContents not found.");
