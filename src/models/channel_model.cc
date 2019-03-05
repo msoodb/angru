@@ -37,7 +37,7 @@ pqxx::result ChannelModel::GetChannels(int page, int limit, std::string service,
 									      				name , \
 									      				title , \
 									      				(select name from services where id = main.service) as  service , \
-									      				(select name from channels where id = main.parent) as  parent , \
+									      				parent , \
 																(select username from users where id = main.created_by) as  created_by , \
 																(select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
