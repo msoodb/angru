@@ -18,7 +18,7 @@ namespace model{
 PlaylistModel::PlaylistModel(){}
 PlaylistModel::~PlaylistModel(){}
 
-pqxx::result PlaylistModel::GetPlaylists(int page, int limit, std::string query){
+pqxx::result PlaylistModel::GetAllPlaylists(int page, int limit, std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -61,7 +61,51 @@ pqxx::result PlaylistModel::GetPlaylists(int page, int limit, std::string query)
 	return R;
 }
 
-int PlaylistModel::GetPlaylistsCount(std::string query){
+pqxx::result PlaylistModel::GetPlaylists(int page, int limit, std::string service, std::string query){
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
+	try {
+		if (C.is_open()) {
+			 LOG_INFO << "Opened database successfully: " << C.dbname();
+		} else {
+			 LOG_ERROR << "Can't open database: " << C.dbname();
+		}
+		C.disconnect ();
+	} catch (const angru::system::exception::error &e) {
+			LOG_ERROR << e.what();
+	}
+	LOG_INFO << "Connected to database: " << C.dbname();
+	pqxx::work W(C);
+	std::string complete_query = "SELECT \
+									      				id , \
+									      				name , \
+									      				title , \
+									      				(select name from services where id = main.service) as service , \
+																(select username from users where id = main.created_by) as  created_by , \
+																(select username from users where id = main.updated_by) as  updated_by , \
+									      				created_at , \
+									      				updated_at , \
+									      				details , \
+									      				status , \
+									      				situation , \
+									      				description  FROM playlists AS main where deleted_at is NULL \
+																AND (CASE WHEN $1 = '' THEN service is NULL ELSE service=$1::uuid END) ";
+	if(!query.empty())
+	{
+		complete_query += " AND ";
+		complete_query +=  query;
+	}
+	complete_query += " limit ";
+	complete_query += std::to_string(limit);
+	complete_query += " offset ";
+	int offset = (page-1)* limit;
+	complete_query += std::to_string(offset);
+  C.prepare("find", complete_query);
+  pqxx::result R = W.prepared("find")(service).exec();
+  W.commit();
+	return R;
+}
+
+int PlaylistModel::GetAllPlaylistsCount(std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -87,9 +131,71 @@ int PlaylistModel::GetPlaylistsCount(std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree PlaylistModel::GetPlaylistsJson(int page, int limit, std::string query){
-	pqxx::result R = GetPlaylists(page, limit, query);
-	int result_count = GetPlaylistsCount(query);
+int PlaylistModel::GetPlaylistsCount(std::string service, std::string query){
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
+	try {
+		if (C.is_open()) {
+			 LOG_INFO << "Opened database successfully: " << C.dbname();
+		} else {
+			 LOG_ERROR << "Can't open database: " << C.dbname();
+		}
+		C.disconnect ();
+	} catch (const angru::system::exception::error &e) {
+			LOG_ERROR << e.what();
+	}
+	LOG_INFO << "Connected to database: " << C.dbname();
+	pqxx::work W(C);
+	std::string complete_query = "SELECT count(id) FROM playlists where deleted_at is NULL \
+																AND (CASE WHEN $1 = '' THEN service is NULL ELSE service=$1::uuid END) ";
+	if(!query.empty())
+	{
+		complete_query += " AND ";
+		complete_query +=  query;
+	}
+  C.prepare("find", complete_query);
+  pqxx::result R = W.prepared("find")(service).exec();
+  W.commit();
+	return (R[0][0]).as<int>();
+}
+
+boost::property_tree::ptree PlaylistModel::GetAllPlaylistsJson(int page, int limit, std::string query){
+	pqxx::result R = GetAllPlaylists(page, limit, query);
+	int result_count = GetAllPlaylistsCount(query);
+	int pageCount = ((result_count - 1) / limit) + 1;
+
+	boost::property_tree::ptree result_node;
+	boost::property_tree::ptree info_node;
+	boost::property_tree::ptree playlist_node;
+	boost::property_tree::ptree playlists_node;
+
+	for (size_t i = 0; i < R.size(); i++) {
+		playlist_node.put("id", R[i][0]);
+		playlist_node.put("name", R[i][1]);
+		playlist_node.put("title", R[i][2]);
+		playlist_node.put("service", R[i][3]);
+		playlist_node.put("created_by", R[i][4]);
+		playlist_node.put("updated_by", R[i][5]);
+		playlist_node.put("created_at", R[i][6]);
+		playlist_node.put("updated_at", R[i][7]);
+		playlist_node.put("details", R[i][8]);
+		playlist_node.put("status", R[i][9]);
+		playlist_node.put("situation", R[i][10]);
+		playlist_node.put("description", R[i][11]);
+		playlists_node.push_back(std::make_pair("", playlist_node));
+	}
+	info_node.put<int>("page", page);
+	info_node.put<int>("limit", limit);
+	info_node.put<int>("page_count", pageCount);
+	info_node.put<int>("result_count", result_count);
+
+	result_node.add_child("info", info_node);
+	result_node.add_child("items", playlists_node);
+	return result_node;
+}
+
+boost::property_tree::ptree PlaylistModel::GetPlaylistsJson(int page, int limit, std::string service, std::string query){
+	pqxx::result R = GetPlaylists(page, limit, service, query);
+	int result_count = GetPlaylistsCount(service, query);
 	int pageCount = ((result_count - 1) / limit) + 1;
 
 	boost::property_tree::ptree result_node;

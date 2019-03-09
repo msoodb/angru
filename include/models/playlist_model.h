@@ -18,9 +18,12 @@ class PlaylistModel
 public:
 	PlaylistModel();
 	~PlaylistModel();
-	static pqxx::result GetPlaylists(int page=1, int limit=LIMIT_COUNT, std::string query="");
-	static int GetPlaylistsCount(std::string query="");
-	static boost::property_tree::ptree GetPlaylistsJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static pqxx::result GetPlaylists(int page=1, int limit=LIMIT_COUNT, std::string service="", std::string query="");
+	static int GetPlaylistsCount(std::string service="", std::string query="");
+	static boost::property_tree::ptree GetPlaylistsJson(int page=1, int limit=LIMIT_COUNT, std::string service="", std::string query="");
+	static pqxx::result GetAllPlaylists(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static int GetAllPlaylistsCount(std::string query="");
+	static boost::property_tree::ptree GetAllPlaylistsJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
   static pqxx::result GetPlaylist(std::string id);
 	static boost::property_tree::ptree GetPlaylistJson(std::string id);
 	static std::string AddPlaylist(

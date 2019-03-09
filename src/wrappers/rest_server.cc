@@ -107,6 +107,14 @@ void RestServer::SetupRoutes() {
   Get(router, "/services/:service_id/channels/:channel_id/tags_channels", bind(&TagsChannelController::doGetTagsChannels));
 	Delete(router, "/services/:service_id/channels/:channel_id/tags_channels/:id", bind(&TagsChannelController::doDeleteTagsChannel));
   Post(router, "/services/:service_id/channels/:channel_id/tags_channels", bind(&TagsChannelController::doAddTagsChannel));
+  Get(router, "/services/:service_id/playlists", bind(&PlaylistController::doGetPlaylists));
+	Get(router, "/services/:service_id/playlists/:id", bind(&PlaylistController::doGetPlaylist));
+	Delete(router, "/services/:service_id/playlists/:id", bind(&PlaylistController::doDeletePlaylist));
+  Post(router, "/services/:service_id/playlists", bind(&PlaylistController::doAddPlaylist));
+	Put(router, "/services/:service_id/playlists/:id", bind(&PlaylistController::doUpdatePlaylist));
+  Get(router, "/services/:service_id/playlists/:playlist_id/tags_playlists", bind(&TagsPlaylistController::doGetTagsPlaylists));
+	Delete(router, "/services/:service_id/playlists/:playlist_id/tags_playlists/:id", bind(&TagsPlaylistController::doDeleteTagsPlaylist));
+  Post(router, "/services/:service_id/playlists/:playlist_id/tags_playlists", bind(&TagsPlaylistController::doAddTagsPlaylist));
 
   Get(router, "/products", bind(&ProductController::doGetProducts));
   Get(router, "/products/:id", bind(&ProductController::doGetProduct));
@@ -175,7 +183,7 @@ void RestServer::SetupRoutes() {
 	Delete(router, "/channels/:channel_id/tags_channels/:id", bind(&TagsChannelController::doDeleteTagsChannel));
   Post(router, "/channels/:channel_id/tags_channels", bind(&TagsChannelController::doAddTagsChannel));
 
-  Get(router, "/playlists", bind(&PlaylistController::doGetPlaylists));
+  Get(router, "/playlists", bind(&PlaylistController::doGetAllPlaylists));
 	Get(router, "/playlists/:id", bind(&PlaylistController::doGetPlaylist));
 	Delete(router, "/playlists/:id", bind(&PlaylistController::doDeletePlaylist));
   Post(router, "/playlists", bind(&PlaylistController::doAddPlaylist));

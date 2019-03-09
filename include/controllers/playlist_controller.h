@@ -21,6 +21,7 @@ public:
 	PlaylistController();
 	~PlaylistController();
 	static void	doGetPlaylists(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+	static void	doGetAllPlaylists(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 	static void	doGetPlaylist(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
   static void	doDeletePlaylist(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 	static void	doAddPlaylist(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
