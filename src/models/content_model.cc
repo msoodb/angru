@@ -34,11 +34,12 @@ pqxx::result ContentModel::GetContents(int page, int limit, std::string query){
 	pqxx::work W(C);
 	std::string complete_query = "SELECT \
 									      				id , \
-									      				service , \
-									      				publisher , \
+									      				(select name from services where id = main.service) as  service , \
+									      				(select name from channels where id = main.channel) as  channel , \
+									      				(select name from publishers where id = main.publisher) as  publisher , \
 									      				type , \
-(select username from users where id = main.created_by) as  created_by , \
-(select username from users where id = main.updated_by) as  updated_by , \
+																(select username from users where id = main.created_by) as  created_by , \
+																(select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
 									      				details , \
@@ -100,16 +101,17 @@ boost::property_tree::ptree ContentModel::GetContentsJson(int page, int limit, s
 	for (size_t i = 0; i < R.size(); i++) {
 		content_node.put("id", R[i][0]);
 		content_node.put("service", R[i][1]);
-		content_node.put("publisher", R[i][2]);
-		content_node.put("type", R[i][3]);
-		content_node.put("created_by", R[i][4]);
-		content_node.put("updated_by", R[i][5]);
-		content_node.put("created_at", R[i][6]);
-		content_node.put("updated_at", R[i][7]);
-		content_node.put("details", R[i][8]);
-		content_node.put("status", R[i][9]);
-		content_node.put("situation", R[i][10]);
-		content_node.put("description", R[i][11]);
+		content_node.put("channel", R[i][2]);
+		content_node.put("publisher", R[i][3]);
+		content_node.put("type", R[i][4]);
+		content_node.put("created_by", R[i][5]);
+		content_node.put("updated_by", R[i][6]);
+		content_node.put("created_at", R[i][7]);
+		content_node.put("updated_at", R[i][8]);
+		content_node.put("details", R[i][9]);
+		content_node.put("status", R[i][10]);
+		content_node.put("situation", R[i][11]);
+		content_node.put("description", R[i][12]);
 		contents_node.push_back(std::make_pair("", content_node));
 	}
 	info_node.put<int>("page", page);
@@ -139,6 +141,7 @@ pqxx::result ContentModel::GetContent(std::string id){
   C.prepare("find", "SELECT \
 									      				id , \
 									      				service , \
+									      				channel , \
 									      				publisher , \
 									      				type , \
 (select username from users where id = main.created_by) as  created_by , \
@@ -161,22 +164,24 @@ boost::property_tree::ptree ContentModel::GetContentJson(std::string id){
 	if(R.size() == 1){
 		content_node.put("id", R[0][0]);
 		content_node.put("service", R[0][1]);
-		content_node.put("publisher", R[0][2]);
-		content_node.put("type", R[0][3]);
-		content_node.put("created_by", R[0][4]);
-		content_node.put("updated_by", R[0][5]);
-		content_node.put("created_at", R[0][6]);
-		content_node.put("updated_at", R[0][7]);
-		content_node.put("details", R[0][8]);
-		content_node.put("status", R[0][9]);
-		content_node.put("situation", R[0][10]);
-		content_node.put("description", R[0][11]);
+		content_node.put("channel", R[0][2]);
+		content_node.put("publisher", R[0][3]);
+		content_node.put("type", R[0][4]);
+		content_node.put("created_by", R[0][5]);
+		content_node.put("updated_by", R[0][6]);
+		content_node.put("created_at", R[0][7]);
+		content_node.put("updated_at", R[0][8]);
+		content_node.put("details", R[0][9]);
+		content_node.put("status", R[0][10]);
+		content_node.put("situation", R[0][11]);
+		content_node.put("description", R[0][12]);
 	}
 	return content_node;
 }
 
 std::string ContentModel::AddContent(
 													std::string	service,
+													std::string	channel,
 													std::string	publisher,
 													int	type,
 													std::string	created_by,
@@ -200,6 +205,7 @@ std::string ContentModel::AddContent(
 	C.prepare("insert", "INSERT INTO contents( \
 													id, \
 													service, \
+													channel, \
 													publisher, \
 													type, \
 													created_by, \
@@ -214,21 +220,23 @@ std::string ContentModel::AddContent(
 													description	) VALUES (\
 												   DEFAULT, \
 												   $1, \
-												   $2, \
-												   $3, \
+													 (CASE WHEN $2 = '' THEN NULL ELSE $2 END)::uuid, \
+													 (CASE WHEN $3 = '' THEN NULL ELSE $3 END)::uuid, \
 												   $4, \
+												   $5, \
 												   NULL, \
 												   NULL, \
 												   now(), \
 												   NULL, \
 												   NULL, \
-												   $5, \
 												   $6, \
 												   $7, \
-												   $8 ) RETURNING id");
+												   $8, \
+												   $9 ) RETURNING id");
 
   pqxx::result R = W.prepared("insert")
                  (service)
+                 (channel)
                  (publisher)
                  (type)
                  (created_by)
@@ -248,6 +256,7 @@ std::string ContentModel::AddContent(
 void ContentModel::UpdateContent(
 													std::string	id,
 													std::string	service,
+													std::string	channel,
 													std::string	publisher,
 													int	type,
 													std::string	updated_by,
@@ -270,17 +279,19 @@ void ContentModel::UpdateContent(
 	pqxx::work W(C);
 	C.prepare("update", "UPDATE contents SET \
 													service = $2, \
-													publisher = $3, \
-													type = $4, \
-													updated_by = $5, \
+													channel = (CASE WHEN $3 = '' THEN  NULL ELSE $3 END)::uuid, \
+													publisher = (CASE WHEN $4 = '' THEN  NULL ELSE $4 END)::uuid, \
+													type = $5, \
+													updated_by = $6, \
 													updated_at = now(), \
-													details = $6, \
-													status = $7, \
-													situation = $8, \
-													description = $9	WHERE id = $1");
+													details = $7, \
+													status = $8, \
+													situation = $9, \
+													description = $10	WHERE id = $1");
 	W.prepared("update")
                  (id)
                  (service)
+                 (channel)
                  (publisher)
                  (type)
                  (updated_by)

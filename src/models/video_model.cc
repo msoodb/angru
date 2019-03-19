@@ -33,20 +33,25 @@ pqxx::result VideoModel::GetVideos(int page, int limit, std::string query){
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	std::string complete_query = "SELECT \
-									      				id , \
-									      				content , \
-									      				name , \
-									      				title , \
-									      				path , \
-									      				size , \
-(select username from users where id = main.created_by) as  created_by , \
-(select username from users where id = main.updated_by) as  updated_by , \
-									      				created_at , \
-									      				updated_at , \
-									      				details , \
-									      				status , \
-									      				situation , \
-									      				description  FROM videos AS main where deleted_at is NULL ";
+									      				main.id , \
+									      				main.name , \
+									      				main.title , \
+									      				main.path , \
+									      				main.size , \
+																(select username from users where id = main.created_by) as  created_by , \
+																(select username from users where id = main.updated_by) as  updated_by , \
+									      				main.created_at , \
+									      				main.updated_at , \
+									      				main.details , \
+									      				main.status , \
+									      				main.situation , \
+																main.description, \
+																(select name from services where id = contents.service) as  service , \
+																(select name from channels where id = contents.channel) as  channel , \
+																(select name from publishers where id = contents.publisher) as  publisher \
+									      				FROM videos AS main join contents \
+																	on main.content = contents.id \
+																where main.deleted_at is NULL ";
 	if(!query.empty())
 	{
 		complete_query += " AND ";
@@ -101,19 +106,21 @@ boost::property_tree::ptree VideoModel::GetVideosJson(int page, int limit, std::
 
 	for (size_t i = 0; i < R.size(); i++) {
 		video_node.put("id", R[i][0]);
-		video_node.put("content", R[i][1]);
-		video_node.put("name", R[i][2]);
-		video_node.put("title", R[i][3]);
-		video_node.put("path", R[i][4]);
-		video_node.put("size", R[i][5]);
-		video_node.put("created_by", R[i][6]);
-		video_node.put("updated_by", R[i][7]);
-		video_node.put("created_at", R[i][8]);
-		video_node.put("updated_at", R[i][9]);
-		video_node.put("details", R[i][10]);
-		video_node.put("status", R[i][11]);
-		video_node.put("situation", R[i][12]);
-		video_node.put("description", R[i][13]);
+		video_node.put("name", R[i][1]);
+		video_node.put("title", R[i][2]);
+		video_node.put("path", R[i][3]);
+		video_node.put("size", R[i][4]);
+		video_node.put("created_by", R[i][5]);
+		video_node.put("updated_by", R[i][6]);
+		video_node.put("created_at", R[i][7]);
+		video_node.put("updated_at", R[i][8]);
+		video_node.put("details", R[i][9]);
+		video_node.put("status", R[i][10]);
+		video_node.put("situation", R[i][11]);
+		video_node.put("description", R[i][12]);
+		video_node.put("service", R[i][13]);
+		video_node.put("channel", R[i][14]);
+		video_node.put("publisher", R[i][15]);
 		videos_node.push_back(std::make_pair("", video_node));
 	}
 	info_node.put<int>("page", page);
@@ -141,24 +148,57 @@ pqxx::result VideoModel::GetVideo(std::string id){
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
   C.prepare("find", "SELECT \
-									      				id , \
-									      				content , \
-									      				name , \
-									      				title , \
-									      				path , \
-									      				size , \
-(select username from users where id = main.created_by) as  created_by , \
-(select username from users where id = main.updated_by) as  updated_by , \
-									      				created_at , \
-									      				updated_at , \
-									      				details , \
-									      				status , \
-									      				situation , \
-									      				description  FROM videos AS main where id = $1 and deleted_at is NULL ");
+											main.id , \
+											main.name , \
+											main.title , \
+											main.path , \
+											main.size , \
+											(select username from users where id = main.created_by) as  created_by , \
+											(select username from users where id = main.updated_by) as  updated_by , \
+											main.created_at , \
+											main.updated_at , \
+											main.details , \
+											main.status , \
+											main.situation , \
+											main.description, \
+											contents.service , \
+											contents.channel , \
+											contents.publisher \
+											FROM videos AS main join contents \
+												on main.content = contents.id \
+											where main.id = $1 and main.deleted_at is NULL ");
   pqxx::result R = W.prepared("find")(id).exec();
 	W.commit();
 	return R;
 }
+
+std::string VideoModel::GetContent(std::string id){
+	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
+	try {
+		if (C.is_open()) {
+			 LOG_INFO << "Opened database successfully: " << C.dbname();
+		} else {
+			 LOG_ERROR << "Can't open database: " << C.dbname();
+		}
+		C.disconnect ();
+	} catch (const angru::system::exception::error &e) {
+			LOG_ERROR << e.what();
+	}
+	LOG_INFO << "Connected to database: " << C.dbname();
+	pqxx::work W(C);
+  C.prepare("find", "SELECT \
+											content \
+											FROM videos \
+											where id = $1 and deleted_at is NULL ");
+  pqxx::result R = W.prepared("find")(id).exec();
+	W.commit();
+	std::string content_id = "";
+	if(R.size() == 1){
+		content_id = R[0][0].as<std::string>();
+	}
+	return content_id;
+}
+
 
 boost::property_tree::ptree VideoModel::GetVideoJson(std::string id){
 	pqxx::result R = GetVideo(id);
@@ -166,19 +206,21 @@ boost::property_tree::ptree VideoModel::GetVideoJson(std::string id){
 
 	if(R.size() == 1){
 		video_node.put("id", R[0][0]);
-		video_node.put("content", R[0][1]);
-		video_node.put("name", R[0][2]);
-		video_node.put("title", R[0][3]);
-		video_node.put("path", R[0][4]);
-		video_node.put("size", R[0][5]);
-		video_node.put("created_by", R[0][6]);
-		video_node.put("updated_by", R[0][7]);
-		video_node.put("created_at", R[0][8]);
-		video_node.put("updated_at", R[0][9]);
-		video_node.put("details", R[0][10]);
-		video_node.put("status", R[0][11]);
-		video_node.put("situation", R[0][12]);
-		video_node.put("description", R[0][13]);
+		video_node.put("name", R[0][1]);
+		video_node.put("title", R[0][2]);
+		video_node.put("path", R[0][3]);
+		video_node.put("size", R[0][4]);
+		video_node.put("created_by", R[0][5]);
+		video_node.put("updated_by", R[0][6]);
+		video_node.put("created_at", R[0][7]);
+		video_node.put("updated_at", R[0][8]);
+		video_node.put("details", R[0][9]);
+		video_node.put("status", R[0][10]);
+		video_node.put("situation", R[0][11]);
+		video_node.put("description", R[0][12]);
+		video_node.put("service", R[0][13]);
+		video_node.put("channel", R[0][14]);
+		video_node.put("publisher", R[0][15]);
 	}
 	return video_node;
 }

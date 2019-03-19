@@ -25,6 +25,7 @@ public:
 	static boost::property_tree::ptree GetContentJson(std::string id);
 	static std::string AddContent(
 													std::string	service,
+													std::string	channel,
 													std::string	publisher,
 													int	type,
 													std::string	created_by,
@@ -35,6 +36,7 @@ public:
 	static void UpdateContent(
 													std::string	id,
 													std::string	service,
+													std::string	channel,
 													std::string	publisher,
 													int	type,
 													std::string	updated_by,

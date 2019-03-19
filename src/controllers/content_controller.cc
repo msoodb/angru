@@ -119,6 +119,7 @@ void ContentController::doAddContent(const Pistache::Rest::Request& request,
     auto body = request.body();
     std::string created_by = user_id;
     std::string	service;
+    std::string	channel;
     std::string	publisher;
     int	type;
     std::string	details;
@@ -132,6 +133,7 @@ void ContentController::doAddContent(const Pistache::Rest::Request& request,
       boost::property_tree::ptree pt;
       boost::property_tree::read_json(ss, pt);
       service = pt.get<std::string>("service");
+      channel = pt.get<std::string>("channel");
       publisher = pt.get<std::string>("publisher");
       type = pt.get<int>("type");
       details = pt.get<std::string>("details");
@@ -141,6 +143,7 @@ void ContentController::doAddContent(const Pistache::Rest::Request& request,
 
       std::string id = angru::mvc::model::ContentModel::AddContent(
                                                   service,
+                                                  channel,
                                                   publisher,
                                                   type,
                                                   created_by,
@@ -174,6 +177,7 @@ void ContentController::doUpdateContent(const Pistache::Rest::Request& request,
     }
     auto body = request.body();
     std::string	service;
+    std::string	channel;
     std::string	publisher;
     int	type;
     std::string	details;
@@ -187,6 +191,7 @@ void ContentController::doUpdateContent(const Pistache::Rest::Request& request,
       boost::property_tree::ptree pt;
       boost::property_tree::read_json(ss, pt);
       service = pt.get<std::string>("service");
+      channel = pt.get<std::string>("channel");
       publisher = pt.get<std::string>("publisher");
       type = pt.get<int>("type");
       details = pt.get<std::string>("details");
@@ -196,6 +201,7 @@ void ContentController::doUpdateContent(const Pistache::Rest::Request& request,
       angru::mvc::model::ContentModel::UpdateContent(
                                                   id,
                                                   service,
+                                                  channel,
                                                   publisher,
                                                   type,
                                                   updated_by,

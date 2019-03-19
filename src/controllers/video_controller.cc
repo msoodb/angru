@@ -11,6 +11,7 @@
 #include "wrappers/postgresql.h"
 #include "tools/security.h"
 #include "models/video_model.h"
+#include "models/content_model.h"
 #include "models/privilege_model.h"
 
 namespace angru{
@@ -52,7 +53,7 @@ void VideoController::doGetVideos(const Pistache::Rest::Request& request,
 
     std::string inifile_text = oss.str();
     if (inifile_text.empty()) {
-      response.send(Pistache::Http::Code::Not_Found, "Videos not found.");
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Videos not found..\"}");
     } else {
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
@@ -80,7 +81,7 @@ void VideoController::doGetVideo(const Pistache::Rest::Request& request,
     std::string inifile_text = oss.str();
 
     if (inifile_text.empty()) {
-      response.send(Pistache::Http::Code::Not_Found, "Videos not found.");
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Videos not found..\"}");
     } else {
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
@@ -118,7 +119,10 @@ void VideoController::doAddVideo(const Pistache::Rest::Request& request,
     }
     auto body = request.body();
     std::string created_by = user_id;
-    std::string	content;
+    std::string	service;
+    std::string	channel;
+    std::string	publisher;
+    int	type = 0; // 0 for video
     std::string	name;
     std::string	title;
     std::string	path;
@@ -133,7 +137,9 @@ void VideoController::doAddVideo(const Pistache::Rest::Request& request,
       ss << body;
       boost::property_tree::ptree pt;
       boost::property_tree::read_json(ss, pt);
-      content = pt.get<std::string>("content");
+      service = pt.get<std::string>("service");
+      channel = pt.get<std::string>("channel");
+      publisher = pt.get<std::string>("publisher");
       name = pt.get<std::string>("name");
       title = pt.get<std::string>("title");
       path = pt.get<std::string>("path");
@@ -143,6 +149,16 @@ void VideoController::doAddVideo(const Pistache::Rest::Request& request,
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
 
+      std::string content = angru::mvc::model::ContentModel::AddContent(
+                                                  service,
+                                                  channel,
+                                                  publisher,
+                                                  type,
+                                                  created_by,
+                                                  details,
+                                                  status,
+                                                  situation,
+                                                  description );
       std::string id = angru::mvc::model::VideoModel::AddVideo(
                                                   content,
                                                   name,
@@ -158,7 +174,7 @@ void VideoController::doAddVideo(const Pistache::Rest::Request& request,
       response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
-      response.send(Pistache::Http::Code::Not_Found, "Videos not found.");
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Videos not found..\"}");
     }
 }
 
@@ -179,7 +195,10 @@ void VideoController::doUpdateVideo(const Pistache::Rest::Request& request,
       id = value.as<std::string>();
     }
     auto body = request.body();
-    std::string	content;
+    std::string	service;
+    std::string	channel;
+    std::string	publisher;
+    int	type = 0; // 0 for video
     std::string	name;
     std::string	title;
     std::string	path;
@@ -194,7 +213,9 @@ void VideoController::doUpdateVideo(const Pistache::Rest::Request& request,
       ss << body;
       boost::property_tree::ptree pt;
       boost::property_tree::read_json(ss, pt);
-      content = pt.get<std::string>("content");
+      service = pt.get<std::string>("service");
+      channel = pt.get<std::string>("channel");
+      publisher = pt.get<std::string>("publisher");
       name = pt.get<std::string>("name");
       title = pt.get<std::string>("title");
       path = pt.get<std::string>("path");
@@ -203,6 +224,19 @@ void VideoController::doUpdateVideo(const Pistache::Rest::Request& request,
       status = pt.get<int>("status");
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
+
+      std::string content = angru::mvc::model::VideoModel::GetContent(id);
+      angru::mvc::model::ContentModel::UpdateContent(
+                                                  content,
+                                                  service,
+                                                  channel,
+                                                  publisher,
+                                                  type,
+                                                  updated_by,
+                                                  details,
+                                                  status,
+                                                  situation,
+                                                  description );
       angru::mvc::model::VideoModel::UpdateVideo(
                                                   id,
                                                   content,
@@ -215,10 +249,10 @@ void VideoController::doUpdateVideo(const Pistache::Rest::Request& request,
                                                   status,
                                                   situation,
                                                   description );
-      response.send(Pistache::Http::Code::Ok, "Videos updated.");
+      response.send(Pistache::Http::Code::Ok, "{\"message\":\"Videos updated.\"}");
     }
     catch (std::exception const& e){
-      response.send(Pistache::Http::Code::Not_Found, "Videos not found.");
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Videos not found..\"}");
     }
  }
 

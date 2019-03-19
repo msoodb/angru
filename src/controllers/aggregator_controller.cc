@@ -53,7 +53,7 @@ void AggregatorController::doGetAggregators(const Pistache::Rest::Request& reque
 
     std::string inifile_text = oss.str();
     if (inifile_text.empty()) {
-      response.send(Pistache::Http::Code::Not_Found, "Aggregators not found.");
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Aggregators not found.\"}");
     } else {
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
@@ -81,7 +81,7 @@ void AggregatorController::doGetAggregator(const Pistache::Rest::Request& reques
     std::string inifile_text = oss.str();
 
     if (inifile_text.empty()) {
-      response.send(Pistache::Http::Code::Not_Found, "Aggregators not found.");
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Aggregators not found.\"}");
     } else {
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
@@ -159,7 +159,7 @@ void AggregatorController::doAddAggregator(const Pistache::Rest::Request& reques
       response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
-      response.send(Pistache::Http::Code::Not_Found, "Aggregators not found.");
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Aggregators not found.\"}");
     }
 }
 
@@ -219,7 +219,7 @@ void AggregatorController::doUpdateAggregator(const Pistache::Rest::Request& req
       response.send(Pistache::Http::Code::Ok, "Aggregators updated.");
     }
     catch (std::exception const& e){
-      response.send(Pistache::Http::Code::Not_Found, "Aggregators not found.");
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Aggregators not found.\"}");
     }
  }
 

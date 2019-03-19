@@ -22,6 +22,7 @@ public:
 	static int GetVideosCount(std::string query="");
 	static boost::property_tree::ptree GetVideosJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
   static pqxx::result GetVideo(std::string id);
+	static std::string GetContent(std::string id);
 	static boost::property_tree::ptree GetVideoJson(std::string id);
 	static std::string AddVideo(
 													std::string	content,

@@ -132,7 +132,7 @@ void ChannelController::doGetChannel(const Pistache::Rest::Request& request,
     std::string inifile_text = oss.str();
 
     if (inifile_text.empty()) {
-      response.send(Pistache::Http::Code::Not_Found, "Channels not found.");
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Channels not found.\"}");
     } else {
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
@@ -265,7 +265,7 @@ void ChannelController::doUpdateChannel(const Pistache::Rest::Request& request,
       response.send(Pistache::Http::Code::Ok, "Channels updated.");
     }
     catch (std::exception const& e){
-      response.send(Pistache::Http::Code::Not_Found, "Channels not found.");
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Channels not found.\"}");
     }
  }
 

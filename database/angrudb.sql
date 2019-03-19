@@ -819,6 +819,7 @@ CREATE TABLE public.contents
 (
   id uuid NOT NULL DEFAULT uuid_generate_v4(),
   service uuid NOT NULL,
+  channel uuid,
   publisher uuid,
   type integer NOT NULL,
   created_by uuid,
@@ -834,6 +835,9 @@ CREATE TABLE public.contents
   CONSTRAINT contents_pkey PRIMARY KEY (id),
   CONSTRAINT contents_service_fkey FOREIGN KEY (service)
       REFERENCES public.services (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT contents_channel_fkey FOREIGN KEY (channel)
+      REFERENCES public.channels (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT contents_publisher_fkey FOREIGN KEY (publisher)
       REFERENCES public.publishers (id) MATCH SIMPLE

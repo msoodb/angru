@@ -41,11 +41,11 @@ void AvatarController::doGetAvatar(const Pistache::Rest::Request& request,
       Pistache::Http::serveFile(response, path);
     }
     catch (std::exception const& e){
-      response.send(Pistache::Http::Code::Not_Found, "Avatar not found.");
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Avatar not found.\"}");
     }
     catch(...)
     {
-      response.send(Pistache::Http::Code::Not_Found, "Avatar not found.");
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Avatar not found.\"}");
     }
 }
 void AvatarController::doAddAvatar(const Pistache::Rest::Request& request,
@@ -81,11 +81,11 @@ void AvatarController::doAddAvatar(const Pistache::Rest::Request& request,
       }
     }
     catch (std::exception const& e){
-      response.send(Pistache::Http::Code::Not_Found, "Avatar not added.");
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Avatar not added.\"}");
     }
     catch(...)
     {
-      response.send(Pistache::Http::Code::Not_Found, "Avatar not found.");
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Avatar not found.\"}");
     }
 }
 

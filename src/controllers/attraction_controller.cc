@@ -52,7 +52,7 @@ void AttractionController::doGetAttractions(const Pistache::Rest::Request& reque
 
     std::string inifile_text = oss.str();
     if (inifile_text.empty()) {
-      response.send(Pistache::Http::Code::Not_Found, "Attractions not found.");
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Attractions not found.\"}");
     } else {
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
@@ -80,7 +80,7 @@ void AttractionController::doGetAttraction(const Pistache::Rest::Request& reques
     std::string inifile_text = oss.str();
 
     if (inifile_text.empty()) {
-      response.send(Pistache::Http::Code::Not_Found, "Attractions not found.");
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Attractions not found.\"}");
     } else {
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
@@ -152,7 +152,7 @@ void AttractionController::doAddAttraction(const Pistache::Rest::Request& reques
       response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){
-      response.send(Pistache::Http::Code::Not_Found, "Attractions not found.");
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Attractions not found.\"}");
     }
 }
 
@@ -206,7 +206,7 @@ void AttractionController::doUpdateAttraction(const Pistache::Rest::Request& req
       response.send(Pistache::Http::Code::Ok, "Attractions updated.");
     }
     catch (std::exception const& e){
-      response.send(Pistache::Http::Code::Not_Found, "Attractions not found.");
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Attractions not found.\"}");
     }
  }
 

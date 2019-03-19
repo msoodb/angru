@@ -115,6 +115,16 @@ void RestServer::SetupRoutes() {
   Get(router, "/services/:service_id/playlists/:playlist_id/tags_playlists", bind(&TagsPlaylistController::doGetTagsPlaylists));
 	Delete(router, "/services/:service_id/playlists/:playlist_id/tags_playlists/:id", bind(&TagsPlaylistController::doDeleteTagsPlaylist));
   Post(router, "/services/:service_id/playlists/:playlist_id/tags_playlists", bind(&TagsPlaylistController::doAddTagsPlaylist));
+  Get(router, "/services/:service_id/contents", bind(&ContentController::doGetContents));
+  Get(router, "/services/:service_id/contents/:id", bind(&ContentController::doGetContent));
+  Delete(router, "/services/:service_id/contents/:id", bind(&ContentController::doDeleteContent));
+  Post(router, "/services/:service_id/contents", bind(&ContentController::doAddContent));
+  Put(router, "/services/:service_id/contents/:id", bind(&ContentController::doUpdateContent));
+  Get(router, "/services/:service_id/contents/:content_id/tags_contents", bind(&TagsContentController::doGetTagsContents));
+  Delete(router, "/services/:service_id/contents/:content_id/tags_contents/:id", bind(&TagsContentController::doDeleteTagsContent));
+  Post(router, "/services/:service_id/contents/:content_id/tags_contents", bind(&TagsContentController::doAddTagsContent));
+
+
 
   Get(router, "/products", bind(&ProductController::doGetProducts));
   Get(router, "/products/:id", bind(&ProductController::doGetProduct));
