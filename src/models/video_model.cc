@@ -34,6 +34,7 @@ pqxx::result VideoModel::GetVideos(int page, int limit, std::string query){
 	pqxx::work W(C);
 	std::string complete_query = "SELECT \
 									      				main.id , \
+																main.content , \
 									      				main.name , \
 									      				main.title , \
 									      				main.path , \
@@ -106,21 +107,22 @@ boost::property_tree::ptree VideoModel::GetVideosJson(int page, int limit, std::
 
 	for (size_t i = 0; i < R.size(); i++) {
 		video_node.put("id", R[i][0]);
-		video_node.put("name", R[i][1]);
-		video_node.put("title", R[i][2]);
-		video_node.put("path", R[i][3]);
-		video_node.put("size", R[i][4]);
-		video_node.put("created_by", R[i][5]);
-		video_node.put("updated_by", R[i][6]);
-		video_node.put("created_at", R[i][7]);
-		video_node.put("updated_at", R[i][8]);
-		video_node.put("details", R[i][9]);
-		video_node.put("status", R[i][10]);
-		video_node.put("situation", R[i][11]);
-		video_node.put("description", R[i][12]);
-		video_node.put("service", R[i][13]);
-		video_node.put("channel", R[i][14]);
-		video_node.put("publisher", R[i][15]);
+		video_node.put("content", R[i][1]);
+		video_node.put("name", R[i][2]);
+		video_node.put("title", R[i][3]);
+		video_node.put("path", R[i][4]);
+		video_node.put("size", R[i][5]);
+		video_node.put("created_by", R[i][6]);
+		video_node.put("updated_by", R[i][7]);
+		video_node.put("created_at", R[i][8]);
+		video_node.put("updated_at", R[i][9]);
+		video_node.put("details", R[i][10]);
+		video_node.put("status", R[i][11]);
+		video_node.put("situation", R[i][12]);
+		video_node.put("description", R[i][13]);
+		video_node.put("service", R[i][14]);
+		video_node.put("channel", R[i][15]);
+		video_node.put("publisher", R[i][16]);
 		videos_node.push_back(std::make_pair("", video_node));
 	}
 	info_node.put<int>("page", page);
@@ -149,6 +151,7 @@ pqxx::result VideoModel::GetVideo(std::string id){
 	pqxx::work W(C);
   C.prepare("find", "SELECT \
 											main.id , \
+											main.content , \
 											main.name , \
 											main.title , \
 											main.path , \
@@ -206,21 +209,22 @@ boost::property_tree::ptree VideoModel::GetVideoJson(std::string id){
 
 	if(R.size() == 1){
 		video_node.put("id", R[0][0]);
-		video_node.put("name", R[0][1]);
-		video_node.put("title", R[0][2]);
-		video_node.put("path", R[0][3]);
-		video_node.put("size", R[0][4]);
-		video_node.put("created_by", R[0][5]);
-		video_node.put("updated_by", R[0][6]);
-		video_node.put("created_at", R[0][7]);
-		video_node.put("updated_at", R[0][8]);
-		video_node.put("details", R[0][9]);
-		video_node.put("status", R[0][10]);
-		video_node.put("situation", R[0][11]);
-		video_node.put("description", R[0][12]);
-		video_node.put("service", R[0][13]);
-		video_node.put("channel", R[0][14]);
-		video_node.put("publisher", R[0][15]);
+		video_node.put("content", R[0][1]);
+		video_node.put("name", R[0][2]);
+		video_node.put("title", R[0][3]);
+		video_node.put("path", R[0][4]);
+		video_node.put("size", R[0][5]);
+		video_node.put("created_by", R[0][6]);
+		video_node.put("updated_by", R[0][7]);
+		video_node.put("created_at", R[0][8]);
+		video_node.put("updated_at", R[0][9]);
+		video_node.put("details", R[0][10]);
+		video_node.put("status", R[0][11]);
+		video_node.put("situation", R[0][12]);
+		video_node.put("description", R[0][13]);
+		video_node.put("service", R[0][14]);
+		video_node.put("channel", R[0][15]);
+		video_node.put("publisher", R[0][16]);
 	}
 	return video_node;
 }
