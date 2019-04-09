@@ -39,8 +39,8 @@ pqxx::result MobileOperatorModel::GetMobileOperators(int page, int limit, std::s
 									      				code , \
 									      				phone , \
 									      				email , \
-(select username from users where id = main.created_by) as  created_by , \
-(select username from users where id = main.updated_by) as  updated_by , \
+																(select username from users where id = main.created_by) as  created_by , \
+																(select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
 									      				details , \
@@ -52,6 +52,7 @@ pqxx::result MobileOperatorModel::GetMobileOperators(int page, int limit, std::s
 		complete_query += " AND ";
 		complete_query +=  query;
 	}
+	complete_query += " order by created_at ";
 	complete_query += " limit ";
 	complete_query += std::to_string(limit);
 	complete_query += " offset ";

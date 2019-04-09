@@ -54,6 +54,7 @@ pqxx::result ServiceModel::GetServices(int page, int limit, std::string query){
 		complete_query += " AND ";
 		complete_query +=  query;
 	}
+	complete_query += " order by created_at ";
 	complete_query += " limit ";
 	complete_query += std::to_string(limit);
 	complete_query += " offset ";
