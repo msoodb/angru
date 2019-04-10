@@ -18,7 +18,7 @@ namespace model{
 ContentModel::ContentModel(){}
 ContentModel::~ContentModel(){}
 
-pqxx::result ContentModel::GetContents(int page, int limit, std::string query){
+pqxx::result ContentModel::GetContents(int page, int limit, std::string query, std::string order){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -88,8 +88,8 @@ int ContentModel::GetContentsCount(std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree ContentModel::GetContentsJson(int page, int limit, std::string query){
-	pqxx::result R = GetContents(page, limit, query);
+boost::property_tree::ptree ContentModel::GetContentsJson(int page, int limit, std::string query, std::string order){
+	pqxx::result R = GetContents(page, limit, query, order);
 	int result_count = GetContentsCount(query);
 	int pageCount = ((result_count - 1) / limit) + 1;
 

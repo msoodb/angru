@@ -45,7 +45,12 @@ void PrivilegeController::doGetPrivileges(const Pistache::Rest::Request& request
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
     }
-    boost::property_tree::ptree privileges = angru::mvc::model::PrivilegeModel::GetPrivilegesJson(page, limit, filter);
+    std::string order;
+    if(query.has("order")) {
+      auto value = query.get("order").get();
+      order = angru::security::cryptography::decode_base64(value);
+    }
+    boost::property_tree::ptree privileges = angru::mvc::model::PrivilegeModel::GetPrivilegesJson(page, limit, filter, order);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, privileges);
 

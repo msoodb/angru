@@ -29,9 +29,9 @@ public:
 	~PrivilegeModel();
 	static bool AuthorizationCheck(std::string user_id, std::string entity_name, int action);
 	static pqxx::result GetPrivilegeStrings(std::string user_id, std::string entity_name);
-	static pqxx::result GetPrivileges(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static pqxx::result GetPrivileges(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
 	static int GetPrivilegesCount(std::string query="");
-	static boost::property_tree::ptree GetPrivilegesJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static boost::property_tree::ptree GetPrivilegesJson(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
   static pqxx::result GetPrivilege(std::string id);
 	static boost::property_tree::ptree GetPrivilegeJson(std::string id);
 	static std::string AddPrivilege(

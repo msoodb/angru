@@ -19,9 +19,9 @@ class AggregatorModel
 public:
 	AggregatorModel();
 	~AggregatorModel();
-	static pqxx::result GetAggregators(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static pqxx::result GetAggregators(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
 	static int GetAggregatorsCount(std::string query="");
-	static boost::property_tree::ptree GetAggregatorsJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static boost::property_tree::ptree GetAggregatorsJson(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
   static pqxx::result GetAggregator(std::string id);
 	static boost::property_tree::ptree GetAggregatorJson(std::string id);
 	static std::string AddAggregator(

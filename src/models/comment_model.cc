@@ -18,7 +18,7 @@ namespace model{
 CommentModel::CommentModel(){}
 CommentModel::~CommentModel(){}
 
-pqxx::result CommentModel::GetComments(int page, int limit, std::string query){
+pqxx::result CommentModel::GetComments(int page, int limit, std::string query, std::string order){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -88,8 +88,8 @@ int CommentModel::GetCommentsCount(std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree CommentModel::GetCommentsJson(int page, int limit, std::string query){
-	pqxx::result R = GetComments(page, limit, query);
+boost::property_tree::ptree CommentModel::GetCommentsJson(int page, int limit, std::string query, std::string order){
+	pqxx::result R = GetComments(page, limit, query, order);
 	int result_count = GetCommentsCount(query);
 	int pageCount = ((result_count - 1) / limit) + 1;
 

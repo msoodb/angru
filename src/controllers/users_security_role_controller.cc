@@ -56,8 +56,12 @@ void UsersSecurityRoleController::doGetUsersSecurityRolesByUserId(const Pistache
     else{
       filter = " _user_ = '" + id + "'";
     }
-
-    boost::property_tree::ptree users_security_roles = angru::mvc::model::UsersSecurityRoleModel::GetUsersSecurityRolesJson(page, limit, filter);
+    std::string order;
+    if(query.has("order")) {
+      auto value = query.get("order").get();
+      order = angru::security::cryptography::decode_base64(value);
+    }
+    boost::property_tree::ptree users_security_roles = angru::mvc::model::UsersSecurityRoleModel::GetUsersSecurityRolesJson(page, limit, filter, order);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, users_security_roles);
 
@@ -95,7 +99,12 @@ void UsersSecurityRoleController::doGetUsersSecurityRoles(const Pistache::Rest::
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
     }
-    boost::property_tree::ptree users_security_roles = angru::mvc::model::UsersSecurityRoleModel::GetUsersSecurityRolesJson(page, limit, filter);
+    std::string order;
+    if(query.has("order")) {
+      auto value = query.get("order").get();
+      order = angru::security::cryptography::decode_base64(value);
+    }
+    boost::property_tree::ptree users_security_roles = angru::mvc::model::UsersSecurityRoleModel::GetUsersSecurityRolesJson(page, limit, filter, order);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, users_security_roles);
 

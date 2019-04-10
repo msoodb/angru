@@ -60,6 +60,11 @@ void ChannelController::doGetChannels(const Pistache::Rest::Request& request,
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
     }
+    std::string order;
+    if(query.has("order")) {
+      auto value = query.get("order").get();
+      order = angru::security::cryptography::decode_base64(value);
+    }
     boost::property_tree::ptree channels = angru::mvc::model::ChannelModel::GetChannelsJson(page, limit, service_id, parent, filter);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, channels);
@@ -98,7 +103,12 @@ void ChannelController::doGetAllChannels(const Pistache::Rest::Request& request,
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
     }
-    boost::property_tree::ptree channels = angru::mvc::model::ChannelModel::GetAllChannelsJson(page, limit, filter);
+    std::string order;
+    if(query.has("order")) {
+      auto value = query.get("order").get();
+      order = angru::security::cryptography::decode_base64(value);
+    }
+    boost::property_tree::ptree channels = angru::mvc::model::ChannelModel::GetAllChannelsJson(page, limit, filter, order);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, channels);
 

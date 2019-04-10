@@ -18,7 +18,7 @@ namespace model{
 TagsPlaylistModel::TagsPlaylistModel(){}
 TagsPlaylistModel::~TagsPlaylistModel(){}
 
-pqxx::result TagsPlaylistModel::GetTagsPlaylists(int page, int limit, std::string query){
+pqxx::result TagsPlaylistModel::GetTagsPlaylists(int page, int limit, std::string query, std::string order){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -85,8 +85,8 @@ int TagsPlaylistModel::GetTagsPlaylistsCount(std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree TagsPlaylistModel::GetTagsPlaylistsJson(int page, int limit, std::string query){
-	pqxx::result R = GetTagsPlaylists(page, limit, query);
+boost::property_tree::ptree TagsPlaylistModel::GetTagsPlaylistsJson(int page, int limit, std::string query, std::string order){
+	pqxx::result R = GetTagsPlaylists(page, limit, query, order);
 	int result_count = GetTagsPlaylistsCount(query);
 	int pageCount = ((result_count - 1) / limit) + 1;
 

@@ -18,7 +18,7 @@ namespace model{
 UserModel::UserModel(){}
 UserModel::~UserModel(){}
 
-pqxx::result UserModel::GetUsers(int page, int limit, std::string query){
+pqxx::result UserModel::GetUsers(int page, int limit, std::string query, std::string order){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -91,8 +91,8 @@ int UserModel::GetUsersCount(std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree UserModel::GetUsersJson(int page, int limit, std::string query){
-	pqxx::result R = GetUsers(page, limit, query);
+boost::property_tree::ptree UserModel::GetUsersJson(int page, int limit, std::string query, std::string order){
+	pqxx::result R = GetUsers(page, limit, query, order);
 	int result_count = GetUsersCount(query);
 	int pageCount = ((result_count - 1) / limit) + 1;
 

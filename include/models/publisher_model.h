@@ -18,9 +18,9 @@ class PublisherModel
 public:
 	PublisherModel();
 	~PublisherModel();
-	static pqxx::result GetPublishers(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static pqxx::result GetPublishers(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
 	static int GetPublishersCount(std::string query="");
-	static boost::property_tree::ptree GetPublishersJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static boost::property_tree::ptree GetPublishersJson(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
   static pqxx::result GetPublisher(std::string id);
 	static boost::property_tree::ptree GetPublisherJson(std::string id);
 	static std::string AddPublisher(

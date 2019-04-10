@@ -116,7 +116,7 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
   out_cc << class_name << "::" << class_name << "(){}" << '\n';
   out_cc << class_name << "::~"<< class_name << "(){}" << '\n';
   out_cc << '\n';
-  out_cc << "pqxx::result " << class_name << "::Get" << entity_name << "s(int page, int limit, std::string query){" << '\n';
+  out_cc << "pqxx::result " << class_name << "::Get" << entity_name << "s(int page, int limit, std::string query, std::string order){" << '\n';
   out_cc << "	pqxx::connection C(angru::wrapper::Postgresql::connection_string());" << '\n';
   out_cc << "	try {" << '\n';
   out_cc << "		if (C.is_open()) {" << '\n';
@@ -190,8 +190,8 @@ void modelGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "	return (R[0][0]).as<int>();" << '\n';
   out_cc << "}" << '\n';
   out_cc << '\n';
-  out_cc << "boost::property_tree::ptree " << class_name << "::Get" << entity_name << "sJson(int page, int limit, std::string query){" << '\n';
-  out_cc << "	pqxx::result R = Get" << entity_name << "s(page, limit, query);" << '\n';
+  out_cc << "boost::property_tree::ptree " << class_name << "::Get" << entity_name << "sJson(int page, int limit, std::string query, std::string order){" << '\n';
+  out_cc << "	pqxx::result R = Get" << entity_name << "s(page, limit, query, order);" << '\n';
   out_cc << "	int result_count = Get" << entity_name << "sCount(query);" << '\n';
   out_cc << "	int pageCount = ((result_count - 1) / limit) + 1;" << '\n';
   out_cc << '\n';
@@ -570,7 +570,7 @@ void controllerGenerator(std::string table_name_single, std::string entity_name,
   out_cc << "      auto value = query.get(\"filter\").get();" << '\n';
   out_cc << "      filter = angru::security::cryptography::decode_base64(value);" << '\n';
   out_cc << "    }" << '\n';
-  out_cc << "    boost::property_tree::ptree " << table_name << "s = angru::mvc::model::" << entity_name << "Model::Get" << entity_name << "sJson(page, limit, filter);" << '\n';
+  out_cc << "    boost::property_tree::ptree " << table_name << "s = angru::mvc::model::" << entity_name << "Model::Get" << entity_name << "sJson(page, limit, filter, order);" << '\n';
   out_cc << "    std::ostringstream oss;" << '\n';
   out_cc << "    boost::property_tree::write_json(oss, " << table_name << "s);" << '\n';
   out_cc << '\n';

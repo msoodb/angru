@@ -18,7 +18,7 @@ namespace model{
 SecurityRoleModel::SecurityRoleModel(){}
 SecurityRoleModel::~SecurityRoleModel(){}
 
-pqxx::result SecurityRoleModel::GetSecurityRoles(int page, int limit, std::string query){
+pqxx::result SecurityRoleModel::GetSecurityRoles(int page, int limit, std::string query, std::string order){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -85,8 +85,8 @@ int SecurityRoleModel::GetSecurityRolesCount(std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree SecurityRoleModel::GetSecurityRolesJson(int page, int limit, std::string query){
-	pqxx::result R = GetSecurityRoles(page, limit, query);
+boost::property_tree::ptree SecurityRoleModel::GetSecurityRolesJson(int page, int limit, std::string query, std::string order){
+	pqxx::result R = GetSecurityRoles(page, limit, query, order);
 	int result_count = GetSecurityRolesCount(query);
 	int pageCount = ((result_count - 1) / limit) + 1;
 

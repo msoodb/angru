@@ -18,7 +18,7 @@ namespace model{
 PlaylistModel::PlaylistModel(){}
 PlaylistModel::~PlaylistModel(){}
 
-pqxx::result PlaylistModel::GetAllPlaylists(int page, int limit, std::string query){
+pqxx::result PlaylistModel::GetAllPlaylists(int page, int limit, std::string query, std::string order){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -158,8 +158,8 @@ int PlaylistModel::GetPlaylistsCount(std::string service, std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree PlaylistModel::GetAllPlaylistsJson(int page, int limit, std::string query){
-	pqxx::result R = GetAllPlaylists(page, limit, query);
+boost::property_tree::ptree PlaylistModel::GetAllPlaylistsJson(int page, int limit, std::string query, std::string order){
+	pqxx::result R = GetAllPlaylists(page, limit, query, order);
 	int result_count = GetAllPlaylistsCount(query);
 	int pageCount = ((result_count - 1) / limit) + 1;
 

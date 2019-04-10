@@ -18,9 +18,9 @@ class TagsPlaylistModel
 public:
 	TagsPlaylistModel();
 	~TagsPlaylistModel();
-	static pqxx::result GetTagsPlaylists(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static pqxx::result GetTagsPlaylists(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
 	static int GetTagsPlaylistsCount(std::string query="");
-	static boost::property_tree::ptree GetTagsPlaylistsJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static boost::property_tree::ptree GetTagsPlaylistsJson(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
   static pqxx::result GetTagsPlaylist(std::string id);
 	static boost::property_tree::ptree GetTagsPlaylistJson(std::string id);
 	static std::string AddTagsPlaylist(

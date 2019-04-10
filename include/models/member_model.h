@@ -18,9 +18,9 @@ class MemberModel
 public:
 	MemberModel();
 	~MemberModel();
-	static pqxx::result GetMembers(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static pqxx::result GetMembers(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
 	static int GetMembersCount(std::string query="");
-	static boost::property_tree::ptree GetMembersJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static boost::property_tree::ptree GetMembersJson(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
   static pqxx::result GetMember(std::string id);
 	static boost::property_tree::ptree GetMemberJson(std::string id);
 	static std::string AddMember(

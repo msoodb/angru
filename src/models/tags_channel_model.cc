@@ -18,7 +18,7 @@ namespace model{
 TagsChannelModel::TagsChannelModel(){}
 TagsChannelModel::~TagsChannelModel(){}
 
-pqxx::result TagsChannelModel::GetTagsChannels(int page, int limit, std::string query){
+pqxx::result TagsChannelModel::GetTagsChannels(int page, int limit, std::string query, std::string order){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -85,8 +85,8 @@ int TagsChannelModel::GetTagsChannelsCount(std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree TagsChannelModel::GetTagsChannelsJson(int page, int limit, std::string query){
-	pqxx::result R = GetTagsChannels(page, limit, query);
+boost::property_tree::ptree TagsChannelModel::GetTagsChannelsJson(int page, int limit, std::string query, std::string order){
+	pqxx::result R = GetTagsChannels(page, limit, query, order);
 	int result_count = GetTagsChannelsCount(query);
 	int pageCount = ((result_count - 1) / limit) + 1;
 

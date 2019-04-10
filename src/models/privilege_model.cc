@@ -81,7 +81,7 @@ pqxx::result PrivilegeModel::GetPrivilegeStrings(std::string user_id, std::strin
 	return R;
 }
 
-pqxx::result PrivilegeModel::GetPrivileges(int page, int limit, std::string query){
+pqxx::result PrivilegeModel::GetPrivileges(int page, int limit, std::string query, std::string order){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -149,8 +149,8 @@ int PrivilegeModel::GetPrivilegesCount(std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree PrivilegeModel::GetPrivilegesJson(int page, int limit, std::string query){
-	pqxx::result R = GetPrivileges(page, limit, query);
+boost::property_tree::ptree PrivilegeModel::GetPrivilegesJson(int page, int limit, std::string query, std::string order){
+	pqxx::result R = GetPrivileges(page, limit, query, order);
 	int result_count = GetPrivilegesCount(query);
 	int pageCount = ((result_count - 1) / limit) + 1;
 

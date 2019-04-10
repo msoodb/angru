@@ -18,9 +18,9 @@ class UserModel
 public:
 	UserModel();
 	~UserModel();
-	static pqxx::result GetUsers(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static pqxx::result GetUsers(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
 	static int GetUsersCount(std::string query="");
-	static boost::property_tree::ptree GetUsersJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static boost::property_tree::ptree GetUsersJson(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
   static pqxx::result GetUser(std::string id);
 	static bool IsZeus(std::string id);
 	static boost::property_tree::ptree GetUserJson(std::string id);

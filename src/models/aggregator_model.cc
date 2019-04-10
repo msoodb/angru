@@ -18,7 +18,7 @@ namespace model{
 AggregatorModel::AggregatorModel(){}
 AggregatorModel::~AggregatorModel(){}
 
-pqxx::result AggregatorModel::GetAggregators(int page, int limit, std::string query){
+pqxx::result AggregatorModel::GetAggregators(int page, int limit, std::string query, std::string order){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -89,8 +89,8 @@ int AggregatorModel::GetAggregatorsCount(std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree AggregatorModel::GetAggregatorsJson(int page, int limit, std::string query){
-	pqxx::result R = GetAggregators(page, limit, query);
+boost::property_tree::ptree AggregatorModel::GetAggregatorsJson(int page, int limit, std::string query, std::string order){
+	pqxx::result R = GetAggregators(page, limit, query, order);
 	int result_count = GetAggregatorsCount(query);
 	int pageCount = ((result_count - 1) / limit) + 1;
 

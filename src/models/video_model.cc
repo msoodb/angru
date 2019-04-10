@@ -18,7 +18,7 @@ namespace model{
 VideoModel::VideoModel(){}
 VideoModel::~VideoModel(){}
 
-pqxx::result VideoModel::GetVideos(int page, int limit, std::string query){
+pqxx::result VideoModel::GetVideos(int page, int limit, std::string query, std::string order){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -95,8 +95,8 @@ int VideoModel::GetVideosCount(std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree VideoModel::GetVideosJson(int page, int limit, std::string query){
-	pqxx::result R = GetVideos(page, limit, query);
+boost::property_tree::ptree VideoModel::GetVideosJson(int page, int limit, std::string query, std::string order){
+	pqxx::result R = GetVideos(page, limit, query, order);
 	int result_count = GetVideosCount(query);
 	int pageCount = ((result_count - 1) / limit) + 1;
 

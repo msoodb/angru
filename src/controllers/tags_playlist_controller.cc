@@ -47,7 +47,12 @@ void TagsPlaylistController::doGetTagsPlaylists(const Pistache::Rest::Request& r
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
     }
-    boost::property_tree::ptree tags_playlists = angru::mvc::model::TagsPlaylistModel::GetTagsPlaylistsJson(page, limit, filter);
+    std::string order;
+    if(query.has("order")) {
+      auto value = query.get("order").get();
+      order = angru::security::cryptography::decode_base64(value);
+    }
+    boost::property_tree::ptree tags_playlists = angru::mvc::model::TagsPlaylistModel::GetTagsPlaylistsJson(page, limit, filter, order);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, tags_playlists);
 

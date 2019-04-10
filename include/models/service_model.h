@@ -18,9 +18,9 @@ class ServiceModel
 public:
 	ServiceModel();
 	~ServiceModel();
-	static pqxx::result GetServices(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static pqxx::result GetServices(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
 	static int GetServicesCount(std::string query="");
-	static boost::property_tree::ptree GetServicesJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static boost::property_tree::ptree GetServicesJson(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
   static pqxx::result GetService(std::string id);
 	static boost::property_tree::ptree GetServiceJson(std::string id);
 	static std::string AddService(

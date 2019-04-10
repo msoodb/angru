@@ -47,7 +47,12 @@ void MobileOperatorController::doGetMobileOperators(const Pistache::Rest::Reques
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
     }
-    boost::property_tree::ptree mobile_operators = angru::mvc::model::MobileOperatorModel::GetMobileOperatorsJson(page, limit, filter);
+    std::string order;
+    if(query.has("order")) {
+      auto value = query.get("order").get();
+      order = angru::security::cryptography::decode_base64(value);
+    }
+    boost::property_tree::ptree mobile_operators = angru::mvc::model::MobileOperatorModel::GetMobileOperatorsJson(page, limit, filter, order);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, mobile_operators);
 

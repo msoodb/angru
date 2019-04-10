@@ -18,7 +18,7 @@ namespace model{
 PublisherModel::PublisherModel(){}
 PublisherModel::~PublisherModel(){}
 
-pqxx::result PublisherModel::GetPublishers(int page, int limit, std::string query){
+pqxx::result PublisherModel::GetPublishers(int page, int limit, std::string query, std::string order){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -90,8 +90,8 @@ int PublisherModel::GetPublishersCount(std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree PublisherModel::GetPublishersJson(int page, int limit, std::string query){
-	pqxx::result R = GetPublishers(page, limit, query);
+boost::property_tree::ptree PublisherModel::GetPublishersJson(int page, int limit, std::string query, std::string order){
+	pqxx::result R = GetPublishers(page, limit, query, order);
 	int result_count = GetPublishersCount(query);
 	int pageCount = ((result_count - 1) / limit) + 1;
 

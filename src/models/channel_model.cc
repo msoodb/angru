@@ -64,7 +64,7 @@ pqxx::result ChannelModel::GetChannels(int page, int limit, std::string service,
 	return R;
 }
 
-pqxx::result ChannelModel::GetAllChannels(int page, int limit, std::string query){
+pqxx::result ChannelModel::GetAllChannels(int page, int limit, std::string query, std::string order){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -198,8 +198,8 @@ boost::property_tree::ptree ChannelModel::GetChannelsJson(int page, int limit, s
 	return result_node;
 }
 
-boost::property_tree::ptree ChannelModel::GetAllChannelsJson(int page, int limit, std::string query){
-	pqxx::result R = GetAllChannels(page, limit, query);
+boost::property_tree::ptree ChannelModel::GetAllChannelsJson(int page, int limit, std::string query, std::string order){
+	pqxx::result R = GetAllChannels(page, limit, query, order);
 	int result_count = GetAllChannelsCount(query);
 	int pageCount = ((result_count - 1) / limit) + 1;
 

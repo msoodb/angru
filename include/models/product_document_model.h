@@ -18,9 +18,9 @@ class ProductDocumentModel
 public:
 	ProductDocumentModel();
 	~ProductDocumentModel();
-	static pqxx::result GetProductDocuments(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static pqxx::result GetProductDocuments(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
 	static int GetProductDocumentsCount(std::string query="");
-	static boost::property_tree::ptree GetProductDocumentsJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static boost::property_tree::ptree GetProductDocumentsJson(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
   static pqxx::result GetProductDocument(int);
 	static boost::property_tree::ptree GetProductDocumentJson(int);
 	static std::string AddProductDocument(

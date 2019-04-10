@@ -18,9 +18,9 @@ class TagModel
 public:
 	TagModel();
 	~TagModel();
-	static pqxx::result GetTags(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static pqxx::result GetTags(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
 	static int GetTagsCount(std::string query="");
-	static boost::property_tree::ptree GetTagsJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static boost::property_tree::ptree GetTagsJson(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
 	static std::string ReturnTagId(std::string user_id, std::string name);
 	static std::string GetTagIdByName(std::string name);
   static pqxx::result GetTag(std::string id);

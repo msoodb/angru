@@ -18,9 +18,9 @@ class CommentModel
 public:
 	CommentModel();
 	~CommentModel();
-	static pqxx::result GetComments(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static pqxx::result GetComments(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
 	static int GetCommentsCount(std::string query="");
-	static boost::property_tree::ptree GetCommentsJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static boost::property_tree::ptree GetCommentsJson(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
   static pqxx::result GetComment(std::string id);
 	static boost::property_tree::ptree GetCommentJson(std::string id);
 	static std::string AddComment(

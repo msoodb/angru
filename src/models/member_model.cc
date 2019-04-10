@@ -18,7 +18,7 @@ namespace model{
 MemberModel::MemberModel(){}
 MemberModel::~MemberModel(){}
 
-pqxx::result MemberModel::GetMembers(int page, int limit, std::string query){
+pqxx::result MemberModel::GetMembers(int page, int limit, std::string query, std::string order){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -85,8 +85,8 @@ int MemberModel::GetMembersCount(std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree MemberModel::GetMembersJson(int page, int limit, std::string query){
-	pqxx::result R = GetMembers(page, limit, query);
+boost::property_tree::ptree MemberModel::GetMembersJson(int page, int limit, std::string query, std::string order){
+	pqxx::result R = GetMembers(page, limit, query, order);
 	int result_count = GetMembersCount(query);
 	int pageCount = ((result_count - 1) / limit) + 1;
 

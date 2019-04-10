@@ -18,7 +18,7 @@ namespace model{
 ServiceModel::ServiceModel(){}
 ServiceModel::~ServiceModel(){}
 
-pqxx::result ServiceModel::GetServices(int page, int limit, std::string query){
+pqxx::result ServiceModel::GetServices(int page, int limit, std::string query, std::string order){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -54,7 +54,11 @@ pqxx::result ServiceModel::GetServices(int page, int limit, std::string query){
 		complete_query += " AND ";
 		complete_query +=  query;
 	}
-	complete_query += " order by created_at ";
+	if(!order.empty())
+	{
+		complete_query += " ORDER BY ";
+		complete_query +=  order;
+	}
 	complete_query += " limit ";
 	complete_query += std::to_string(limit);
 	complete_query += " offset ";
@@ -92,8 +96,8 @@ int ServiceModel::GetServicesCount(std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree ServiceModel::GetServicesJson(int page, int limit, std::string query){
-	pqxx::result R = GetServices(page, limit, query);
+boost::property_tree::ptree ServiceModel::GetServicesJson(int page, int limit, std::string query, std::string order){
+	pqxx::result R = GetServices(page, limit, query, order);
 	int result_count = GetServicesCount(query);
 	int pageCount = ((result_count - 1) / limit) + 1;
 

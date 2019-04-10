@@ -18,7 +18,7 @@ namespace model{
 AttractionModel::AttractionModel(){}
 AttractionModel::~AttractionModel(){}
 
-pqxx::result AttractionModel::GetAttractions(int page, int limit, std::string query){
+pqxx::result AttractionModel::GetAttractions(int page, int limit, std::string query, std::string order){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -87,8 +87,8 @@ int AttractionModel::GetAttractionsCount(std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree AttractionModel::GetAttractionsJson(int page, int limit, std::string query){
-	pqxx::result R = GetAttractions(page, limit, query);
+boost::property_tree::ptree AttractionModel::GetAttractionsJson(int page, int limit, std::string query, std::string order){
+	pqxx::result R = GetAttractions(page, limit, query, order);
 	int result_count = GetAttractionsCount(query);
 	int pageCount = ((result_count - 1) / limit) + 1;
 

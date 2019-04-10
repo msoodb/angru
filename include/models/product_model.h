@@ -18,9 +18,9 @@ class ProductModel
 public:
 	ProductModel();
 	~ProductModel();
-	static pqxx::result GetProducts(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static pqxx::result GetProducts(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
 	static int GetProductsCount(std::string query="");
-	static boost::property_tree::ptree GetProductsJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static boost::property_tree::ptree GetProductsJson(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
   static pqxx::result GetProduct(int);
 	static boost::property_tree::ptree GetProductJson(int);
 	static std::string AddProduct(

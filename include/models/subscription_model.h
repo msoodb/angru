@@ -18,9 +18,9 @@ class SubscriptionModel
 public:
 	SubscriptionModel();
 	~SubscriptionModel();
-	static pqxx::result GetSubscriptions(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static pqxx::result GetSubscriptions(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
 	static int GetSubscriptionsCount(std::string query="");
-	static boost::property_tree::ptree GetSubscriptionsJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static boost::property_tree::ptree GetSubscriptionsJson(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
   static pqxx::result GetSubscription(std::string id);
 	static boost::property_tree::ptree GetSubscriptionJson(std::string id);
 	static std::string AddSubscription(

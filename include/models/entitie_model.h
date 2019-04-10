@@ -18,9 +18,9 @@ class EntitieModel
 public:
 	EntitieModel();
 	~EntitieModel();
-	static pqxx::result GetEntities(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static pqxx::result GetEntities(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
 	static int GetEntitiesCount(std::string query="");
-	static boost::property_tree::ptree GetEntitiesJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static boost::property_tree::ptree GetEntitiesJson(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
   static pqxx::result GetEntitie(std::string id);
 	static boost::property_tree::ptree GetEntitieJson(std::string id);
 	static std::string AddEntitie(

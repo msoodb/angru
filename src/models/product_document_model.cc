@@ -18,7 +18,7 @@ namespace model{
 ProductDocumentModel::ProductDocumentModel(){}
 ProductDocumentModel::~ProductDocumentModel(){}
 
-pqxx::result ProductDocumentModel::GetProductDocuments(int page, int limit, std::string query){
+pqxx::result ProductDocumentModel::GetProductDocuments(int page, int limit, std::string query, std::string order){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
 		if (C.is_open()) {
@@ -87,8 +87,8 @@ int ProductDocumentModel::GetProductDocumentsCount(std::string query){
 	return (R[0][0]).as<int>();
 }
 
-boost::property_tree::ptree ProductDocumentModel::GetProductDocumentsJson(int page, int limit, std::string query){
-	pqxx::result R = GetProductDocuments(page, limit, query);
+boost::property_tree::ptree ProductDocumentModel::GetProductDocumentsJson(int page, int limit, std::string query, std::string order){
+	pqxx::result R = GetProductDocuments(page, limit, query, order);
 	int result_count = GetProductDocumentsCount(query);
 	int pageCount = ((result_count - 1) / limit) + 1;
 

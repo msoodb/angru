@@ -46,7 +46,12 @@ void UsersContentProviderController::doGetUsersContentProviders(const Pistache::
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
     }
-    boost::property_tree::ptree users_content_providers = angru::mvc::model::UsersContentProviderModel::GetUsersContentProvidersJson(page, limit, filter);
+    std::string order;
+    if(query.has("order")) {
+      auto value = query.get("order").get();
+      order = angru::security::cryptography::decode_base64(value);
+    }
+    boost::property_tree::ptree users_content_providers = angru::mvc::model::UsersContentProviderModel::GetUsersContentProvidersJson(page, limit, filter, order);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, users_content_providers);
 

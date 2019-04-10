@@ -18,9 +18,9 @@ class SecurityRoleModel
 public:
 	SecurityRoleModel();
 	~SecurityRoleModel();
-	static pqxx::result GetSecurityRoles(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static pqxx::result GetSecurityRoles(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
 	static int GetSecurityRolesCount(std::string query="");
-	static boost::property_tree::ptree GetSecurityRolesJson(int page=1, int limit=LIMIT_COUNT, std::string query="");
+	static boost::property_tree::ptree GetSecurityRolesJson(int page=1, int limit=LIMIT_COUNT, std::string query="", std::string order="");
   static pqxx::result GetSecurityRole(std::string id);
 	static boost::property_tree::ptree GetSecurityRoleJson(std::string id);
 	static std::string AddSecurityRole(
