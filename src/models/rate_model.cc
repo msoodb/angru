@@ -50,6 +50,11 @@ pqxx::result RateModel::GetRates(int page, int limit, std::string query, std::st
 		complete_query += " AND ";
 		complete_query +=  query;
 	}
+	if(!order.empty())
+	{
+		complete_query += " ORDER BY ";
+		complete_query +=  order;
+	}
 	complete_query += " limit ";
 	complete_query += std::to_string(limit);
 	complete_query += " offset ";
