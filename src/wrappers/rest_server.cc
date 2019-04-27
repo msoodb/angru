@@ -124,8 +124,6 @@ void RestServer::SetupRoutes() {
   Delete(router, "/services/:service_id/contents/:content_id/tags_contents/:id", bind(&TagsContentController::doDeleteTagsContent));
   Post(router, "/services/:service_id/contents/:content_id/tags_contents", bind(&TagsContentController::doAddTagsContent));
 
-
-
   Get(router, "/products", bind(&ProductController::doGetProducts));
   Get(router, "/products/:id", bind(&ProductController::doGetProduct));
   Delete(router, "/products/:id", bind(&ProductController::doDeleteProduct));
@@ -240,6 +238,11 @@ void RestServer::SetupRoutes() {
   Get(router, "/contents/:content_id/tags_contents", bind(&TagsContentController::doGetTagsContents));
 	Delete(router, "/contents/:content_id/tags_contents/:id", bind(&TagsContentController::doDeleteTagsContent));
   Post(router, "/contents/:content_id/tags_contents", bind(&TagsContentController::doAddTagsContent));
+  Get(router, "/contents/:content_id/playlists_contents", bind(&PlaylistsContentController::doGetPlaylistsContents));
+  Get(router, "/contents/:content_id/playlists_contents/:id", bind(&PlaylistsContentController::doGetPlaylistsContent));
+  Delete(router, "/contents/:content_id/playlists_contents/:id", bind(&PlaylistsContentController::doDeletePlaylistsContent));
+  Post(router, "/contents/:content_id/playlists_contents", bind(&PlaylistsContentController::doAddPlaylistsContent));
+  Put(router, "/contents/:content_id/playlists_contents/:id", bind(&PlaylistsContentController::doUpdatePlaylistsContent));
 
   Get(router, "/playlists_contents", bind(&PlaylistsContentController::doGetPlaylistsContents));
   Get(router, "/playlists_contents/:id", bind(&PlaylistsContentController::doGetPlaylistsContent));

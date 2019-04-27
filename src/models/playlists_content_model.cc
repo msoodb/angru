@@ -34,10 +34,12 @@ pqxx::result PlaylistsContentModel::GetPlaylistsContents(int page, int limit, st
 	pqxx::work W(C);
 	std::string complete_query = "SELECT \
 									      				id , \
+																(select name from playlists where id = main.playlist) as  playlist_name , \
+																(select title from playlists where id = main.playlist) as  playlist_title , \
 									      				playlist , \
 									      				content , \
-(select username from users where id = main.created_by) as  created_by , \
-(select username from users where id = main.updated_by) as  updated_by , \
+																(select username from users where id = main.created_by) as  created_by , \
+																(select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
 									      				details , \
@@ -103,16 +105,18 @@ boost::property_tree::ptree PlaylistsContentModel::GetPlaylistsContentsJson(int 
 
 	for (size_t i = 0; i < R.size(); i++) {
 		playlists_content_node.put("id", R[i][0]);
-		playlists_content_node.put("playlist", R[i][1]);
-		playlists_content_node.put("content", R[i][2]);
-		playlists_content_node.put("created_by", R[i][3]);
-		playlists_content_node.put("updated_by", R[i][4]);
-		playlists_content_node.put("created_at", R[i][5]);
-		playlists_content_node.put("updated_at", R[i][6]);
-		playlists_content_node.put("details", R[i][7]);
-		playlists_content_node.put("status", R[i][8]);
-		playlists_content_node.put("situation", R[i][9]);
-		playlists_content_node.put("description", R[i][10]);
+		playlists_content_node.put("playlist_name", R[i][1]);
+		playlists_content_node.put("playlist_title", R[i][2]);
+		playlists_content_node.put("playlist", R[i][3]);
+		playlists_content_node.put("content", R[i][4]);
+		playlists_content_node.put("created_by", R[i][5]);
+		playlists_content_node.put("updated_by", R[i][6]);
+		playlists_content_node.put("created_at", R[i][7]);
+		playlists_content_node.put("updated_at", R[i][8]);
+		playlists_content_node.put("details", R[i][9]);
+		playlists_content_node.put("status", R[i][10]);
+		playlists_content_node.put("situation", R[i][11]);
+		playlists_content_node.put("description", R[i][12]);
 		playlists_contents_node.push_back(std::make_pair("", playlists_content_node));
 	}
 	info_node.put<int>("page", page);
