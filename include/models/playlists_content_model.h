@@ -27,7 +27,6 @@ public:
 													std::string	playlist,
 													std::string	content,
 													std::string	created_by,
-													std::string	details,
 													int	status,
 													int	situation,
 													std::string	description);
@@ -36,7 +35,6 @@ public:
 													std::string	playlist,
 													std::string	content,
 													std::string	updated_by,
-													std::string	details,
 													int	status,
 													int	situation,
 													std::string	description);

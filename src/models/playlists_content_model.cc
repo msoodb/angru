@@ -42,7 +42,6 @@ pqxx::result PlaylistsContentModel::GetPlaylistsContents(int page, int limit, st
 																(select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
-									      				details , \
 									      				status , \
 									      				situation , \
 									      				description  FROM playlists_contents AS main where deleted_at is NULL ";
@@ -113,10 +112,9 @@ boost::property_tree::ptree PlaylistsContentModel::GetPlaylistsContentsJson(int 
 		playlists_content_node.put("updated_by", R[i][6]);
 		playlists_content_node.put("created_at", R[i][7]);
 		playlists_content_node.put("updated_at", R[i][8]);
-		playlists_content_node.put("details", R[i][9]);
-		playlists_content_node.put("status", R[i][10]);
-		playlists_content_node.put("situation", R[i][11]);
-		playlists_content_node.put("description", R[i][12]);
+		playlists_content_node.put("status", R[i][9]);
+		playlists_content_node.put("situation", R[i][10]);
+		playlists_content_node.put("description", R[i][11]);
 		playlists_contents_node.push_back(std::make_pair("", playlists_content_node));
 	}
 	info_node.put<int>("page", page);
@@ -151,7 +149,6 @@ pqxx::result PlaylistsContentModel::GetPlaylistsContent(std::string id){
 (select username from users where id = main.updated_by) as  updated_by , \
 									      				created_at , \
 									      				updated_at , \
-									      				details , \
 									      				status , \
 									      				situation , \
 									      				description  FROM playlists_contents AS main where id = $1 and deleted_at is NULL ");
@@ -172,10 +169,9 @@ boost::property_tree::ptree PlaylistsContentModel::GetPlaylistsContentJson(std::
 		playlists_content_node.put("updated_by", R[0][4]);
 		playlists_content_node.put("created_at", R[0][5]);
 		playlists_content_node.put("updated_at", R[0][6]);
-		playlists_content_node.put("details", R[0][7]);
-		playlists_content_node.put("status", R[0][8]);
-		playlists_content_node.put("situation", R[0][9]);
-		playlists_content_node.put("description", R[0][10]);
+		playlists_content_node.put("status", R[0][7]);
+		playlists_content_node.put("situation", R[0][8]);
+		playlists_content_node.put("description", R[0][9]);
 	}
 	return playlists_content_node;
 }
@@ -184,7 +180,6 @@ std::string PlaylistsContentModel::AddPlaylistsContent(
 													std::string	playlist,
 													std::string	content,
 													std::string	created_by,
-													std::string	details,
 													int	status,
 													int	situation,
 													std::string	description){
@@ -211,7 +206,6 @@ std::string PlaylistsContentModel::AddPlaylistsContent(
 													created_at, \
 													deleted_at, \
 													updated_at, \
-													details, \
 													status, \
 													situation, \
 													description	) VALUES (\
@@ -226,14 +220,12 @@ std::string PlaylistsContentModel::AddPlaylistsContent(
 												   NULL, \
 												   $4, \
 												   $5, \
-												   $6, \
-												   $7 ) RETURNING id");
+												   $6 ) RETURNING id");
 
   pqxx::result R = W.prepared("insert")
                  (playlist)
                  (content)
                  (created_by)
-                 (details)
                  (status)
                  (situation)
                  (description)
@@ -251,7 +243,6 @@ void PlaylistsContentModel::UpdatePlaylistsContent(
 													std::string	playlist,
 													std::string	content,
 													std::string	updated_by,
-													std::string	details,
 													int	status,
 													int	situation,
 													std::string	description ){
@@ -273,16 +264,14 @@ void PlaylistsContentModel::UpdatePlaylistsContent(
 													content = $3, \
 													updated_by = $4, \
 													updated_at = now(), \
-													details = $5, \
-													status = $6, \
-													situation = $7, \
-													description = $8	WHERE id = $1");
+													status = $5, \
+													situation = $6, \
+													description = $7	WHERE id = $1");
 	W.prepared("update")
                  (id)
                  (playlist)
                  (content)
                  (updated_by)
-                 (details)
                  (status)
                  (situation)
                  (description)

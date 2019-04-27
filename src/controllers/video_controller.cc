@@ -175,7 +175,7 @@ void VideoController::doAddVideo(const Pistache::Rest::Request& request,
                                                   status,
                                                   situation,
                                                   description );
-      std::string message = "{\"message\":\"Video Added.\", \"id\":\"" + id + "\"}";
+      std::string message = "{\"message\":\"Video Added.\", \"id\":\"" + id + "\",\"content\":\"" + content + "\"}";
       response.send(Pistache::Http::Code::Ok, message);
     }
     catch (std::exception const& e){

@@ -125,7 +125,6 @@ void PlaylistsContentController::doAddPlaylistsContent(const Pistache::Rest::Req
     std::string created_by = user_id;
     std::string	playlist;
     std::string	content;
-    std::string	details;
     int	status;
     int	situation;
     std::string	description;
@@ -137,7 +136,6 @@ void PlaylistsContentController::doAddPlaylistsContent(const Pistache::Rest::Req
       boost::property_tree::read_json(ss, pt);
       playlist = pt.get<std::string>("playlist");
       content = pt.get<std::string>("content");
-      details = pt.get<std::string>("details");
       status = pt.get<int>("status");
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
@@ -146,7 +144,6 @@ void PlaylistsContentController::doAddPlaylistsContent(const Pistache::Rest::Req
                                                   playlist,
                                                   content,
                                                   created_by,
-                                                  details,
                                                   status,
                                                   situation,
                                                   description );
@@ -177,7 +174,6 @@ void PlaylistsContentController::doUpdatePlaylistsContent(const Pistache::Rest::
     auto body = request.body();
     std::string	playlist;
     std::string	content;
-    std::string	details;
     int	status;
     int	situation;
     std::string	description;
@@ -189,7 +185,6 @@ void PlaylistsContentController::doUpdatePlaylistsContent(const Pistache::Rest::
       boost::property_tree::read_json(ss, pt);
       playlist = pt.get<std::string>("playlist");
       content = pt.get<std::string>("content");
-      details = pt.get<std::string>("details");
       status = pt.get<int>("status");
       situation = pt.get<int>("situation");
       description = pt.get<std::string>("description");
@@ -198,7 +193,6 @@ void PlaylistsContentController::doUpdatePlaylistsContent(const Pistache::Rest::
                                                   playlist,
                                                   content,
                                                   updated_by,
-                                                  details,
                                                   status,
                                                   situation,
                                                   description );
