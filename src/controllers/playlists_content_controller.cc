@@ -30,6 +30,15 @@ void PlaylistsContentController::doGetPlaylistsContents(const Pistache::Rest::Re
       response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
       return;
     }
+    std::string content_id = "";
+    if (request.hasParam(":content_id")) {
+        auto value = request.param(":content_id");
+        content_id = value.as<std::string>();
+    }
+    else{
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Playlists not found.\"}");
+      return;
+    }
     int page = 1;
     std::string filter;
     auto query = request.query();
@@ -45,6 +54,10 @@ void PlaylistsContentController::doGetPlaylistsContents(const Pistache::Rest::Re
     if(query.has("filter")) {
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
+      filter = filter + " AND content = '" + content_id + "'";
+    }
+    else{
+      filter = " content = '" + content_id + "'";
     }
     std::string order;
     if(query.has("order")) {
