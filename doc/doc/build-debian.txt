@@ -5,11 +5,12 @@ angru@198.143.183.251:1235
 --------------------------------------------------------------------------
 ssh root@198.143.183.251
 cat /etc/os-release
-useradd angru
-passwd angru
+adduser angru
+//passwd angru
 usermod -aG sudo angru
 su - angru
 exit
+apt-get install sudo
 exit
 --------------------------------------------------------------------------
 //create ssh-key on development machine
@@ -23,7 +24,7 @@ sudo apt-get -y update
 sudo apt-get -y upgrade
 sudo apt-get clean all
 sudo apt-get install nano wget curl net-tools lsof bash-completion
-//if .ssh dose not 
+//ls -a if .ssh dose not 
 //exist mkdir .ssh
 cd ~/.ssh
 ssh-keygen
@@ -31,17 +32,13 @@ cat id_rsa.pub
 copy id_rsa.pub to deploy key to angru project on github
 --------------------------------------------------------------------------
 sudo apt-get install build-essential
-cd ~
-git clone git@github.com:msoodb/angru.git
-cd angru
-mkdir build
-cd build
-cmake -DCMAKE_BUILD_TYPE=Release ../
-make
+sudo apt-get install git-all
+sudo apt-get install cmake
 --------------------------------------------------------------------------
-sudo apt-get install postgresql-server postgresql-contrib
-sudo postgresql-setup initdb
-sudo vi /var/lib/pgsql/data/pg_hba.conf
+sudo apt install postgresql postgresql-contrib
+//sudo postgresql-setup initdb
+//sudo vi /var/lib/pgsql/data/pg_hba.conf
+sudo vi /etc/postgresql/9.6/main/pg_hba.conf
 
 		pg_hba.conf excerpt (original)
 host    all             all             127.0.0.1/32            ident
@@ -55,34 +52,46 @@ host    all             all             ::1/128                 md5
 sudo systemctl start postgresql
 sudo systemctl enable postgresql
 sudo -i -u postgres
+
 ---------------------------------------------------------------------------
-sudo apt-get install  https://download.postgresql.org/pub/repos/apt-get/9.6/redhat/rhel-7-x86_64/pgdg-redhat96-9.6-3.noarch.rpm -y
-sudo apt-get install postgresql96 postgresql96-server postgresql96-contrib postgresql96-libs -y
-sudo /usr/pgsql-9.6/bin/postgresql96-setup initdb
-sudo systemctl enable postgresql-9.6.service
-sudo systemctl start postgresql-9.6.service
+cd ~
+git clone git@github.com:msoodb/angru.git
+cd angru
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release ../
+make
+--------------------------------------------------------------------------
+//sudo apt-get install  https://download.postgresql.org/pub/repos/apt-get/9.6/redhat/rhel-7-x86_64/pgdg-redhat96-9.6-3.noarch.rpm -y
+//sudo apt-get install postgresql96 postgresql96-server postgresql96-contrib postgresql96-libs -y
+//sudo /usr/pgsql-9.6/bin/postgresql96-setup initdb
+//sudo systemctl enable postgresql-9.6.service
+//sudo systemctl start postgresql-9.6.service
+---------------------------------------------------------------------------
 sudo -i -u postgres
----------------------------------------------------------------------------
 psql
 create user angru;
 alter user angru password '1235';
 alter user angru with superuser;
 create database angrudb;
-alter database angrudb owner to angru;
+//alter database angrudb owner to angru;
 grant ALL on DATABASE angrudb to angru;
 \q
 exit
-pg_restore -d angrudb -c ~/angru/database/angrudb/angrudb.dump
-//pg_dump angrudb -c -Ft -f ~/Projects/angru/database/angrudb/angrudb.dump 
+psql -f angru/database/angrudb.sql angrudb
+//pg_restore -d angrudb -c ~/angru/database/angrudb/angrudb.dump
+//pg_dump angrudb -c -Ft -f ~/Projects/angru/database/angrudb/angrudb.dump
+sudo -i -u postgres
+psql
+alter user angru with nosuperuser;
 --------------------------------------------------------------------------
 apt-get update
 sudo apt-get install openssl
+sudo apt install libssl-dev
 sudo apt-get install libboost-all-dev
 sudo apt-get install rapidjson-dev
-sudo apt-get install libpqxx-devel
-sudo apt-get install libvmime-dev
-sudo apt-get install cmake
-sudo apt-get install curl
+sudo apt-get install libpqxx-dev
+//sudo apt-get install libvmime-dev
 git clone git@github.com:oktal/pistache.git
 git pull
 vi common.h //change file uplaod size to 1024*1024*1024
@@ -92,16 +101,17 @@ cd build
 cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ..
 make
 sudo make install
-git clone git@github.com:arun11299/cpp-jwt.git
+//git clone git@github.com:arun11299/cpp-jwt.git
 --------------------------------------------------------------------------
 ....nginx
 sudo apt-get update
 sudo apt-get upgrade
-sudo lsof -i:80 // check if apache2 is installed
+sudo lsof -i:80 // check if apache2 is installed then sudo apt remove apache2
 sudo apt-get install nginx
 sudo systemctl restart nginx
 sudo systemctl start nginx
 -------------------------------------------------------------------------
+sudo apt install supervisor
 sudo supervisorctl // restart all instance of angru
 -------------------------------------------------------------------------
 HTTPS:
