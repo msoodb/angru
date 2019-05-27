@@ -110,9 +110,53 @@ sudo lsof -i:80 // check if apache2 is installed then sudo apt remove apache2
 sudo apt-get install nginx
 sudo systemctl restart nginx
 sudo systemctl start nginx
+
+ps -ef | grep nginx
+/usr/local/nginx/sbin/nginx -t //test nginx
+/etc/nginx/sites-available$ sudo vi default
+	upstream backend {
+   		server 127.0.0.1:9080; 
+   		server 127.0.0.1:9081;
+	   	server 127.0.0.1:9082;
+	}
+	server
+	{
+		listen 8592;
+		server_name ahrv;
+		location / {
+		proxy_pass "http://backend";
+		}
+	}
+sudo nginx -t
+sudo nginx -s reload
 -------------------------------------------------------------------------
 sudo apt install supervisor
+sudo touch /etc/supervisor/conf.d/angru_script.conf
+sudo vi /etc/supervisor/conf.d/angru_script.conf
+	[program:angru_script_1]
+	command=/home/angru/angru/build/src/angru 9080
+	autostart=true
+	autorestart=true
+	stderr_logfile=/var/log/angru.err.log
+	stdout_logfile=/var/log/angru.out.log
+
+	[program:angru_script_2]
+	command=/home/angru/angru/build/src/angru 9081
+	autostart=true
+	autorestart=true
+	stderr_logfile=/var/log/angru.err.log
+	stdout_logfile=/var/log/angru.out.log
+
+	[program:angru_script_3]
+	command=/home/angru/angru/build/src/angru 9082
+	autostart=true	
+	autorestart=true
+	stderr_logfile=/var/log/angru.err.log
+	stdout_logfile=/var/log/angru.out.log
+sudo supervisorctl reread
+sudo supervisorctl update
 sudo supervisorctl // restart all instance of angru
+// supervisorctl command: status, stop, start, restart All, quit
 -------------------------------------------------------------------------
 HTTPS:
 sudo apt-get install certbot python-certbot-nginx -t stretch-backports
