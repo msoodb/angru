@@ -50,7 +50,6 @@ void UserController::doLogin(const Pistache::Rest::Request& request,
                           + " AND password = '" + password_sha1 + "' "
                           + " AND status = 1 "
                           + " AND situation = 1";
-        std::cout << "query : " << query << '\n';
         pqxx::result R = angru::mvc::model::UserModel::GetUsers(1, LIMIT_COUNT, query);
       	if (R.size() == 1){
           std::string user_id = R[0][0].as<std::string>();
