@@ -24,7 +24,7 @@ sudo apt-get -y update
 sudo apt-get -y upgrade
 sudo apt-get clean all
 sudo apt-get install nano wget curl net-tools lsof bash-completion
-//ls -a if .ssh dose not 
+//ls -a if .ssh dose not
 //exist mkdir .ssh
 cd ~/.ssh
 ssh-keygen
@@ -43,7 +43,7 @@ sudo vi /etc/postgresql/9.6/main/pg_hba.conf
 		pg_hba.conf excerpt (original)
 host    all             all             127.0.0.1/32            ident
 host    all             all             ::1/128                 ident
-			
+
 		pg_hba.conf excerpt (updated)
 
 host    all             all             127.0.0.1/32            md5
@@ -94,7 +94,8 @@ sudo apt-get install libpqxx-dev
 //sudo apt-get install libvmime-dev
 git clone git@github.com:oktal/pistache.git
 git pull
-vi common.h //change file uplaod size to 1024*1024*1024
+//vi common.h //change file uplaod size to 1024*1024*1024
+vi config.h //static constexpr size_t DefaultMaxPayload = 1024 * 1024 * 1024;
 cd pistache
 mkdir build
 cd build
@@ -115,7 +116,7 @@ ps -ef | grep nginx
 /usr/local/nginx/sbin/nginx -t //test nginx
 /etc/nginx/sites-available$ sudo vi default
 	upstream backend {
-   		server 127.0.0.1:9080; 
+   		server 127.0.0.1:9080;
    		server 127.0.0.1:9081;
 	   	server 127.0.0.1:9082;
 	}
@@ -129,6 +130,13 @@ ps -ef | grep nginx
 	}
 sudo nginx -t
 sudo nginx -s reload
+
+/etc/nginx$ sudo vi nginx.conf
+http {
+    client_max_body_size 1024M;
+    //other lines...
+}
+sudo service nginx restart
 -------------------------------------------------------------------------
 sudo apt install supervisor
 sudo touch /etc/supervisor/conf.d/angru_script.conf
@@ -149,7 +157,7 @@ sudo vi /etc/supervisor/conf.d/angru_script.conf
 
 	[program:angru_script_3]
 	command=/home/angru/angru/build/src/angru 9082
-	autostart=true	
+	autostart=true
 	autorestart=true
 	stderr_logfile=/var/log/angru.err.log
 	stdout_logfile=/var/log/angru.out.log
@@ -161,9 +169,3 @@ sudo supervisorctl // restart all instance of angru
 HTTPS:
 sudo apt-get install certbot python-certbot-nginx -t stretch-backports
 sudo certbot --nginx
-
-
-
-
-
-
