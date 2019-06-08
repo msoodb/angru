@@ -236,7 +236,7 @@ std::string PublisherModel::AddPublisher(
 													situation, \
 													description	) VALUES (\
 												   DEFAULT, \
-												   $1, \
+												   (CASE WHEN $1 = '' THEN NULL ELSE $1 END)::uuid, \
 												   $2, \
 												   $3, \
 												   $4, \
@@ -301,7 +301,7 @@ void PublisherModel::UpdatePublisher(
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	C.prepare("update", "UPDATE publishers SET \
-													admin = $2, \
+													admin = (CASE WHEN $2 = '' THEN  NULL ELSE $2 END)::uuid, \
 													name = $3, \
 													title = $4, \
 													code = $5, \
