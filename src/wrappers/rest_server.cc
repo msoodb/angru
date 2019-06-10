@@ -305,8 +305,8 @@ void RestServer::HandleReady(const Pistache::Rest::Request&,
 
 void RestServer::Init(size_t thr) {
     auto opts = Pistache::Http::Endpoint::options()
-        .threads(thr)
-        .flags(Pistache::Tcp::Options::InstallSignalHandler);
+        .threads(thr);
+        //.flags(Pistache::Tcp::Options::InstallSignalHandler);
     httpEndpoint->init(opts);
     SetupRoutes();
 }
