@@ -1,6 +1,7 @@
 #include "tools/file_generator.h"
 
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <chrono>
 #include <experimental/filesystem>

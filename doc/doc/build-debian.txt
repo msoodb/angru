@@ -58,11 +58,6 @@ sudo -i -u postgres
 ---------------------------------------------------------------------------
 cd ~
 git clone git@github.com:msoodb/angru.git
-cd angru
-mkdir build
-cd build
-cmake -DCMAKE_BUILD_TYPE=Release ../
-make
 --------------------------------------------------------------------------
 //sudo apt-get install  https://download.postgresql.org/pub/repos/apt-get/9.6/redhat/rhel-7-x86_64/pgdg-redhat96-9.6-3.noarch.rpm -y
 //sudo apt-get install postgresql96 postgresql96-server postgresql96-contrib postgresql96-libs -y
@@ -87,18 +82,18 @@ sudo -i -u postgres
 psql
 alter user angru with nosuperuser;
 --------------------------------------------------------------------------
-apt-get update
-sudo apt-get install openssl
+sudo apt update
+sudo apt install openssl
 sudo apt install libssl-dev
-sudo apt-get install libboost-all-dev
-sudo apt-get install rapidjson-dev
-sudo apt-get install libpqxx-dev
-//sudo apt-get install libvmime-dev
+sudo apt install libboost-all-dev
+sudo apt install rapidjson-dev
+sudo apt install libpqxx-dev
+sudo apt install libvmime-dev
 git clone git@github.com:oktal/pistache.git
-git pull
+cd pistache/include/pistache/
 //vi common.h //change file uplaod size to 1024*1024*1024
 vi config.h //static constexpr size_t DefaultMaxPayload = 1024 * 1024 * 1024;
-cd pistache
+cd ~/pistache
 mkdir build
 cd build
 cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ..
@@ -115,7 +110,7 @@ sudo systemctl restart nginx
 sudo systemctl start nginx
 
 ps -ef | grep nginx
-/usr/local/nginx/sbin/nginx -t //test nginx
+sudo /usr/local/nginx/sbin/nginx -t //test nginx
 /etc/nginx/sites-available$ sudo vi default
 	upstream backend {
    		server 127.0.0.1:9080;
@@ -165,6 +160,13 @@ sudo vi /etc/supervisor/conf.d/angru_script.conf
 	stdout_logfile=/var/log/angru.out.log
 sudo supervisorctl reread
 sudo supervisorctl update
+
+cd ~/angru
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release ../
+make
+
 sudo supervisorctl // restart all instance of angru
 // supervisorctl command: status, stop, start, restart All, quit
 -------------------------------------------------------------------------
