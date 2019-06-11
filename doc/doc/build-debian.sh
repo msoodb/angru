@@ -155,6 +155,8 @@ sudo supervisorctl update
 
 cd ~/angru
 mkdir build
+mkdir avatars
+mkdir files
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release ../
 make
