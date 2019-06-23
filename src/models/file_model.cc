@@ -21,9 +21,6 @@ namespace model{
 FileModel::FileModel(){}
 FileModel::~FileModel(){}
 
-pqxx::result FileModel::GetFile(int id){
-
-}
 std::string FileModel::AddFile(const std::string & filename, const std::string & data,
       size_t offset, size_t length)
 {

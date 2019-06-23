@@ -18,7 +18,6 @@ class FileModel
 public:
 	FileModel();
 	~FileModel();
-  static pqxx::result GetFile(int);
 	static std::string AddFile(
 														const std::string & filename,
 														const std::string & data,
