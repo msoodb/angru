@@ -45,9 +45,7 @@ bool FileModel::DeleteFile(const std::string & path){
   if( result != 0 ){
     return false;
   }
-  else{
-    return true;
-  }
+  return true;
 }
 
 
