@@ -20,12 +20,16 @@ namespace angru{
 namespace mvc{
 namespace model{
 
+std::string AvatarModel::execute_path="";
+
 AvatarModel::AvatarModel(){}
 AvatarModel::~AvatarModel(){}
 
+void AvatarModel::Setup(std::string e_path){
+  execute_path = e_path;
+}
 std::string AvatarModel::GetAvatar(std::string & user_id){
-  std::string path= "/home/angru/angru/avatars/";
-  // std::string path= "/home/masoud/Projects/angru/avatars/";
+  std::string path = execute_path + "/avatars/";
   DIR* dirp = opendir(path.c_str());
   struct dirent * dp;
   while ((dp = readdir(dirp)) != NULL) {
@@ -40,9 +44,7 @@ std::string AvatarModel::GetAvatar(std::string & user_id){
 }
 std::string AvatarModel::AddAvatar(const std::string & user_id, const std::string & filename, const std::string & data,
       size_t offset, size_t length){
-
-  std::string path= "/home/angru/angru/avatars/";
-  // std::string path= "/home/masoud/Projects/angru/avatars/";
+  std::string path =  execute_path + "/avatars/";
   DIR* dirp = opendir(path.c_str());
   struct dirent * dp;
   while ((dp = readdir(dirp)) != NULL) {
@@ -52,8 +54,7 @@ std::string AvatarModel::AddAvatar(const std::string & user_id, const std::strin
       DeleteAvatar(path+fn);
     }
   }
-  path= "/home/angru/angru/avatars/" + user_id + filename;
-  // path= "/home/masoud/Projects/angru/avatars/" + user_id + filename;
+  path =  execute_path + "/avatars/" + user_id + filename;
   std::ofstream out(path);
   out << data.substr(offset, length);
   out.close();

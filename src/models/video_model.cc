@@ -159,7 +159,7 @@ pqxx::result VideoModel::GetVideo(std::string id){
 											main.content , \
 											main.name , \
 											main.title , \
-											main.path , \
+											CONCAT('https://cdn.zeus.cloudns.org/', main.path) , \
 											main.size , \
 											(select username from users where id = main.created_by) as  created_by , \
 											(select username from users where id = main.updated_by) as  updated_by , \

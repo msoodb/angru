@@ -24,7 +24,7 @@ private:
 	static std::string connection_str;
 public:
 	Postgresql();
-	static void Setup();
+	static void Setup(std::string path);
 	static std::string connection_string();
 };
 

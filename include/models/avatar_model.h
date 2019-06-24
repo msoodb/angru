@@ -15,9 +15,12 @@ namespace model{
 
 class AvatarModel
 {
+private:
+	static std::string execute_path;
 public:
 	AvatarModel();
 	~AvatarModel();
+	static void Setup(std::string e_path);
   static std::string GetAvatar(std::string & user_id);
 	static std::string AddAvatar(
 																const std::string & user_id,

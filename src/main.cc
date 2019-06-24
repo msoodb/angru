@@ -36,6 +36,8 @@
 #include "structures/async_structure.h"
 #include "tools/file_generator_factory.h"
 #include "tools/data_generator_factory.h"
+#include "models/avatar_model.h"
+
 
 
 int main(int argc, char const *argv[])
@@ -43,21 +45,31 @@ int main(int argc, char const *argv[])
 	std::cout<<"angru version .011"<<std::endl;
 	try
 	{
-		int thr = 2;
+		std::string execute_path= "/home/masoud/Projects/angru";
 		int port = 9080;
+		int thr = 2;
+
     if (argc >= 2) {
-        port = std::stol(argv[1]);
-        if (argc == 3){
-					thr = std::stol(argv[2]);
+			  execute_path = argv[1];
+				if(argc >= 3){
+					port = std::stol(argv[2]);
+				}
+        if (argc == 4){
+					thr = std::stol(argv[3]);
 				}
     }
 		LOG_INFO << "setup logfile using boost...";
 		LOG_INFO << "setup database connection_string using pqxx...";
-		angru::wrapper::Postgresql::Setup();
+		angru::wrapper::Postgresql::Setup(execute_path);
 		LOG_INFO << "setup datetime and calendar using boost...";
 		angru::system::localization::Setup();
+		LOG_INFO << "setup AvatarModel path ...";
+		angru::mvc::model::AvatarModel::Setup(execute_path);
 		LOG_INFO << "setup RestServer using pistache...";
 		angru::wrapper::RestServer::Setup(port, thr);
+
+
+
 		LOG_INFO << "setup HttpClient using pistache...";
 		//angru::wrapper::HttpClient::Setup();
 		LOG_INFO << "generate files using file_generator_factory...";
