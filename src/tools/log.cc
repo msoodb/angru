@@ -16,6 +16,8 @@
 #include <boost/log/utility/setup/common_attributes.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/shared_ptr.hpp>
+#include "tools/global.h"
+
 
 namespace logging = boost::log;
 namespace src = boost::log::sources;
@@ -33,7 +35,7 @@ BOOST_LOG_GLOBAL_LOGGER_INIT(logger, src::severity_logger_mt) {
 
     // add attributes
     logger.add_attribute("LineID", attrs::counter<unsigned int>(1));
-    logger.add_attribute("TimeStamp", attrs::local_clock()); 
+    logger.add_attribute("TimeStamp", attrs::local_clock());
 
     // get core
     boost::shared_ptr< logging::core > core = logging::core::get();
@@ -43,7 +45,7 @@ BOOST_LOG_GLOBAL_LOGGER_INIT(logger, src::severity_logger_mt) {
 
     // add a text and file sink
     boost::shared_ptr<file_sink> backend = boost::make_shared< file_sink >(
-            keywords::file_name = LOGFILE,
+            keywords::file_name = angru::tools::global::m_execute_path + "/log/file_%5N.log",
             keywords::open_mode = std::ios_base::app|std::ios_base::out,
             keywords::rotation_size = 5 * 1024 * 1024,
             keywords::auto_flush = true,

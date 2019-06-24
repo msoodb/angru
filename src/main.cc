@@ -36,21 +36,17 @@
 #include "structures/async_structure.h"
 #include "tools/file_generator_factory.h"
 #include "tools/data_generator_factory.h"
-#include "models/avatar_model.h"
-
-
+#include "tools/global.h"
 
 int main(int argc, char const *argv[])
 {
 	std::cout<<"angru version .011"<<std::endl;
 	try
 	{
-		std::string execute_path= "/home/masoud/Projects/angru";
 		int port = 9080;
 		int thr = 2;
-
     if (argc >= 2) {
-			  execute_path = argv[1];
+			  angru::tools::global::m_execute_path = argv[1];
 				if(argc >= 3){
 					port = std::stol(argv[2]);
 				}
@@ -60,15 +56,11 @@ int main(int argc, char const *argv[])
     }
 		LOG_INFO << "setup logfile using boost...";
 		LOG_INFO << "setup database connection_string using pqxx...";
-		angru::wrapper::Postgresql::Setup(execute_path);
+		angru::wrapper::Postgresql::Setup();
 		LOG_INFO << "setup datetime and calendar using boost...";
 		angru::system::localization::Setup();
-		LOG_INFO << "setup AvatarModel path ...";
-		angru::mvc::model::AvatarModel::Setup(execute_path);
 		LOG_INFO << "setup RestServer using pistache...";
 		angru::wrapper::RestServer::Setup(port, thr);
-
-
 
 		LOG_INFO << "setup HttpClient using pistache...";
 		//angru::wrapper::HttpClient::Setup();

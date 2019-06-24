@@ -7,7 +7,7 @@
 #include <boost/property_tree/ptree.hpp>
 #include "wrappers/json_reader.h"
 #include "tools/system.h"
-
+#include "tools/global.h"
 
 
  namespace angru{
@@ -23,9 +23,9 @@ std::string Postgresql::connection_str="";
 Postgresql::Postgresql(){
 }
 
-void Postgresql::Setup(std::string path)
+void Postgresql::Setup()
 {
-  JsonReader config_reader(path + "/config/config.json");
+  JsonReader config_reader(angru::tools::global::m_execute_path + "/config/config.json");
 	boost::property_tree::ptree config = config_reader.GetData();
 	dbname = config.get<std::string>("connection_string.dbname");
 	user = config.get<std::string>("connection_string.user");
