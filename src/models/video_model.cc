@@ -10,6 +10,7 @@
 #include "tools/log.h"
 #include "wrappers/postgresql.h"
 #include "wrappers/csv_writer.h"
+#include "tools/global.h"
 
 namespace angru{
 namespace mvc{
@@ -159,7 +160,8 @@ pqxx::result VideoModel::GetVideo(std::string id){
 											main.content , \
 											main.name , \
 											main.title , \
-											CONCAT('https://cdn.zeus.cloudns.org/', main.path) , \
+											main.path , \
+											main.path as url , \
 											main.size , \
 											(select username from users where id = main.created_by) as  created_by , \
 											(select username from users where id = main.updated_by) as  updated_by , \
@@ -218,18 +220,19 @@ boost::property_tree::ptree VideoModel::GetVideoJson(std::string id){
 		video_node.put("name", R[0][2]);
 		video_node.put("title", R[0][3]);
 		video_node.put("path", R[0][4]);
-		video_node.put("size", R[0][5]);
-		video_node.put("created_by", R[0][6]);
-		video_node.put("updated_by", R[0][7]);
-		video_node.put("created_at", R[0][8]);
-		video_node.put("updated_at", R[0][9]);
-		video_node.put("details", R[0][10]);
-		video_node.put("status", R[0][11]);
-		video_node.put("situation", R[0][12]);
-		video_node.put("description", R[0][13]);
-		video_node.put("service", R[0][14]);
-		video_node.put("channel", R[0][15]);
-		video_node.put("publisher", R[0][16]);
+		video_node.put("url", angru::tools::global::m_cdn + R[0][5].as<std::string>());
+		video_node.put("size", R[0][6]);
+		video_node.put("created_by", R[0][7]);
+		video_node.put("updated_by", R[0][8]);
+		video_node.put("created_at", R[0][9]);
+		video_node.put("updated_at", R[0][10]);
+		video_node.put("details", R[0][11]);
+		video_node.put("status", R[0][12]);
+		video_node.put("situation", R[0][13]);
+		video_node.put("description", R[0][14]);
+		video_node.put("service", R[0][15]);
+		video_node.put("channel", R[0][16]);
+		video_node.put("publisher", R[0][17]);
 	}
 	return video_node;
 }

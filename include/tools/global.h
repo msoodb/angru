@@ -8,6 +8,7 @@ namespace tools{
 namespace global{
 
 extern std::string m_execute_path;
+extern std::string m_cdn;
 
 } // namespace global
 } // namespace tools
