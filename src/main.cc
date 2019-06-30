@@ -43,17 +43,30 @@ int main(int argc, char const *argv[])
 	std::cout<<"angru version .011"<<std::endl;
 	try
 	{
+		angru::tools::global::m_execute_path = "/home/masoud/Projects/angru";
+	  angru::tools::global::m_cdn = "https://cdn.zeus.cloudns.org/";
 		int port = 9080;
 		int thr = 2;
+
+		// arg[0] : angru
+		// arg[1] : path
+		// arg[2] : cdn
+		// arg[0] : port
+		// arg[0] : thread
+
     if (argc >= 2) {
-			  angru::tools::global::m_execute_path = argv[1];
-				if(argc >= 3){
-					port = std::stol(argv[2]);
+		  angru::tools::global::m_execute_path = argv[1];
+			if(argc >= 3){
+				angru::tools::global::m_cdn = argv[2];
+				if(argc >= 4){
+					port = std::stol(argv[3]);
+					if (argc >= 5){
+						thr = std::stol(argv[4]);
+					}
 				}
-        if (argc == 4){
-					thr = std::stol(argv[3]);
-				}
+			}
     }
+
 		LOG_INFO << "setup logfile using boost...";
 		LOG_INFO << "setup database connection_string using pqxx...";
 		angru::wrapper::Postgresql::Setup();

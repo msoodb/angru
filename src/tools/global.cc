@@ -6,8 +6,8 @@ namespace angru{
 namespace tools{
 namespace global{
 
-  std::string m_execute_path = "/home/masoud/Projects/angru";
-  std::string m_cdn = "https://cdn.zeus.cloudns.org/";
+  std::string m_execute_path = "";
+  std::string m_cdn = "";
 
 } // namespace global
 } // namespace tools

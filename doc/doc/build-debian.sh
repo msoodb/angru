@@ -165,6 +165,15 @@ sudo supervisorctl # restart all instance of angru
 # supervisorctl command: status, stop, start, restart All, quit
 #--------------------------------------------------------------------------#
 HTTPS:
-sudo apt-get install certbot python-certbot-nginx -t stretch-backports
+sudo apt-get install certbot python-certbot-nginx #-t stretch-backports
 sudo certbot --nginx
 #--------------------------------------------------------------------------#
+cdn
+server
+{
+	server_name cdn.zeus.cloudns.org;
+	root /home/angru/angru/files;
+	location / {
+		root /home/angru/angru/files;
+	}
+}
