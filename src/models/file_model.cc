@@ -13,6 +13,7 @@
 #include "tools/log.h"
 #include "wrappers/postgresql.h"
 #include "wrappers/csv_writer.h"
+#include "tools/global.h"
 
 namespace angru{
 namespace mvc{
@@ -29,15 +30,15 @@ std::string FileModel::AddFile(const std::string & filename, const std::string &
   std::string name = std::to_string(ms.count()) + filename;
   //std::string path = "/home/angru/angru/files/" + name;
   //std::string path = "/home/masoud/Projects/angru/files/" + name;
-  std::string path = name;
+  std::string path = angru::tools::global::m_execute_path + "/files/" + name;
   std::ofstream out(path);
   out << data.substr(offset,length);
   out.close();
-  return path;
+  return name;
 }
 
 bool FileModel::DeleteFile(const std::string & path){
-  std::string deleted_path = path + ".deleted";
+  std::string deleted_path = angru::tools::global::m_execute_path + "/files/" + path + ".deleted";
   int result = std::rename(path.c_str(), deleted_path.c_str());
   if( result != 0 ){
     return false;

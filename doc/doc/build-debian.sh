@@ -105,16 +105,34 @@ ps -ef | grep nginx
 sudo /usr/local/nginx/sbin/nginx -t # test nginx
 /etc/nginx/sites-available$ sudo vi default
 	upstream backend {
-   		server 127.0.0.1:9080;
-   		server 127.0.0.1:9081;
-	   	server 127.0.0.1:9082;
+		server 127.0.0.1:9080;
+		server 127.0.0.1:9081;
+		server 127.0.0.1:9082;
 	}
 	server
 	{
-		listen 8592;
-		server_name ahrv;
+		listen 80;
+		server_name api.zeus.cloudns.org;
 		location / {
-		proxy_pass "http://backend";
+			proxy_pass "http://backend";
+		}
+	}
+	server
+	{
+		server_name cdn.zeus.cloudns.org;
+		root /home/angru/angru/files;
+		location / {
+			root /home/angru/angru/files;
+		}
+	}
+	server
+	{
+		server_name zeus.cloudns.org;
+		root /home/angru/angrui/dist;
+		index   index.html index.htm;
+		location / {
+			root /home/angru/angrui/dist;
+			try_files $uri /index.html;
 		}
 	}
 sudo nginx -t
@@ -131,21 +149,21 @@ sudo apt install supervisor
 sudo touch /etc/supervisor/conf.d/angru_script.conf
 sudo vi /etc/supervisor/conf.d/angru_script.conf
 	[program:angru_script_1]
-	command=/home/angru/angru/build/src/angru 9080
+	command=/home/angru/angru/build/src/angru /home/angru/angru https://cdn.zeus.cloudns.org/ 9080
 	autostart=true
 	autorestart=true
 	stderr_logfile=/var/log/angru.err.log
 	stdout_logfile=/var/log/angru.out.log
 
 	[program:angru_script_2]
-	command=/home/angru/angru/build/src/angru 9081
+	command=/home/angru/angru/build/src/angru /home/angru/angru https://cdn.zeus.cloudns.org/ 9081
 	autostart=true
 	autorestart=true
 	stderr_logfile=/var/log/angru.err.log
 	stdout_logfile=/var/log/angru.out.log
 
 	[program:angru_script_3]
-	command=/home/angru/angru/build/src/angru 9082
+	command=/home/angru/angru/build/src/angru /home/angru/angru https://cdn.zeus.cloudns.org/ 9082
 	autostart=true
 	autorestart=true
 	stderr_logfile=/var/log/angru.err.log
