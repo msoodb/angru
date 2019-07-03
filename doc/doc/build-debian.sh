@@ -104,37 +104,37 @@ sudo systemctl start nginx
 ps -ef | grep nginx
 sudo /usr/local/nginx/sbin/nginx -t # test nginx
 /etc/nginx/sites-available$ sudo vi default
-	upstream backend {
-		server 127.0.0.1:9080;
-		server 127.0.0.1:9081;
-		server 127.0.0.1:9082;
-	}
-	server
-	{
-		listen 80;
-		server_name api.zeus.cloudns.org;
-		location / {
-			proxy_pass "http://backend";
-		}
-	}
-	server
-	{
-		server_name cdn.zeus.cloudns.org;
-		root /home/angru/angru/files;
-		location / {
+upstream backend {
+			server 127.0.0.1:9080;
+			server 127.0.0.1:9081;
+			server 127.0.0.1:9082;
+}
+server
+{
+			server_name api.mibinim.com;
+			location / {
+							proxy_pass "http://backend";
+			}
+}
+server
+{
+			server_name cdn.mibinim.com;
 			root /home/angru/angru/files;
-		}
-	}
-	server
-	{
-		server_name zeus.cloudns.org;
-		root /home/angru/angrui/dist;
-		index   index.html index.htm;
-		location / {
+			location / {
+							root /home/angru/angru/files;
+			}
+}
+server
+{
+			server_name panel.mibinim.com;
 			root /home/angru/angrui/dist;
-			try_files $uri /index.html;
-		}
-	}
+			index   index.html index.htm;
+			location / {
+							root /home/angru/angrui/dist;
+							try_files $uri /index.html;
+			}
+}
+
 sudo nginx -t
 sudo nginx -s reload
 
@@ -149,21 +149,21 @@ sudo apt install supervisor
 sudo touch /etc/supervisor/conf.d/angru_script.conf
 sudo vi /etc/supervisor/conf.d/angru_script.conf
 	[program:angru_script_1]
-	command=/home/angru/angru/build/src/angru /home/angru/angru https://cdn.zeus.cloudns.org/ 9080
+	command=/home/angru/angru/build/src/angru /home/angru/angru https://cdn.mibinim.com/ 9080
 	autostart=true
 	autorestart=true
 	stderr_logfile=/var/log/angru.err.log
 	stdout_logfile=/var/log/angru.out.log
 
 	[program:angru_script_2]
-	command=/home/angru/angru/build/src/angru /home/angru/angru https://cdn.zeus.cloudns.org/ 9081
+	command=/home/angru/angru/build/src/angru /home/angru/angru https://cdn.mibinim.com/ 9081
 	autostart=true
 	autorestart=true
 	stderr_logfile=/var/log/angru.err.log
 	stdout_logfile=/var/log/angru.out.log
 
 	[program:angru_script_3]
-	command=/home/angru/angru/build/src/angru /home/angru/angru https://cdn.zeus.cloudns.org/ 9082
+	command=/home/angru/angru/build/src/angru /home/angru/angru https://cdn.mibinim.com/ 9082
 	autostart=true
 	autorestart=true
 	stderr_logfile=/var/log/angru.err.log
@@ -186,12 +186,3 @@ HTTPS:
 sudo apt-get install certbot python-certbot-nginx #-t stretch-backports
 sudo certbot --nginx
 #--------------------------------------------------------------------------#
-cdn
-server
-{
-	server_name cdn.zeus.cloudns.org;
-	root /home/angru/angru/files;
-	location / {
-		root /home/angru/angru/files;
-	}
-}
