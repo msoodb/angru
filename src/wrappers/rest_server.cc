@@ -107,6 +107,11 @@ void RestServer::SetupRoutes() {
   Get(router, "/services/:service_id/channels/:channel_id/tags_channels", bind(&TagsChannelController::doGetTagsChannels));
 	Delete(router, "/services/:service_id/channels/:channel_id/tags_channels/:id", bind(&TagsChannelController::doDeleteTagsChannel));
   Post(router, "/services/:service_id/channels/:channel_id/tags_channels", bind(&TagsChannelController::doAddTagsChannel));
+  Get(router, "/services/:service_id/channels/:channel_id/contents", bind(&ContentController::doGetContentsByChannel));
+  Get(router, "/services/:service_id/channels/:channel_id/contents/:id", bind(&ContentController::doGetContent));
+  Delete(router, "/services/:service_id/channels/:channel_id/contents/:id", bind(&ContentController::doDeleteContent));
+  Post(router, "/services/:service_id/channels/:channel_id/contents", bind(&ContentController::doAddContent));
+  Put(router, "/services/:service_id/channels/:channel_id/contents/:id", bind(&ContentController::doUpdateContent));
   Get(router, "/services/:service_id/playlists", bind(&PlaylistController::doGetPlaylists));
 	Get(router, "/services/:service_id/playlists/:id", bind(&PlaylistController::doGetPlaylist));
 	Delete(router, "/services/:service_id/playlists/:id", bind(&PlaylistController::doDeletePlaylist));
@@ -115,7 +120,7 @@ void RestServer::SetupRoutes() {
   Get(router, "/services/:service_id/playlists/:playlist_id/tags_playlists", bind(&TagsPlaylistController::doGetTagsPlaylists));
 	Delete(router, "/services/:service_id/playlists/:playlist_id/tags_playlists/:id", bind(&TagsPlaylistController::doDeleteTagsPlaylist));
   Post(router, "/services/:service_id/playlists/:playlist_id/tags_playlists", bind(&TagsPlaylistController::doAddTagsPlaylist));
-  Get(router, "/services/:service_id/contents", bind(&ContentController::doGetContents));
+  Get(router, "/services/:service_id/contents", bind(&ContentController::doGetContentsByService));
   Get(router, "/services/:service_id/contents/:id", bind(&ContentController::doGetContent));
   Delete(router, "/services/:service_id/contents/:id", bind(&ContentController::doDeleteContent));
   Post(router, "/services/:service_id/contents", bind(&ContentController::doAddContent));

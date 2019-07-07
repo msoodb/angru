@@ -21,6 +21,8 @@ public:
 	ContentController();
 	~ContentController();
 	static void	doGetContents(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+	static void	doGetContentsByChannel(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
+	static void	doGetContentsByService(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 	static void	doGetContent(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
   static void	doDeleteContent(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);
 	static void	doAddContent(const Pistache::Rest::Request&, Pistache::Http::ResponseWriter);

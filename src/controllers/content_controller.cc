@@ -45,6 +45,62 @@ void ContentController::doGetContents(const Pistache::Rest::Request& request,
     if(query.has("filter")) {
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
+    }    
+    std::string order;
+    if(query.has("order")) {
+      auto value = query.get("order").get();
+      order = angru::security::cryptography::decode_base64(value);
+    }
+    boost::property_tree::ptree contents = angru::mvc::model::ContentModel::GetContentsJson(page, limit, filter, order);
+    std::ostringstream oss;
+    boost::property_tree::write_json(oss, contents);
+
+    std::string inifile_text = oss.str();
+    if (inifile_text.empty()) {
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Contents not found.\"}");
+    } else {
+      response.send(Pistache::Http::Code::Ok, inifile_text);
+    }
+}
+
+void ContentController::doGetContentsByChannel(const Pistache::Rest::Request& request,
+  Pistache::Http::ResponseWriter response) {
+    angru::security::authorization::CORS(request,response);
+    angru::security::authorization::ContentTypeJSONCheck(request,response);
+    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "contents", GET_ITEMS);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
+    std::string channel_id = "";
+    if (request.hasParam(":channel_id")) {
+        auto value = request.param(":channel_id");
+        channel_id = value.as<std::string>();
+    }
+    else{
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Contents not found.\"}");
+      return;
+    }
+    int page = 1;
+    std::string filter;
+    auto query = request.query();
+    if(query.has("page")) {
+      auto value = query.get("page").get();
+      page = std::stoi(value);
+    }
+    int limit = LIMIT_COUNT;
+    if(query.has("limit")) {
+      auto value = query.get("limit").get();
+      limit = std::stoi(value);
+    }
+    if(query.has("filter")) {
+      auto value = query.get("filter").get();
+      filter = angru::security::cryptography::decode_base64(value);
+      filter = filter + " AND channel = '" + channel_id + "'";
+    }
+    else{
+      filter = " channel = '" + channel_id + "'";
     }
     std::string order;
     if(query.has("order")) {
@@ -57,7 +113,63 @@ void ContentController::doGetContents(const Pistache::Rest::Request& request,
 
     std::string inifile_text = oss.str();
     if (inifile_text.empty()) {
-      response.send(Pistache::Http::Code::Not_Found, "Contents not found.");
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Contents not found.\"}");
+    } else {
+      response.send(Pistache::Http::Code::Ok, inifile_text);
+    }
+}
+
+void ContentController::doGetContentsByService(const Pistache::Rest::Request& request,
+  Pistache::Http::ResponseWriter response) {
+    angru::security::authorization::CORS(request,response);
+    angru::security::authorization::ContentTypeJSONCheck(request,response);
+    std::string user_id = angru::security::authorization::AuthenticationCheck(request,response);
+    bool authorized = angru::mvc::model::PrivilegeModel::AuthorizationCheck(user_id, "contents", GET_ITEMS);
+    if(!authorized){
+      response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
+      return;
+    }
+    std::string service_id = "";
+    if (request.hasParam(":service_id")) {
+        auto value = request.param(":service_id");
+        service_id = value.as<std::string>();
+    }
+    else{
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Contents not found.\"}");
+      return;
+    }
+    int page = 1;
+    std::string filter;
+    auto query = request.query();
+    if(query.has("page")) {
+      auto value = query.get("page").get();
+      page = std::stoi(value);
+    }
+    int limit = LIMIT_COUNT;
+    if(query.has("limit")) {
+      auto value = query.get("limit").get();
+      limit = std::stoi(value);
+    }
+    if(query.has("filter")) {
+      auto value = query.get("filter").get();
+      filter = angru::security::cryptography::decode_base64(value);
+      filter = filter + " AND service = '" + service_id + "'";
+    }
+    else{
+      filter = " service = '" + service_id + "'";
+    }
+    std::string order;
+    if(query.has("order")) {
+      auto value = query.get("order").get();
+      order = angru::security::cryptography::decode_base64(value);
+    }
+    boost::property_tree::ptree contents = angru::mvc::model::ContentModel::GetContentsJson(page, limit, filter, order);
+    std::ostringstream oss;
+    boost::property_tree::write_json(oss, contents);
+
+    std::string inifile_text = oss.str();
+    if (inifile_text.empty()) {
+      response.send(Pistache::Http::Code::Not_Found, "{\"message\":\"Contents not found.\"}");
     } else {
       response.send(Pistache::Http::Code::Ok, inifile_text);
     }
