@@ -19,6 +19,7 @@ namespace model{
 VideoModel::VideoModel(){}
 VideoModel::~VideoModel(){}
 
+
 pqxx::result VideoModel::GetVideos(int page, int limit, std::string query, std::string order){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
@@ -89,7 +90,9 @@ int VideoModel::GetVideosCount(std::string query){
 	}
 	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
-	std::string complete_query = "SELECT count(id) FROM videos where deleted_at is NULL ";
+	std::string complete_query = "SELECT count(main.id) \
+																FROM videos AS main join contents on main.content = contents.id\
+																where main.deleted_at is NULL ";
 	if(!query.empty())
 	{
 		complete_query += " AND ";

@@ -31,9 +31,19 @@ void VideoController::doGetVideos(const Pistache::Rest::Request& request,
       response.send(Pistache::Http::Code::Forbidden, "{\"message\":\"Forbidden request.\"}");
       return;
     }
-    int page = 1;
+    std::string channel_id = "";
+    if (request.hasParam(":channel_id")) {
+        auto value = request.param(":channel_id");
+        channel_id = value.as<std::string>();
+    }
+    std::string service_id = "";
+    if (request.hasParam(":service_id")) {
+        auto value = request.param(":service_id");
+        service_id = value.as<std::string>();
+    }
     std::string filter;
     auto query = request.query();
+    int page = 1;
     if(query.has("page")) {
       auto value = query.get("page").get();
       page = std::stoi(value);
@@ -46,6 +56,20 @@ void VideoController::doGetVideos(const Pistache::Rest::Request& request,
     if(query.has("filter")) {
       auto value = query.get("filter").get();
       filter = angru::security::cryptography::decode_base64(value);
+      if(channel_id != ""){
+        filter = filter + " AND contents.channel = '" + channel_id + "'";
+      }
+      if(service_id != ""){
+        filter = filter + " AND contents.service = '" + service_id + "'";
+      }
+    }
+    else{
+      if(channel_id != ""){
+        filter = " contents.channel = '" + channel_id + "'";
+      }
+      if(service_id != ""){
+        filter = " contents.service = '" + service_id + "'";
+      }
     }
     std::string order;
     if(query.has("order")) {

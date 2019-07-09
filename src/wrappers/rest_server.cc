@@ -112,6 +112,11 @@ void RestServer::SetupRoutes() {
   Delete(router, "/services/:service_id/channels/:channel_id/contents/:id", bind(&ContentController::doDeleteContent));
   Post(router, "/services/:service_id/channels/:channel_id/contents", bind(&ContentController::doAddContent));
   Put(router, "/services/:service_id/channels/:channel_id/contents/:id", bind(&ContentController::doUpdateContent));
+  Get(router, "/services/:service_id/channels/:channel_id/videos", bind(&VideoController::doGetVideos));
+	Get(router, "/services/:service_id/channels/:channel_id/videos/:id", bind(&VideoController::doGetVideo));
+	Delete(router, "/services/:service_id/channels/:channel_id/videos/:id", bind(&VideoController::doDeleteVideo));
+  Post(router, "/services/:service_id/channels/:channel_id/videos", bind(&VideoController::doAddVideo));
+	Put(router, "/services/:service_id/channels/:channel_id/videos/:id", bind(&VideoController::doUpdateVideo));
   Get(router, "/services/:service_id/playlists", bind(&PlaylistController::doGetPlaylists));
 	Get(router, "/services/:service_id/playlists/:id", bind(&PlaylistController::doGetPlaylist));
 	Delete(router, "/services/:service_id/playlists/:id", bind(&PlaylistController::doDeletePlaylist));
@@ -128,6 +133,11 @@ void RestServer::SetupRoutes() {
   Get(router, "/services/:service_id/contents/:content_id/tags_contents", bind(&TagsContentController::doGetTagsContents));
   Delete(router, "/services/:service_id/contents/:content_id/tags_contents/:id", bind(&TagsContentController::doDeleteTagsContent));
   Post(router, "/services/:service_id/contents/:content_id/tags_contents", bind(&TagsContentController::doAddTagsContent));
+  Get(router, "/services/:service_id/videos", bind(&VideoController::doGetVideos));
+	Get(router, "/services/:service_id/videos/:id", bind(&VideoController::doGetVideo));
+	Delete(router, "/services/:service_id/videos/:id", bind(&VideoController::doDeleteVideo));
+  Post(router, "/services/:service_id/videos", bind(&VideoController::doAddVideo));
+	Put(router, "/services/:service_id/videos/:id", bind(&VideoController::doUpdateVideo));
 
   Get(router, "/products", bind(&ProductController::doGetProducts));
   Get(router, "/products/:id", bind(&ProductController::doGetProduct));
