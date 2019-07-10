@@ -21,16 +21,13 @@ ProductDocumentModel::~ProductDocumentModel(){}
 pqxx::result ProductDocumentModel::GetProductDocuments(int page, int limit, std::string query, std::string order){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
-	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	std::string complete_query = "SELECT \
 									      				id , \
@@ -64,16 +61,13 @@ pqxx::result ProductDocumentModel::GetProductDocuments(int page, int limit, std:
 int ProductDocumentModel::GetProductDocumentsCount(std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
-	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	std::string complete_query = "SELECT count(id) FROM product_documents where deleted_at is NULL ";
 	if(!query.empty())
@@ -125,16 +119,13 @@ boost::property_tree::ptree ProductDocumentModel::GetProductDocumentsJson(int pa
 pqxx::result ProductDocumentModel::GetProductDocument(int id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
-	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
   C.prepare("find", "SELECT \
 									      				id , \
@@ -187,16 +178,13 @@ std::string ProductDocumentModel::AddProductDocument(
 													std::string	description){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
-	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	C.prepare("insert", "INSERT INTO product_documents( \
 													id, \
@@ -258,16 +246,13 @@ void ProductDocumentModel::UpdateProductDocument(
 													std::string	description ){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
-	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	C.prepare("update", "UPDATE product_documents SET \
 													product_id = $2, \
@@ -298,16 +283,13 @@ void ProductDocumentModel::UpdateProductDocument(
 void ProductDocumentModel::DeleteProductDocument(int id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
-	 } catch (const angru::system::exception::error &e) {
+	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
-	 }
-	 LOG_INFO << "Connected to database: " << C.dbname();
+	}
 	 pqxx::work W(C);
 	 C.prepare("update", "UPDATE product_documents SET \
 												deleted_at = now()  \

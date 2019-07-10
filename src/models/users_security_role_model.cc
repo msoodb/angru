@@ -21,16 +21,13 @@ UsersSecurityRoleModel::~UsersSecurityRoleModel(){}
 pqxx::result UsersSecurityRoleModel::GetUsersSecurityRoles(int page, int limit, std::string query, std::string order){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
-	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	std::string complete_query = "SELECT \
 									      				id , \
@@ -67,16 +64,13 @@ pqxx::result UsersSecurityRoleModel::GetUsersSecurityRoles(int page, int limit, 
 int UsersSecurityRoleModel::GetUsersSecurityRolesCount(std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
-	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	std::string complete_query = "SELECT count(id) FROM users_security_roles where deleted_at is NULL ";
 	if(!query.empty())
@@ -126,16 +120,13 @@ boost::property_tree::ptree UsersSecurityRoleModel::GetUsersSecurityRolesJson(in
 pqxx::result UsersSecurityRoleModel::GetUsersSecurityRole(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
-	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
   C.prepare("find", "SELECT \
 									      				id , \
@@ -181,16 +172,13 @@ std::string UsersSecurityRoleModel::AddUsersSecurityRole(
 													std::string	description){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
-	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	C.prepare("insert", "INSERT INTO users_security_roles( \
 													id, \
@@ -244,16 +232,13 @@ void UsersSecurityRoleModel::UpdateUsersSecurityRole(
 													std::string	description ){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
-	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	C.prepare("update", "UPDATE users_security_roles SET \
 													_user_ = $2, \
@@ -278,16 +263,13 @@ void UsersSecurityRoleModel::UpdateUsersSecurityRole(
 void UsersSecurityRoleModel::DeleteUsersSecurityRole(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
-	 } catch (const angru::system::exception::error &e) {
+	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
-	 }
-	 LOG_INFO << "Connected to database: " << C.dbname();
+	}
 	 pqxx::work W(C);
 	 C.prepare("update", "UPDATE users_security_roles SET \
 												deleted_at = now()  \

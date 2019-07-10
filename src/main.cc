@@ -66,20 +66,11 @@ int main(int argc, char const *argv[])
 				}
 			}
     }
-
-		LOG_INFO << "setup logfile using boost...";
-		LOG_INFO << "setup database connection_string using pqxx...";
 		angru::wrapper::Postgresql::Setup();
-		LOG_INFO << "setup datetime and calendar using boost...";
 		angru::system::localization::Setup();
-		LOG_INFO << "setup RestServer using pistache...";
 		angru::wrapper::RestServer::Setup(port, thr);
-
-		LOG_INFO << "setup HttpClient using pistache...";
 		//angru::wrapper::HttpClient::Setup();
-		LOG_INFO << "generate files using file_generator_factory...";
 		//angru::tools::factory::generate();
-		LOG_INFO << "generate fake data using data_generator_factory...";
 		//angru::tools::factory::GenerateFakeData();
 	}
 	catch(const angru::system::exception::error & e)

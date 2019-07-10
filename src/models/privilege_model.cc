@@ -53,16 +53,13 @@ bool PrivilegeModel::AuthorizationCheck(std::string user_id, std::string entity_
 pqxx::result PrivilegeModel::GetPrivilegeStrings(std::string user_id, std::string entity_name){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
-	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	std::string complete_query = "SELECT \
 									      				public.privileges.privilege_string \
@@ -84,16 +81,13 @@ pqxx::result PrivilegeModel::GetPrivilegeStrings(std::string user_id, std::strin
 pqxx::result PrivilegeModel::GetPrivileges(int page, int limit, std::string query, std::string order){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
-	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	std::string complete_query = "SELECT \
 									      				id , \
@@ -131,16 +125,13 @@ pqxx::result PrivilegeModel::GetPrivileges(int page, int limit, std::string quer
 int PrivilegeModel::GetPrivilegesCount(std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
-	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	std::string complete_query = "SELECT count(id) FROM privileges where deleted_at is NULL ";
 	if(!query.empty())
@@ -191,16 +182,13 @@ boost::property_tree::ptree PrivilegeModel::GetPrivilegesJson(int page, int limi
 pqxx::result PrivilegeModel::GetPrivilege(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
-	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
   C.prepare("find", "SELECT \
 									      				id , \
@@ -249,16 +237,13 @@ std::string PrivilegeModel::AddPrivilege(
 													std::string	description){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
-	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	C.prepare("insert", "INSERT INTO privileges( \
 													id, \
@@ -316,16 +301,13 @@ void PrivilegeModel::UpdatePrivilege(
 													std::string	description ){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
-	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	C.prepare("update", "UPDATE privileges SET \
 													security_role = $2, \
@@ -352,16 +334,13 @@ void PrivilegeModel::UpdatePrivilege(
 void PrivilegeModel::DeletePrivilege(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
-	 } catch (const angru::system::exception::error &e) {
+	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
-	 }
-	 LOG_INFO << "Connected to database: " << C.dbname();
+	}
 	 pqxx::work W(C);
 	 C.prepare("update", "UPDATE privileges SET \
 												deleted_at = now()  \

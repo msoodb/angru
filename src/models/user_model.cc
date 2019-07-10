@@ -21,16 +21,13 @@ UserModel::~UserModel(){}
 pqxx::result UserModel::GetUsers(int page, int limit, std::string query, std::string order){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
-	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	std::string complete_query = "SELECT \
 									      				id , \
@@ -73,16 +70,13 @@ pqxx::result UserModel::GetUsers(int page, int limit, std::string query, std::st
 int UserModel::GetUsersCount(std::string query){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
-	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	std::string complete_query = "SELECT count(id) FROM users where deleted_at is NULL ";
 	if(!query.empty())
@@ -138,16 +132,13 @@ boost::property_tree::ptree UserModel::GetUsersJson(int page, int limit, std::st
 pqxx::result UserModel::GetUser(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
-	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
   C.prepare("find", "SELECT \
 									      				id , \
@@ -220,16 +211,13 @@ std::string UserModel::AddUser(
 													std::string	description){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
-	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	C.prepare("insert", "INSERT INTO users( \
 													id, \
@@ -306,16 +294,13 @@ void UserModel::UpdateUser(
 													std::string	description ){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
-	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	C.prepare("update", "UPDATE users SET \
 													first_name = $2, \
@@ -352,16 +337,13 @@ void UserModel::ChangePassword(
 													std::string password ){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
 	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
-	LOG_INFO << "Connected to database: " << C.dbname();
 	pqxx::work W(C);
 	C.prepare("update", "UPDATE users SET \
 													password = $2	WHERE id = $1");
@@ -375,16 +357,13 @@ void UserModel::ChangePassword(
 void UserModel::DeleteUser(std::string id){
 	pqxx::connection C(angru::wrapper::Postgresql::connection_string());
 	try {
-		if (C.is_open()) {
-			 LOG_INFO << "Opened database successfully: " << C.dbname();
-		} else {
+		if (!C.is_open()) {
 			 LOG_ERROR << "Can't open database: " << C.dbname();
 		}
 		C.disconnect ();
-	 } catch (const angru::system::exception::error &e) {
+	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
-	 }
-	 LOG_INFO << "Connected to database: " << C.dbname();
+	}
 	 pqxx::work W(C);
 	 C.prepare("update", "UPDATE users SET \
 												deleted_at = now()  \
