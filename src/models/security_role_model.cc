@@ -239,6 +239,7 @@ void SecurityRoleModel::UpdateSecurityRole(
 	} catch (const angru::system::exception::error &e) {
 			LOG_ERROR << e.what();
 	}
+	pqxx::work W(C);
 	C.prepare("update", "UPDATE security_roles SET \
 													name = $2, \
 													title = $3, \
