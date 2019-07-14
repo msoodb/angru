@@ -20,7 +20,7 @@ void HttpClient::Setup(){
   query.add("by","zone");
   query.add("zone","America/Chicago");
   //std::string body;
-  Pistache::Http::Code code;
+  // Pistache::Http::Code code;
 
   int count = 1;
 
