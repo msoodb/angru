@@ -1,0 +1,10 @@
+/home/masoud/Projects/angru/build/CMakeFiles/rebuild_cache.dir
+/home/masoud/Projects/angru/build/CMakeFiles/edit_cache.dir
+/home/masoud/Projects/angru/build/src/CMakeFiles/edit_cache.dir
+/home/masoud/Projects/angru/build/src/CMakeFiles/all_pch.dir
+/home/masoud/Projects/angru/build/src/CMakeFiles/angru_pch.dir
+/home/masoud/Projects/angru/build/src/CMakeFiles/rebuild_cache.dir
+/home/masoud/Projects/angru/build/src/CMakeFiles/all_unity.dir
+/home/masoud/Projects/angru/build/src/CMakeFiles/angru.dir
+/home/masoud/Projects/angru/build/src/CMakeFiles/angru_unity.dir
+/home/masoud/Projects/angru/build/src/CMakeFiles/clean_cotire.dir
