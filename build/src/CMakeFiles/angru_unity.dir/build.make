@@ -94,16 +94,16 @@ angru_unity_EXTERNAL_OBJECTS =
 
 src/angru: src/CMakeFiles/angru_unity.dir/cotire/angru_CXX_unity.cxx.o
 src/angru: src/CMakeFiles/angru_unity.dir/build.make
-src/angru: /usr/lib/x86_64-linux-gnu/libboost_date_time.so
-src/angru: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
-src/angru: /usr/lib/x86_64-linux-gnu/libboost_system.so
-src/angru: /usr/lib/x86_64-linux-gnu/libboost_log.so
-src/angru: /usr/lib/x86_64-linux-gnu/libboost_log_setup.so
-src/angru: /usr/lib/x86_64-linux-gnu/libboost_regex.so
-src/angru: /usr/lib/x86_64-linux-gnu/libboost_thread.so
-src/angru: /usr/lib/x86_64-linux-gnu/libboost_locale.so
-src/angru: /usr/lib/x86_64-linux-gnu/libboost_chrono.so
-src/angru: /usr/lib/x86_64-linux-gnu/libboost_atomic.so
+src/angru: /usr/lib/x86_64-linux-gnu/libboost_date_time.a
+src/angru: /usr/lib/x86_64-linux-gnu/libboost_filesystem.a
+src/angru: /usr/lib/x86_64-linux-gnu/libboost_system.a
+src/angru: /usr/lib/x86_64-linux-gnu/libboost_log.a
+src/angru: /usr/lib/x86_64-linux-gnu/libboost_log_setup.a
+src/angru: /usr/lib/x86_64-linux-gnu/libboost_regex.a
+src/angru: /usr/lib/x86_64-linux-gnu/libboost_thread.a
+src/angru: /usr/lib/x86_64-linux-gnu/libboost_locale.a
+src/angru: /usr/lib/x86_64-linux-gnu/libboost_chrono.a
+src/angru: /usr/lib/x86_64-linux-gnu/libboost_atomic.a
 src/angru: /usr/lib/x86_64-linux-gnu/libpthread.so
 src/angru: /usr/lib/x86_64-linux-gnu/libpq.so
 src/angru: /usr/local/lib/libpistache.so
