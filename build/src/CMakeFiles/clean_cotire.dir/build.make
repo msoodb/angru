@@ -55,7 +55,7 @@ include src/CMakeFiles/clean_cotire.dir/progress.make
 
 src/CMakeFiles/clean_cotire:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/masoud/Projects/angru/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Cleaning up all cotire generated files"
-	/usr/bin/cmake -DCOTIRE_BUILD_TYPE:STRING=Release -DCOTIRE_VERBOSE:BOOL=$(VERBOSE) -P /home/masoud/Projects/angru/CMakeModules/cotire.cmake cleanup /home/masoud/Projects/angru/build cotire
+	/usr/bin/cmake -DCOTIRE_BUILD_TYPE:STRING= -DCOTIRE_VERBOSE:BOOL=$(VERBOSE) -P /home/masoud/Projects/angru/CMakeModules/cotire.cmake cleanup /home/masoud/Projects/angru/build cotire
 
 clean_cotire: src/CMakeFiles/clean_cotire
 clean_cotire: src/CMakeFiles/clean_cotire.dir/build.make

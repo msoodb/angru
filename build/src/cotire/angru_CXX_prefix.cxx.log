@@ -395,7 +395,6 @@ Multiple include guards may be useful for:
 /usr/include/x86_64-linux-gnu/bits/locale.h
 /usr/include/x86_64-linux-gnu/bits/math-vector.h
 /usr/include/x86_64-linux-gnu/bits/mathdef.h
-/usr/include/x86_64-linux-gnu/bits/mathinline.h
 /usr/include/x86_64-linux-gnu/bits/nan.h
 /usr/include/x86_64-linux-gnu/bits/netdb.h
 /usr/include/x86_64-linux-gnu/bits/poll.h
@@ -406,8 +405,6 @@ Multiple include guards may be useful for:
 /usr/include/x86_64-linux-gnu/bits/signum.h
 /usr/include/x86_64-linux-gnu/bits/sigstack.h
 /usr/include/x86_64-linux-gnu/bits/socket_type.h
-/usr/include/x86_64-linux-gnu/bits/stdio.h
-/usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h
 /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
 /usr/include/x86_64-linux-gnu/bits/sys_errlist.h
 /usr/include/x86_64-linux-gnu/bits/termios.h

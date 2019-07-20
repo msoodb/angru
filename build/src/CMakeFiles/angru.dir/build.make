@@ -61,23 +61,23 @@ src/cotire/angru_CXX_prefix.hxx.gch: src/cotire/angru_CXX_prefix.hxx
 src/cotire/angru_CXX_prefix.hxx.gch: /usr/bin/c++
 src/cotire/angru_CXX_prefix.hxx.gch: src/cotire/angru_CXX_prefix.hxx
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/masoud/Projects/angru/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX precompiled header src/cotire/angru_CXX_prefix.hxx.gch"
-	cd /home/masoud/Projects/angru/src && /usr/bin/cmake -DCOTIRE_BUILD_TYPE:STRING=Release -DCOTIRE_VERBOSE:BOOL=$(VERBOSE) -P /home/masoud/Projects/angru/CMakeModules/cotire.cmake precompile /home/masoud/Projects/angru/build/src/angru_CXX_cotire.cmake /home/masoud/Projects/angru/build/src/cotire/angru_CXX_prefix.hxx /home/masoud/Projects/angru/build/src/cotire/angru_CXX_prefix.hxx.gch controllers/aggregator_controller.cc
+	cd /home/masoud/Projects/angru/src && /usr/bin/cmake -DCOTIRE_BUILD_TYPE:STRING= -DCOTIRE_VERBOSE:BOOL=$(VERBOSE) -P /home/masoud/Projects/angru/CMakeModules/cotire.cmake precompile /home/masoud/Projects/angru/build/src/angru_CXX_cotire.cmake /home/masoud/Projects/angru/build/src/cotire/angru_CXX_prefix.hxx /home/masoud/Projects/angru/build/src/cotire/angru_CXX_prefix.hxx.gch controllers/aggregator_controller.cc
 
 src/cotire/angru_CXX_prefix.hxx: src/cotire/angru_CXX_prefix.cxx
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/masoud/Projects/angru/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating CXX prefix header src/cotire/angru_CXX_prefix.hxx"
-	/usr/bin/cmake -DCOTIRE_BUILD_TYPE:STRING=Release -DCOTIRE_VERBOSE:BOOL=$(VERBOSE) -P /home/masoud/Projects/angru/CMakeModules/cotire.cmake combine /home/masoud/Projects/angru/build/src/angru_CXX_cotire.cmake /home/masoud/Projects/angru/build/src/cotire/angru_CXX_prefix.hxx /home/masoud/Projects/angru/build/src/cotire/angru_CXX_prefix.cxx
+	/usr/bin/cmake -DCOTIRE_BUILD_TYPE:STRING= -DCOTIRE_VERBOSE:BOOL=$(VERBOSE) -P /home/masoud/Projects/angru/CMakeModules/cotire.cmake combine /home/masoud/Projects/angru/build/src/angru_CXX_cotire.cmake /home/masoud/Projects/angru/build/src/cotire/angru_CXX_prefix.hxx /home/masoud/Projects/angru/build/src/cotire/angru_CXX_prefix.cxx
 
 src/cotire/angru_CXX_prefix.cxx: src/cotire/angru_CXX_unity.cxx
 src/cotire/angru_CXX_prefix.cxx: /usr/bin/c++
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/masoud/Projects/angru/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating CXX prefix source src/cotire/angru_CXX_prefix.cxx"
-	cd /home/masoud/Projects/angru/src && /usr/bin/cmake -DCOTIRE_BUILD_TYPE:STRING=Release -DCOTIRE_VERBOSE:BOOL=$(VERBOSE) -P /home/masoud/Projects/angru/CMakeModules/cotire.cmake prefix /home/masoud/Projects/angru/build/src/angru_CXX_cotire.cmake /home/masoud/Projects/angru/build/src/cotire/angru_CXX_prefix.cxx /home/masoud/Projects/angru/build/src/cotire/angru_CXX_unity.cxx
+	cd /home/masoud/Projects/angru/src && /usr/bin/cmake -DCOTIRE_BUILD_TYPE:STRING= -DCOTIRE_VERBOSE:BOOL=$(VERBOSE) -P /home/masoud/Projects/angru/CMakeModules/cotire.cmake prefix /home/masoud/Projects/angru/build/src/angru_CXX_cotire.cmake /home/masoud/Projects/angru/build/src/cotire/angru_CXX_prefix.cxx /home/masoud/Projects/angru/build/src/cotire/angru_CXX_unity.cxx
 
 src/cotire/angru_CXX_prefix.cxx.log: src/cotire/angru_CXX_prefix.cxx
 	@$(CMAKE_COMMAND) -E touch_nocreate src/cotire/angru_CXX_prefix.cxx.log
 
 src/cotire/angru_CXX_unity.cxx: src/angru_CXX_cotire.cmake
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/masoud/Projects/angru/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating CXX unity source src/cotire/angru_CXX_unity.cxx"
-	cd /home/masoud/Projects/angru/src && /usr/bin/cmake -DCOTIRE_BUILD_TYPE:STRING=Release -DCOTIRE_VERBOSE:BOOL=$(VERBOSE) -P /home/masoud/Projects/angru/CMakeModules/cotire.cmake unity /home/masoud/Projects/angru/build/src/angru_CXX_cotire.cmake /home/masoud/Projects/angru/build/src/cotire/angru_CXX_unity.cxx
+	cd /home/masoud/Projects/angru/src && /usr/bin/cmake -DCOTIRE_BUILD_TYPE:STRING= -DCOTIRE_VERBOSE:BOOL=$(VERBOSE) -P /home/masoud/Projects/angru/CMakeModules/cotire.cmake unity /home/masoud/Projects/angru/build/src/angru_CXX_cotire.cmake /home/masoud/Projects/angru/build/src/cotire/angru_CXX_unity.cxx
 
 src/CMakeFiles/angru.dir/controllers/aggregator_controller.cc.o: src/CMakeFiles/angru.dir/flags.make
 src/CMakeFiles/angru.dir/controllers/aggregator_controller.cc.o: ../src/controllers/aggregator_controller.cc
@@ -2339,9 +2339,9 @@ src/angru: /usr/lib/x86_64-linux-gnu/libboost_locale.a
 src/angru: /usr/lib/x86_64-linux-gnu/libboost_chrono.a
 src/angru: /usr/lib/x86_64-linux-gnu/libboost_atomic.a
 src/angru: /usr/lib/x86_64-linux-gnu/libpthread.so
-src/angru: /usr/lib/x86_64-linux-gnu/libpq.so
-src/angru: /usr/local/lib/libpistache.so
-src/angru: /usr/lib/x86_64-linux-gnu/libpqxx.so
+src/angru: /usr/lib/x86_64-linux-gnu/libpq.a
+src/angru: /usr/local/lib/libpistache.a
+src/angru: /usr/lib/x86_64-linux-gnu/libpqxx.a
 src/angru: /usr/lib/x86_64-linux-gnu/libboost_log.a
 src/angru: /usr/lib/x86_64-linux-gnu/libboost_log_setup.a
 src/angru: /usr/lib/x86_64-linux-gnu/libboost_regex.a
@@ -2350,14 +2350,12 @@ src/angru: /usr/lib/x86_64-linux-gnu/libboost_locale.a
 src/angru: /usr/lib/x86_64-linux-gnu/libboost_chrono.a
 src/angru: /usr/lib/x86_64-linux-gnu/libboost_atomic.a
 src/angru: /usr/lib/x86_64-linux-gnu/libpthread.so
-src/angru: /usr/lib/x86_64-linux-gnu/libpq.so
-src/angru: /usr/local/lib/libpistache.so
-src/angru: /usr/lib/x86_64-linux-gnu/libpqxx.so
+src/angru: /usr/lib/x86_64-linux-gnu/libpq.a
+src/angru: /usr/local/lib/libpistache.a
+src/angru: /usr/lib/x86_64-linux-gnu/libpqxx.a
 src/angru: src/CMakeFiles/angru.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/masoud/Projects/angru/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_88) "Linking CXX executable angru"
 	cd /home/masoud/Projects/angru/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/angru.dir/link.txt --verbose=$(VERBOSE)
-	cd /home/masoud/Projects/angru/build/src && strip /home/masoud/Projects/angru/build/src/angru
-	cd /home/masoud/Projects/angru/build/src && strip -R.comment /home/masoud/Projects/angru/build/src/angru
 
 # Rule to build all files generated by this target.
 src/CMakeFiles/angru.dir/build: src/angru

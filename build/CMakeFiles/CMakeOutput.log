@@ -564,3 +564,243 @@ Linking C executable cmTC_3752d
 make[1]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
 
 
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_78d24/fast"
+make[1]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_78d24.dir/build.make CMakeFiles/cmTC_78d24.dir/build
+make[2]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_78d24.dir/CheckIncludeFile.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_78d24.dir/CheckIncludeFile.c.o   -c /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_78d24
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_78d24.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_78d24.dir/CheckIncludeFile.c.o  -o cmTC_78d24 
+make[2]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_018d5/fast"
+make[1]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_018d5.dir/build.make CMakeFiles/cmTC_018d5.dir/build
+make[2]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_018d5.dir/CheckIncludeFile.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_018d5.dir/CheckIncludeFile.c.o   -c /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_018d5
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_018d5.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_018d5.dir/CheckIncludeFile.c.o  -o cmTC_018d5 
+make[2]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_d7f59/fast"
+make[1]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_d7f59.dir/build.make CMakeFiles/cmTC_d7f59.dir/build
+make[2]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_d7f59.dir/CheckIncludeFile.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_d7f59.dir/CheckIncludeFile.c.o   -c /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_d7f59
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d7f59.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_d7f59.dir/CheckIncludeFile.c.o  -o cmTC_d7f59 
+make[2]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_a663f/fast"
+make[1]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_a663f.dir/build.make CMakeFiles/cmTC_a663f.dir/build
+make[2]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_a663f.dir/CheckIncludeFile.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_a663f.dir/CheckIncludeFile.c.o   -c /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_a663f
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a663f.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_a663f.dir/CheckIncludeFile.c.o  -o cmTC_a663f 
+make[2]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_fc4fd/fast"
+make[1]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_fc4fd.dir/build.make CMakeFiles/cmTC_fc4fd.dir/build
+make[2]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_fc4fd.dir/CheckIncludeFile.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_fc4fd.dir/CheckIncludeFile.c.o   -c /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_fc4fd
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fc4fd.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_fc4fd.dir/CheckIncludeFile.c.o  -o cmTC_fc4fd 
+make[2]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_fc485/fast"
+make[1]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_fc485.dir/build.make CMakeFiles/cmTC_fc485.dir/build
+make[2]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_fc485.dir/CheckIncludeFile.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_fc485.dir/CheckIncludeFile.c.o   -c /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_fc485
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fc485.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_fc485.dir/CheckIncludeFile.c.o  -o cmTC_fc485 
+make[2]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_2a838/fast"
+make[1]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_2a838.dir/build.make CMakeFiles/cmTC_2a838.dir/build
+make[2]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_2a838.dir/CheckIncludeFile.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_2a838.dir/CheckIncludeFile.c.o   -c /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_2a838
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2a838.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_2a838.dir/CheckIncludeFile.c.o  -o cmTC_2a838 
+make[2]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_0f660/fast"
+make[1]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_0f660.dir/build.make CMakeFiles/cmTC_0f660.dir/build
+make[2]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_0f660.dir/CheckIncludeFile.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_0f660.dir/CheckIncludeFile.c.o   -c /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_0f660
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0f660.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_0f660.dir/CheckIncludeFile.c.o  -o cmTC_0f660 
+make[2]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_658a4/fast"
+make[1]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_658a4.dir/build.make CMakeFiles/cmTC_658a4.dir/build
+make[2]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_658a4.dir/CheckIncludeFile.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_658a4.dir/CheckIncludeFile.c.o   -c /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_658a4
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_658a4.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_658a4.dir/CheckIncludeFile.c.o  -o cmTC_658a4 
+make[2]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_7e0fd/fast"
+make[1]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_7e0fd.dir/build.make CMakeFiles/cmTC_7e0fd.dir/build
+make[2]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_7e0fd.dir/CheckIncludeFile.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_7e0fd.dir/CheckIncludeFile.c.o   -c /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_7e0fd
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7e0fd.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_7e0fd.dir/CheckIncludeFile.c.o  -o cmTC_7e0fd 
+make[2]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_2c8a0/fast"
+make[1]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_2c8a0.dir/build.make CMakeFiles/cmTC_2c8a0.dir/build
+make[2]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_2c8a0.dir/CheckIncludeFile.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_2c8a0.dir/CheckIncludeFile.c.o   -c /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_2c8a0
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2c8a0.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_2c8a0.dir/CheckIncludeFile.c.o  -o cmTC_2c8a0 
+make[2]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_1b0b0/fast"
+make[1]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_1b0b0.dir/build.make CMakeFiles/cmTC_1b0b0.dir/build
+make[2]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_1b0b0.dir/CheckIncludeFile.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_1b0b0.dir/CheckIncludeFile.c.o   -c /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_1b0b0
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1b0b0.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_1b0b0.dir/CheckIncludeFile.c.o  -o cmTC_1b0b0 
+make[2]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_603c6/fast"
+make[1]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_603c6.dir/build.make CMakeFiles/cmTC_603c6.dir/build
+make[2]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_603c6.dir/CheckIncludeFile.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_603c6.dir/CheckIncludeFile.c.o   -c /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_603c6
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_603c6.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_603c6.dir/CheckIncludeFile.c.o  -o cmTC_603c6 
+make[2]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_e654e/fast"
+make[1]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_e654e.dir/build.make CMakeFiles/cmTC_e654e.dir/build
+make[2]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_e654e.dir/CheckIncludeFile.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_e654e.dir/CheckIncludeFile.c.o   -c /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_e654e
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e654e.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_e654e.dir/CheckIncludeFile.c.o  -o cmTC_e654e 
+make[2]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_03a96/fast"
+make[1]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_03a96.dir/build.make CMakeFiles/cmTC_03a96.dir/build
+make[2]: Entering directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_03a96.dir/CheckIncludeFile.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_03a96.dir/CheckIncludeFile.c.o   -c /home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_03a96
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_03a96.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_03a96.dir/CheckIncludeFile.c.o  -o cmTC_03a96 
+make[2]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+make[1]: Leaving directory '/home/masoud/Projects/angru/build/CMakeFiles/CMakeTmp'
+
+

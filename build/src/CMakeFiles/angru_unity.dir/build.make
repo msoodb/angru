@@ -59,7 +59,7 @@ include src/CMakeFiles/angru_unity.dir/flags.make
 
 src/cotire/angru_CXX_unity.cxx: src/angru_CXX_cotire.cmake
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/masoud/Projects/angru/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating CXX unity source src/cotire/angru_CXX_unity.cxx"
-	cd /home/masoud/Projects/angru/src && /usr/bin/cmake -DCOTIRE_BUILD_TYPE:STRING=Release -DCOTIRE_VERBOSE:BOOL=$(VERBOSE) -P /home/masoud/Projects/angru/CMakeModules/cotire.cmake unity /home/masoud/Projects/angru/build/src/angru_CXX_cotire.cmake /home/masoud/Projects/angru/build/src/cotire/angru_CXX_unity.cxx
+	cd /home/masoud/Projects/angru/src && /usr/bin/cmake -DCOTIRE_BUILD_TYPE:STRING= -DCOTIRE_VERBOSE:BOOL=$(VERBOSE) -P /home/masoud/Projects/angru/CMakeModules/cotire.cmake unity /home/masoud/Projects/angru/build/src/angru_CXX_cotire.cmake /home/masoud/Projects/angru/build/src/cotire/angru_CXX_unity.cxx
 
 src/CMakeFiles/angru_unity.dir/cotire/angru_CXX_unity.cxx.o: src/CMakeFiles/angru_unity.dir/flags.make
 src/CMakeFiles/angru_unity.dir/cotire/angru_CXX_unity.cxx.o: src/cotire/angru_CXX_unity.cxx
@@ -105,9 +105,9 @@ src/angru: /usr/lib/x86_64-linux-gnu/libboost_locale.a
 src/angru: /usr/lib/x86_64-linux-gnu/libboost_chrono.a
 src/angru: /usr/lib/x86_64-linux-gnu/libboost_atomic.a
 src/angru: /usr/lib/x86_64-linux-gnu/libpthread.so
-src/angru: /usr/lib/x86_64-linux-gnu/libpq.so
-src/angru: /usr/local/lib/libpistache.so
-src/angru: /usr/lib/x86_64-linux-gnu/libpqxx.so
+src/angru: /usr/lib/x86_64-linux-gnu/libpq.a
+src/angru: /usr/local/lib/libpistache.a
+src/angru: /usr/lib/x86_64-linux-gnu/libpqxx.a
 src/angru: src/CMakeFiles/angru_unity.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/masoud/Projects/angru/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable angru"
 	cd /home/masoud/Projects/angru/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/angru_unity.dir/link.txt --verbose=$(VERBOSE)
