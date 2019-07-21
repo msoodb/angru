@@ -27,31 +27,31 @@ AWK_EXECUTABLE:FILEPATH=/usr/bin/awk
 BOOST_THREAD_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libpthread.so
 
 //Boost atomic library (debug)
-Boost_ATOMIC_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_atomic.a
+Boost_ATOMIC_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_atomic.so
 
 //Boost atomic library (release)
-Boost_ATOMIC_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_atomic.a
+Boost_ATOMIC_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_atomic.so
 
 //Boost chrono library (debug)
-Boost_CHRONO_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_chrono.a
+Boost_CHRONO_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_chrono.so
 
 //Boost chrono library (release)
-Boost_CHRONO_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_chrono.a
+Boost_CHRONO_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_chrono.so
 
 //Boost date_time library (debug)
-Boost_DATE_TIME_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_date_time.a
+Boost_DATE_TIME_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_date_time.so
 
 //Boost date_time library (release)
-Boost_DATE_TIME_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_date_time.a
+Boost_DATE_TIME_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_date_time.so
 
 //The directory containing a CMake configuration file for Boost.
 Boost_DIR:PATH=Boost_DIR-NOTFOUND
 
 //Boost filesystem library (debug)
-Boost_FILESYSTEM_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_filesystem.a
+Boost_FILESYSTEM_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_filesystem.so
 
 //Boost filesystem library (release)
-Boost_FILESYSTEM_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_filesystem.a
+Boost_FILESYSTEM_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_filesystem.so
 
 //Path to a file.
 Boost_INCLUDE_DIR:PATH=/usr/include
@@ -63,40 +63,40 @@ Boost_LIBRARY_DIR_DEBUG:PATH=/usr/lib/x86_64-linux-gnu
 Boost_LIBRARY_DIR_RELEASE:PATH=/usr/lib/x86_64-linux-gnu
 
 //Boost locale library (debug)
-Boost_LOCALE_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_locale.a
+Boost_LOCALE_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_locale.so
 
 //Boost locale library (release)
-Boost_LOCALE_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_locale.a
+Boost_LOCALE_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_locale.so
 
 //Boost log library (debug)
-Boost_LOG_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_log.a
+Boost_LOG_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_log.so
 
 //Boost log library (release)
-Boost_LOG_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_log.a
+Boost_LOG_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_log.so
 
 //Boost log_setup library (debug)
-Boost_LOG_SETUP_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_log_setup.a
+Boost_LOG_SETUP_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_log_setup.so
 
 //Boost log_setup library (release)
-Boost_LOG_SETUP_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_log_setup.a
+Boost_LOG_SETUP_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_log_setup.so
 
 //Boost regex library (debug)
-Boost_REGEX_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_regex.a
+Boost_REGEX_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_regex.so
 
 //Boost regex library (release)
-Boost_REGEX_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_regex.a
+Boost_REGEX_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_regex.so
 
 //Boost system library (debug)
-Boost_SYSTEM_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_system.a
+Boost_SYSTEM_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_system.so
 
 //Boost system library (release)
-Boost_SYSTEM_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_system.a
+Boost_SYSTEM_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_system.so
 
 //Boost thread library (debug)
-Boost_THREAD_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_thread.a
+Boost_THREAD_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_thread.so
 
 //Boost thread library (release)
-Boost_THREAD_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_thread.a
+Boost_THREAD_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_thread.so
 
 //Choose the type of build, options are: None(CMAKE_CXX_FLAGS or
 // CMAKE_C_FLAGS used) Debug Release RelWithDebInfo MinSizeRel.
@@ -267,13 +267,13 @@ PERL_EXECUTABLE:FILEPATH=/usr/bin/perl
 PGSQL_INCLUDE_DIR:PATH=/usr/include
 
 //Path to a library.
-PGSQL_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libpq.a
+PGSQL_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libpq.so
 
 //Path to a file.
 PISTACHE_INCLUDE_DIR:PATH=/usr/local/include
 
 //Path to a library.
-PISTACHE_LIBRARY:FILEPATH=/usr/local/lib/libpistache.a
+PISTACHE_LIBRARY:FILEPATH=/usr/local/lib/libpistache.so
 
 //pkg-config executable
 PKG_CONFIG_EXECUTABLE:FILEPATH=/usr/bin/pkg-config
@@ -282,7 +282,7 @@ PKG_CONFIG_EXECUTABLE:FILEPATH=/usr/bin/pkg-config
 PQXX_INCLUDE_DIR:PATH=/usr/include
 
 //Path to a library.
-PQXX_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libpqxx.a
+PQXX_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libpqxx.so
 
 //Path to a file.
 SED_EXECUTABLE:FILEPATH=/bin/sed
@@ -294,7 +294,7 @@ TR_EXECUTABLE:FILEPATH=/usr/bin/tr
 VMIME_INCLUDE_DIR:PATH=/usr/include
 
 //Path to a library.
-VMIME_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libvmime.a
+VMIME_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libvmime.so
 
 
 ########################
@@ -541,9 +541,9 @@ _Boost_NAMESPACE_LAST:INTERNAL=boost
 //Last used Boost_USE_MULTITHREADED value.
 _Boost_USE_MULTITHREADED_LAST:INTERNAL=ON
 //Last used Boost_USE_STATIC_LIBS value.
-_Boost_USE_STATIC_LIBS_LAST:INTERNAL=ON
+_Boost_USE_STATIC_LIBS_LAST:INTERNAL=OFF
 //Last used Boost_USE_STATIC_RUNTIME value.
-_Boost_USE_STATIC_RUNTIME_LAST:INTERNAL=ON
+_Boost_USE_STATIC_RUNTIME_LAST:INTERNAL=OFF
 //Result of TRY_COMPILE
 _COMPILE_RESULT_VAR:INTERNAL=TRUE
 //Result of TRY_RUN

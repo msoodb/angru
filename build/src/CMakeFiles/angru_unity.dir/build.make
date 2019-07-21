@@ -94,20 +94,20 @@ angru_unity_EXTERNAL_OBJECTS =
 
 src/angru: src/CMakeFiles/angru_unity.dir/cotire/angru_CXX_unity.cxx.o
 src/angru: src/CMakeFiles/angru_unity.dir/build.make
-src/angru: /usr/lib/x86_64-linux-gnu/libboost_date_time.a
-src/angru: /usr/lib/x86_64-linux-gnu/libboost_filesystem.a
-src/angru: /usr/lib/x86_64-linux-gnu/libboost_system.a
-src/angru: /usr/lib/x86_64-linux-gnu/libboost_log.a
-src/angru: /usr/lib/x86_64-linux-gnu/libboost_log_setup.a
-src/angru: /usr/lib/x86_64-linux-gnu/libboost_regex.a
-src/angru: /usr/lib/x86_64-linux-gnu/libboost_thread.a
-src/angru: /usr/lib/x86_64-linux-gnu/libboost_locale.a
-src/angru: /usr/lib/x86_64-linux-gnu/libboost_chrono.a
-src/angru: /usr/lib/x86_64-linux-gnu/libboost_atomic.a
+src/angru: /usr/lib/x86_64-linux-gnu/libboost_date_time.so
+src/angru: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
+src/angru: /usr/lib/x86_64-linux-gnu/libboost_system.so
+src/angru: /usr/lib/x86_64-linux-gnu/libboost_log.so
+src/angru: /usr/lib/x86_64-linux-gnu/libboost_log_setup.so
+src/angru: /usr/lib/x86_64-linux-gnu/libboost_regex.so
+src/angru: /usr/lib/x86_64-linux-gnu/libboost_thread.so
+src/angru: /usr/lib/x86_64-linux-gnu/libboost_locale.so
+src/angru: /usr/lib/x86_64-linux-gnu/libboost_chrono.so
+src/angru: /usr/lib/x86_64-linux-gnu/libboost_atomic.so
 src/angru: /usr/lib/x86_64-linux-gnu/libpthread.so
-src/angru: /usr/lib/x86_64-linux-gnu/libpq.a
-src/angru: /usr/local/lib/libpistache.a
-src/angru: /usr/lib/x86_64-linux-gnu/libpqxx.a
+src/angru: /usr/lib/x86_64-linux-gnu/libpq.so
+src/angru: /usr/local/lib/libpistache.so
+src/angru: /usr/lib/x86_64-linux-gnu/libpqxx.so
 src/angru: src/CMakeFiles/angru_unity.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/masoud/Projects/angru/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable angru"
 	cd /home/masoud/Projects/angru/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/angru_unity.dir/link.txt --verbose=$(VERBOSE)
