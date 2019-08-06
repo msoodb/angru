@@ -13,6 +13,10 @@ chmod 700 ~/.ssh
 chmod 600 ~/.ssh/authorized_keys
 ssh angru@198.143.183.251
 #--------------------------------------------------------------------------#
+sudo vim /etc/ssh/sshd_config
+set PermitRootLogin no
+sudo systemctl restsrt sshd
+#--------------------------------------------------------------------------#
 sudo apt-get check
 sudo apt-get -y update
 sudo apt-get -y upgrade
