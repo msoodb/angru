@@ -61,7 +61,7 @@ git clone git@github.com:msoodb/angru.git
 sudo -i -u postgres
 psql
 create user angru;
-alter user angru password '1235';
+alter user angru password '1235'; # 123456
 alter user angru with superuser;
 create database angrudb;
 # alter database angrudb owner to angru;
