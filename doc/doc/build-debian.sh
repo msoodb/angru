@@ -1,3 +1,4 @@
+#-------------------------------------------------------------------------#
 ssh root@xxx.xxx.xxx.xxx
 cat /etc/os-release
 adduser angru
