@@ -40,53 +40,53 @@
 
 int main(int argc, char const *argv[])
 {
-	std::cout<<"angru version .011"<<std::endl;
-	try
-	{
-		angru::tools::global::m_execute_path = "/home/masoud/Projects/angru";
-	  angru::tools::global::m_cdn = "https://cdn.zeus.cloudns.org/";
-		int port = 9080;
-		int thr = 2;
+  std::cout<<"angru version .011"<<std::endl;
+  try
+    {
+      angru::tools::global::m_execute_path = "/home/masoud/Projects/angru";
+      angru::tools::global::m_cdn = "https://cdn.zeus.cloudns.org/";
+      int port = 9080;
+      int thr = 2;
 
-		// arg[0] : angru
-		// arg[1] : path
-		// arg[2] : cdn
-		// arg[0] : port
-		// arg[0] : thread
+      // arg[0] : angru
+      // arg[1] : path
+      // arg[2] : cdn
+      // arg[0] : port
+      // arg[0] : thread
 
-    if (argc >= 2) {
-		  angru::tools::global::m_execute_path = argv[1];
-			if(argc >= 3){
-				angru::tools::global::m_cdn = argv[2];
-				if(argc >= 4){
-					port = std::stol(argv[3]);
-					if (argc >= 5){
-						thr = std::stol(argv[4]);
-					}
-				}
-			}
+      if (argc >= 2) {
+	angru::tools::global::m_execute_path = argv[1];
+	if(argc >= 3){
+	  angru::tools::global::m_cdn = argv[2];
+	  if(argc >= 4){
+	    port = std::stol(argv[3]);
+	    if (argc >= 5){
+	      thr = std::stol(argv[4]);
+	    }
+	  }
+	}
+      }
+      angru::wrapper::Postgresql::Setup();
+      angru::system::localization::Setup();
+      angru::wrapper::RestServer::Setup(port, thr);
+      //angru::wrapper::HttpClient::Setup();
+      //angru::tools::factory::generate();
+      //angru::tools::factory::GenerateFakeData();
     }
-		angru::wrapper::Postgresql::Setup();
-		angru::system::localization::Setup();
-		angru::wrapper::RestServer::Setup(port, thr);
-		//angru::wrapper::HttpClient::Setup();
-		//angru::tools::factory::generate();
-		//angru::tools::factory::GenerateFakeData();
-	}
-	catch(const angru::system::exception::error & e)
-	{
-    LOG_ERROR << e.what();
-		return 1;
-	}
-	catch(const std::exception& e)
-	{
-    LOG_ERROR << e.what();
-		return 1;
-	}
-	catch(...)
-	{
-    LOG_ERROR << "Error: unknown exception";
-		return 2;
-	}
-	return 0;
+  catch(const angru::system::exception::error & e)
+    {
+      LOG_ERROR << e.what();
+      return 1;
+    }
+  catch(const std::exception& e)
+    {
+      LOG_ERROR << e.what();
+      return 1;
+    }
+  catch(...)
+    {
+      LOG_ERROR << "Error: unknown exception";
+      return 2;
+    }
+  return 0;
 }
