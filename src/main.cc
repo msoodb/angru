@@ -21,8 +21,8 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
-#include "wrappers/postgresql.h"
 #include "wrappers/csv_writer.h"
+#include "wrappers/postgresql.h"
 #include "wrappers/csv_reader.h"
 #include "wrappers/json_writer.h"
 #include "wrappers/json_reader.h"
